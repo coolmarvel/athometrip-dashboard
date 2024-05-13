@@ -1,0 +1,25 @@
+{
+  "session": {
+    "::1": 1
+  },
+  "users": [
+    {
+      "id": 1,
+      "name": "이성현",
+      "email": "marvel97@naver.com",
+      "phone": "010-9254-1305",
+      "approved": true,
+      "updatedAt": "2024-05-13T01:39:49.406Z"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "userId": 1,
+      "title": "bzxmk0fso9",
+      "content": "rgpr5o7uxygvc0j7x20z46ulw23gkudpw6qoj7iz7hmkme0r8pfhs7objld2k64ms0yev05sqs7oxjx2k49nu74jcshxvvw2cppr",
+      "createdAt": "2024-05-13T01:41:16.294Z",
+      "updatedAt": "2024-05-13T01:41:16.294Z"
+    }
+  ]
+}
