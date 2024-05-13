@@ -1,6 +1,6 @@
 import { MatchFunction, match } from 'path-to-regexp';
 import { IconType } from 'react-icons';
-import { BsFillPostcardFill } from 'react-icons/bs';
+import { Bs1SquareFill, BsFillPostcardFill, BsFlagFill } from 'react-icons/bs';
 import { FaUser } from 'react-icons/fa';
 
 export enum ApiRoutes {
@@ -12,6 +12,8 @@ export enum ApiRoutes {
   ApproveUser = 'api/users/:id?/approve',
   Post = 'api/posts/:id?',
   LikedPost = 'api/posts/liked',
+  // Test
+  Test = 'api/tests/:id?'
 }
 
 export enum PageRoutes {
@@ -23,6 +25,9 @@ export enum PageRoutes {
   PostDetail = '/posts/:id',
   WritePost = '/posts/write',
   EditPost = '/posts/:id/edit',
+  // Test
+  Test = '/tests',
+  TestDetail = '/tests/:id',
 }
 
 export const whiteList = [PageRoutes.Home, PageRoutes.Signin, PageRoutes.Users, PageRoutes.UserDetail];
@@ -101,6 +106,21 @@ export const navs: Nav[] = [
         label: 'Edit Post',
         pathname: PageRoutes.EditPost,
         matcher: match(PageRoutes.EditPost),
+      },
+    ],
+  },
+  // Test
+  {
+    label: 'Tests',
+    pathname: PageRoutes.Test,
+    query: defaultQuery,
+    icon: BsFlagFill,
+    matcher: match(PageRoutes.Test),
+    children: [
+      {
+        label: 'Test Detail',
+        pathname: PageRoutes.TestDetail,
+        matcher: match(PageRoutes.TestDetail),
       },
     ],
   },
