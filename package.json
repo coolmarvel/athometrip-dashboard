@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 80",
+    "start": "next start -H 0.0.0.0 -p 80",
     "lint": "next lint"
   },
   "dependencies": {
@@ -43,6 +43,7 @@
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
     "i18next-parser": "^8.13.0",
+    "node-cmd": "^5.0.0",
     "type-fest": "^4.18.2",
     "typescript": "^5"
   }
