@@ -1,5 +1,6 @@
 import { PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
 import { ViewQueries } from '@/constants';
+import { OrderUtils } from '@/containers/orders/OrderUtils';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
@@ -30,7 +31,7 @@ const OrdersAllPage = () => {
       </Head>
       <ResponsiveLayout>
         <Flex direction={'column'} gap={'4'} h={'100%'}>
-          {/* <OrderUtils /> */}
+          <OrderUtils />
           <Flex justifyContent={'space-between'} gap={'4'} wrap={'wrap'}>
             <Search
               onSubmit={(search) =>
