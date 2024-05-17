@@ -1,12 +1,11 @@
 import { PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
 import { ViewQueries } from '@/constants';
-import { PostUtils } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useMemo } from 'react';
 
-const TestsAllPage = () => {
+const OrdersAllPage = () => {
   const { router, push } = useSafePush();
   const viewOption = router.query?.view as ViewQueries;
 
@@ -31,7 +30,7 @@ const TestsAllPage = () => {
       </Head>
       <ResponsiveLayout>
         <Flex direction={'column'} gap={'4'} h={'100%'}>
-          <PostUtils />
+          {/* <OrderUtils /> */}
           <Flex justifyContent={'space-between'} gap={'4'} wrap={'wrap'}>
             <Search
               onSubmit={(search) =>
@@ -53,4 +52,4 @@ const TestsAllPage = () => {
   );
 };
 
-export default TestsAllPage;
+export default OrdersAllPage;

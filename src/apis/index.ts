@@ -4,5 +4,6 @@ export * from './post';
 export * from './types';
 export * from './user';
 export * from './utils';
-// Test
-export * from './test';
+
+// Order
+export * from './order';

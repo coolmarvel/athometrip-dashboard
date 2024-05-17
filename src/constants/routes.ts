@@ -12,8 +12,9 @@ export enum ApiRoutes {
   ApproveUser = 'api/users/:id?/approve',
   Post = 'api/posts/:id?',
   LikedPost = 'api/posts/liked',
-  // Test
-  Test = 'api/tests/:id?'
+
+  // Order
+  Order = 'api/orders/:id?',
 }
 
 export enum PageRoutes {
@@ -25,9 +26,12 @@ export enum PageRoutes {
   PostDetail = '/posts/:id',
   WritePost = '/posts/write',
   EditPost = '/posts/:id/edit',
-  // Test
-  Test = '/tests',
-  TestDetail = '/tests/:id',
+
+  // Order
+  Order = '/orders',
+  OrderDetail = '/orders/:id',
+  WriteOrder = '/orders/write',
+  EditOrder = '/orders/:id/edit',
 }
 
 export const whiteList = [PageRoutes.Home, PageRoutes.Signin, PageRoutes.Users, PageRoutes.UserDetail];
@@ -109,18 +113,19 @@ export const navs: Nav[] = [
       },
     ],
   },
-  // Test
+
+  // Order
   {
-    label: 'Tests',
-    pathname: PageRoutes.Test,
+    label: 'Orders',
+    pathname: PageRoutes.Order,
     query: defaultQuery,
     icon: BsFlagFill,
-    matcher: match(PageRoutes.Test),
+    matcher: match(PageRoutes.Order),
     children: [
       {
-        label: 'Test Detail',
-        pathname: PageRoutes.TestDetail,
-        matcher: match(PageRoutes.TestDetail),
+        label: 'Order Detail',
+        pathname: PageRoutes.OrderDetail,
+        matcher: match(PageRoutes.OrderDetail),
       },
     ],
   },
