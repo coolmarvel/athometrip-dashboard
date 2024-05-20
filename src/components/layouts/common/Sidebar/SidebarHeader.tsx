@@ -19,7 +19,7 @@ const SidebarHeader = () => {
         </Tooltip>
       </Box>
       <Flex gap={'4'} direction={{ base: 'row', lg: 'column', xl: 'row' }}>
-        <LayoutToggler />
+        {/* <LayoutToggler /> */}
         <ColorToggler />
         <PrimaryColorChanger placement={'right'} />
         <LanguageToggler />

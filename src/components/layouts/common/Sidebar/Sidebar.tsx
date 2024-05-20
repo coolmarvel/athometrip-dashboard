@@ -11,7 +11,9 @@ const Sidebar = () => {
     <Box as={'aside'} display={'flex'} flexDirection={'column'} bgColor={alphaColor(50)} w={{ base: '64', lg: '24', xl: '64' }} p={'4'} h={'100vh'}>
       <SidebarHeader />
       <Divider />
-      <Navbar />
+      <Box overflowY="auto" flex="1">
+        <Navbar />
+      </Box>
       <SidebarFooter />
     </Box>
   );

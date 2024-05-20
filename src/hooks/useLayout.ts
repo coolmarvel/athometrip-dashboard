@@ -2,7 +2,7 @@ import { Layout } from '@/types';
 import { createContext, useContext } from 'react';
 
 const LayoutContext = createContext<{ layout: Layout; toggleLayout: () => void }>({
-  layout: 'vertical',
+  layout: 'horizontal',
   toggleLayout: () => {},
 });
 

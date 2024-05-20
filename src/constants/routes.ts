@@ -1,6 +1,6 @@
 import { MatchFunction, match } from 'path-to-regexp';
 import { IconType } from 'react-icons';
-import { Bs1SquareFill, BsFillPostcardFill, BsFlagFill } from 'react-icons/bs';
+import { BsFillCollectionFill, BsFillPostcardFill } from 'react-icons/bs';
 import { FaUser } from 'react-icons/fa';
 
 export enum ApiRoutes {
@@ -12,9 +12,6 @@ export enum ApiRoutes {
   ApproveUser = 'api/users/:id?/approve',
   Post = 'api/posts/:id?',
   LikedPost = 'api/posts/liked',
-
-  // Order
-  Order = 'api/orders/:id?',
 }
 
 export enum PageRoutes {
@@ -27,11 +24,28 @@ export enum PageRoutes {
   WritePost = '/posts/write',
   EditPost = '/posts/:id/edit',
 
-  // Order
-  Order = '/orders',
-  OrderDetail = '/orders/:id',
-  WriteOrder = '/orders/write',
-  EditOrder = '/orders/:id/edit',
+  // Tickets
+  Tickets = '/tickets',
+  TopOfTheRock = '/tickets/top-of-the-rock',
+  TopOfTheRockDetail = '/tickets/top-of-the-rock/:id',
+  Summit = '/tickets/summit',
+  SummitDetail = 'tickets/summit/:id',
+  Empire = '/tickets/empire',
+  EmpireDetail = '/tickets/empire/:id',
+  OneWorld = '/tickets/one-world',
+  OneWorldDetail = '/tickets/one-world/:id',
+  Memorial911 = '/tickets/911-memorial',
+  Memorial911Detail = '/tickets/911-memorial/:id',
+  UNTour = '/tickets/un-tour',
+  UNTourDetail = '/tickets/un-tour/:id',
+  Wollman = '/tickets/wollman',
+  WollmanDetail = '/tickets/wollman/:id',
+  CityTrip = '/tickets/city-trip',
+  CityTripDetail = '/tickets/city-trip/:id',
+  EllisIsland = '/tickets/ellis-island',
+  EllisIslandDetail = '/tickets/ellis-island/:id',
+  MLBMets = '/tickets/mlb-mets',
+  MLBMetsDetail = '/tickets/mlb-mets/:id',
 }
 
 export const whiteList = [PageRoutes.Home, PageRoutes.Signin, PageRoutes.Users, PageRoutes.UserDetail];
@@ -58,6 +72,7 @@ export interface Nav {
   icon?: IconType;
   matcher: MatchFunction;
   children?: Nav[];
+  collapsible?: boolean;
 }
 
 export const defaultQuery = {
@@ -114,18 +129,133 @@ export const navs: Nav[] = [
     ],
   },
 
-  // Order
+  // Tickets
   {
-    label: 'Orders',
-    pathname: PageRoutes.Order,
-    query: defaultQuery,
-    icon: BsFlagFill,
-    matcher: match(PageRoutes.Order),
+    label: 'Tickets',
+    pathname: PageRoutes.Tickets,
+    icon: BsFillCollectionFill,
+    matcher: match(PageRoutes.Tickets),
+    collapsible: true,
     children: [
       {
-        label: 'Order Detail',
-        pathname: PageRoutes.OrderDetail,
-        matcher: match(PageRoutes.OrderDetail),
+        label: 'Top of the Rock',
+        pathname: PageRoutes.TopOfTheRock,
+        matcher: match(PageRoutes.TopOfTheRock),
+        children: [
+          {
+            label: 'Top of the Rock Detail',
+            pathname: PageRoutes.TopOfTheRockDetail,
+            matcher: match(PageRoutes.TopOfTheRockDetail),
+          },
+        ],
+      },
+      {
+        label: 'Summit',
+        pathname: PageRoutes.Summit,
+        matcher: match(PageRoutes.Summit),
+        children: [
+          {
+            label: 'Summit Detail',
+            pathname: PageRoutes.SummitDetail,
+            matcher: match(PageRoutes.SummitDetail),
+          },
+        ],
+      },
+      {
+        label: 'Empire',
+        pathname: PageRoutes.Empire,
+        matcher: match(PageRoutes.Empire),
+        children: [
+          {
+            label: 'Empire Detail',
+            pathname: PageRoutes.EmpireDetail,
+            matcher: match(PageRoutes.EmpireDetail),
+          },
+        ],
+      },
+      {
+        label: 'OneWorld',
+        pathname: PageRoutes.OneWorld,
+        matcher: match(PageRoutes.OneWorld),
+        children: [
+          {
+            label: 'OneWorld Detail',
+            pathname: PageRoutes.OneWorldDetail,
+            matcher: match(PageRoutes.OneWorldDetail),
+          },
+        ],
+      },
+      {
+        label: 'Memorial911',
+        pathname: PageRoutes.Memorial911,
+        matcher: match(PageRoutes.Memorial911),
+        children: [
+          {
+            label: 'Memorial911 Detail',
+            pathname: PageRoutes.Memorial911Detail,
+            matcher: match(PageRoutes.Memorial911Detail),
+          },
+        ],
+      },
+      {
+        label: 'UNTour',
+        pathname: PageRoutes.UNTour,
+        matcher: match(PageRoutes.UNTour),
+        children: [
+          {
+            label: 'UNTour Detail',
+            pathname: PageRoutes.UNTourDetail,
+            matcher: match(PageRoutes.UNTourDetail),
+          },
+        ],
+      },
+      {
+        label: 'Wollman',
+        pathname: PageRoutes.Wollman,
+        matcher: match(PageRoutes.Wollman),
+        children: [
+          {
+            label: 'Wollman Detail',
+            pathname: PageRoutes.WollmanDetail,
+            matcher: match(PageRoutes.WollmanDetail),
+          },
+        ],
+      },
+      {
+        label: 'CityTrip',
+        pathname: PageRoutes.CityTrip,
+        matcher: match(PageRoutes.CityTrip),
+        children: [
+          {
+            label: 'CityTrip Detail',
+            pathname: PageRoutes.CityTripDetail,
+            matcher: match(PageRoutes.CityTripDetail),
+          },
+        ],
+      },
+      {
+        label: 'EllisIsland',
+        pathname: PageRoutes.EllisIsland,
+        matcher: match(PageRoutes.EllisIsland),
+        children: [
+          {
+            label: 'EllisIsland Detail',
+            pathname: PageRoutes.EllisIslandDetail,
+            matcher: match(PageRoutes.EllisIslandDetail),
+          },
+        ],
+      },
+      {
+        label: 'MLBMets',
+        pathname: PageRoutes.MLBMets,
+        matcher: match(PageRoutes.MLBMets),
+        children: [
+          {
+            label: 'MLBMets Detail',
+            pathname: PageRoutes.MLBMetsDetail,
+            matcher: match(PageRoutes.MLBMetsDetail),
+          },
+        ],
       },
     ],
   },

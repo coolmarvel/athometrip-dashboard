@@ -3,7 +3,7 @@ import { delayForDev } from '../utils';
 import { readPosts, readPostsWithUser, writePosts } from './db';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  delayForDev(500);
+  // delayForDev(500);
   switch (req.method) {
     case 'GET':
       return getPost(req, res);
