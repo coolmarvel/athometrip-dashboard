@@ -5,5 +5,4 @@ export * from './types';
 export * from './user';
 export * from './utils';
 
-// Order
-export * from './order';
+export * from './tickets';

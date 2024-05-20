@@ -1,5 +1,6 @@
 import { PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
 import { ViewQueries } from '@/constants';
+import { Memorial911ByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
@@ -12,7 +13,7 @@ const Memorial911Page = () => {
   const display = useMemo(() => {
     switch (viewOption) {
       case ViewQueries.Table:
-        return '<Memorial911Page />';
+        return <Memorial911ByPage />;
       case ViewQueries.List:
         return '<Memorial911Page usesObserver />';
       default:

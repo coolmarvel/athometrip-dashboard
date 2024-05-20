@@ -10,11 +10,6 @@ const PostsByPage = () => {
   const router = useRouter();
   const { page, limit, sort, order, onPagination } = usePagination();
 
-  // console.log('page: ', page);
-  // console.log('limit: ', limit);
-  // console.log('sort: ', sort);
-  // console.log('order: ', order);
-
   const { data: postsByPage, isLoading: postsIsLoading } = useGetPostsByPage({
     page,
     limit,
@@ -22,8 +17,6 @@ const PostsByPage = () => {
     order,
     search: QueryParser.toString(router.query.search) ?? '',
   });
-
-  console.log(postsByPage);
 
   return (
     <>

@@ -12,6 +12,9 @@ export enum ApiRoutes {
   ApproveUser = 'api/users/:id?/approve',
   Post = 'api/posts/:id?',
   LikedPost = 'api/posts/liked',
+
+  // Tickets
+  Memorial911 = 'api/tickets/911-memorial/:id?',
 }
 
 export enum PageRoutes {
@@ -141,6 +144,7 @@ export const navs: Nav[] = [
         label: 'Top of the Rock',
         pathname: PageRoutes.TopOfTheRock,
         matcher: match(PageRoutes.TopOfTheRock),
+        query: defaultQuery,
         children: [
           {
             label: 'Top of the Rock Detail',
@@ -153,6 +157,8 @@ export const navs: Nav[] = [
         label: 'Summit',
         pathname: PageRoutes.Summit,
         matcher: match(PageRoutes.Summit),
+
+        query: defaultQuery,
         children: [
           {
             label: 'Summit Detail',
@@ -165,6 +171,8 @@ export const navs: Nav[] = [
         label: 'Empire',
         pathname: PageRoutes.Empire,
         matcher: match(PageRoutes.Empire),
+
+        query: defaultQuery,
         children: [
           {
             label: 'Empire Detail',
@@ -177,6 +185,8 @@ export const navs: Nav[] = [
         label: 'OneWorld',
         pathname: PageRoutes.OneWorld,
         matcher: match(PageRoutes.OneWorld),
+
+        query: defaultQuery,
         children: [
           {
             label: 'OneWorld Detail',
@@ -189,6 +199,8 @@ export const navs: Nav[] = [
         label: 'Memorial911',
         pathname: PageRoutes.Memorial911,
         matcher: match(PageRoutes.Memorial911),
+
+        query: defaultQuery,
         children: [
           {
             label: 'Memorial911 Detail',
@@ -201,6 +213,8 @@ export const navs: Nav[] = [
         label: 'UNTour',
         pathname: PageRoutes.UNTour,
         matcher: match(PageRoutes.UNTour),
+
+        query: defaultQuery,
         children: [
           {
             label: 'UNTour Detail',
@@ -213,6 +227,8 @@ export const navs: Nav[] = [
         label: 'Wollman',
         pathname: PageRoutes.Wollman,
         matcher: match(PageRoutes.Wollman),
+
+        query: defaultQuery,
         children: [
           {
             label: 'Wollman Detail',
@@ -225,6 +241,8 @@ export const navs: Nav[] = [
         label: 'CityTrip',
         pathname: PageRoutes.CityTrip,
         matcher: match(PageRoutes.CityTrip),
+
+        query: defaultQuery,
         children: [
           {
             label: 'CityTrip Detail',
@@ -237,6 +255,8 @@ export const navs: Nav[] = [
         label: 'EllisIsland',
         pathname: PageRoutes.EllisIsland,
         matcher: match(PageRoutes.EllisIsland),
+
+        query: defaultQuery,
         children: [
           {
             label: 'EllisIsland Detail',
@@ -249,6 +269,8 @@ export const navs: Nav[] = [
         label: 'MLBMets',
         pathname: PageRoutes.MLBMets,
         matcher: match(PageRoutes.MLBMets),
+
+        query: defaultQuery,
         children: [
           {
             label: 'MLBMets Detail',
