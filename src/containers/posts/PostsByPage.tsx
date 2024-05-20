@@ -1,33 +1,36 @@
-import { useGetPostsByPage } from "@/apis";
-import { Pagination } from "@/components";
-import { PostTable } from "@/containers";
-import { usePagination } from "@/hooks";
-import { QueryParser } from "@/utils";
-import { TableContainer } from "@chakra-ui/react";
-import { useRouter } from "next/router";
+import { useGetPostsByPage } from '@/apis';
+import { Pagination } from '@/components';
+import { PostTable } from '@/containers';
+import { usePagination } from '@/hooks';
+import { QueryParser } from '@/utils';
+import { TableContainer } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
 const PostsByPage = () => {
   const router = useRouter();
   const { page, limit, sort, order, onPagination } = usePagination();
+
+  // console.log('page: ', page);
+  // console.log('limit: ', limit);
+  // console.log('sort: ', sort);
+  // console.log('order: ', order);
+
   const { data: postsByPage, isLoading: postsIsLoading } = useGetPostsByPage({
     page,
     limit,
     sort,
     order,
-    search: QueryParser.toString(router.query.search) ?? "",
+    search: QueryParser.toString(router.query.search) ?? '',
   });
+
+  console.log(postsByPage);
 
   return (
     <>
-      <TableContainer flex={1} overflowY={"auto"}>
+      <TableContainer flex={1} overflowY={'auto'}>
         <PostTable posts={postsByPage?.data ?? []} isLoading={postsIsLoading} />
       </TableContainer>
-      <Pagination
-        currentPage={page}
-        limit={limit}
-        total={postsByPage?.total ?? 0}
-        onChange={(page) => onPagination({ page })}
-      />
+      <Pagination currentPage={page} limit={limit} total={postsByPage?.total ?? 0} onChange={(page) => onPagination({ page })} />
     </>
   );
 };

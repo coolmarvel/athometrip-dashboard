@@ -1,8 +1,14 @@
 import { toUrl } from '@/utils';
 import { ApiRoutes } from '@/constants';
 import { CursorQueryParams, PageQueryParams, Scheme, User, useDelete, useFetch, useGetPage, useInvalidate, useLoadMore, usePost, useUpdate } from '.';
+import { Nullable } from '@/types';
 
-export interface Order extends Scheme {}
+export interface Order extends Scheme {
+  userId: number;
+  user: Nullable<User>;
+  title: string;
+  content: string;
+}
 
 export type OrderCreate = Omit<Order, 'order' | keyof Scheme>;
 

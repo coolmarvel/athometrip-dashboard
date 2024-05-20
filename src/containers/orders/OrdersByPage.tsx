@@ -4,6 +4,7 @@ import { usePagination } from '@/hooks';
 import { QueryParser } from '@/utils';
 import { TableContainer } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { OrderTable } from './OrderTable';
 
 export const OrdersByPage = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ export const OrdersByPage = () => {
   return (
     <>
       <TableContainer flex={1} overflowY={'auto'}>
-        {/* <TestTable posts={ordersByPage?.data ?? []} isLoading={ordersIsLoading} /> */}
+        <OrderTable datas={ordersByPage?.data ?? []} isLoading={ordersIsLoading} />
       </TableContainer>
       <Pagination currentPage={page} limit={limit} total={ordersByPage?.total ?? 0} onChange={(page) => onPagination({ page })} />{' '}
     </>

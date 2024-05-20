@@ -1,5 +1,6 @@
 import { PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
 import { ViewQueries } from '@/constants';
+import { OrdersByPage } from '@/containers';
 import { OrderUtils } from '@/containers/orders/OrderUtils';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
@@ -13,7 +14,7 @@ const OrdersAllPage = () => {
   const display = useMemo(() => {
     switch (viewOption) {
       case ViewQueries.Table:
-        return 'TestsByPage';
+        return <OrdersByPage />;
       case ViewQueries.List:
         return 'TestsByCursor usesObserver';
       default:
