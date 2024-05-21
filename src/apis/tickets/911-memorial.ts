@@ -8,5 +8,5 @@ export const useGet911Memorial = (id?: number) => {
 
 // [GET] /api/tickets/911-memorial?page=1&limit=10
 export const useGet911MemorialByPage = (params: PageQueryParams) => {
-  return useGetPage<any[]>(toUrl(ApiRoutes.Memorial911, params));
+  return useGetPage<any[]>(toUrl(ApiRoutes.Memorial911), params);
 };

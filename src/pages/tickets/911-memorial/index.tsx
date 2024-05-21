@@ -35,14 +35,11 @@ const Memorial911Page = () => {
           <Flex justifyContent={'space-between'} gap={'4'} wrap={'wrap'}>
             <Search
               onSubmit={(search) => {
-                // push({
-                //   pathname: router.pathname,
-                //   query: { ...router.query, search },
-                // })
+                push({ pathname: router.pathname, query: { ...router.query, search } });
               }}
             />
             <Flex gap={'4'}>
-              <ViewOptions />
+              {/* <ViewOptions /> */}
               <PageOptions />
             </Flex>
           </Flex>

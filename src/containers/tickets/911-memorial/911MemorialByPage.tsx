@@ -15,7 +15,7 @@ const Memorial911ByPage = () => {
   return (
     <>
       <TableContainer flex={1} overflowY={'auto'}>
-        <Memorial911Table users={memorial911ByPage?.data ?? []} isLoading={isLoading} />
+        <Memorial911Table memorial911={memorial911ByPage?.data ?? []} isLoading={isLoading} />
       </TableContainer>
       <Pagination currentPage={page} limit={limit} total={memorial911ByPage?.total ?? 0} onChange={(page) => onPagination({ page })} />
     </>

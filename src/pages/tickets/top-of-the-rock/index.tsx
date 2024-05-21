@@ -12,7 +12,7 @@ const TopOfTheRockPage = () => {
   const display = useMemo(() => {
     switch (viewOption) {
       case ViewQueries.Table:
-        return '<TopOfTheRockPage />';
+        return <TopOfTheRockPage />;
       case ViewQueries.List:
         return '<TopOfTheRockPage usesObserver />';
       default:
@@ -34,10 +34,7 @@ const TopOfTheRockPage = () => {
           <Flex justifyContent={'space-between'} gap={'4'} wrap={'wrap'}>
             <Search
               onSubmit={(search) => {
-                // push({
-                //   pathname: router.pathname,
-                //   query: { ...router.query, search },
-                // })
+                push({ pathname: router.pathname, query: { ...router.query, search } });
               }}
             />
             <Flex gap={'4'}>

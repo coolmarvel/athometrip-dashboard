@@ -15,6 +15,7 @@ export enum ApiRoutes {
 
   // Tickets
   Memorial911 = 'api/tickets/911-memorial/:id?',
+  TopOfTheRock = 'api/tickets/top-of-the-rock/:id?',
 }
 
 export enum PageRoutes {
