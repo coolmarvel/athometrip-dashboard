@@ -20,6 +20,8 @@ const PostTable = ({ posts, isLoading }: PostTableProps) => {
   const { push } = useSafePush();
   const formatDate = useFormatDate();
 
+  console.log(posts);
+
   const columns = useMemo(
     () => [
       columnHelper.accessor('id', {
