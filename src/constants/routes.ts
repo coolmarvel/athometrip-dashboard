@@ -1,6 +1,19 @@
 import { MatchFunction, match } from 'path-to-regexp';
 import { IconType } from 'react-icons';
-import { BsFillCollectionFill, BsFillPostcardFill } from 'react-icons/bs';
+import {
+  BsFillPostcardFill,
+  BsFill0SquareFill,
+  BsFill1SquareFill,
+  BsFill2SquareFill,
+  BsFill3SquareFill,
+  BsFill4SquareFill,
+  BsFill5SquareFill,
+  BsFill6SquareFill,
+  BsFill7SquareFill,
+  BsFill8SquareFill,
+  BsFill9SquareFill,
+  BsFillCollectionFill,
+} from 'react-icons/bs';
 import { FaUser } from 'react-icons/fa';
 
 export enum ApiRoutes {
@@ -136,8 +149,8 @@ export const navs: Nav[] = [
   // Tickets
   {
     label: 'Tickets',
-    pathname: PageRoutes.Tickets,
     icon: BsFillCollectionFill,
+    pathname: PageRoutes.Tickets,
     matcher: match(PageRoutes.Tickets),
     collapsible: true,
     children: [
@@ -145,6 +158,7 @@ export const navs: Nav[] = [
         label: 'Top of the Rock',
         pathname: PageRoutes.TopOfTheRock,
         matcher: match(PageRoutes.TopOfTheRock),
+        icon: BsFill0SquareFill,
         query: defaultQuery,
         children: [
           {
@@ -158,7 +172,7 @@ export const navs: Nav[] = [
         label: 'Summit',
         pathname: PageRoutes.Summit,
         matcher: match(PageRoutes.Summit),
-
+        icon: BsFill1SquareFill,
         query: defaultQuery,
         children: [
           {
@@ -172,7 +186,7 @@ export const navs: Nav[] = [
         label: 'Empire',
         pathname: PageRoutes.Empire,
         matcher: match(PageRoutes.Empire),
-
+        icon: BsFill2SquareFill,
         query: defaultQuery,
         children: [
           {
@@ -186,7 +200,7 @@ export const navs: Nav[] = [
         label: 'OneWorld',
         pathname: PageRoutes.OneWorld,
         matcher: match(PageRoutes.OneWorld),
-
+        icon: BsFill3SquareFill,
         query: defaultQuery,
         children: [
           {
@@ -200,7 +214,7 @@ export const navs: Nav[] = [
         label: 'Memorial911',
         pathname: PageRoutes.Memorial911,
         matcher: match(PageRoutes.Memorial911),
-
+        icon: BsFill4SquareFill,
         query: defaultQuery,
         children: [
           {
@@ -214,7 +228,7 @@ export const navs: Nav[] = [
         label: 'UNTour',
         pathname: PageRoutes.UNTour,
         matcher: match(PageRoutes.UNTour),
-
+        icon: BsFill5SquareFill,
         query: defaultQuery,
         children: [
           {
@@ -228,7 +242,7 @@ export const navs: Nav[] = [
         label: 'Wollman',
         pathname: PageRoutes.Wollman,
         matcher: match(PageRoutes.Wollman),
-
+        icon: BsFill6SquareFill,
         query: defaultQuery,
         children: [
           {
@@ -242,7 +256,7 @@ export const navs: Nav[] = [
         label: 'CityTrip',
         pathname: PageRoutes.CityTrip,
         matcher: match(PageRoutes.CityTrip),
-
+        icon: BsFill7SquareFill,
         query: defaultQuery,
         children: [
           {
@@ -256,7 +270,7 @@ export const navs: Nav[] = [
         label: 'EllisIsland',
         pathname: PageRoutes.EllisIsland,
         matcher: match(PageRoutes.EllisIsland),
-
+        icon: BsFill8SquareFill,
         query: defaultQuery,
         children: [
           {
@@ -270,7 +284,7 @@ export const navs: Nav[] = [
         label: 'MLBMets',
         pathname: PageRoutes.MLBMets,
         matcher: match(PageRoutes.MLBMets),
-
+        icon: BsFill9SquareFill,
         query: defaultQuery,
         children: [
           {

@@ -1,5 +1,6 @@
 import { PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
 import { ViewQueries } from '@/constants';
+import { TopOfTheRockByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
@@ -12,7 +13,7 @@ const TopOfTheRockPage = () => {
   const display = useMemo(() => {
     switch (viewOption) {
       case ViewQueries.Table:
-        return <TopOfTheRockPage />;
+        return <TopOfTheRockByPage />;
       case ViewQueries.List:
         return '<TopOfTheRockPage usesObserver />';
       default:
@@ -38,7 +39,7 @@ const TopOfTheRockPage = () => {
               }}
             />
             <Flex gap={'4'}>
-              <ViewOptions />
+              {/* <ViewOptions /> */}
               <PageOptions />
             </Flex>
           </Flex>
