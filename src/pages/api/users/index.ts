@@ -35,7 +35,6 @@ const getUsers = async (req: NextApiRequest, res: NextApiResponse) => {
 // [GET] /api/users
 const getUsersByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, search } = req.query;
-
   const offset = (Number(page) - 1) * Number(limit);
 
   try {
