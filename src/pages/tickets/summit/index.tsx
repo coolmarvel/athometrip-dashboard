@@ -1,5 +1,6 @@
 import { PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
 import { ViewQueries } from '@/constants';
+import { SummitByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
@@ -12,7 +13,7 @@ const SummitPage = () => {
   const display = useMemo(() => {
     switch (viewOption) {
       case ViewQueries.Table:
-        return '<SummitPage />';
+        return <SummitByPage />;
       case ViewQueries.List:
         return '<SummitPage usesObserver />';
       default:
@@ -38,7 +39,7 @@ const SummitPage = () => {
               }}
             />
             <Flex gap={'4'}>
-              <ViewOptions />
+              {/* <ViewOptions /> */}
               <PageOptions />
             </Flex>
           </Flex>

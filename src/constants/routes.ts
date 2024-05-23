@@ -27,6 +27,14 @@ export enum ApiRoutes {
   LikedPost = 'api/posts/liked',
 
   // Tickets
+  Empie = 'api/tickets/empire/:id?',
+  Summit = 'api/tickets/summit/:id?',
+  UNTour = 'api/tickets/un-tour/:id?',
+  Wollman = 'api/tickets/wollman/:id?',
+  MLBMets = 'api/tickets/mlb-mets/:id?',
+  CityTrip = 'api/tickets/city-trip/:id?',
+  OneWorld = 'api/tickets/one-world/:id?',
+  EllisIsland = 'api/tickets/ellis-island/:id?',
   Memorial911 = 'api/tickets/911-memorial/:id?',
   TopOfTheRock = 'api/tickets/top-of-the-rock/:id?',
 }
