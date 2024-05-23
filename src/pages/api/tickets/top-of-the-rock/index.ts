@@ -2,7 +2,7 @@ import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { RequiredKeysOf } from 'type-fest';
 import { Order } from '../../types';
-import { topOfTheRockStore, useTopOfTheRockStore } from '@/stores';
+import { ticketStore } from '..';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -33,19 +33,34 @@ const getTopOfTheRockByPage = async (req: NextApiRequest, res: NextApiResponse) 
   const offset = (Number(page) - 1) * Number(limit);
 
   try {
-    if (topOfTheRockStore.getState().data.length === 0) {
-      await topOfTheRockStore.getState().fetchData();
-      const topOfTheRock = await topOfTheRockStore.getState().sortData(topOfTheRockStore.getState().data, sort as RequiredKeysOf<any>, order as Order);
-      const slicedTopOfTheRock = topOfTheRock.slice(Number(offset), Number(offset) + Number(limit));
+    let activeTicket = ticketStore.activeTicket;
+    let tickets = ticketStore.tickets;
 
-      return res.status(200).json({ data: { total: topOfTheRock.length, data: slicedTopOfTheRock }, message: 'Successfully retrieved top of the rocks' });
-    } else if (topOfTheRockStore.getState().data.length > 0) {
-      const topOfTheRock = await topOfTheRockStore.getState().sortData(topOfTheRockStore.getState().data, sort as RequiredKeysOf<any>, order as Order);
-      const slicedTopOfTheRock = topOfTheRock.slice(Number(offset), Number(offset) + Number(limit));
+    if (activeTicket !== 'top-of-the-rock' && tickets.length === 0) {
+      await ticketStore.fetchTicket('top-of-the-rock', 'http://localhost:3000/api/production/adapter/types/2/108');
+      await ticketStore.sortTicket(sort as RequiredKeysOf<any>, order as Order);
 
-      return res.status(200).json({ data: { total: topOfTheRock.length, data: slicedTopOfTheRock }, message: 'Successfully retrieved top of the rocks' });
+      tickets = ticketStore.tickets;
+      const slicedTickets = tickets.slice(Number(offset), Number(offset) + Number(limit));
+
+      return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });
+    } else if (activeTicket === 'top-of-the-rock' && tickets.length > 0) {
+      await ticketStore.sortTicket(sort as RequiredKeysOf<any>, order as Order);
+
+      tickets = ticketStore.tickets;
+      const slicedTickets = tickets.slice(Number(offset), Number(offset) + Number(limit));
+
+      return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });
+    } else if (activeTicket !== 'top-of-the-rock' && tickets.length > 0) {
+      await ticketStore.fetchTicket('top-of-the-rock', 'http://localhost:3000/api/production/adapter/types/2/108');
+      await ticketStore.sortTicket(sort as RequiredKeysOf<any>, order as Order);
+
+      tickets = ticketStore.tickets;
+      const slicedTickets = tickets.slice(Number(offset), Number(offset) + Number(limit));
+
+      return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });
     }
   } catch (error) {
-    return res.status(500).json({ data: null, message: 'Failed to get top of the rocks' });
+    return res.status(500).send({ data: null, message: 'Failed to get top of the rocks' });
   }
 };

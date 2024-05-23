@@ -1,7 +1,7 @@
 import { useGetMe } from '@/apis';
 import { Unauthorized } from '@/components';
 import { PageRoutes, isWhiteList } from '@/constants';
-import { ticketStore, useModalStore } from '@/stores';
+import { useModalStore } from '@/stores';
 import { NextURL } from '@/utils';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useRef } from 'react';
@@ -42,18 +42,6 @@ const useSafePush = () => {
   const handleRouteChange = useCallback(() => {
     isChanging.current = false;
   }, []);
-
-  const clearTicketStore = useCallback(() => {
-    ticketStore.getState().clearTicket();
-  }, []);
-
-  useEffect(() => {
-    router.events.on('routeChangeStart', clearTicketStore);
-
-    return () => {
-      router.events.off('routeChangeStart', clearTicketStore);
-    };
-  }, [clearTicketStore, router]);
 
   useEffect(() => {
     router.events.on('routeChangeComplete', handleRouteChange);

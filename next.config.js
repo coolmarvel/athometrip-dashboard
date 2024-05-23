@@ -1,11 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    domains: ['kr.object.ncloudstorage.com'],
-  },
-  // async rewrites() {
-  //   return [{ source: '/api/tickets/:path*', destination: 'http://localhost:3000/api/:path*' }];
-  // },
+  images: { domains: ['kr.object.ncloudstorage.com'] },
   reactStrictMode: true,
 };
 
