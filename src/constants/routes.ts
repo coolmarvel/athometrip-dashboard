@@ -27,7 +27,7 @@ export enum ApiRoutes {
   LikedPost = 'api/posts/liked',
 
   // Tickets
-  Empie = 'api/tickets/empire/:id?',
+  Empire = 'api/tickets/empire/:id?',
   Summit = 'api/tickets/summit/:id?',
   UNTour = 'api/tickets/un-tour/:id?',
   Wollman = 'api/tickets/wollman/:id?',
