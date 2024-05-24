@@ -13,3 +13,4 @@ export { ViewOptions } from './ViewOptions';
 export { VirtualList, WindowVirtualList } from './VirtualList';
 export { WithFormLabel } from './WithFormLabel';
 export { WithLabel } from './WithLabel';
+export { DatePickerOptions } from './DatePickerOptions';

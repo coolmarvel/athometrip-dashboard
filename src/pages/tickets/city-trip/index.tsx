@@ -1,9 +1,9 @@
-import { PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
+import { DatePickerOptions, PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
 import { ViewQueries } from '@/constants';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
-import { useMemo } from 'react';
+import { SetStateAction, useMemo } from 'react';
 
 const CityTripPage = () => {
   const { router, push } = useSafePush();
@@ -38,7 +38,17 @@ const CityTripPage = () => {
               }}
             />
             <Flex gap={'4'}>
-              <ViewOptions />
+              {/* <ViewOptions /> */}
+              <DatePickerOptions
+                startDate={''}
+                setStartDate={function (value: SetStateAction<string>): void {
+                  throw new Error('Function not implemented.');
+                }}
+                endDate={''}
+                setEndDate={function (value: SetStateAction<string>): void {
+                  throw new Error('Function not implemented.');
+                }}
+              />
               <PageOptions />
             </Flex>
           </Flex>
