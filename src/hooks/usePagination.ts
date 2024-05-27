@@ -18,6 +18,9 @@ const usePagination = () => {
   const { router, push } = useSafePush();
 
   const params = useMemo(() => {
+    console.log(router.query.startDate);
+    console.log(router.query.endDate);
+    
     return {
       page: QueryParser.toNumber(router.query.page) ?? 1,
       limit: QueryParser.toNumber(router.query.limit) ?? 10,

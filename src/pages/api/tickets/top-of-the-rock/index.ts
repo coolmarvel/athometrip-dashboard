@@ -29,30 +29,32 @@ const getTopOfTheRock = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const getTopOfTheRockByPage = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { page, limit, sort, order, search } = req.query;
+  const { page, limit, sort, order, startDate, endDate, search } = req.query;
   const offset = (Number(page) - 1) * Number(limit);
 
   try {
     let activeTicket = ticketStore.activeTicket;
     let tickets = ticketStore.tickets;
 
-    if (activeTicket !== 'top-of-the-rock' && tickets.length === 0) {
-      await ticketStore.fetchTicket('top-of-the-rock', 'http://localhost:3000/api/production/adapter/types/2/108');
+    const ticketName = 'top-of-the-rock';
+    const url = 'http://localhost:3000/api/production/adapter/types';
+    if (activeTicket !== ticketName && tickets.length === 0) {
+      await ticketStore.fetchTicket(ticketName, `${url}/2/108?start_date=${startDate}&end_date=${endDate}`);
       await ticketStore.sortTicket(sort as RequiredKeysOf<any>, order as Order);
 
       tickets = ticketStore.tickets;
       const slicedTickets = tickets.slice(Number(offset), Number(offset) + Number(limit));
 
       return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });
-    } else if (activeTicket === 'top-of-the-rock' && tickets.length > 0) {
+    } else if (activeTicket === ticketName && tickets.length > 0) {
       await ticketStore.sortTicket(sort as RequiredKeysOf<any>, order as Order);
 
       tickets = ticketStore.tickets;
       const slicedTickets = tickets.slice(Number(offset), Number(offset) + Number(limit));
 
       return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });
-    } else if (activeTicket !== 'top-of-the-rock' && tickets.length > 0) {
-      await ticketStore.fetchTicket('top-of-the-rock', 'http://localhost:3000/api/production/adapter/types/2/108');
+    } else if (activeTicket !== ticketName && tickets.length > 0) {
+      await ticketStore.fetchTicket(ticketName, `${url}/2/108?start_date=${startDate}&end_date=${endDate}`);
       await ticketStore.sortTicket(sort as RequiredKeysOf<any>, order as Order);
 
       tickets = ticketStore.tickets;

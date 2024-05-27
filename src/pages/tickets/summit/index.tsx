@@ -1,4 +1,4 @@
-import { PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
+import { DatePickerOptions, PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
 import { ViewQueries } from '@/constants';
 import { SummitByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
@@ -40,6 +40,7 @@ const SummitPage = () => {
             />
             <Flex gap={'4'}>
               {/* <ViewOptions /> */}
+              <DatePickerOptions />
               <PageOptions />
             </Flex>
           </Flex>

@@ -8,9 +8,9 @@ import { useRouter } from 'next/router';
 
 const TopOfTheRockByPage = () => {
   const router = useRouter();
-  const { page, limit, sort, order, onPagination } = usePagination();
+  const { page, limit, sort, order, startDate, endDate, onPagination } = usePagination();
 
-  const { data: topOfTheRockByPage, isLoading: isLoading } = useGetTopOfTheRockByPage({ page, limit, sort, order, search: QueryParser.toString(router.query.search) ?? '' });
+  const { data: topOfTheRockByPage, isLoading: isLoading } = useGetTopOfTheRockByPage({ page, limit, sort, order, startDate, endDate, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>
