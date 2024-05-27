@@ -8,9 +8,9 @@ import { useRouter } from 'next/router';
 
 const Memorial911ByPage = () => {
   const router = useRouter();
-  const { page, limit, sort, order, onPagination } = usePagination();
+  const { page, limit, sort, order, startDate, endDate, onPagination } = usePagination();
 
-  const { data: memorial911ByPage, isLoading: isLoading } = useGet911MemorialByPage({ page, limit, sort, order, search: QueryParser.toString(router.query.search) ?? '' });
+  const { data: memorial911ByPage, isLoading: isLoading } = useGet911MemorialByPage({ page, limit, sort, order, startDate, endDate, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>

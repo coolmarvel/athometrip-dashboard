@@ -1,4 +1,4 @@
-import { PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
+import { DatePickerOptions, PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
 import { ViewQueries } from '@/constants';
 import { Memorial911ByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
@@ -40,6 +40,7 @@ const Memorials911Page = () => {
             />
             <Flex gap={'4'}>
               {/* <ViewOptions /> */}
+              <DatePickerOptions />
               <PageOptions />
             </Flex>
           </Flex>

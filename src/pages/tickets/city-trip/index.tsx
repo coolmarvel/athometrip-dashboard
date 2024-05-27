@@ -39,16 +39,7 @@ const CityTripPage = () => {
             />
             <Flex gap={'4'}>
               {/* <ViewOptions /> */}
-              <DatePickerOptions
-                startDate={''}
-                setStartDate={function (value: SetStateAction<string>): void {
-                  throw new Error('Function not implemented.');
-                }}
-                endDate={''}
-                setEndDate={function (value: SetStateAction<string>): void {
-                  throw new Error('Function not implemented.');
-                }}
-              />
+              <DatePickerOptions />
               <PageOptions />
             </Flex>
           </Flex>

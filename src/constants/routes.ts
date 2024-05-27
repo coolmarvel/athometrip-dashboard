@@ -106,6 +106,8 @@ export const defaultQuery = {
   limit: 10,
   sort: 'id',
   order: 'desc',
+  startDate: '',
+  endDate: '',
   search: '',
 };
 

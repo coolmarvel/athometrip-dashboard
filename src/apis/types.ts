@@ -27,6 +27,8 @@ export type PageQueryParams = {
   limit: number;
   sort?: string;
   order?: Order;
+  startDate?: string;
+  endDate?: string;
   search?: string;
 };
 
