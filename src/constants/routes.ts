@@ -1,3 +1,5 @@
+import { format, subMonths } from 'date-fns';
+import { ko } from 'date-fns/locale';
 import { MatchFunction, match } from 'path-to-regexp';
 import { IconType } from 'react-icons';
 import {
@@ -100,14 +102,17 @@ export interface Nav {
   collapsible?: boolean;
 }
 
+const startDate: string = format(subMonths(new Date(), 1), 'yyyy-MM-dd', { locale: ko });
+const endDate: string = format(new Date(), 'yyyy-MM-dd', { locale: ko });
+
 export const defaultQuery = {
   view: ViewQueries.Table,
   page: 1,
   limit: 10,
   sort: 'id',
   order: 'desc',
-  startDate: '',
-  endDate: '',
+  startDate: startDate,
+  endDate: endDate,
   search: '',
 };
 

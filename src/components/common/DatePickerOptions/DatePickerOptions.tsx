@@ -6,7 +6,8 @@ import { useState } from 'react';
 
 const DatePickerOptions = () => {
   const { router, push } = useSafePush();
-  const [selectedDates, setSelectedDates] = useState<Date[]>([subMonths(new Date(), 1), new Date()]);
+  // const [selectedDates, setSelectedDates] = useState<Date[]>([subMonths(new Date(), 1), new Date()]);
+  const [selectedDates, setSelectedDates] = useState<Date[]>([new Date(router.query.startDate as string), new Date(router.query.endDate as string)]);
 
   const handleDateChange = (dates: Date[]) => {
     setSelectedDates(dates);
