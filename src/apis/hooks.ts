@@ -53,6 +53,10 @@ export const useMutation = <TCached, TRequest, TResponse>(
       const builtQueryKey = buildQueryKey(queryKey, variables);
       console.log('The mutation has been executed.', builtQueryKey);
 
+      console.log('queryKey: ', queryKey);
+      console.log('variables: ', variables);
+      console.log('builtQueryKey: ', builtQueryKey);
+
       // 낙관적 업데이트(쿼리 키가 없으면 실행되지 않음)
       // Optimistic update(does not run if query key is not present)
       await queryClient.cancelQueries(builtQueryKey);
@@ -115,7 +119,7 @@ export const useFetch = <TResponse>(url: string, params?: object, options?: Quer
 export const useGetPage = <TResponse>(url: string, params?: object, options?: PageQueryOptions<TResponse>) => {
   return useQuery<PageQueryResponse<TResponse>>(url, params, {
     ...options,
-    keepPreviousData: true,
+    keepPreviousData: false,
   });
 };
 

@@ -122,44 +122,44 @@ export const defaultQuery = {
 // t("Write Post")
 // t("Post Detail")
 export const navs: Nav[] = [
-  // {
-  //   label: 'Users',
-  //   pathname: PageRoutes.Users,
-  //   query: defaultQuery,
-  //   icon: FaUser,
-  //   matcher: match(PageRoutes.Users),
-  //   children: [
-  //     {
-  //       label: 'User Detail',
-  //       pathname: PageRoutes.UserDetail,
-  //       matcher: match(PageRoutes.UserDetail),
-  //     },
-  //   ],
-  // },
-  // {
-  //   label: 'Posts',
-  //   pathname: PageRoutes.Posts,
-  //   query: defaultQuery,
-  //   icon: BsFillPostcardFill,
-  //   matcher: match(PageRoutes.Posts),
-  //   children: [
-  //     {
-  //       label: 'Write Post',
-  //       pathname: PageRoutes.WritePost,
-  //       matcher: match(PageRoutes.WritePost),
-  //     },
-  //     {
-  //       label: 'Post Detail',
-  //       pathname: PageRoutes.PostDetail,
-  //       matcher: match(PageRoutes.PostDetail),
-  //     },
-  //     {
-  //       label: 'Edit Post',
-  //       pathname: PageRoutes.EditPost,
-  //       matcher: match(PageRoutes.EditPost),
-  //     },
-  //   ],
-  // },
+  {
+    label: 'Users',
+    pathname: PageRoutes.Users,
+    query: defaultQuery,
+    icon: FaUser,
+    matcher: match(PageRoutes.Users),
+    children: [
+      {
+        label: 'User Detail',
+        pathname: PageRoutes.UserDetail,
+        matcher: match(PageRoutes.UserDetail),
+      },
+    ],
+  },
+  {
+    label: 'Posts',
+    pathname: PageRoutes.Posts,
+    query: defaultQuery,
+    icon: BsFillPostcardFill,
+    matcher: match(PageRoutes.Posts),
+    children: [
+      {
+        label: 'Write Post',
+        pathname: PageRoutes.WritePost,
+        matcher: match(PageRoutes.WritePost),
+      },
+      {
+        label: 'Post Detail',
+        pathname: PageRoutes.PostDetail,
+        matcher: match(PageRoutes.PostDetail),
+      },
+      {
+        label: 'Edit Post',
+        pathname: PageRoutes.EditPost,
+        matcher: match(PageRoutes.EditPost),
+      },
+    ],
+  },
 
   // Tickets
   {

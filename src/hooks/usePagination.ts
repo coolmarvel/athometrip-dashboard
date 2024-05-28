@@ -30,10 +30,7 @@ const usePagination = () => {
 
   const onPagination = useCallback<(params: OnPaginationParams) => void>(
     (params) => {
-      push({
-        pathname: router.pathname,
-        query: { ...router.query, ...params },
-      });
+      push({ pathname: router.pathname, query: { ...router.query, ...params } });
     },
     [push, router.pathname, router.query]
   );
