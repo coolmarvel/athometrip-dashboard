@@ -1,4 +1,5 @@
 export * from './top-of-the-rock';
+export * from './ellis-island';
 export * from './911-memorial';
 export * from './city-trip';
 export * from './one-world';
