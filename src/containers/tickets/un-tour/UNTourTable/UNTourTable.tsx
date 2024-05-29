@@ -42,7 +42,7 @@ const UNTourTable = ({ unTour, isLoading }: UNTourTableProps) => {
 
   const table = useReactTable({ data: unTour, columns, getCoreRowModel: getCoreRowModel() });
 
-  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.TopOfTheRockDetail, { id: row.original.order.id }))} />;
+  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.UNTourDetail, { id: row.original.order.id }))} />;
 };
 
 export default UNTourTable;

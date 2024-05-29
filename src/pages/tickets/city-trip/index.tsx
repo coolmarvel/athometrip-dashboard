@@ -1,9 +1,10 @@
 import { DatePickerOptions, PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
 import { ViewQueries } from '@/constants';
+import { CityTripByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
-import { SetStateAction, useMemo } from 'react';
+import { useMemo } from 'react';
 
 const CityTripPage = () => {
   const { router, push } = useSafePush();
@@ -12,7 +13,7 @@ const CityTripPage = () => {
   const display = useMemo(() => {
     switch (viewOption) {
       case ViewQueries.Table:
-        return '<CityTripPage />';
+        return <CityTripByPage />;
       case ViewQueries.List:
         return '<CityTripPage usesObserver />';
       default:

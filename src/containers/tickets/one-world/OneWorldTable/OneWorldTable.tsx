@@ -34,7 +34,7 @@ const OneWorldTable = ({ oneWorld, isLoading }: OneWorldTableProps) => {
 
   const table = useReactTable({ data: oneWorld, columns, getCoreRowModel: getCoreRowModel() });
 
-  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.TopOfTheRockDetail, { id: row.original.order.id }))} />;
+  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.OneWorldDetail, { id: row.original.order.id }))} />;
 };
 
 export default OneWorldTable;

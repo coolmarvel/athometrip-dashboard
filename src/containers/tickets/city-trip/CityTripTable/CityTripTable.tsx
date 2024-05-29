@@ -8,16 +8,16 @@ import { useTranslation } from 'react-i18next';
 
 const columnHelper = createColumnHelper<any>();
 
-interface WollmanTableProps {
-  wollman: any[];
+interface CityTripTableProps {
+  cityTrip: any[];
   isLoading?: boolean;
 }
 
-const WollmanTable = ({ wollman, isLoading }: WollmanTableProps) => {
+const CityTripTable = ({ cityTrip, isLoading }: CityTripTableProps) => {
   const { push } = useSafePush();
   const { t } = useTranslation();
 
-  console.log(wollman);
+  console.log(cityTrip);
 
   const columns = useMemo(
     () => [
@@ -49,9 +49,9 @@ const WollmanTable = ({ wollman, isLoading }: WollmanTableProps) => {
     [t]
   );
 
-  const table = useReactTable({ data: wollman, columns, getCoreRowModel: getCoreRowModel() });
+  const table = useReactTable({ data: cityTrip, columns, getCoreRowModel: getCoreRowModel() });
 
-  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.WollmanDetail, { id: row.original.order.id }))} />;
+  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.CityTripDetail, { id: row.original.order.id }))} />;
 };
 
-export default WollmanTable;
+export default CityTripTable;

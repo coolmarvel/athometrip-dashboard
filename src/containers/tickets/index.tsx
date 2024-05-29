@@ -1,5 +1,6 @@
 export * from './top-of-the-rock';
 export * from './911-memorial';
+export * from './city-trip';
 export * from './one-world';
 export * from './un-tour';
 export * from './wollman';
