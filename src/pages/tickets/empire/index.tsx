@@ -1,5 +1,6 @@
-import { PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
+import { DatePickerOptions, PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
 import { ViewQueries } from '@/constants';
+import { EmpireByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
@@ -12,7 +13,7 @@ const EmpirePage = () => {
   const display = useMemo(() => {
     switch (viewOption) {
       case ViewQueries.Table:
-        return '<EmpirePage />';
+        return <EmpireByPage />;
       case ViewQueries.List:
         return '<EmpirePage usesObserver />';
       default:
@@ -38,7 +39,8 @@ const EmpirePage = () => {
               }}
             />
             <Flex gap={'4'}>
-              <ViewOptions />
+              {/* <ViewOptions /> */}
+              <DatePickerOptions />
               <PageOptions />
             </Flex>
           </Flex>

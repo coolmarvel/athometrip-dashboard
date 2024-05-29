@@ -1,9 +1,8 @@
 import { DatePickerOptions, PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
-import { ApiRoutes, ViewQueries } from '@/constants';
+import { ViewQueries } from '@/constants';
 import { Memorial911ByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
-import { useQueryClient } from '@tanstack/react-query';
 import Head from 'next/head';
 import { useMemo } from 'react';
 
@@ -21,46 +20,6 @@ const Memorials911Page = () => {
         return null;
     }
   }, [viewOption]);
-
-  const queryClient = useQueryClient();
-
-  const handleReset = async () => {
-    console.log('handleReset clicked');
-    await queryClient.resetQueries(
-      [
-        'api/tickets/911-memorial',
-        {
-          page: router.query.page,
-          limit: router.query.limit,
-          sort: router.query.sort,
-          order: router.query.order,
-          startDate: router.query.startDate,
-          endDate: router.query.endDate,
-          search: router.query.search,
-        },
-      ],
-      { exact: true }
-    );
-  };
-
-  const handleRemove = () => {
-    console.log('handleRemove clicked');
-    queryClient.removeQueries(
-      [
-        'api/tickets/911-memorial',
-        {
-          page: router.query.page,
-          limit: router.query.limit,
-          sort: router.query.sort,
-          order: router.query.order,
-          startDate: router.query.startDate,
-          endDate: router.query.endDate,
-          search: router.query.search,
-        },
-      ],
-      { exact: true }
-    );
-  };
 
   return (
     <>
@@ -81,12 +40,6 @@ const Memorials911Page = () => {
             />
             <Flex gap={'4'}>
               {/* <ViewOptions /> */}
-              <button type="button" onClick={() => handleReset()}>
-                RESET
-              </button>
-              <button type="button" onClick={() => handleRemove()}>
-                REMOVE
-              </button>
               <DatePickerOptions />
               <PageOptions />
             </Flex>

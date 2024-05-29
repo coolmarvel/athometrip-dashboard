@@ -29,11 +29,19 @@ const SummitTable = ({ summit, isLoading }: SummitTableProps) => {
         (row) => {
           const date = row.tour?.date_summit === null ? row.tour?.summit_night_date : row.tour?.date_summit;
           const time = row.tour?.summit_daytime_time === null ? row.tour?.summit_night_time : row.tour?.summit_daytime_time;
+
+          return `${date} ${time}`;
+        },
+        { header: t('schedule(1)'), meta: { sortable: true } }
+      ),
+      columnHelper.accessor(
+        (row) => {
+          const date = row.tour?.date_summit === null ? row.tour?.summit_night_date : row.tour?.date_summit;
           const time2 = row.tour?.summ_time_2 === null ? row.tour?.summit_night_time : row.tour?.summ_time_2;
 
-          return `${date} ${time} | ${time2}`;
+          return `${date} ${time2}`;
         },
-        { header: t('schedule'), meta: { sortable: true } }
+        { header: t('schedule(2)'), meta: { sortable: true } }
       ),
       columnHelper.accessor('lineItem.quantity', { header: t('quantity'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),

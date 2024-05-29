@@ -9,9 +9,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
       const { page, cursor, limit } = req.query;
-      if (page && limit) return getSummitByPage(req, res);
-      if (cursor && limit) return getSummit(req, res);
-      return getSummit(req, res);
+      if (page && limit) return getEmpireByPage(req, res);
+      if (cursor && limit) return getEmpire(req, res);
+      return getEmpire(req, res);
     case 'POST':
       return res.status(405).end();
     default:
@@ -19,27 +19,27 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const getSummit = async (req: NextApiRequest, res: NextApiResponse) => {
+const getEmpire = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const result = await axios.get('http://localhost:3000/api/production/adapter/types/1/98');
+    const result = await axios.get('http://localhost:3000/api/production/adapter/types/1/43');
 
-    return res.status(200).json({ data: result.data, message: 'Successfully retrieved summit' });
+    return res.status(200).json({ data: result.data, message: 'Successfully retrieved empire' });
   } catch {
-    return res.status(500).json({ data: null, message: 'Failed to get summit' });
+    return res.status(500).json({ data: null, message: 'Failed to get empire' });
   }
 };
 
-const getSummitByPage = async (req: NextApiRequest, res: NextApiResponse) => {
+const getEmpireByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, startDate, endDate, search } = req.query;
   const offset = (Number(page) - 1) * Number(limit);
 
-  const ticketName = 'summit';
+  const ticketName = 'empire';
   const url = 'http://localhost:3000/api/production/adapter/types';
 
   try {
     let tickets = ticketStore.tickets;
 
-    await ticketStore.fetchTicket(ticketName, `${url}/1/98?start_date=${startDate}&end_date=${endDate}`);
+    await ticketStore.fetchTicket(ticketName, `${url}/1/43?start_date=${startDate}&end_date=${endDate}`);
     await ticketStore.sortTicket(sort as RequiredKeysOf<any>, order as Order);
 
     tickets = ticketStore.tickets;
@@ -47,6 +47,6 @@ const getSummitByPage = async (req: NextApiRequest, res: NextApiResponse) => {
 
     return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });
   } catch (error) {
-    return res.status(500).send({ data: null, message: 'Failed to get summit' });
+    return res.status(500).send({ data: null, message: 'Failed to get empire' });
   }
 };

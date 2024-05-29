@@ -1,12 +1,18 @@
 import { toUrl } from '@/utils';
 import { ApiRoutes } from '@/constants';
-import { PageQueryParams, useFetch, useGetPage } from '..';
+import { PageQueryParams, useFetch, useGetPage, useInvalidate, usePost, useUpdate } from '..';
 
-export const useGet911Memorial = (id?: number) => {
-  return useFetch<any>(toUrl(ApiRoutes.Memorial911), { id });
-};
-
-// [GET] /api/tickets/911-memorial?page=1&limit=10
+// [GET] /api/tickets/911-memorial
 export const useGet911MemorialByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.Memorial911), params);
+};
+
+// [PUT] /api/tickets/911-memorial
+export const useUpdate911Memorial = () => {
+  return useUpdate<any, any>(toUrl(ApiRoutes.Memorial911, {}), undefined, undefined, (old, data) => ({ ...old, ...data }));
+};
+
+// [DELETE] /api/tickets/911-memorial/reset
+export const useReset911Memorial = () => {
+  return usePost(`${toUrl(ApiRoutes.Memorial911)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.Memorial911)) });
 };
