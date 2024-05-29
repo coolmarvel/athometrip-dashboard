@@ -8,16 +8,16 @@ import { useTranslation } from 'react-i18next';
 
 const columnHelper = createColumnHelper<any>();
 
-interface TopOfTheRockTableProps {
-  topOfTheRock: any[];
+interface OneWorldTableProps {
+  oneWorld: any[];
   isLoading?: boolean;
 }
 
-const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) => {
+const OneWorldTable = ({ oneWorld, isLoading }: OneWorldTableProps) => {
   const { push } = useSafePush();
   const { t } = useTranslation();
 
-  console.log(topOfTheRock);
+  console.log(oneWorld);
 
   const columns = useMemo(
     () => [
@@ -25,16 +25,16 @@ const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) 
       columnHelper.accessor('billing.first_name', { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor((row) => useConvertDate(row.order.date_created), { header: t('date'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? 'default', { header: t('type'), meta: { sortable: true } }),
-      columnHelper.accessor((row) => `${row.tour?.top_date} ${row.tour?.top_sunset} | ${row.tour?.tor_time_2}`, { header: t('schedule'), meta: { sortable: true } }),
+      columnHelper.accessor((row) => `${row.tour?.oneworld_date} ${row.tour?.oneworld_time}`, { header: t('schedule'), meta: { sortable: true } }),
       columnHelper.accessor('lineItem.quantity', { header: t('quantity'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
     ],
     [t]
   );
 
-  const table = useReactTable({ data: topOfTheRock, columns, getCoreRowModel: getCoreRowModel() });
+  const table = useReactTable({ data: oneWorld, columns, getCoreRowModel: getCoreRowModel() });
 
   return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.TopOfTheRockDetail, { id: row.original.order.id }))} />;
 };
 
-export default TopOfTheRockTable;
+export default OneWorldTable;

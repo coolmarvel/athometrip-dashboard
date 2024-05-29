@@ -9,14 +9,15 @@ import { useEffect } from 'react';
 
 const Memorial911ByPage = () => {
   const router = useRouter();
-  const { page, limit, sort, order, startDate, endDate, onPagination } = usePagination();
 
-  const { data: memorial911ByPage, isLoading: isLoading } = useGet911MemorialByPage({ page, limit, sort, order, startDate, endDate, search: QueryParser.toString(router.query.search) ?? '' });
+  const { page, limit, sort, order, startDate, endDate, onPagination } = usePagination();
   const { mutate: resetMemorial911 } = useReset911Memorial();
 
   useEffect(() => {
     resetMemorial911();
   }, [startDate, endDate, resetMemorial911]);
+
+  const { data: memorial911ByPage, isLoading: isLoading } = useGet911MemorialByPage({ page, limit, sort, order, startDate, endDate, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>

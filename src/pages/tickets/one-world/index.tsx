@@ -1,5 +1,6 @@
-import { PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
+import { DatePickerOptions, PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
 import { ViewQueries } from '@/constants';
+import { OneWorldByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
@@ -12,7 +13,7 @@ const OneWorldPage = () => {
   const display = useMemo(() => {
     switch (viewOption) {
       case ViewQueries.Table:
-        return '<OneWorldPage />';
+        return <OneWorldByPage />;
       case ViewQueries.List:
         return '<OneWorldPage usesObserver />';
       default:
@@ -38,7 +39,8 @@ const OneWorldPage = () => {
               }}
             />
             <Flex gap={'4'}>
-              <ViewOptions />
+              {/* <ViewOptions /> */}
+              <DatePickerOptions />
               <PageOptions />
             </Flex>
           </Flex>

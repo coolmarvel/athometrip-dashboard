@@ -3,8 +3,8 @@ import axios from 'axios';
 import { RequiredKeysOf } from 'type-fest';
 
 class TicketStore {
-  activeTicket: string;
-  tickets: any[];
+  public activeTicket: string;
+  public tickets: any[];
 
   constructor() {
     this.activeTicket = '';

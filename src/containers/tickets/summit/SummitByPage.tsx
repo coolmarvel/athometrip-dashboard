@@ -9,14 +9,15 @@ import { useEffect } from 'react';
 
 const SummitByPage = () => {
   const router = useRouter();
-  const { page, limit, sort, order, startDate, endDate, onPagination } = usePagination();
 
-  const { data: summitByPage, isLoading: isLoading } = useGetSummitByPage({ page, limit, sort, order, startDate, endDate, search: QueryParser.toString(router.query.search) ?? '' });
+  const { page, limit, sort, order, startDate, endDate, onPagination } = usePagination();
   const { mutate: resetSummit } = useResetSummit();
 
   useEffect(() => {
     resetSummit();
   }, [startDate, endDate, resetSummit]);
+
+  const { data: summitByPage, isLoading: isLoading } = useGetSummitByPage({ page, limit, sort, order, startDate, endDate, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>

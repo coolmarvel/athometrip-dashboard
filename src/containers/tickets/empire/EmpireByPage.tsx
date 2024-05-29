@@ -9,14 +9,15 @@ import { useEffect } from 'react';
 
 const EmpireByPage = () => {
   const router = useRouter();
-  const { page, limit, sort, order, startDate, endDate, onPagination } = usePagination();
 
-  const { data: empireByPage, isLoading: isLoading } = useGetEmpireByPage({ page, limit, sort, order, startDate, endDate, search: QueryParser.toString(router.query.search) ?? '' });
+  const { page, limit, sort, order, startDate, endDate, onPagination } = usePagination();
   const { mutate: resetEmpire } = useResetEmpire();
 
   useEffect(() => {
     resetEmpire();
   }, [startDate, endDate, resetEmpire]);
+
+  const { data: empireByPage, isLoading: isLoading } = useGetEmpireByPage({ page, limit, sort, order, startDate, endDate, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>

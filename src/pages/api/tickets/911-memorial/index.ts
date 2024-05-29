@@ -5,6 +5,9 @@ import axios from 'axios';
 import { Order } from '../../types';
 import { ticketStore } from '..';
 
+const ticketName = '911-memorial';
+const url = 'http://localhost:3000/api/production/adapter/types';
+
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
@@ -33,12 +36,9 @@ const get911MemorialsByPage = async (req: NextApiRequest, res: NextApiResponse) 
   const { page, limit, sort, order, startDate, endDate, search } = req.query;
   const offset = (Number(page) - 1) * Number(limit);
 
-  const ticketName = '911-memorial';
-  const url = 'http://localhost:3000/api/production/adapter/types';
+  let tickets = ticketStore.tickets;
 
   try {
-    let tickets = ticketStore.tickets;
-
     await ticketStore.fetchTicket(ticketName, `${url}/1/11?start_date=${startDate}&end_date=${endDate}`);
     await ticketStore.sortTicket(sort as RequiredKeysOf<any>, order as Order);
 
