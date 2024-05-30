@@ -6,16 +6,22 @@ import { create } from 'zustand';
 
 interface T {
   activeTicket: string;
-  tickets: any[];
+  tickets: any;
 
-  clearTicket: () => void;
-  fetchTicket: (name: string, url: string) => Promise<void>;
-  sortTicket: (ticket?: any, sort?: RequiredKeysOf<any>, order?: Order) => Promise<void>;
+  setTickets: (tickets: any) => any;
+  setActiveTicket: (name: any) => any;
+
+  clearTicket: () => any;
+  fetchTicket: (name: string, url: string) => Promise<any>;
+  sortTicket: (tickets?: any, sort?: RequiredKeysOf<any>, order?: Order) => Promise<any>;
 }
 
 export const ticketStore = create<T>((set, get) => ({
   activeTicket: '',
   tickets: [],
+
+  setTickets: (tickets: any) => set({ tickets: tickets }),
+  setActiveTicket: (name: any) => set({ activeTicket: name }),
 
   clearTicket: () => set({ activeTicket: '', tickets: [] }),
 
@@ -38,20 +44,6 @@ export const ticketStore = create<T>((set, get) => ({
 
       set({ tickets: sortedTickets });
     }
-
-    // if (sort && order) {
-    //   tickets = tickets.map((ticket: any) => ({ ...ticket, id: parseInt(ticket.order.id, 10) }));
-    //   tickets = tickets.sort((a: any, b: any) => {
-    //     const ac = a[sort];
-    //     const bc = b[sort];
-
-    //     if (ac > bc) return order === 'desc' ? -1 : 1;
-    //     else if (ac < bc) return order === 'desc' ? 1 : -1;
-    //     else return 0;
-    //   });
-    // }
-
-    // set({ tickets: tickets });
   },
 }));
 

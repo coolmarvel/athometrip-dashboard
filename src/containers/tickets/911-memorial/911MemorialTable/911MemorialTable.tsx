@@ -33,11 +33,7 @@ const Memorial911Table = ({ memorial911, isLoading }: Memorial911TableProps) => 
     [t]
   );
 
-  const table = useReactTable({
-    data: memorial911,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
+  const table = useReactTable({ data: memorial911, columns, getCoreRowModel: getCoreRowModel() });
 
   return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.Memorial911Detail, { id: row.original.order.id }))} />;
 };

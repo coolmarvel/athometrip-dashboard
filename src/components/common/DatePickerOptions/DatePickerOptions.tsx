@@ -7,16 +7,16 @@ import { useState } from 'react';
 const DatePickerOptions = () => {
   const { router, push } = useSafePush();
 
-  const startDate = new Date(router.query?.startDate !== undefined || null ? (router.query?.startDate as string) : subMonths(new Date(), 1));
-  const endDate = new Date(router.query?.endDate !== undefined || null ? (router.query?.endDate as string) : new Date());
-  const [selectedDates, setSelectedDates] = useState<Date[]>([startDate, endDate]);
+  const after = new Date(router.query?.after !== undefined ? (router.query?.after as string) : subMonths(new Date(), 1));
+  const before = new Date(router.query?.before !== undefined ? (router.query?.before as string) : new Date());
+  const [selectedDates, setSelectedDates] = useState<Date[]>([after, before]);
 
   const handleDateChange = (dates: Date[]) => {
     setSelectedDates(dates);
 
     if (dates.length === 2) {
       const formattedDates = dates.map((date) => format(date, 'yyyy-MM-dd', { locale: ko }));
-      push({ query: { ...router.query, startDate: formattedDates[0], endDate: formattedDates[1] } });
+      push({ query: { ...router.query, after: formattedDates[0], before: formattedDates[1] } });
     }
   };
 

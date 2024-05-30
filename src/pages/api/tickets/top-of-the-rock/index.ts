@@ -20,11 +20,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 const ticketName = 'top-of-the-rock';
-const url = 'http://localhost:3000/api/production/adapter/types';
+const productName = '탑 오브 더 락';
+const url = 'http://localhost:3000/api/production/adapter/orders';
 
 const getTopOfTheRock = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const result = await axios.get('http://localhost:3000/api/production/adapter/types/2/108');
+    const result = await axios.get(`${url}?product_name=${productName}`);
 
     return res.status(200).json({ data: result.data, message: 'Successfully retrieved top-of-the-rock' });
   } catch {
@@ -39,7 +40,7 @@ const getTopOfTheRockByPage = async (req: NextApiRequest, res: NextApiResponse) 
   try {
     let tickets = ticketStore.tickets;
 
-    await ticketStore.fetchTicket(ticketName, `${url}/2/108?start_date=${startDate}&end_date=${endDate}`);
+    await ticketStore.fetchTicket(ticketName, `${url}?product_name=${productName}&start_date=${startDate}&end_date=${endDate}`);
     await ticketStore.sortTicket(sort as RequiredKeysOf<any>, order as Order);
 
     tickets = ticketStore.tickets;

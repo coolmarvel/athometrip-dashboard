@@ -102,8 +102,8 @@ export interface Nav {
   collapsible?: boolean;
 }
 
-const startDate: string = format(subMonths(new Date(), 1), 'yyyy-MM-dd', { locale: ko });
-const endDate: string = format(new Date(), 'yyyy-MM-dd', { locale: ko });
+const after: string = format(subMonths(new Date(), 1), 'yyyy-MM-dd', { locale: ko });
+const before: string = format(new Date(), 'yyyy-MM-dd', { locale: ko });
 
 export const defaultQuery = {
   view: ViewQueries.Table,
@@ -111,8 +111,10 @@ export const defaultQuery = {
   limit: 10,
   sort: 'id',
   order: 'desc',
-  startDate: startDate,
-  endDate: endDate,
+  after: after,
+  before: before,
+  product: '',
+  total: 0,
   search: '',
 };
 

@@ -27,9 +27,11 @@ export type PageQueryParams = {
   limit: number;
   sort?: string;
   order?: Order;
-  startDate?: string;
-  endDate?: string;
+  after?: string;
+  before?: string;
   search?: string;
+  product?: string;
+  total?: number;
 };
 
 export type CursorQueryParams = {
@@ -40,6 +42,7 @@ export type CursorQueryParams = {
 };
 
 export interface PageQueryResponse<T> {
+  product?: string;
   total: number;
   data: T;
 }

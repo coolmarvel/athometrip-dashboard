@@ -19,9 +19,13 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
+const ticketName = 'summit';
+const productName = '써밋 전망대';
+const url = 'http://localhost:3000/api/production/adapter/orders';
+
 const getSummit = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const result = await axios.get('http://localhost:3000/api/production/adapter/types/1/98');
+    const result = await axios.get(`${url}?product_name=${productName}`);
 
     return res.status(200).json({ data: result.data, message: 'Successfully retrieved summit' });
   } catch {
@@ -33,13 +37,10 @@ const getSummitByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, startDate, endDate, search } = req.query;
   const offset = (Number(page) - 1) * Number(limit);
 
-  const ticketName = 'summit';
-  const url = 'http://localhost:3000/api/production/adapter/types';
-
   try {
     let tickets = ticketStore.tickets;
 
-    await ticketStore.fetchTicket(ticketName, `${url}/1/98?start_date=${startDate}&end_date=${endDate}`);
+    await ticketStore.fetchTicket(ticketName, `${url}?product_name=${productName}&start_date=${startDate}&end_date=${endDate}`);
     await ticketStore.sortTicket(sort as RequiredKeysOf<any>, order as Order);
 
     tickets = ticketStore.tickets;
