@@ -11,10 +11,10 @@ import { useEffect } from 'react';
 const Memorial911ByPage = () => {
   const router = useRouter();
 
+  const { mutate: resetMemorial911 } = useReset911Memorial();
   const { tickets, activeTicket } = useTicketStore(['tickets', 'activeTicket']);
   const { setTickets, setActiveTicket } = useTicketStore(['setTickets', 'setActiveTicket']);
   const { page, limit, sort, order, after, before, product, total, onPagination } = usePagination();
-  const { mutate: resetMemorial911 } = useReset911Memorial();
 
   const params = { page, limit, sort, order, after, before, product, total, search: QueryParser.toString(router.query.search) ?? '' };
   const { data: memorial911ByPage, isLoading: isLoading } = useGet911MemorialByPage(params);
@@ -25,9 +25,10 @@ const Memorial911ByPage = () => {
   }, [after, before, resetMemorial911]);
 
   useEffect(() => {
-    setActiveTicket(memorial911ByPage?.product);
     setTickets(memorial911ByPage?.data);
-  }, [memorial911ByPage, setActiveTicket, setTickets]);
+    setActiveTicket(memorial911ByPage?.product);
+    onPagination({ product: activeTicket, total: tickets.length });
+  }, [memorial911ByPage, setActiveTicket, setTickets, onPagination]);
 
   return (
     <>

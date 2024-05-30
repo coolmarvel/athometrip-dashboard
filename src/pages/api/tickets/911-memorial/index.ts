@@ -53,6 +53,10 @@ const get911MemorialsByPage = async (req: NextApiRequest, res: NextApiResponse) 
 
       return res.status(200).send({ data: { total: data.length, data: data }, product: ticketName });
     }
+
+    if (product === ticketName && Number(total) > 0) {
+      return res.status(200).send({});
+    }
   } catch {
     return res.status(500).send({ data: null, message: 'Failed to get 911-memorial' });
   }
