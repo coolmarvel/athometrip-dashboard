@@ -11,12 +11,19 @@ class TicketStore {
     this.tickets = [];
   }
 
-  fetchTicket(name: string, url: string): Promise<any> {
+  clearTicket(): Promise<any> {
+    return new Promise((resolve) => {
+      this.tickets = [];
+      this.activeTicket = '';
+
+      return resolve(true);
+    });
+  }
+
+  fetchTicket(url: string): Promise<any> {
     return new Promise(async (resolve, reject) => {
       try {
         const { data } = await axios.get(url);
-
-        this.activeTicket = name;
         this.tickets = data;
 
         return resolve(true);
@@ -40,6 +47,7 @@ class TicketStore {
             else return 0;
           });
         }
+
         return resolve(true);
       } catch (error) {
         return reject(error);

@@ -1,8 +1,7 @@
-import { useGet911MemorialByPage, useReset911Memorial } from '@/apis';
+import { useGet911MemorialByPage } from '@/apis';
 import { Pagination } from '@/components';
 import { Memorial911Table } from '@/containers';
 import { usePagination } from '@/hooks';
-import { useTicketStore } from '@/stores';
 import { QueryParser } from '@/utils';
 import { TableContainer } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
@@ -11,24 +10,10 @@ import { useEffect } from 'react';
 const Memorial911ByPage = () => {
   const router = useRouter();
 
-  const { mutate: resetMemorial911 } = useReset911Memorial();
-  const { tickets, activeTicket } = useTicketStore(['tickets', 'activeTicket']);
-  const { setTickets, setActiveTicket } = useTicketStore(['setTickets', 'setActiveTicket']);
   const { page, limit, sort, order, after, before, product, total, onPagination } = usePagination();
 
-  const params = { page, limit, sort, order, after, before, product, total, search: QueryParser.toString(router.query.search) ?? '' };
+  const params = { page, limit, sort, order, after, before, total, product, search: QueryParser.toString(router.query.search) ?? '' };
   const { data: memorial911ByPage, isLoading: isLoading } = useGet911MemorialByPage(params);
-
-  useEffect(() => {
-    const resetResult = resetMemorial911();
-    console.log(resetResult);
-  }, [after, before, resetMemorial911]);
-
-  useEffect(() => {
-    setTickets(memorial911ByPage?.data);
-    setActiveTicket(memorial911ByPage?.product);
-    onPagination({ product: activeTicket, total: tickets.length });
-  }, [memorial911ByPage, setActiveTicket, setTickets, onPagination]);
 
   return (
     <>

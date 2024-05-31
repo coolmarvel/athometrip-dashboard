@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 const columnHelper = createColumnHelper<any>();
 
 interface Memorial911TableProps {
-  memorial911: any[];
+  memorial911: any;
   isLoading?: boolean;
 }
 
