@@ -40,7 +40,7 @@ const getSummitByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     let tickets = ticketStore.tickets;
 
-    await ticketStore.fetchTicket(ticketName, `${url}?product_name=${productName}&start_date=${startDate}&end_date=${endDate}`);
+    // await ticketStore.fetchTicket(ticketName, `${url}?product_name=${productName}&start_date=${startDate}&end_date=${endDate}`);
     await ticketStore.sortTicket(sort as RequiredKeysOf<any>, order as Order);
 
     tickets = ticketStore.tickets;

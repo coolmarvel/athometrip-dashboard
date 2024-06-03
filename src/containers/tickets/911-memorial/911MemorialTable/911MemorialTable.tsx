@@ -16,6 +16,7 @@ interface Memorial911TableProps {
 const Memorial911Table = ({ memorial911, isLoading }: Memorial911TableProps) => {
   const { push } = useSafePush();
   const { t } = useTranslation();
+  const convertDate = useConvertDate();
 
   console.log(memorial911);
 
@@ -23,7 +24,7 @@ const Memorial911Table = ({ memorial911, isLoading }: Memorial911TableProps) => 
     () => [
       columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor('billing.first_name', { header: t('name'), meta: { sortable: true } }),
-      columnHelper.accessor((row) => useConvertDate(row.order.date_created), { header: t('date'), meta: { sortable: true } }),
+      columnHelper.accessor('row.order.date_created', { header: t('date'), cell: (context) => convertDate(context.renderValue()), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? 'default', { header: t('type'), meta: { sortable: true } }),
       columnHelper.accessor((row) => `${row.tour?.date_911} ${row.tour?.time_911}`, { header: t('schedule(1)'), meta: { sortable: true } }),
       columnHelper.accessor((row) => `${row.tour?.date_911_2} ${row.tour?.time_911_2}`, { header: t('schedule(2)'), meta: { sortable: true } }),

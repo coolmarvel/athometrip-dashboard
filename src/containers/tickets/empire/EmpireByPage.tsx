@@ -10,14 +10,14 @@ import { useEffect } from 'react';
 const EmpireByPage = () => {
   const router = useRouter();
 
-  const { page, limit, sort, order, startDate, endDate, onPagination } = usePagination();
+  const { page, limit, sort, order, after, before, onPagination } = usePagination();
   const { mutate: resetEmpire } = useResetEmpire();
 
   useEffect(() => {
     resetEmpire();
-  }, [startDate, endDate, resetEmpire]);
+  }, [after, before, resetEmpire]);
 
-  const { data: empireByPage, isLoading: isLoading } = useGetEmpireByPage({ page, limit, sort, order, startDate, endDate, search: QueryParser.toString(router.query.search) ?? '' });
+  const { data: empireByPage, isLoading: isLoading } = useGetEmpireByPage({ page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>

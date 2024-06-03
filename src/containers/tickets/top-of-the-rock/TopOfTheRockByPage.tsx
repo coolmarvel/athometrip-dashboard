@@ -10,14 +10,14 @@ import { useEffect } from 'react';
 const TopOfTheRockByPage = () => {
   const router = useRouter();
 
-  const { page, limit, sort, order, startDate, endDate, onPagination } = usePagination();
+  const { page, limit, sort, order, after, before, onPagination } = usePagination();
   const { mutate: resetTopOfTheRock } = useResetTopOfTheRock();
 
   useEffect(() => {
     resetTopOfTheRock();
-  }, [startDate, endDate, resetTopOfTheRock]);
+  }, [after, before, resetTopOfTheRock]);
 
-  const { data: topOfTheRockByPage, isLoading: isLoading } = useGetTopOfTheRockByPage({ page, limit, sort, order, startDate, endDate, search: QueryParser.toString(router.query.search) ?? '' });
+  const { data: topOfTheRockByPage, isLoading: isLoading } = useGetTopOfTheRockByPage({ page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>

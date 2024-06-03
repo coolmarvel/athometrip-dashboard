@@ -10,14 +10,14 @@ import { useEffect } from 'react';
 const UNTourByPage = () => {
   const router = useRouter();
 
-  const { page, limit, sort, order, startDate, endDate, onPagination } = usePagination();
+  const { page, limit, sort, order, after, before, onPagination } = usePagination();
   const { mutate: resetUNTour } = useResetUNTour();
 
   useEffect(() => {
     resetUNTour();
-  }, [startDate, endDate, resetUNTour]);
+  }, [after, before, resetUNTour]);
 
-  const { data: unTourByPage, isLoading: isLoading } = useGetUNTourByPage({ page, limit, sort, order, startDate, endDate, search: QueryParser.toString(router.query.search) ?? '' });
+  const { data: unTourByPage, isLoading: isLoading } = useGetUNTourByPage({ page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>

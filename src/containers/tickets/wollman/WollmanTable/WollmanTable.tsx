@@ -16,6 +16,7 @@ interface WollmanTableProps {
 const WollmanTable = ({ wollman, isLoading }: WollmanTableProps) => {
   const { push } = useSafePush();
   const { t } = useTranslation();
+  const convertDate = useConvertDate();
 
   console.log(wollman);
 
@@ -23,7 +24,7 @@ const WollmanTable = ({ wollman, isLoading }: WollmanTableProps) => {
     () => [
       columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor('billing.first_name', { header: t('name'), meta: { sortable: true } }),
-      columnHelper.accessor((row) => useConvertDate(row.order.date_created), { header: t('date'), meta: { sortable: true } }),
+      columnHelper.accessor('row.order.date_created', { header: t('date'), cell: (context) => convertDate(context.renderValue()), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? 'default', { header: t('type'), meta: { sortable: true } }),
       columnHelper.accessor(
         (row) => {

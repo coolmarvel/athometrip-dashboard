@@ -10,14 +10,14 @@ import { useEffect } from 'react';
 const EllisIslandByPage = () => {
   const router = useRouter();
 
-  const { page, limit, sort, order, startDate, endDate, onPagination } = usePagination();
+  const { page, limit, sort, order, after, before, onPagination } = usePagination();
   const { mutate: resetEllisIsland } = useResetEllisIsland();
 
   useEffect(() => {
     resetEllisIsland();
-  }, [startDate, endDate, resetEllisIsland]);
+  }, [after, before, resetEllisIsland]);
 
-  const { data: ellisIslandByPage, isLoading: isLoading } = useGetEllisIslandByPage({ page, limit, sort, order, startDate, endDate, search: QueryParser.toString(router.query.search) ?? '' });
+  const { data: ellisIslandByPage, isLoading: isLoading } = useGetEllisIslandByPage({ page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>

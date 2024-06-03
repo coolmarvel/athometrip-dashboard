@@ -39,7 +39,7 @@ const getWollmanByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     let tickets = ticketStore.tickets;
 
-    await ticketStore.fetchTicket(ticketName, `${url}/1/120?start_date=${startDate}&end_date=${endDate}`);
+    // await ticketStore.fetchTicket(ticketName, `${url}/1/120?start_date=${startDate}&end_date=${endDate}`);
     await ticketStore.sortTicket(sort as RequiredKeysOf<any>, order as Order);
 
     tickets = ticketStore.tickets;

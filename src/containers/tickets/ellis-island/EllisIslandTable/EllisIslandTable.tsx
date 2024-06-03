@@ -16,6 +16,7 @@ interface EllisIslandTableProps {
 const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => {
   const { push } = useSafePush();
   const { t } = useTranslation();
+  const convertDate = useConvertDate();
 
   console.log(ellisIsland);
 
@@ -23,7 +24,7 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
     () => [
       columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor('billing.first_name', { header: t('name'), meta: { sortable: true } }),
-      columnHelper.accessor((row) => useConvertDate(row.order.date_created), { header: t('date'), meta: { sortable: true } }),
+      columnHelper.accessor('row.order.date_created', { header: t('date'), cell: (context) => convertDate(context.renderValue()), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? 'default', { header: t('type'), meta: { sortable: true } }),
       columnHelper.accessor((row) => `${row.tour?.ellis_island_date} ${row.tour?.oneworld_time}`, { header: t('schedule'), meta: { sortable: true } }),
       columnHelper.accessor('lineItem.quantity', { header: t('quantity'), meta: { sortable: true } }),

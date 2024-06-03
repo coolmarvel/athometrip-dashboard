@@ -16,6 +16,7 @@ interface UNTourTableProps {
 const UNTourTable = ({ unTour, isLoading }: UNTourTableProps) => {
   const { push } = useSafePush();
   const { t } = useTranslation();
+  const convertDate = useConvertDate();
 
   console.log(unTour);
 
@@ -23,11 +24,11 @@ const UNTourTable = ({ unTour, isLoading }: UNTourTableProps) => {
     () => [
       columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor('billing.first_name', { header: t('name'), meta: { sortable: true } }),
-      columnHelper.accessor((row) => useConvertDate(row.order.date_created), { header: t('date'), meta: { sortable: true } }),
+      columnHelper.accessor('row.order.date_created', { header: t('date'), cell: (context) => convertDate(context.renderValue()), meta: { sortable: true } }),
       // columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? 'default', { header: t('type'), meta: { sortable: true } }),
       columnHelper.accessor(
         (row) => {
-          const date = useConvertDate(row.order.metadata.find((meta: any) => meta.key === 'un_tour_date')?.value).split(' ')[0];
+          const date = convertDate(row.order.metadata.find((meta: any) => meta.key === 'un_tour_date')?.value).split(' ')[0];
           const time = row.order.metadata.find((meta: any) => meta.key === 'un_tour_time3')?.value;
 
           return `${date} ${time}`;

@@ -10,14 +10,14 @@ import { useEffect } from 'react';
 const OneWorldByPage = () => {
   const router = useRouter();
 
-  const { page, limit, sort, order, startDate, endDate, onPagination } = usePagination();
+  const { page, limit, sort, order, after, before, onPagination } = usePagination();
   const { mutate: resetOneWorld } = useResetOneWorld();
 
   useEffect(() => {
     resetOneWorld();
-  }, [startDate, endDate, resetOneWorld]);
+  }, [after, before, resetOneWorld]);
 
-  const { data: oneWorldByPage, isLoading: isLoading } = useGetOneWorldByPage({ page, limit, sort, order, startDate, endDate, search: QueryParser.toString(router.query.search) ?? '' });
+  const { data: oneWorldByPage, isLoading: isLoading } = useGetOneWorldByPage({ page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>

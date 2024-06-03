@@ -10,14 +10,14 @@ import { useEffect } from 'react';
 const CityTripByPage = () => {
   const router = useRouter();
 
-  const { page, limit, sort, order, startDate, endDate, onPagination } = usePagination();
+  const { page, limit, sort, order, after, before, onPagination } = usePagination();
   const { mutate: resetCityTrip } = useResetCityTrip();
 
   useEffect(() => {
     resetCityTrip();
-  }, [startDate, endDate, resetCityTrip]);
+  }, [after, before, resetCityTrip]);
 
-  const { data: cityTripByPage, isLoading: isLoading } = useGetCityTripByPage({ page, limit, sort, order, startDate, endDate, search: QueryParser.toString(router.query.search) ?? '' });
+  const { data: cityTripByPage, isLoading: isLoading } = useGetCityTripByPage({ page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>
