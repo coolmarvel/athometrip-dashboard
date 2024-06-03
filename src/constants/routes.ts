@@ -39,6 +39,15 @@ export enum ApiRoutes {
   EllisIsland = 'api/tickets/ellis-island/:id?',
   Memorial911 = 'api/tickets/911-memorial/:id?',
   TopOfTheRock = 'api/tickets/top-of-the-rock/:id?',
+
+  // USIMs
+  TMobileDaily = 'api/usims/t-mobile/daily/:id?',
+  TMobileDailyPlan = 'api/usims/t-mobile/daily/plan/:id?',
+  TMobileMonthly = 'api/usims/t-mobile/monthly/:id?',
+  TMobileMonthlyPlan = 'api/usims/t-mobile/monthly/plan/:id?',
+  H2OSim = 'api/usims/h2o/:id?',
+  Lyca = 'api/usims/lyca/:id?',
+  LycaMonthlyPlan = 'api/usims/lyca/monthly/plan/:id?',
 }
 
 export enum PageRoutes {
@@ -73,6 +82,24 @@ export enum PageRoutes {
   EllisIslandDetail = '/tickets/ellis-island/:id',
   MLBMets = '/tickets/mlb-mets',
   MLBMetsDetail = '/tickets/mlb-mets/:id',
+
+  // USIMs
+  Usims = '/usims',
+  TMobile = '/usims/t-mobile',
+  TMobileDaily = '/usims/t-mobile/daily',
+  TMobileDailyDetail = '/usims/t-mobile/daily/:id',
+  TMobileDailyPlan = '/usims/t-mobile/daily/plan',
+  TMobileDailyPlanDetail = '/usims/t-mobile/daily/plan/:id',
+  TMobileMonthly = '/usims/t-mobile/monthly',
+  TMobileMonthlyDetail = '/usims/t-mobile/monthly/:id',
+  TMobileMonthlyPlan = '/usims/t-mobile/monthly/plan',
+  TMobileMonthlyPlanDetail = '/usims/t-mobile/monthly/plan/:id',
+  H2OSim = '/usims/h2o',
+  H2OSimDetail = '/usims/h2o/:id',
+  Lyca = '/usims/lyca',
+  LycaDetail = '/usims/lyca/:id',
+  LycaMonthlyPlan = '/usims/lyca/monthly/plan',
+  LycaMonthlyPlanDetail = '/usims/lyca/monthly/plan/:id',
 }
 
 export const whiteList = [PageRoutes.Home, PageRoutes.Signin, PageRoutes.Users, PageRoutes.UserDetail];
@@ -180,6 +207,164 @@ export const navs: Nav[] = [
             label: 'Top of the Rock Detail',
             pathname: PageRoutes.TopOfTheRockDetail,
             matcher: match(PageRoutes.TopOfTheRockDetail),
+          },
+        ],
+      },
+      {
+        label: 'Summit',
+        pathname: PageRoutes.Summit,
+        matcher: match(PageRoutes.Summit),
+        icon: BsFill1SquareFill,
+        query: defaultQuery,
+        children: [
+          {
+            label: 'Summit Detail',
+            pathname: PageRoutes.SummitDetail,
+            matcher: match(PageRoutes.SummitDetail),
+          },
+        ],
+      },
+      {
+        label: 'Empire',
+        pathname: PageRoutes.Empire,
+        matcher: match(PageRoutes.Empire),
+        icon: BsFill2SquareFill,
+        query: defaultQuery,
+        children: [
+          {
+            label: 'Empire Detail',
+            pathname: PageRoutes.EmpireDetail,
+            matcher: match(PageRoutes.EmpireDetail),
+          },
+        ],
+      },
+      {
+        label: 'OneWorld',
+        pathname: PageRoutes.OneWorld,
+        matcher: match(PageRoutes.OneWorld),
+        icon: BsFill3SquareFill,
+        query: defaultQuery,
+        children: [
+          {
+            label: 'OneWorld Detail',
+            pathname: PageRoutes.OneWorldDetail,
+            matcher: match(PageRoutes.OneWorldDetail),
+          },
+        ],
+      },
+      {
+        label: 'Memorial911',
+        pathname: PageRoutes.Memorial911,
+        matcher: match(PageRoutes.Memorial911),
+        icon: BsFill4SquareFill,
+        query: defaultQuery,
+        children: [
+          {
+            label: 'Memorial911 Detail',
+            pathname: PageRoutes.Memorial911Detail,
+            matcher: match(PageRoutes.Memorial911Detail),
+          },
+        ],
+      },
+      {
+        label: 'UNTour',
+        pathname: PageRoutes.UNTour,
+        matcher: match(PageRoutes.UNTour),
+        icon: BsFill5SquareFill,
+        query: defaultQuery,
+        children: [
+          {
+            label: 'UNTour Detail',
+            pathname: PageRoutes.UNTourDetail,
+            matcher: match(PageRoutes.UNTourDetail),
+          },
+        ],
+      },
+      {
+        label: 'Wollman',
+        pathname: PageRoutes.Wollman,
+        matcher: match(PageRoutes.Wollman),
+        icon: BsFill6SquareFill,
+        query: defaultQuery,
+        children: [
+          {
+            label: 'Wollman Detail',
+            pathname: PageRoutes.WollmanDetail,
+            matcher: match(PageRoutes.WollmanDetail),
+          },
+        ],
+      },
+      {
+        label: 'CityTrip',
+        pathname: PageRoutes.CityTrip,
+        matcher: match(PageRoutes.CityTrip),
+        icon: BsFill7SquareFill,
+        query: defaultQuery,
+        children: [
+          {
+            label: 'CityTrip Detail',
+            pathname: PageRoutes.CityTripDetail,
+            matcher: match(PageRoutes.CityTripDetail),
+          },
+        ],
+      },
+      {
+        label: 'EllisIsland',
+        pathname: PageRoutes.EllisIsland,
+        matcher: match(PageRoutes.EllisIsland),
+        icon: BsFill8SquareFill,
+        query: defaultQuery,
+        children: [
+          {
+            label: 'EllisIsland Detail',
+            pathname: PageRoutes.EllisIslandDetail,
+            matcher: match(PageRoutes.EllisIslandDetail),
+          },
+        ],
+      },
+      {
+        label: 'MLBMets',
+        pathname: PageRoutes.MLBMets,
+        matcher: match(PageRoutes.MLBMets),
+        icon: BsFill9SquareFill,
+        query: defaultQuery,
+        children: [
+          {
+            label: 'MLBMets Detail',
+            pathname: PageRoutes.MLBMetsDetail,
+            matcher: match(PageRoutes.MLBMetsDetail),
+          },
+        ],
+      },
+    ],
+  },
+
+  // USIMs
+  {
+    label: 'Usims',
+    icon: BsFillCollectionFill,
+    pathname: PageRoutes.Usims,
+    matcher: match(PageRoutes.Usims),
+    collapsible: true,
+    children: [
+      {
+        label: 'T-Mobile',
+        pathname: PageRoutes.TMobile,
+        matcher: match(PageRoutes.TMobile),
+        icon: BsFill0SquareFill,
+        collapsible: true,
+        children: [
+          {
+            label: 'Daily',
+            pathname: PageRoutes.TMobileDaily,
+            matcher: match(PageRoutes.TMobileDaily),
+            query: defaultQuery,
+          },
+          {
+            label: 'Daily Plan',
+            pathname: PageRoutes.TMobileDailyPlan,
+            matcher: match(PageRoutes.TMobileDailyPlan),
+            query: defaultQuery,
           },
         ],
       },
