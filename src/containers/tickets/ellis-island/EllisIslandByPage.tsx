@@ -18,7 +18,7 @@ const EllisIslandByPage = () => {
 
   useEffect(() => {
     resetEllisIsland();
-  }, [after, before, resetEllisIsland]);
+  }, [before, resetEllisIsland]);
 
   return (
     <>

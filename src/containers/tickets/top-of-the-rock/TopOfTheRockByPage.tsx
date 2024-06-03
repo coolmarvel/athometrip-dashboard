@@ -18,7 +18,7 @@ const TopOfTheRockByPage = () => {
 
   useEffect(() => {
     resetTopOfTheRock();
-  }, [after, before, resetTopOfTheRock]);
+  }, [before, resetTopOfTheRock]);
 
   return (
     <>

@@ -23,17 +23,32 @@ const UNTourTable = ({ unTour, isLoading }: UNTourTableProps) => {
   const columns = useMemo(
     () => [
       columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
-      columnHelper.accessor('billing.first_name', { header: t('name'), meta: { sortable: true } }),
+      columnHelper.accessor('billing.first_name', { header: t('name(kr)'), meta: { sortable: true } }),
+      columnHelper.accessor(
+        (row) => {
+          const enName = row.order.metadata.find((meta: any) => meta.key === 'un_name')?.value.toUpperCase() ?? '';
+
+          return `${enName}`;
+        },
+        { header: t('name(en)'), meta: { sortable: true } }
+      ),
       columnHelper.accessor('order.date_created', { header: t('date'), cell: (context) => convertDate(context.renderValue()!), meta: { sortable: true } }),
       // columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? 'default', { header: t('type'), meta: { sortable: true } }),
       columnHelper.accessor(
         (row) => {
           const date = convertDate(row.order.metadata.find((meta: any) => meta.key === 'un_tour_date')?.value).split(' ')[0];
-          const time = row.order.metadata.find((meta: any) => meta.key === 'un_tour_time3')?.value;
 
-          return `${date} ${time}`;
+          return `${date}`;
         },
-        { header: t('schedule'), meta: { sortable: true } }
+        { header: t('schedule(date)'), meta: { sortable: true } }
+      ),
+      columnHelper.accessor(
+        (row) => {
+          const time = row.order.metadata.find((meta: any) => meta.key === 'un_tour_time3')?.value ?? '';
+
+          return `${time}`;
+        },
+        { header: t('schedule(time)'), meta: { sortable: true } }
       ),
       columnHelper.accessor('lineItem.quantity', { header: t('quantity'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),

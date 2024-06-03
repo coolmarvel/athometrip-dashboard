@@ -10,9 +10,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
       const { page, cursor, limit } = req.query;
-      if (page && limit) return getEllisIslandByPage(req, res);
-      if (cursor && limit) return getEllisIsland(req, res);
-      return getEllisIsland(req, res);
+      if (page && limit) return getMLBMetsByPage(req, res);
     case 'POST':
       return res.status(405).end();
     default:
@@ -20,21 +18,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const ticketName = 'ellis-island';
-const productName = '엘리스 아일랜드';
+const ticketName = 'mlb-mets';
+const productName = 'MLB';
 const url = 'http://localhost:3000/api/production/adapter/orders';
 
-const getEllisIsland = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const result = await axios.get('http://localhost:3000/api/production/adapter/types/2/110');
-
-    return res.status(200).json({ data: result.data, message: 'Successfully retrieved ellis-island' });
-  } catch {
-    return res.status(500).json({ data: null, message: 'Failed to get ellis-island' });
-  }
-};
-
-const getEllisIslandByPage = async (req: NextApiRequest, res: NextApiResponse) => {
+const getMLBMetsByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };
   const offset = (Number(page) - 1) * Number(limit);
 
@@ -61,6 +49,6 @@ const getEllisIslandByPage = async (req: NextApiRequest, res: NextApiResponse) =
       return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });
     }
   } catch {
-    return res.status(500).send({ data: null, message: 'Failed to get ellis-island' });
+    return res.status(500).send({ data: null, message: 'Failed to get mlb-mets' });
   }
 };

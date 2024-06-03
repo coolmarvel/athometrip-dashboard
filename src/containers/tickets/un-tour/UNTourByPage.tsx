@@ -18,7 +18,7 @@ const UNTourByPage = () => {
 
   useEffect(() => {
     resetUNTour();
-  }, [after, before, resetUNTour]);
+  }, [before, resetUNTour]);
 
   return (
     <>

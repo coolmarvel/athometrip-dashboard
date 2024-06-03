@@ -8,34 +8,42 @@ import { useTranslation } from 'react-i18next';
 
 const columnHelper = createColumnHelper<any>();
 
-interface EllisIslandTableProps {
-  ellisIsland: any[];
+interface MLBMetsTableProps {
+  mlbMets: any[];
   isLoading?: boolean;
 }
 
-const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => {
+const MLBMetsTable = ({ mlbMets, isLoading }: MLBMetsTableProps) => {
   const { push } = useSafePush();
   const { t } = useTranslation();
   const convertDate = useConvertDate();
 
-  console.log(ellisIsland);
+  console.log(mlbMets);
 
   const columns = useMemo(
     () => [
       columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor('billing.first_name', { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created', { header: t('date'), cell: (context) => convertDate(context.renderValue()!), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? 'default', { header: t('type'), meta: { sortable: true } }),
-      columnHelper.accessor((row) => `${row.tour?.ellis_island_date} ${row.tour?.oneworld_time ? row.tour?.oneworld_time : ''}`, { header: t('schedule'), meta: { sortable: true } }),
+      // columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? 'default', { header: t('type'), meta: { sortable: true } }),
+      columnHelper.accessor(
+        (row) => {
+          const date = convertDate(row.order.metadata.find((meta: any) => meta.key === 'yankees_off_date')?.value).split(' ')[0] ?? '';
+          const time = row.order.metadata.find((meta: any) => meta.key === 'yankees_off_time')?.value ?? '';
+
+          return `${date} ${time}`;
+        },
+        { header: t('schedule'), meta: { sortable: true } }
+      ),
       columnHelper.accessor('lineItem.quantity', { header: t('quantity'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
     ],
     [t]
   );
 
-  const table = useReactTable({ data: ellisIsland, columns, getCoreRowModel: getCoreRowModel() });
+  const table = useReactTable({ data: mlbMets, columns, getCoreRowModel: getCoreRowModel() });
 
-  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.EllisIslandDetail, { id: row.original.order.id }))} />;
+  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.MLBMetsDetail, { id: row.original.order.id }))} />;
 };
 
-export default EllisIslandTable;
+export default MLBMetsTable;

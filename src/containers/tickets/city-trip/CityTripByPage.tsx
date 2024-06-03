@@ -18,7 +18,7 @@ const CityTripByPage = () => {
 
   useEffect(() => {
     resetCityTrip();
-  }, [after, before, resetCityTrip]);
+  }, [before, resetCityTrip]);
 
   return (
     <>

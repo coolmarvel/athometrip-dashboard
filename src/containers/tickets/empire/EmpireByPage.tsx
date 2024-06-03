@@ -18,7 +18,7 @@ const EmpireByPage = () => {
 
   useEffect(() => {
     resetEmpire();
-  }, [after, before, resetEmpire]);
+  }, [before, resetEmpire]);
 
   return (
     <>

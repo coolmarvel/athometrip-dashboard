@@ -1,5 +1,6 @@
-import { PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
+import { DatePickerOptions, PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
 import { ViewQueries } from '@/constants';
+import { MLBMetsByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
@@ -12,7 +13,7 @@ const MLBMetsPage = () => {
   const display = useMemo(() => {
     switch (viewOption) {
       case ViewQueries.Table:
-        return '<MLBMetsPage />';
+        return <MLBMetsByPage />;
       case ViewQueries.List:
         return '<MLBMetsPage usesObserver />';
       default:
@@ -38,7 +39,8 @@ const MLBMetsPage = () => {
               }}
             />
             <Flex gap={'4'}>
-              <ViewOptions />
+              {/* <ViewOptions /> */}
+              <DatePickerOptions />
               <PageOptions />
             </Flex>
           </Flex>

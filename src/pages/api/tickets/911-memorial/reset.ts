@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { ticketStore } from '..';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {

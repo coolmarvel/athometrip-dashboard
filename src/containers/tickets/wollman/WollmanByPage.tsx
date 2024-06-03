@@ -18,7 +18,7 @@ const WollmanByPage = () => {
 
   useEffect(() => {
     resetWollman();
-  }, [after, before, resetWollman]);
+  }, [before, resetWollman]);
 
   return (
     <>

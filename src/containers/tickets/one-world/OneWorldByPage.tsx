@@ -18,7 +18,7 @@ const OneWorldByPage = () => {
 
   useEffect(() => {
     resetOneWorld();
-  }, [after, before, resetOneWorld]);
+  }, [before, resetOneWorld]);
 
   return (
     <>

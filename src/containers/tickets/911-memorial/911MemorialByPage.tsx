@@ -18,7 +18,7 @@ const Memorial911ByPage = () => {
 
   useEffect(() => {
     resetMemorial911();
-  }, [after, before, resetMemorial911]);
+  }, [before, resetMemorial911]);
 
   return (
     <>
