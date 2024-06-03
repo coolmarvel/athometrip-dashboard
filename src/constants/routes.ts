@@ -113,8 +113,6 @@ export const defaultQuery = {
   order: 'desc',
   after: after,
   before: before,
-  product: '',
-  total: 0,
   search: '',
 };
 
