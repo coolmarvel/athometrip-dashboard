@@ -13,11 +13,12 @@ const CityTripByPage = () => {
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
   const { mutate: resetCityTrip } = useResetCityTrip();
 
+  const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
+  const { data: cityTripByPage, isLoading: isLoading } = useGetCityTripByPage(params);
+
   useEffect(() => {
     resetCityTrip();
   }, [after, before, resetCityTrip]);
-
-  const { data: cityTripByPage, isLoading: isLoading } = useGetCityTripByPage({ page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>

@@ -13,11 +13,12 @@ const EllisIslandByPage = () => {
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
   const { mutate: resetEllisIsland } = useResetEllisIsland();
 
+  const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
+  const { data: ellisIslandByPage, isLoading: isLoading } = useGetEllisIslandByPage(params);
+
   useEffect(() => {
     resetEllisIsland();
   }, [after, before, resetEllisIsland]);
-
-  const { data: ellisIslandByPage, isLoading: isLoading } = useGetEllisIslandByPage({ page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>

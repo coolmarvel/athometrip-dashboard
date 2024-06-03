@@ -13,11 +13,12 @@ const EmpireByPage = () => {
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
   const { mutate: resetEmpire } = useResetEmpire();
 
+  const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
+  const { data: empireByPage, isLoading: isLoading } = useGetEmpireByPage(params);
+
   useEffect(() => {
     resetEmpire();
   }, [after, before, resetEmpire]);
-
-  const { data: empireByPage, isLoading: isLoading } = useGetEmpireByPage({ page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>

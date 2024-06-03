@@ -13,11 +13,12 @@ const SummitByPage = () => {
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
   const { mutate: resetSummit } = useResetSummit();
 
+  const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
+  const { data: summitByPage, isLoading: isLoading } = useGetSummitByPage(params);
+
   useEffect(() => {
     resetSummit();
   }, [after, before, resetSummit]);
-
-  const { data: summitByPage, isLoading: isLoading } = useGetSummitByPage({ page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>

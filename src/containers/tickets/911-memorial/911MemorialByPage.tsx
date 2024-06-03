@@ -1,4 +1,4 @@
-import { useGet911MemorialByPage } from '@/apis';
+import { useGet911MemorialByPage, useReset911Memorial } from '@/apis';
 import { Pagination } from '@/components';
 import { Memorial911Table } from '@/containers';
 import { usePagination } from '@/hooks';
@@ -10,10 +10,15 @@ import { useEffect } from 'react';
 const Memorial911ByPage = () => {
   const router = useRouter();
 
-  const { page, limit, sort, order, after, before, product, total, onPagination } = usePagination();
+  const { page, limit, sort, order, after, before, onPagination } = usePagination();
+  const { mutate: resetMemorial911 } = useReset911Memorial();
 
-  const params = { page, limit, sort, order, after, before, total, product, search: QueryParser.toString(router.query.search) ?? '' };
+  const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
   const { data: memorial911ByPage, isLoading: isLoading } = useGet911MemorialByPage(params);
+
+  useEffect(() => {
+    resetMemorial911();
+  }, [after, before, resetMemorial911]);
 
   return (
     <>

@@ -13,11 +13,12 @@ const OneWorldByPage = () => {
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
   const { mutate: resetOneWorld } = useResetOneWorld();
 
+  const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
+  const { data: oneWorldByPage, isLoading: isLoading } = useGetOneWorldByPage(params);
+
   useEffect(() => {
     resetOneWorld();
   }, [after, before, resetOneWorld]);
-
-  const { data: oneWorldByPage, isLoading: isLoading } = useGetOneWorldByPage({ page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>

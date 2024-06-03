@@ -13,11 +13,12 @@ const TopOfTheRockByPage = () => {
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
   const { mutate: resetTopOfTheRock } = useResetTopOfTheRock();
 
+  const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
+  const { data: topOfTheRockByPage, isLoading: isLoading } = useGetTopOfTheRockByPage(params);
+
   useEffect(() => {
     resetTopOfTheRock();
   }, [after, before, resetTopOfTheRock]);
-
-  const { data: topOfTheRockByPage, isLoading: isLoading } = useGetTopOfTheRockByPage({ page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>

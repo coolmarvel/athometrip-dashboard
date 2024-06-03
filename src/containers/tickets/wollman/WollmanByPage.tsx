@@ -13,11 +13,12 @@ const WollmanByPage = () => {
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
   const { mutate: resetWollman } = useResetWollman();
 
+  const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
+  const { data: wollmanByPage, isLoading: isLoading } = useGetWollmanByPage(params);
+
   useEffect(() => {
     resetWollman();
   }, [after, before, resetWollman]);
-
-  const { data: wollmanByPage, isLoading: isLoading } = useGetWollmanByPage({ page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>

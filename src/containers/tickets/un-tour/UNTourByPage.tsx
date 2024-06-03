@@ -13,11 +13,12 @@ const UNTourByPage = () => {
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
   const { mutate: resetUNTour } = useResetUNTour();
 
+  const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
+  const { data: unTourByPage, isLoading: isLoading } = useGetUNTourByPage(params);
+
   useEffect(() => {
     resetUNTour();
   }, [after, before, resetUNTour]);
-
-  const { data: unTourByPage, isLoading: isLoading } = useGetUNTourByPage({ page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' });
 
   return (
     <>
