@@ -5,16 +5,13 @@ import { useTranslation } from 'react-i18next';
 const useConvertDate = () => {
   const { t } = useTranslation();
 
-  return useCallback(
-    (value?: any) => {
-      if (!value) return '';
+  return useCallback((value?: any) => {
+    if (!value) return '';
 
-      const date = new Date(value);
+    const date = new Date(value);
 
-      return format(date, 'yyyy/MM/dd HH:mm:ss');
-    },
-    [t]
-  );
+    return format(date, 'yyyy/MM/dd HH:mm:ss');
+  }, []);
 };
 
 export default useConvertDate;
