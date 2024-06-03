@@ -12,8 +12,6 @@ export interface OnPaginationParams {
   order?: string;
   after?: string;
   before?: string;
-  product?: string;
-  total?: number;
 }
 
 const usePagination = () => {
@@ -27,8 +25,6 @@ const usePagination = () => {
       order: (QueryParser.toString(router.query.order) ?? 'desc') as Order,
       after: QueryParser.toString(router.query.after) ?? format(subMonths(new Date(), 1), 'yyyy-MM-dd', { locale: ko }),
       before: QueryParser.toString(router.query.before) ?? format(new Date(), 'yyyy-MM-dd', { locale: ko }),
-      product: QueryParser.toString(router.query.product) ?? '',
-      total: QueryParser.toNumber(router.query.total) ?? 0,
     };
   }, [router.query]);
 
