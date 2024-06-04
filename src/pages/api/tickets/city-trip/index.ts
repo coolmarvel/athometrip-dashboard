@@ -41,25 +41,27 @@ const getCityTripByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const key = `${ticketName}_${after}_${before}`;
 
   try {
-    const existingData = await checkExistingDataInRange(ticketName, after, before);
-    let tickets: any = existingData ? existingData : [];
+    // const existingData = await checkExistingDataInRange(ticketName, after, before);
+    // let tickets: any = existingData ? existingData : [];
 
-    if (tickets.length === 0) {
-      const { data } = await axios.get(`${url}?product_name=${productName}&start_date=${after}&end_date=${before}`);
-      tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order);
+    // if (tickets.length === 0) {
+    //   const { data } = await axios.get(`${url}?product_name=${productName}&start_date=${after}&end_date=${before}`);
+    //   tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order);
 
-      await setValue(key, tickets);
+    //   await setValue(key, tickets);
 
-      const slicedTickets = tickets.slice(Number(offset), Number(offset) + Number(limit));
+    //   const slicedTickets = tickets.slice(Number(offset), Number(offset) + Number(limit));
 
-      return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });
-    } else {
-      tickets = await filterTicket(tickets, after, before);
-      tickets = await sortTicket(tickets, sort as RequiredKeysOf<any>, order as Order);
-      const slicedTickets = tickets.slice(Number(offset), Number(offset) + Number(limit));
+    //   return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });
+    // } else {
+    //   tickets = await filterTicket(tickets, after, before);
+    //   tickets = await sortTicket(tickets, sort as RequiredKeysOf<any>, order as Order);
+    //   const slicedTickets = tickets.slice(Number(offset), Number(offset) + Number(limit));
 
-      return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });
-    }
+    //   return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });
+    // }
+
+    return res.status(200).send({ data: { total: 0, data: [] } });
   } catch {
     return res.status(500).send({ data: null, message: 'Failed to get city-trip' });
   }
