@@ -42,12 +42,12 @@ export enum ApiRoutes {
 
   // USIMs
   TMobileDaily = 'api/usims/t-mobile/daily/:id?',
-  TMobileDailyPlan = 'api/usims/t-mobile/daily/plan/:id?',
+  TMobileDailyPlan = 'api/usims/t-mobile/daily-plan/:id?',
   TMobileMonthly = 'api/usims/t-mobile/monthly/:id?',
-  TMobileMonthlyPlan = 'api/usims/t-mobile/monthly/plan/:id?',
-  H2OSim = 'api/usims/h2o/:id?',
-  Lyca = 'api/usims/lyca/:id?',
-  LycaMonthlyPlan = 'api/usims/lyca/monthly/plan/:id?',
+  TMobileMonthlyPlan = 'api/usims/t-mobile/monthly-plan/:id?',
+  H2OEsim = 'api/usims/h2osim/esim/:id?',
+  LycaPortal = 'api/usims/lyca/portal/:id?',
+  LycaMonthlyPlan = 'api/usims/lyca/monthly-plan/:id?',
 }
 
 export enum PageRoutes {
@@ -88,18 +88,20 @@ export enum PageRoutes {
   TMobile = '/usims/t-mobile',
   TMobileDaily = '/usims/t-mobile/daily',
   TMobileDailyDetail = '/usims/t-mobile/daily/:id',
-  TMobileDailyPlan = '/usims/t-mobile/daily/plan',
-  TMobileDailyPlanDetail = '/usims/t-mobile/daily/plan/:id',
+  TMobileDailyPlan = '/usims/t-mobile/daily-plan',
+  TMobileDailyPlanDetail = '/usims/t-mobile/daily-plan/:id',
   TMobileMonthly = '/usims/t-mobile/monthly',
   TMobileMonthlyDetail = '/usims/t-mobile/monthly/:id',
-  TMobileMonthlyPlan = '/usims/t-mobile/monthly/plan',
-  TMobileMonthlyPlanDetail = '/usims/t-mobile/monthly/plan/:id',
-  H2OSim = '/usims/h2o',
-  H2OSimDetail = '/usims/h2o/:id',
+  TMobileMonthlyPlan = '/usims/t-mobile/monthly-plan',
+  TMobileMonthlyPlanDetail = '/usims/t-mobile/monthly-plan/:id',
+  H2OSim = '/usims/h2osim',
+  H2OEsim = '/usims/h2osim/esim',
+  H2OEsimDetail = 'usims/h2osim/esim/:id',
   Lyca = '/usims/lyca',
-  LycaDetail = '/usims/lyca/:id',
-  LycaMonthlyPlan = '/usims/lyca/monthly/plan',
-  LycaMonthlyPlanDetail = '/usims/lyca/monthly/plan/:id',
+  LycaPortal = '/usims/lyca/portal',
+  LycaPortalDetail = '/usims/lyca/portal/:id',
+  LycaMonthlyPlan = '/usims/lyca/monthly-plan',
+  LycaMonthlyPlanDetail = '/usims/lyca/monthly-plan/:id',
 }
 
 export const whiteList = [PageRoutes.Home, PageRoutes.Signin, PageRoutes.Users, PageRoutes.UserDetail];
@@ -149,6 +151,7 @@ export const defaultQuery = {
 // t("Write Post")
 // t("Post Detail")
 export const navs: Nav[] = [
+  // Users
   {
     label: 'Users',
     pathname: PageRoutes.Users,
@@ -163,6 +166,8 @@ export const navs: Nav[] = [
       },
     ],
   },
+
+  // Posts
   {
     label: 'Posts',
     pathname: PageRoutes.Posts,
@@ -351,7 +356,7 @@ export const navs: Nav[] = [
         label: 'T-Mobile',
         pathname: PageRoutes.TMobile,
         matcher: match(PageRoutes.TMobile),
-        icon: BsFill0SquareFill,
+        icon: BsFill1SquareFill,
         collapsible: true,
         children: [
           {
@@ -359,138 +364,109 @@ export const navs: Nav[] = [
             pathname: PageRoutes.TMobileDaily,
             matcher: match(PageRoutes.TMobileDaily),
             query: defaultQuery,
+            children: [
+              {
+                label: 'Daily Detail',
+                pathname: PageRoutes.TMobileDailyDetail,
+                matcher: match(PageRoutes.TMobileDailyDetail),
+              },
+            ],
           },
           {
             label: 'Daily Plan',
             pathname: PageRoutes.TMobileDailyPlan,
             matcher: match(PageRoutes.TMobileDailyPlan),
             query: defaultQuery,
+            children: [
+              {
+                label: 'Daily Plan Detail',
+                pathname: PageRoutes.TMobileDailyPlanDetail,
+                matcher: match(PageRoutes.TMobileDailyPlanDetail),
+              },
+            ],
           },
-        ],
-      },
-      {
-        label: 'Summit',
-        pathname: PageRoutes.Summit,
-        matcher: match(PageRoutes.Summit),
-        icon: BsFill1SquareFill,
-        query: defaultQuery,
-        children: [
           {
-            label: 'Summit Detail',
-            pathname: PageRoutes.SummitDetail,
-            matcher: match(PageRoutes.SummitDetail),
+            label: 'Monthly',
+            pathname: PageRoutes.TMobileMonthly,
+            matcher: match(PageRoutes.TMobileMonthly),
+            query: defaultQuery,
+            children: [
+              {
+                label: 'Monthly Detail',
+                pathname: PageRoutes.TMobileMonthlyDetail,
+                matcher: match(PageRoutes.TMobileMonthlyDetail),
+              },
+            ],
+          },
+          {
+            label: 'Monthly Plan',
+            pathname: PageRoutes.TMobileMonthlyPlan,
+            matcher: match(PageRoutes.TMobileMonthlyPlan),
+            query: defaultQuery,
+            children: [
+              {
+                label: 'Monthly Plan Detail',
+                pathname: PageRoutes.TMobileMonthlyPlanDetail,
+                matcher: match(PageRoutes.TMobileMonthlyPlanDetail),
+              },
+            ],
           },
         ],
       },
       {
-        label: 'Empire',
-        pathname: PageRoutes.Empire,
-        matcher: match(PageRoutes.Empire),
+        label: 'H2OSim',
+        pathname: PageRoutes.H2OSim,
+        matcher: match(PageRoutes.H2OSim),
         icon: BsFill2SquareFill,
-        query: defaultQuery,
+        collapsible: true,
         children: [
           {
-            label: 'Empire Detail',
-            pathname: PageRoutes.EmpireDetail,
-            matcher: match(PageRoutes.EmpireDetail),
+            label: 'H2OEsim',
+            pathname: PageRoutes.H2OEsim,
+            matcher: match(PageRoutes.H2OEsim),
+            query: defaultQuery,
+            children: [
+              {
+                label: 'H2OEsim Detail',
+                pathname: PageRoutes.H2OEsimDetail,
+                matcher: match(PageRoutes.H2OEsimDetail),
+              },
+            ],
           },
         ],
       },
       {
-        label: 'OneWorld',
-        pathname: PageRoutes.OneWorld,
-        matcher: match(PageRoutes.OneWorld),
+        label: 'Lyca',
+        pathname: PageRoutes.Lyca,
+        matcher: match(PageRoutes.Lyca),
         icon: BsFill3SquareFill,
-        query: defaultQuery,
+        collapsible: true,
         children: [
           {
-            label: 'OneWorld Detail',
-            pathname: PageRoutes.OneWorldDetail,
-            matcher: match(PageRoutes.OneWorldDetail),
+            label: 'Lyca Portal',
+            pathname: PageRoutes.LycaPortal,
+            matcher: match(PageRoutes.LycaPortal),
+            query: defaultQuery,
+            children: [
+              {
+                label: 'Lyca Portal Detail',
+                pathname: PageRoutes.LycaPortalDetail,
+                matcher: match(PageRoutes.LycaPortalDetail),
+              },
+            ],
           },
-        ],
-      },
-      {
-        label: 'Memorial911',
-        pathname: PageRoutes.Memorial911,
-        matcher: match(PageRoutes.Memorial911),
-        icon: BsFill4SquareFill,
-        query: defaultQuery,
-        children: [
           {
-            label: 'Memorial911 Detail',
-            pathname: PageRoutes.Memorial911Detail,
-            matcher: match(PageRoutes.Memorial911Detail),
-          },
-        ],
-      },
-      {
-        label: 'UNTour',
-        pathname: PageRoutes.UNTour,
-        matcher: match(PageRoutes.UNTour),
-        icon: BsFill5SquareFill,
-        query: defaultQuery,
-        children: [
-          {
-            label: 'UNTour Detail',
-            pathname: PageRoutes.UNTourDetail,
-            matcher: match(PageRoutes.UNTourDetail),
-          },
-        ],
-      },
-      {
-        label: 'Wollman',
-        pathname: PageRoutes.Wollman,
-        matcher: match(PageRoutes.Wollman),
-        icon: BsFill6SquareFill,
-        query: defaultQuery,
-        children: [
-          {
-            label: 'Wollman Detail',
-            pathname: PageRoutes.WollmanDetail,
-            matcher: match(PageRoutes.WollmanDetail),
-          },
-        ],
-      },
-      {
-        label: 'CityTrip',
-        pathname: PageRoutes.CityTrip,
-        matcher: match(PageRoutes.CityTrip),
-        icon: BsFill7SquareFill,
-        query: defaultQuery,
-        children: [
-          {
-            label: 'CityTrip Detail',
-            pathname: PageRoutes.CityTripDetail,
-            matcher: match(PageRoutes.CityTripDetail),
-          },
-        ],
-      },
-      {
-        label: 'EllisIsland',
-        pathname: PageRoutes.EllisIsland,
-        matcher: match(PageRoutes.EllisIsland),
-        icon: BsFill8SquareFill,
-        query: defaultQuery,
-        children: [
-          {
-            label: 'EllisIsland Detail',
-            pathname: PageRoutes.EllisIslandDetail,
-            matcher: match(PageRoutes.EllisIslandDetail),
-          },
-        ],
-      },
-      {
-        label: 'MLBMets',
-        pathname: PageRoutes.MLBMets,
-        matcher: match(PageRoutes.MLBMets),
-        icon: BsFill9SquareFill,
-        query: defaultQuery,
-        children: [
-          {
-            label: 'MLBMets Detail',
-            pathname: PageRoutes.MLBMetsDetail,
-            matcher: match(PageRoutes.MLBMetsDetail),
+            label: 'Monthly Plan',
+            pathname: PageRoutes.LycaMonthlyPlan,
+            matcher: match(PageRoutes.LycaMonthlyPlan),
+            query: defaultQuery,
+            children: [
+              {
+                label: 'Monthly Plan Detail',
+                pathname: PageRoutes.LycaMonthlyPlanDetail,
+                matcher: match(PageRoutes.LycaMonthlyPlanDetail),
+              },
+            ],
           },
         ],
       },
