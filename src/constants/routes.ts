@@ -62,6 +62,7 @@ export enum PageRoutes {
 
   // Tickets
   Tickets = '/tickets',
+
   TopOfTheRock = '/tickets/top-of-the-rock',
   TopOfTheRockDetail = '/tickets/top-of-the-rock/:id',
   Summit = '/tickets/summit',
@@ -85,6 +86,7 @@ export enum PageRoutes {
 
   // USIMs
   Usims = '/usims',
+
   TMobile = '/usims/t-mobile',
   TMobileDaily = '/usims/t-mobile/daily',
   TMobileDailyDetail = '/usims/t-mobile/daily/:id',
@@ -92,11 +94,11 @@ export enum PageRoutes {
   TMobileDailyOtherDetail = '/usims/t-mobile/other/:id',
   TMobileMonthly = '/usims/t-mobile/monthly',
   TMobileMonthlyDetail = '/usims/t-mobile/monthly/:id',
-  TMobileMonthlyPlan = '/usims/t-mobile/monthly-plan',
-  TMobileMonthlyPlanDetail = '/usims/t-mobile/monthly-plan/:id',
+
   H2OSim = '/usims/h2osim',
   H2OEsim = '/usims/h2osim/esim',
   H2OEsimDetail = 'usims/h2osim/esim/:id',
+
   Lyca = '/usims/lyca',
   LycaPortal = '/usims/lyca/portal',
   LycaPortalDetail = '/usims/lyca/portal/:id',
@@ -373,13 +375,13 @@ export const navs: Nav[] = [
             ],
           },
           {
-            label: 'Daily(Canada/Mexico)+Pass',
+            label: 'Daily(Other)',
             pathname: PageRoutes.TMobileDailyOther,
             matcher: match(PageRoutes.TMobileDailyOther),
             query: defaultQuery,
             children: [
               {
-                label: 'Daily Detail',
+                label: 'Daily(Other) Detail',
                 pathname: PageRoutes.TMobileDailyOtherDetail,
                 matcher: match(PageRoutes.TMobileDailyOtherDetail),
               },
