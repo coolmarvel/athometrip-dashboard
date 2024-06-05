@@ -1,5 +1,6 @@
 import { DatePickerOptions, PageOptions, ResponsiveLayout, Search } from '@/components';
 import { ViewQueries } from '@/constants';
+import { TMobileDailyByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
@@ -12,7 +13,7 @@ const TMobileDailyPage = () => {
   const display = useMemo(() => {
     switch (viewOption) {
       case ViewQueries.Table:
-        return '<TMobileDailyPage />';
+        return <TMobileDailyByPage />;
       default:
         return null;
     }

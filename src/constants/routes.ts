@@ -42,7 +42,7 @@ export enum ApiRoutes {
 
   // USIMs
   TMobileDaily = 'api/usims/t-mobile/daily/:id?',
-  TMobileDailyPlan = 'api/usims/t-mobile/daily-plan/:id?',
+  TMobileDailyOther = 'api/usims/t-mobile/other/:id?',
   TMobileMonthly = 'api/usims/t-mobile/monthly/:id?',
   TMobileMonthlyPlan = 'api/usims/t-mobile/monthly-plan/:id?',
   H2OEsim = 'api/usims/h2osim/esim/:id?',
@@ -88,8 +88,8 @@ export enum PageRoutes {
   TMobile = '/usims/t-mobile',
   TMobileDaily = '/usims/t-mobile/daily',
   TMobileDailyDetail = '/usims/t-mobile/daily/:id',
-  TMobileDailyPlan = '/usims/t-mobile/daily-plan',
-  TMobileDailyPlanDetail = '/usims/t-mobile/daily-plan/:id',
+  TMobileDailyOther = '/usims/t-mobile/other',
+  TMobileDailyOtherDetail = '/usims/t-mobile/other/:id',
   TMobileMonthly = '/usims/t-mobile/monthly',
   TMobileMonthlyDetail = '/usims/t-mobile/monthly/:id',
   TMobileMonthlyPlan = '/usims/t-mobile/monthly-plan',
@@ -373,15 +373,15 @@ export const navs: Nav[] = [
             ],
           },
           {
-            label: 'Daily Plan',
-            pathname: PageRoutes.TMobileDailyPlan,
-            matcher: match(PageRoutes.TMobileDailyPlan),
+            label: 'Daily(Canada/Mexico)+Pass',
+            pathname: PageRoutes.TMobileDailyOther,
+            matcher: match(PageRoutes.TMobileDailyOther),
             query: defaultQuery,
             children: [
               {
-                label: 'Daily Plan Detail',
-                pathname: PageRoutes.TMobileDailyPlanDetail,
-                matcher: match(PageRoutes.TMobileDailyPlanDetail),
+                label: 'Daily Detail',
+                pathname: PageRoutes.TMobileDailyOtherDetail,
+                matcher: match(PageRoutes.TMobileDailyOtherDetail),
               },
             ],
           },
@@ -395,19 +395,6 @@ export const navs: Nav[] = [
                 label: 'Monthly Detail',
                 pathname: PageRoutes.TMobileMonthlyDetail,
                 matcher: match(PageRoutes.TMobileMonthlyDetail),
-              },
-            ],
-          },
-          {
-            label: 'Monthly Plan',
-            pathname: PageRoutes.TMobileMonthlyPlan,
-            matcher: match(PageRoutes.TMobileMonthlyPlan),
-            query: defaultQuery,
-            children: [
-              {
-                label: 'Monthly Plan Detail',
-                pathname: PageRoutes.TMobileMonthlyPlanDetail,
-                matcher: match(PageRoutes.TMobileMonthlyPlanDetail),
               },
             ],
           },
