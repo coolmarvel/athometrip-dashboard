@@ -9,10 +9,8 @@ import { setValue } from '../../redis';
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
-      const { page, cursor, limit } = req.query;
+      const { page, limit } = req.query;
       if (page && limit) return getCityTripByPage(req, res);
-    // if (cursor && limit) return getCityTrip(req, res);
-    // return getCityTrip(req, res);
     case 'POST':
       return res.status(405).end();
     default:
@@ -23,16 +21,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 const ticketName = 'city-trip';
 const productName = '';
 const url = 'http://localhost:3000/api/production/adapter/orders';
-
-// const getCityTrip = async (req: NextApiRequest, res: NextApiResponse) => {
-//   try {
-//     const result = await axios.get('http://localhost:3000/api/production/adapter/types/2/112');
-
-//     return res.status(200).json({ data: result.data, message: 'Successfully retrieved city-trip' });
-//   } catch {
-//     return res.status(500).json({ data: null, message: 'Failed to get city-trip' });
-//   }
-// };
 
 const getCityTripByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };

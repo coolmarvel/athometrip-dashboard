@@ -18,8 +18,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
+const productId = '34,35,107,311,312,313';
 const ticketName = 'mlb-mets';
-const productName = 'MLB';
 const url = 'http://localhost:3000/api/production/adapter/orders';
 
 const getMLBMetsByPage = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -33,7 +33,7 @@ const getMLBMetsByPage = async (req: NextApiRequest, res: NextApiResponse) => {
     let tickets: any = existingData ? existingData : [];
 
     if (tickets.length === 0) {
-      const { data } = await axios.get(`${url}?product_name=${productName}&start_date=${after}&end_date=${before}`);
+      const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
       tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order);
 
       await setValue(key, tickets);

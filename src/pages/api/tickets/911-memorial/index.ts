@@ -8,10 +8,8 @@ import { checkExistingDataInRange, filterTicket, sortTicket } from '../ticket-ut
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
-      const { page, cursor, limit } = req.query;
+      const { page, limit } = req.query;
       if (page && limit) return get911MemorialsByPage(req, res);
-    // if (cursor && limit) return get911Memorials(req, res);
-    // return get911Memorials(req, res);
     case 'POST':
       return res.status(405).end();
     default:
@@ -19,19 +17,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
+const productId = '208';
 const ticketName = '911-memorial';
-const productName = '911 메모리얼';
 const url = 'http://localhost:3000/api/production/adapter/orders';
-
-// const get911Memorials = async (req: NextApiRequest, res: NextApiResponse) => {
-//   try {
-//     const result = await axios.get(`${url}?product_name=${productName}`);
-
-//     return res.status(200).json({ data: result.data, message: 'Successfully retrieved 911-memorial' });
-//   } catch {
-//     return res.status(500).json({ data: null, message: 'Failed to get 911-memorial' });
-//   }
-// };
 
 const get911MemorialsByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };
@@ -44,7 +32,7 @@ const get911MemorialsByPage = async (req: NextApiRequest, res: NextApiResponse) 
     let tickets: any = existingData ? existingData : [];
 
     if (tickets.length === 0) {
-      const { data } = await axios.get(`${url}?product_name=${productName}&start_date=${after}&end_date=${before}`);
+      const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
       tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order);
 
       await setValue(key, tickets);

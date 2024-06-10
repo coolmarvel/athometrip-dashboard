@@ -11,8 +11,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     case 'GET':
       const { page, cursor, limit } = req.query;
       if (page && limit) return getUNTourByPage(req, res);
-    // if (cursor && limit) return getUNTour(req, res);
-    // return getUNTour(req, res);
     case 'POST':
       return res.status(405).end();
     default:
@@ -20,19 +18,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
+const productId = '110,309';
 const ticketName = 'un-tour';
-const productName = 'UN';
 const url = 'http://localhost:3000/api/production/adapter/orders';
-
-// const getUNTour = async (req: NextApiRequest, res: NextApiResponse) => {
-//   try {
-//     const result = await axios.get('http://localhost:3000/api/production/adapter/types/2/112');
-
-//     return res.status(200).json({ data: result.data, message: 'Successfully retrieved un-tour' });
-//   } catch {
-//     return res.status(500).json({ data: null, message: 'Failed to get un-tour' });
-//   }
-// };
 
 const getUNTourByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };
@@ -45,7 +33,7 @@ const getUNTourByPage = async (req: NextApiRequest, res: NextApiResponse) => {
     let tickets: any = existingData ? existingData : [];
 
     if (tickets.length === 0) {
-      const { data } = await axios.get(`${url}?product_name=${productName}&start_date=${after}&end_date=${before}`);
+      const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
       tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order);
 
       await setValue(key, tickets);

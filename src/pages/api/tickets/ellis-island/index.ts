@@ -9,10 +9,8 @@ import { setValue } from '../../redis';
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
-      const { page, cursor, limit } = req.query;
+      const { page, limit } = req.query;
       if (page && limit) return getEllisIslandByPage(req, res);
-      if (cursor && limit) return getEllisIsland(req, res);
-      return getEllisIsland(req, res);
     case 'POST':
       return res.status(405).end();
     default:
@@ -20,19 +18,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
+const productId = '249';
 const ticketName = 'ellis-island';
-const productName = '엘리스 아일랜드';
 const url = 'http://localhost:3000/api/production/adapter/orders';
-
-const getEllisIsland = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const result = await axios.get('http://localhost:3000/api/production/adapter/types/2/110');
-
-    return res.status(200).json({ data: result.data, message: 'Successfully retrieved ellis-island' });
-  } catch {
-    return res.status(500).json({ data: null, message: 'Failed to get ellis-island' });
-  }
-};
 
 const getEllisIslandByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };
@@ -45,7 +33,7 @@ const getEllisIslandByPage = async (req: NextApiRequest, res: NextApiResponse) =
     let tickets: any = existingData ? existingData : [];
 
     if (tickets.length === 0) {
-      const { data } = await axios.get(`${url}?product_name=${productName}&start_date=${after}&end_date=${before}`);
+      const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
       tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order);
 
       await setValue(key, tickets);
