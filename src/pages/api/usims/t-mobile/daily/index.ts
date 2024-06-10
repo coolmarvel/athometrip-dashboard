@@ -18,9 +18,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-// const productName = ['티 모바일 LTE 무제한 데일리', '티모바일 usim/esim 연장 상품'];
+const productId = '86,100,145';
 const usimName = 't-mobile-daily';
-const categoryIds = ['87,105', '31,87,104', '31,103,115'];
 const url = 'http://localhost:3000/api/production/adapter/orders';
 
 const getTMobileDaily = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -34,12 +33,8 @@ const getTMobileDaily = async (req: NextApiRequest, res: NextApiResponse) => {
     let usims: any = existingData ? existingData : [];
 
     if (usims.length === 0) {
-      const datas = [];
-      for (let i = 0; i < categoryIds.length; i++) {
-        const { data } = await axios.get(`${url}?category_id=${categoryIds[i]}&after=${after}&before=${before}`);
-        datas.push(...data);
-      }
-      usims = await sortUsim(datas, sort as RequiredKeysOf<any>, order as Order);
+      const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
+      usims = await sortUsim(data, sort as RequiredKeysOf<any>, order as Order);
 
       await setValue(key, usims);
 
