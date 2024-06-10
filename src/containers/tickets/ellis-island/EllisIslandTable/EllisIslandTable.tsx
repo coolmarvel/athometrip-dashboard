@@ -23,10 +23,27 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
   const columns = useMemo(
     () => [
       columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
-      columnHelper.accessor('billing.first_name', { header: t('name'), meta: { sortable: true } }),
+      columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created', { header: t('date'), cell: (context) => convertDate(context.renderValue()!), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? 'default', { header: t('type'), meta: { sortable: true } }),
-      columnHelper.accessor((row) => `${row.tour?.ellis_island_date} ${row.tour?.oneworld_time ? row.tour?.oneworld_time : ''}`, { header: t('schedule'), meta: { sortable: true } }),
+      columnHelper.accessor('', { header: t('type'), meta: { sortable: true } }),
+      columnHelper.accessor((row) => `${row.tour?.ellis_island_date}`, { header: t('schedule(date)'), meta: { sortable: true } }),
+      columnHelper.accessor(
+        (row) => {
+          const ellisIslandTime = row.order.metadata.find((meta: any) => meta.key === 'ellis_island_time')?.value;
+          const ellisIslandTime2 = row.order.metadata.find((meta: any) => meta.key === 'ellis_island_time2')?.value;
+
+          let schedule = '';
+          if (ellisIslandTime && ellisIslandTime2) schedule = `${ellisIslandTime} / ${ellisIslandTime2}`;
+          else if (ellisIslandTime) schedule = ellisIslandTime;
+          else if (ellisIslandTime2) schedule = ellisIslandTime2;
+
+          return schedule;
+        },
+        {
+          header: t('schedule(time)'),
+          meta: { sortable: true },
+        }
+      ),
       columnHelper.accessor('lineItem.quantity', { header: t('quantity'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
     ],
