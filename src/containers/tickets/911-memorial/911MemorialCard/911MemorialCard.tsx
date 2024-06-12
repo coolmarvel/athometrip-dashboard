@@ -27,11 +27,6 @@ const Memorial911Card = ({ data: memorial911 }: Memorial911CardProps) => {
       { label: t('Email'), value: memorial911?.billing.email ?? 'Email' },
       { label: t('Phone'), value: memorial911?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${memorial911?.payment?.payment_method_title ?? 'Payment method'} (${memorial911?.payment?.transaction_id ?? 'Transaction ID'})` },
-      // { label: t('Product'), value: memorial911?.lineItem.parent_name ?? 'Product name' },
-      // { label: t('Quantity'), value: memorial911?.lineItem.quantity ?? 'Quantity' },
-      // { label: t('Total'), value: `$${memorial911?.lineItem.total ?? 'Total'}` },
-      // { label: t('Date'), value: convertDate(memorial911?.tour?.date_911 ?? memorial911?.tour?.date_911_2) ?? 'Date' },
-      // { label: t('Time'), value: memorial911?.tour?.time_911 ?? memorial911?.tour?.time_911_2 ?? 'Time' },
     ],
     [memorial911, convertDate, t]
   );

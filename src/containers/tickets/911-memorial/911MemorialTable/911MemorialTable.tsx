@@ -1,10 +1,12 @@
 import { DataTable } from '@/components';
 import { PageRoutes } from '@/constants';
 import { useSafePush, useConvertDate } from '@/hooks';
+import { useModalStore } from '@/stores';
 import { toUrl } from '@/utils';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Memorial911Modal } from '@/containers';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -18,7 +20,15 @@ const Memorial911Table = ({ memorial911, isLoading }: Memorial911TableProps) => 
   const { t } = useTranslation();
   const convertDate = useConvertDate();
 
-  console.log(memorial911);
+  const { openModal } = useModalStore(['openModal']);
+
+  const handleModal = useCallback<(memorial911Modal: any) => void>(
+    (memorial911Modal) => {
+      if (!memorial911Modal) return;
+      openModal(Memorial911Modal, { memorial911Modal });
+    },
+    [openModal]
+  );
 
   const columns = useMemo(
     () => [
@@ -34,9 +44,12 @@ const Memorial911Table = ({ memorial911, isLoading }: Memorial911TableProps) => 
     [t]
   );
 
+  console.log(memorial911);
+
   const table = useReactTable({ data: memorial911, columns, getCoreRowModel: getCoreRowModel() });
 
-  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.Memorial911Detail, { id: row.original.order.id }))} />;
+  // return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.Memorial911Detail, { id: row.original.order.id }))} />;
+  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
 };
 
 export default Memorial911Table;
