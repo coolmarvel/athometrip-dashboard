@@ -2,6 +2,19 @@ import { Order } from '@/apis';
 import { RequiredKeysOf } from 'type-fest';
 import { getKeys, getValue } from '../redis';
 
+export const getTicketById = async (ticketName: string, ticketId: string): Promise<any> => {
+  const keys = await getKeys(`${ticketName}_*`);
+  for (const key of keys) {
+    const ticketsData: any = await getValue(key);
+    if (ticketsData) {
+      const ticket = ticketsData.find((ticket: any) => ticket.order.id === ticketId);
+      if (ticket) return ticket;
+    }
+  }
+
+  return null;
+};
+
 export const checkExistingDataInRange = async (name: string, after: string, before: string) => {
   const keys = await getKeys(`${name}_*`);
   for (const key of keys) {

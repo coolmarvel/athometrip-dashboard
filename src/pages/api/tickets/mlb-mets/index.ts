@@ -18,7 +18,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '34,35,107,311,312,313';
+const productId = '158582,159803,395630,397359,399005,399012';
 const ticketName = 'mlb-mets';
 const url = 'http://localhost:3000/api/production/adapter/orders';
 

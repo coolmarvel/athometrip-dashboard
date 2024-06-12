@@ -2,9 +2,14 @@ import { toUrl } from '@/utils';
 import { ApiRoutes } from '@/constants';
 import { PageQueryParams, useFetch, useGetPage, useInvalidate, usePost, useUpdate } from '..';
 
-// [GET] /api/tickets/911-memorial
+// [GET] /api/tickets/911-memorial?params
 export const useGet911MemorialByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.Memorial911), params);
+};
+
+// [GET] /api/tickets/911-memorial/{id}
+export const useGet911Memorial = (id?: number) => {
+  return useFetch<any>(toUrl(ApiRoutes.Memorial911, { id }));
 };
 
 // [PUT] /api/tickets/911-memorial

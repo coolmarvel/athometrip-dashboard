@@ -18,7 +18,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '110,309';
+const productId = '101264,152209';
 const ticketName = 'un-tour';
 const url = 'http://localhost:3000/api/production/adapter/orders';
 

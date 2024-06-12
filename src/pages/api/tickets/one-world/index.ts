@@ -18,7 +18,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '191';
+const productId = '21725';
 const ticketName = 'one-world';
 const url = 'http://localhost:3000/api/production/adapter/orders';
 

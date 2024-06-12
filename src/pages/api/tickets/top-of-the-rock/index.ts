@@ -18,7 +18,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '60';
+const productId = '21729';
 const ticketName = 'top-of-the-rock';
 const url = 'http://localhost:3000/api/production/adapter/orders';
 

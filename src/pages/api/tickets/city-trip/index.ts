@@ -19,7 +19,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 const ticketName = 'city-trip';
-const productName = '';
 const url = 'http://localhost:3000/api/production/adapter/orders';
 
 const getCityTripByPage = async (req: NextApiRequest, res: NextApiResponse) => {
