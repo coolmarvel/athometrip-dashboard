@@ -1,10 +1,15 @@
 import { toUrl } from '@/utils';
 import { ApiRoutes } from '@/constants';
-import { PageQueryParams, useGetPage, useInvalidate, usePost, useUpdate } from '..';
+import { PageQueryParams, useFetch, useGetPage, useInvalidate, usePost, useUpdate } from '..';
 
-// [GET] /api/tickets/ellis-island
+// [GET] /api/tickets/ellis-island?params
 export const useGetEllisIslandByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.EllisIsland), params);
+};
+
+// [GET] /api/tickets/ellis-island/{id}
+export const useGetEllisIsland = (id?: number) => {
+  return useFetch<any>(toUrl(ApiRoutes.Memorial911, { id }));
 };
 
 // [PUT] /api/tickets/ellis-island

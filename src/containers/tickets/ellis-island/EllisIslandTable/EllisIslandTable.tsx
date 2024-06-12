@@ -1,10 +1,12 @@
 import { DataTable } from '@/components';
 import { PageRoutes } from '@/constants';
 import { useSafePush, useConvertDate } from '@/hooks';
+import { useModalStore } from '@/stores';
 import { toUrl } from '@/utils';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { EllisIslandModal } from '../EllisIslandModal';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -17,6 +19,16 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
   const { push } = useSafePush();
   const { t } = useTranslation();
   const convertDate = useConvertDate();
+
+  const { openModal } = useModalStore(['openModal']);
+
+  const handleModal = useCallback<(ellisIsland: any) => void>(
+    (ellisIsland) => {
+      if (!ellisIsland) return;
+      openModal(EllisIslandModal, { ellisIsland });
+    },
+    [openModal]
+  );
 
   console.log(ellisIsland);
 
@@ -52,7 +64,8 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
 
   const table = useReactTable({ data: ellisIsland, columns, getCoreRowModel: getCoreRowModel() });
 
-  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.EllisIslandDetail, { id: row.original.order.id }))} />;
+  // return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.EllisIslandDetail, { id: row.original.order.id }))} />;
+  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
 };
 
 export default EllisIslandTable;

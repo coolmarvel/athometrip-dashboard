@@ -22,13 +22,15 @@ const Memorial911Table = ({ memorial911, isLoading }: Memorial911TableProps) => 
 
   const { openModal } = useModalStore(['openModal']);
 
-  const handleModal = useCallback<(memorial911Modal: any) => void>(
-    (memorial911Modal) => {
-      if (!memorial911Modal) return;
-      openModal(Memorial911Modal, { memorial911Modal });
+  const handleModal = useCallback<(memorial911: any) => void>(
+    (memorial911) => {
+      if (!memorial911) return;
+      openModal(Memorial911Modal, { memorial911 });
     },
     [openModal]
   );
+
+  console.log(memorial911);
 
   const columns = useMemo(
     () => [
@@ -43,8 +45,6 @@ const Memorial911Table = ({ memorial911, isLoading }: Memorial911TableProps) => 
     ],
     [t]
   );
-
-  console.log(memorial911);
 
   const table = useReactTable({ data: memorial911, columns, getCoreRowModel: getCoreRowModel() });
 

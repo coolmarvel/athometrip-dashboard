@@ -26,8 +26,8 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-interface Memorial911ModalProps {
-  memorial911: any;
+interface EllisIslandModalProps {
+  ellisIsland: any;
   onClose: () => void;
 }
 
@@ -40,31 +40,31 @@ const statusColorMapping: any = {
   failed: 'orange',
 };
 
-const Memorial911Modal = ({ memorial911, onClose }: Memorial911ModalProps) => {
+const EllisIslandModal = ({ ellisIsland, onClose }: EllisIslandModalProps) => {
   const { t } = useTranslation();
   const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
     () => [
-      { label: t('Name'), value: memorial911?.billing.first_name ?? 'Name' },
-      { label: t('Email'), value: memorial911?.billing.email ?? 'Email' },
-      { label: t('Phone'), value: memorial911?.billing.phone ?? 'Phone' },
-      { label: t('Payment Via'), value: `${memorial911?.payment?.payment_method_title ?? 'Payment method'} (${memorial911?.payment?.transaction_id ?? 'Transaction ID'})` },
+      { label: t('Name'), value: ellisIsland?.billing.first_name ?? 'Name' },
+      { label: t('Email'), value: ellisIsland?.billing.email ?? 'Email' },
+      { label: t('Phone'), value: ellisIsland?.billing.phone ?? 'Phone' },
+      { label: t('Payment Via'), value: `${ellisIsland?.payment?.payment_method_title ?? 'Payment method'} (${ellisIsland?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [memorial911, convertDate, t]
+    [ellisIsland, convertDate, t]
   );
 
   const columns = useMemo(
     () =>
       [
         {
-          name: memorial911?.lineItem.name,
-          quantity: memorial911?.lineItem.quantity,
-          total: memorial911?.lineItem.total,
+          name: ellisIsland?.lineItem.name,
+          quantity: ellisIsland?.lineItem.quantity,
+          total: ellisIsland?.lineItem.total,
         },
       ] ?? [],
-    [memorial911]
+    [ellisIsland]
   );
 
   return (
@@ -78,9 +78,9 @@ const Memorial911Modal = ({ memorial911, onClose }: Memorial911ModalProps) => {
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">
-            Order #{memorial911?.order.id ?? t('Order ID')}
-            <Badge colorScheme={statusColorMapping[memorial911?.order.status] || 'gray'} fontSize={'x-large'}>
-              {memorial911?.order.status ? t(memorial911.order.status) : t('Status')}
+            Order #{ellisIsland?.order.id ?? t('Order ID')}
+            <Badge colorScheme={statusColorMapping[ellisIsland?.order.status] || 'gray'} fontSize={'x-large'}>
+              {ellisIsland?.order.status ? t(ellisIsland.order.status) : t('Status')}
             </Badge>
           </Flex>
           <ModalCloseButton />
@@ -91,7 +91,7 @@ const Memorial911Modal = ({ memorial911, onClose }: Memorial911ModalProps) => {
             <Box p={5}>
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
-                  <Skeleton key={index} isLoaded={!!memorial911}>
+                  <Skeleton key={index} isLoaded={!!ellisIsland}>
                     <WithLabel label={attribute.label} value={attribute.value} />
                   </Skeleton>
                 ))}
@@ -130,4 +130,4 @@ const Memorial911Modal = ({ memorial911, onClose }: Memorial911ModalProps) => {
   );
 };
 
-export default Memorial911Modal;
+export default EllisIslandModal;
