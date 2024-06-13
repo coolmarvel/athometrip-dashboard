@@ -6,7 +6,7 @@ import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useMemo } from 'react';
 
-const TMobileDailyPage = () => {
+const TMobileDailyPages = () => {
   const { router, push } = useSafePush();
   const viewOption = router.query?.view as ViewQueries;
 
@@ -47,4 +47,4 @@ const TMobileDailyPage = () => {
   );
 };
 
-export default TMobileDailyPage;
+export default TMobileDailyPages;

@@ -5,14 +5,14 @@ import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useMemo } from 'react';
 
-const TMobileDailyPlanPage = () => {
+const TMobileDailyOtherPages = () => {
   const { router, push } = useSafePush();
   const viewOption = router.query?.view as ViewQueries;
 
   const display = useMemo(() => {
     switch (viewOption) {
       case ViewQueries.Table:
-        return '<TMobileDailyPlanPage />';
+        return '<TMobileDailyOtherPages />';
       default:
         return null;
     }
@@ -46,4 +46,4 @@ const TMobileDailyPlanPage = () => {
   );
 };
 
-export default TMobileDailyPlanPage;
+export default TMobileDailyOtherPages;

@@ -41,6 +41,7 @@ export enum ApiRoutes {
   TopOfTheRock = 'api/tickets/top-of-the-rock/:id?',
 
   // USIMs
+  TMobile = 'api/usims/t-mobile/:id?',
   TMobileDaily = 'api/usims/t-mobile/daily/:id?',
   TMobileDailyOther = 'api/usims/t-mobile/other/:id?',
   TMobileMonthly = 'api/usims/t-mobile/monthly/:id?',
@@ -88,6 +89,7 @@ export enum PageRoutes {
   Usims = '/usims',
 
   TMobile = '/usims/t-mobile',
+  TMobileDetail = '/usims/t-mobile/:id',
   TMobileDaily = '/usims/t-mobile/daily',
   TMobileDailyDetail = '/usims/t-mobile/daily/:id',
   TMobileDailyOther = '/usims/t-mobile/other',
@@ -123,6 +125,13 @@ export enum ViewQueries {
   List = 'list',
 }
 
+export enum ModeQueries {
+  Usim = 'usim',
+  Esim = 'esim',
+  Daily = 'daily',
+  Monthly = 'monthly',
+}
+
 export interface Nav {
   label: string;
   pathname: PageRoutes;
@@ -133,18 +142,35 @@ export interface Nav {
   collapsible?: boolean;
 }
 
-const after: string = format(subMonths(new Date(), 1), 'yyyy-MM-dd', { locale: ko });
-const before: string = format(new Date(), 'yyyy-MM-dd', { locale: ko });
-
 export const defaultQuery = {
   view: ViewQueries.Table,
   page: 1,
   limit: 10,
   sort: 'id',
   order: 'desc',
+  search: '',
+};
+
+const after: string = format(subMonths(new Date(), 1), 'yyyy-MM-dd', { locale: ko });
+const before: string = format(new Date(), 'yyyy-MM-dd', { locale: ko });
+
+export const ticketQuery = {
+  page: 1,
+  limit: 10,
+  sort: 'id',
+  order: 'desc',
+  // after: after,
+  // before: before,
+};
+
+export const usimQuery = {
+  page: 1,
+  limit: 10,
+  sort: 'id',
+  order: 'desc',
+  mode: ModeQueries.Usim,
   after: after,
   before: before,
-  search: '',
 };
 
 // t("Users")
@@ -208,7 +234,7 @@ export const navs: Nav[] = [
         pathname: PageRoutes.TopOfTheRock,
         matcher: match(PageRoutes.TopOfTheRock),
         icon: BsFill0SquareFill,
-        query: defaultQuery,
+        query: ticketQuery,
         children: [
           {
             label: 'Top of the Rock Detail',
@@ -222,7 +248,7 @@ export const navs: Nav[] = [
         pathname: PageRoutes.Summit,
         matcher: match(PageRoutes.Summit),
         icon: BsFill1SquareFill,
-        query: defaultQuery,
+        query: ticketQuery,
         children: [
           {
             label: 'Summit Detail',
@@ -236,7 +262,7 @@ export const navs: Nav[] = [
         pathname: PageRoutes.Empire,
         matcher: match(PageRoutes.Empire),
         icon: BsFill2SquareFill,
-        query: defaultQuery,
+        query: ticketQuery,
         children: [
           {
             label: 'Empire Detail',
@@ -250,7 +276,7 @@ export const navs: Nav[] = [
         pathname: PageRoutes.OneWorld,
         matcher: match(PageRoutes.OneWorld),
         icon: BsFill3SquareFill,
-        query: defaultQuery,
+        query: ticketQuery,
         children: [
           {
             label: 'OneWorld Detail',
@@ -264,7 +290,7 @@ export const navs: Nav[] = [
         pathname: PageRoutes.Memorial911,
         matcher: match(PageRoutes.Memorial911),
         icon: BsFill4SquareFill,
-        query: defaultQuery,
+        query: ticketQuery,
         children: [
           {
             label: 'Memorial911 Detail',
@@ -278,7 +304,7 @@ export const navs: Nav[] = [
         pathname: PageRoutes.UNTour,
         matcher: match(PageRoutes.UNTour),
         icon: BsFill5SquareFill,
-        query: defaultQuery,
+        query: ticketQuery,
         children: [
           {
             label: 'UNTour Detail',
@@ -292,7 +318,7 @@ export const navs: Nav[] = [
         pathname: PageRoutes.Wollman,
         matcher: match(PageRoutes.Wollman),
         icon: BsFill6SquareFill,
-        query: defaultQuery,
+        query: ticketQuery,
         children: [
           {
             label: 'Wollman Detail',
@@ -306,7 +332,7 @@ export const navs: Nav[] = [
         pathname: PageRoutes.CityTrip,
         matcher: match(PageRoutes.CityTrip),
         icon: BsFill7SquareFill,
-        query: defaultQuery,
+        query: ticketQuery,
         children: [
           {
             label: 'CityTrip Detail',
@@ -320,7 +346,7 @@ export const navs: Nav[] = [
         pathname: PageRoutes.EllisIsland,
         matcher: match(PageRoutes.EllisIsland),
         icon: BsFill8SquareFill,
-        query: defaultQuery,
+        query: ticketQuery,
         children: [
           {
             label: 'EllisIsland Detail',
@@ -334,7 +360,7 @@ export const navs: Nav[] = [
         pathname: PageRoutes.MLBMets,
         matcher: match(PageRoutes.MLBMets),
         icon: BsFill9SquareFill,
-        query: defaultQuery,
+        query: ticketQuery,
         children: [
           {
             label: 'MLBMets Detail',
@@ -359,48 +385,8 @@ export const navs: Nav[] = [
         pathname: PageRoutes.TMobile,
         matcher: match(PageRoutes.TMobile),
         icon: BsFill1SquareFill,
-        collapsible: true,
-        children: [
-          {
-            label: 'Daily',
-            pathname: PageRoutes.TMobileDaily,
-            matcher: match(PageRoutes.TMobileDaily),
-            query: defaultQuery,
-            children: [
-              {
-                label: 'Daily Detail',
-                pathname: PageRoutes.TMobileDailyDetail,
-                matcher: match(PageRoutes.TMobileDailyDetail),
-              },
-            ],
-          },
-          {
-            label: 'Daily(Other)',
-            pathname: PageRoutes.TMobileDailyOther,
-            matcher: match(PageRoutes.TMobileDailyOther),
-            query: defaultQuery,
-            children: [
-              {
-                label: 'Daily(Other) Detail',
-                pathname: PageRoutes.TMobileDailyOtherDetail,
-                matcher: match(PageRoutes.TMobileDailyOtherDetail),
-              },
-            ],
-          },
-          {
-            label: 'Monthly',
-            pathname: PageRoutes.TMobileMonthly,
-            matcher: match(PageRoutes.TMobileMonthly),
-            query: defaultQuery,
-            children: [
-              {
-                label: 'Monthly Detail',
-                pathname: PageRoutes.TMobileMonthlyDetail,
-                matcher: match(PageRoutes.TMobileMonthlyDetail),
-              },
-            ],
-          },
-        ],
+        query: usimQuery,
+        children: [{ label: 'T-Mobile Detail', pathname: PageRoutes.TMobileDetail, matcher: match(PageRoutes.TMobileDetail), query: usimQuery }],
       },
       {
         label: 'H2OSim',
@@ -413,7 +399,7 @@ export const navs: Nav[] = [
             label: 'H2OEsim',
             pathname: PageRoutes.H2OEsim,
             matcher: match(PageRoutes.H2OEsim),
-            query: defaultQuery,
+            query: usimQuery,
             children: [
               {
                 label: 'H2OEsim Detail',
@@ -435,7 +421,7 @@ export const navs: Nav[] = [
             label: 'Lyca Portal',
             pathname: PageRoutes.LycaPortal,
             matcher: match(PageRoutes.LycaPortal),
-            query: defaultQuery,
+            query: usimQuery,
             children: [
               {
                 label: 'Lyca Portal Detail',
@@ -448,7 +434,7 @@ export const navs: Nav[] = [
             label: 'Monthly Plan',
             pathname: PageRoutes.LycaMonthlyPlan,
             matcher: match(PageRoutes.LycaMonthlyPlan),
-            query: defaultQuery,
+            query: usimQuery,
             children: [
               {
                 label: 'Monthly Plan Detail',
