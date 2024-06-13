@@ -1,10 +1,12 @@
 import { DataTable } from '@/components';
 import { PageRoutes } from '@/constants';
 import { useSafePush, useConvertDate } from '@/hooks';
+import { useModalStore } from '@/stores';
 import { toUrl } from '@/utils';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { TopOfTheRockModal } from '../TopOfTheRockModal';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -17,6 +19,16 @@ const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) 
   const { push } = useSafePush();
   const { t } = useTranslation();
   const convertDate = useConvertDate();
+
+  const { openModal } = useModalStore(['openModal']);
+
+  const handleModal = useCallback<(topOfTheRock: any) => void>(
+    (topOfTheRock) => {
+      if (!topOfTheRock) return;
+      openModal(TopOfTheRockModal, { topOfTheRock });
+    },
+    [openModal]
+  );
 
   console.log(topOfTheRock);
 
@@ -36,7 +48,8 @@ const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) 
 
   const table = useReactTable({ data: topOfTheRock, columns, getCoreRowModel: getCoreRowModel() });
 
-  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.TopOfTheRockDetail, { id: row.original.order.id }))} />;
+  // return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.TopOfTheRockDetail, { id: row.original.order.id }))} />;
+  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
 };
 
 export default TopOfTheRockTable;

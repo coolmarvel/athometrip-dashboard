@@ -47,7 +47,7 @@ const UserCreateModal = ({ onClose }: UserCreateModalProps) => {
         )}
       >
         <ModalHeader>{t('Create User')}</ModalHeader>
-        <ModalCloseButton />
+        {/* <ModalCloseButton /> */}
         <ModalBody>
           <Flex direction={'column'} gap={'4'}>
             <UserProfileInput

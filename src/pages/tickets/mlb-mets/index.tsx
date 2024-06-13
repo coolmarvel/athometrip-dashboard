@@ -6,7 +6,7 @@ import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useMemo } from 'react';
 
-const MLBMetsPage = () => {
+const MLBMetsPages = () => {
   const { router, push } = useSafePush();
   const viewOption = router.query?.view as ViewQueries;
 
@@ -15,7 +15,7 @@ const MLBMetsPage = () => {
       case ViewQueries.Table:
         return <MLBMetsByPage />;
       case ViewQueries.List:
-        return '<MLBMetsPage usesObserver />';
+        return '<MLBMetsPages usesObserver />';
       default:
         return null;
     }
@@ -51,4 +51,4 @@ const MLBMetsPage = () => {
   );
 };
 
-export default MLBMetsPage;
+export default MLBMetsPages;

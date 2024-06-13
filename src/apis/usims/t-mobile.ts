@@ -3,7 +3,7 @@ import { ApiRoutes } from '@/constants';
 import { useGetPage, PageQueryParams, usePost, useInvalidate } from '..';
 
 // [GET] /api/usims/t-mobile/daily
-export const useGetTMobileDaily = (params: PageQueryParams) => {
+export const useGetTMobileDailyByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.TMobileDaily), params);
 };
 
@@ -13,21 +13,21 @@ export const useResetTMobileDaily = () => {
 };
 
 // [GET] /api/usims/t-mobile/daily-other
-export const useGetTMobileDailyOther = (params: PageQueryParams) => {
+export const useGetTMobileDailyByPageOtherByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.TMobileDailyOther), params);
 };
 
 // [DELETE] /api/usims/t-mobile/daily-other/reset
-export const useResettTMobileDailyOther = () => {
+export const useResetTMobileDailyOther = () => {
   return usePost(`${toUrl(ApiRoutes.TMobileDailyOther)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.TMobileDailyOther)) });
 };
 
 // [GET] /api/usims/t-mobile/monthly
-export const useGetTMobileMonthly = (params: PageQueryParams) => {
+export const useGetTMobileMonthlyByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.TMobileMonthly), params);
 };
 
 // [DELETE] /api/usims/t-mobile/monthly/reset
-export const useResettTMobileMonthly = () => {
+export const useResetTMobileMonthly = () => {
   return usePost(`${toUrl(ApiRoutes.TMobileMonthly)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.TMobileMonthly)) });
 };

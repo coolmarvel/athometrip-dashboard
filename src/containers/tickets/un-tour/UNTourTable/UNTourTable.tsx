@@ -1,10 +1,12 @@
 import { DataTable } from '@/components';
 import { PageRoutes } from '@/constants';
 import { useSafePush, useConvertDate } from '@/hooks';
+import { useModalStore } from '@/stores';
 import { toUrl } from '@/utils';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { UNTourModal } from '../UNTourModal';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -17,6 +19,16 @@ const UNTourTable = ({ unTour, isLoading }: UNTourTableProps) => {
   const { push } = useSafePush();
   const { t } = useTranslation();
   const convertDate = useConvertDate();
+
+  const { openModal } = useModalStore(['openModal']);
+
+  const handleModal = useCallback<(unTour: any) => void>(
+    (unTour) => {
+      if (!unTour) return;
+      openModal(UNTourModal, { unTour });
+    },
+    [openModal]
+  );
 
   console.log(unTour);
 
@@ -58,7 +70,8 @@ const UNTourTable = ({ unTour, isLoading }: UNTourTableProps) => {
 
   const table = useReactTable({ data: unTour, columns, getCoreRowModel: getCoreRowModel() });
 
-  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.UNTourDetail, { id: row.original.order.id }))} />;
+  // return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.UNTourDetail, { id: row.original.order.id }))} />;
+  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
 };
 
 export default UNTourTable;

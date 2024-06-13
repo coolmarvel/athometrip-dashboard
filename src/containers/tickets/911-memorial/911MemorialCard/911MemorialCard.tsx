@@ -1,4 +1,5 @@
 import { WithLabel } from '@/components';
+import { statusColor } from '@/constants';
 import { useConvertDate } from '@/hooks';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
@@ -7,15 +8,6 @@ import { useTranslation } from 'react-i18next';
 interface Memorial911CardProps {
   data?: any;
 }
-
-const statusColorMapping: any = {
-  processing: 'yellow',
-  completed: 'green',
-  cancelled: 'red',
-  refunded: 'purple',
-  pending: 'gray',
-  failed: 'orange',
-};
 
 const Memorial911Card = ({ data: memorial911 }: Memorial911CardProps) => {
   const { t } = useTranslation();
@@ -31,17 +23,7 @@ const Memorial911Card = ({ data: memorial911 }: Memorial911CardProps) => {
     [memorial911, convertDate, t]
   );
 
-  const columns = useMemo(
-    () =>
-      [
-        {
-          name: memorial911?.lineItem.name,
-          quantity: memorial911?.lineItem.quantity,
-          total: memorial911?.lineItem.total,
-        },
-      ] ?? [],
-    [memorial911]
-  );
+  const columns = useMemo(() => [{ name: memorial911?.lineItem.name, quantity: memorial911?.lineItem.quantity, total: memorial911?.lineItem.total }] ?? [], [memorial911]);
 
   return (
     <Card>
@@ -49,7 +31,7 @@ const Memorial911Card = ({ data: memorial911 }: Memorial911CardProps) => {
         <Skeleton isLoaded={!!memorial911}>
           <Flex justifyContent="space-between" alignItems="center">
             <Heading size="lg">Order #{memorial911?.order.id ?? t('Order ID')}</Heading>
-            <Badge colorScheme={statusColorMapping[memorial911?.order.status] || 'gray'} fontSize={'x-large'}>
+            <Badge colorScheme={statusColor[memorial911?.order.status] || 'gray'} fontSize={'x-large'}>
               {memorial911?.order.status ? t(memorial911.order.status) : t('Status')}
             </Badge>
           </Flex>

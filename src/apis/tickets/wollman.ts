@@ -1,10 +1,15 @@
 import { toUrl } from '@/utils';
-import { PageQueryParams, useGetPage, useInvalidate, usePost } from '..';
+import { PageQueryParams, useFetch, useGetPage, useInvalidate, usePost } from '..';
 import { ApiRoutes } from '@/constants';
 
-// [GET] /api/tickets/wollman
+// [GET] /api/tickets/wollman?params
 export const useGetWollmanByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.Wollman), params);
+};
+
+// [GET] /api/tickets/wollman/{id}
+export const useGetWollman = (id?: number) => {
+  return useFetch<any>(toUrl(ApiRoutes.Wollman, { id }));
 };
 
 // [DELETE] /api/tickets/wollman/reset

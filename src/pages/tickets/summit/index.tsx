@@ -6,7 +6,7 @@ import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useMemo } from 'react';
 
-const SummitPage = () => {
+const SummitPages = () => {
   const { router, push } = useSafePush();
   const viewOption = router.query?.view as ViewQueries;
 
@@ -15,7 +15,7 @@ const SummitPage = () => {
       case ViewQueries.Table:
         return <SummitByPage />;
       case ViewQueries.List:
-        return '<SummitPage usesObserver />';
+        return '<SummitPages usesObserver />';
       default:
         return null;
     }
@@ -51,4 +51,4 @@ const SummitPage = () => {
   );
 };
 
-export default SummitPage;
+export default SummitPages;

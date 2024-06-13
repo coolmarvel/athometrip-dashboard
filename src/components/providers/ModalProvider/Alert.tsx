@@ -11,7 +11,7 @@ const Alert = () => {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{alert?.title}</ModalHeader>
-        <ModalCloseButton />
+        {/* <ModalCloseButton /> */}
         <ModalBody>{alert?.content}</ModalBody>
         <ModalFooter>
           <Button variant="ghost" onClick={closeAlert}>

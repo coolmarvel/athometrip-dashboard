@@ -6,7 +6,7 @@ import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useMemo } from 'react';
 
-const UNTourPage = () => {
+const UNTourPages = () => {
   const { router, push } = useSafePush();
   const viewOption = router.query?.view as ViewQueries;
 
@@ -15,7 +15,7 @@ const UNTourPage = () => {
       case ViewQueries.Table:
         return <UNTourByPage />;
       case ViewQueries.List:
-        return '<UNTourPage usesObserver />';
+        return '<UNTourPages usesObserver />';
       default:
         return null;
     }
@@ -51,4 +51,4 @@ const UNTourPage = () => {
   );
 };
 
-export default UNTourPage;
+export default UNTourPages;

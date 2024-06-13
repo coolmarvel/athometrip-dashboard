@@ -1,10 +1,15 @@
 import { toUrl } from '@/utils';
 import { ApiRoutes } from '@/constants';
-import { PageQueryParams, useGetPage, useInvalidate, usePost, useUpdate } from '..';
+import { PageQueryParams, useFetch, useGetPage, useInvalidate, usePost, useUpdate } from '..';
 
-// [GET] /api/tickets/mlb-mets
+// [GET] /api/tickets/mlb-mets?params
 export const useGetMLBMetsByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.MLBMets), params);
+};
+
+// [GET] /api/tickets/mlb-mets/{id}
+export const useGetMLBMets = (id?: number) => {
+  return useFetch<any>(toUrl(ApiRoutes.MLBMets, { id }));
 };
 
 // [PUT] /api/tickets/mlb-mets

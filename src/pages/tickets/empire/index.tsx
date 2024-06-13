@@ -6,7 +6,7 @@ import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useMemo } from 'react';
 
-const EmpirePage = () => {
+const EmpirePages = () => {
   const { router, push } = useSafePush();
   const viewOption = router.query?.view as ViewQueries;
 
@@ -15,7 +15,7 @@ const EmpirePage = () => {
       case ViewQueries.Table:
         return <EmpireByPage />;
       case ViewQueries.List:
-        return '<EmpirePage usesObserver />';
+        return '<EmpirePages usesObserver />';
       default:
         return null;
     }
@@ -51,4 +51,4 @@ const EmpirePage = () => {
   );
 };
 
-export default EmpirePage;
+export default EmpirePages;

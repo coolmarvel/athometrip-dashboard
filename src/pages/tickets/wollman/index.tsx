@@ -6,7 +6,7 @@ import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useMemo } from 'react';
 
-const WollmanPage = () => {
+const WollmanPages = () => {
   const { router, push } = useSafePush();
   const viewOption = router.query?.view as ViewQueries;
 
@@ -15,7 +15,7 @@ const WollmanPage = () => {
       case ViewQueries.Table:
         return <WollmanByPage />;
       case ViewQueries.List:
-        return '<WollmanPage usesObserver />';
+        return '<WollmanPages usesObserver />';
       default:
         return null;
     }
@@ -51,4 +51,4 @@ const WollmanPage = () => {
   );
 };
 
-export default WollmanPage;
+export default WollmanPages;

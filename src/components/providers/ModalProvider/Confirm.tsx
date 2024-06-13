@@ -17,7 +17,7 @@ const Confirm = () => {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{confirm?.title}</ModalHeader>
-        <ModalCloseButton />
+        {/* <ModalCloseButton /> */}
         <ModalBody>{confirm?.content}</ModalBody>
         <ModalFooter>
           <Button mr={'3'} onClick={closeConfirm}>

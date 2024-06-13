@@ -1,4 +1,5 @@
 import { WithLabel } from '@/components';
+import { statusColor } from '@/constants';
 import { useConvertDate } from '@/hooks';
 import {
   Badge,
@@ -23,22 +24,12 @@ import {
   Tr,
 } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
-
 import { useTranslation } from 'react-i18next';
 
 interface Memorial911ModalProps {
   memorial911: any;
   onClose: () => void;
 }
-
-const statusColorMapping: any = {
-  processing: 'yellow',
-  completed: 'green',
-  cancelled: 'red',
-  refunded: 'purple',
-  pending: 'gray',
-  failed: 'orange',
-};
 
 const Memorial911Modal = ({ memorial911, onClose }: Memorial911ModalProps) => {
   const { t } = useTranslation();
@@ -55,17 +46,7 @@ const Memorial911Modal = ({ memorial911, onClose }: Memorial911ModalProps) => {
     [memorial911, convertDate, t]
   );
 
-  const columns = useMemo(
-    () =>
-      [
-        {
-          name: memorial911?.lineItem.name,
-          quantity: memorial911?.lineItem.quantity,
-          total: memorial911?.lineItem.total,
-        },
-      ] ?? [],
-    [memorial911]
-  );
+  const columns = useMemo(() => [{ name: memorial911?.lineItem.name, quantity: memorial911?.lineItem.quantity, total: memorial911?.lineItem.total }] ?? [], [memorial911]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -79,11 +60,11 @@ const Memorial911Modal = ({ memorial911, onClose }: Memorial911ModalProps) => {
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">
             Order #{memorial911?.order.id ?? t('Order ID')}
-            <Badge colorScheme={statusColorMapping[memorial911?.order.status] || 'gray'} fontSize={'x-large'}>
+            <Badge colorScheme={statusColor[memorial911?.order.status] || 'gray'} fontSize={'x-large'}>
               {memorial911?.order.status ? t(memorial911.order.status) : t('Status')}
             </Badge>
           </Flex>
-          <ModalCloseButton />
+          {/* <ModalCloseButton /> */}
         </ModalHeader>
 
         <ModalBody>
@@ -110,9 +91,13 @@ const Memorial911Modal = ({ memorial911, onClose }: Memorial911ModalProps) => {
               <Tbody>
                 {columns.map((product: any, idx: any) => (
                   <Tr key={idx}>
-                    <Td>{product.name}</Td>
-                    <Td isNumeric>{product.quantity}</Td>
-                    <Td isNumeric>${product.total}</Td>
+                    <Td fontSize={'small'}>{product.name}</Td>
+                    <Td isNumeric fontSize={'small'}>
+                      {product.quantity}
+                    </Td>
+                    <Td isNumeric fontSize={'small'}>
+                      ${product.total}
+                    </Td>
                   </Tr>
                 ))}
               </Tbody>

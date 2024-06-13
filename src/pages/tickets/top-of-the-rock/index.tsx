@@ -6,7 +6,7 @@ import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useMemo } from 'react';
 
-const TopOfTheRockPage = () => {
+const TopOfTheRockPages = () => {
   const { router, push } = useSafePush();
   const viewOption = router.query?.view as ViewQueries;
 
@@ -15,7 +15,7 @@ const TopOfTheRockPage = () => {
       case ViewQueries.Table:
         return <TopOfTheRockByPage />;
       case ViewQueries.List:
-        return '<TopOfTheRockPage usesObserver />';
+        return '<TopOfTheRockPages usesObserver />';
       default:
         return null;
     }
@@ -51,4 +51,4 @@ const TopOfTheRockPage = () => {
   );
 };
 
-export default TopOfTheRockPage;
+export default TopOfTheRockPages;

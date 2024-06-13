@@ -1,10 +1,12 @@
 import { DataTable } from '@/components';
 import { PageRoutes } from '@/constants';
 import { useSafePush, useConvertDate } from '@/hooks';
+import { useModalStore } from '@/stores';
 import { toUrl } from '@/utils';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { WollmanModal } from '../WollmanModal';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -17,6 +19,16 @@ const WollmanTable = ({ wollman, isLoading }: WollmanTableProps) => {
   const { push } = useSafePush();
   const { t } = useTranslation();
   const convertDate = useConvertDate();
+
+  const { openModal } = useModalStore(['openModal']);
+
+  const handleModal = useCallback<(wollman: any) => void>(
+    (wollman) => {
+      if (!wollman) return;
+      openModal(WollmanModal, { wollman });
+    },
+    [openModal]
+  );
 
   console.log(wollman);
 
@@ -53,6 +65,7 @@ const WollmanTable = ({ wollman, isLoading }: WollmanTableProps) => {
   const table = useReactTable({ data: wollman, columns, getCoreRowModel: getCoreRowModel() });
 
   return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.WollmanDetail, { id: row.original.order.id }))} />;
+  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
 };
 
 export default WollmanTable;

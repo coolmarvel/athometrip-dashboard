@@ -3,7 +3,7 @@ import { ApiRoutes } from '@/constants';
 import { useGetPage, PageQueryParams, usePost, useInvalidate } from '..';
 
 // [GET] /api/usims/h2osim/esim
-export const useGetH2OEsim = (params: PageQueryParams) => {
+export const useGetH2OEsimByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.H2OEsim), params);
 };
 

@@ -6,7 +6,7 @@ import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useMemo } from 'react';
 
-const Memorials911Page = () => {
+const Memorial911Pages = () => {
   const { router, push } = useSafePush();
   const viewOption = router.query?.view as ViewQueries;
 
@@ -51,4 +51,4 @@ const Memorials911Page = () => {
   );
 };
 
-export default Memorials911Page;
+export default Memorial911Pages;

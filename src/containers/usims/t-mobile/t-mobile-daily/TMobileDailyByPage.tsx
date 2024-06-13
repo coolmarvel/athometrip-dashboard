@@ -1,4 +1,4 @@
-import { useGetTMobileDaily, useResetTMobileDaily } from '@/apis';
+import { useGetTMobileDailyByPage, useResetTMobileDaily } from '@/apis';
 import { Pagination } from '@/components';
 import { TMobileDailyTable } from '@/containers';
 import { usePagination } from '@/hooks';
@@ -14,7 +14,7 @@ const TMobileDailyByPage = () => {
   const { mutate: resetTMobileDaily } = useResetTMobileDaily();
 
   const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
-  const { data: tMobileDailyByPage, isLoading: isLoading } = useGetTMobileDaily(params);
+  const { data: tMobileDailyByPage, isLoading: isLoading } = useGetTMobileDailyByPage(params);
 
   useEffect(() => {
     resetTMobileDaily();

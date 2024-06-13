@@ -58,7 +58,7 @@ const UserUpdateModal = ({ user, onClose }: UserUpdateModalProps) => {
         )}
       >
         <ModalHeader>{t('Update User')}</ModalHeader>
-        <ModalCloseButton />
+        {/* <ModalCloseButton /> */}
         <ModalBody>
           <Flex direction={'column'} gap={'4'}>
             <UserProfileInput

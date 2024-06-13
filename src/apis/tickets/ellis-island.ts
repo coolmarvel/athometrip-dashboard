@@ -9,7 +9,7 @@ export const useGetEllisIslandByPage = (params: PageQueryParams) => {
 
 // [GET] /api/tickets/ellis-island/{id}
 export const useGetEllisIsland = (id?: number) => {
-  return useFetch<any>(toUrl(ApiRoutes.Memorial911, { id }));
+  return useFetch<any>(toUrl(ApiRoutes.EllisIsland, { id }));
 };
 
 // [PUT] /api/tickets/ellis-island

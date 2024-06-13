@@ -1,4 +1,5 @@
 import { WithLabel } from '@/components';
+import { statusColor } from '@/constants';
 import { useConvertDate } from '@/hooks';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
@@ -7,15 +8,6 @@ import { useTranslation } from 'react-i18next';
 interface EllisIslandCardProps {
   data?: any;
 }
-
-const statusColorMapping: any = {
-  processing: 'yellow',
-  completed: 'green',
-  cancelled: 'red',
-  refunded: 'purple',
-  pending: 'gray',
-  failed: 'orange',
-};
 
 const EllisIslandCard = ({ data: ellisIsland }: EllisIslandCardProps) => {
   const { t } = useTranslation();
@@ -31,17 +23,7 @@ const EllisIslandCard = ({ data: ellisIsland }: EllisIslandCardProps) => {
     [ellisIsland, convertDate, t]
   );
 
-  const columns = useMemo(
-    () =>
-      [
-        {
-          name: ellisIsland?.lineItem.name,
-          quantity: ellisIsland?.lineItem.quantity,
-          total: ellisIsland?.lineItem.total,
-        },
-      ] ?? [],
-    [ellisIsland]
-  );
+  const columns = useMemo(() => [{ name: ellisIsland?.lineItem.name, quantity: ellisIsland?.lineItem.quantity, total: ellisIsland?.lineItem.total }] ?? [], [ellisIsland]);
 
   return (
     <Card>
@@ -49,7 +31,7 @@ const EllisIslandCard = ({ data: ellisIsland }: EllisIslandCardProps) => {
         <Skeleton isLoaded={!!ellisIsland}>
           <Flex justifyContent="space-between" alignItems="center">
             <Heading size="lg">Order #{ellisIsland?.order.id ?? t('Order ID')}</Heading>
-            <Badge colorScheme={statusColorMapping[ellisIsland?.order.status] || 'gray'} fontSize={'x-large'}>
+            <Badge colorScheme={statusColor[ellisIsland?.order.status] || 'gray'} fontSize={'x-large'}>
               {ellisIsland?.order.status ? t(ellisIsland.order.status) : t('Status')}
             </Badge>
           </Flex>

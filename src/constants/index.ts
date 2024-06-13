@@ -3,3 +3,4 @@ export * from './inputs';
 export * from './meta';
 export * from './routes';
 export * from './styles';
+export * from './status-color';

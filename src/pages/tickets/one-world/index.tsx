@@ -6,7 +6,7 @@ import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useMemo } from 'react';
 
-const OneWorldPage = () => {
+const OneWorldPages = () => {
   const { router, push } = useSafePush();
   const viewOption = router.query?.view as ViewQueries;
 
@@ -15,7 +15,7 @@ const OneWorldPage = () => {
       case ViewQueries.Table:
         return <OneWorldByPage />;
       case ViewQueries.List:
-        return '<OneWorldPage usesObserver />';
+        return '<OneWorldPages usesObserver />';
       default:
         return null;
     }
@@ -51,4 +51,4 @@ const OneWorldPage = () => {
   );
 };
 
-export default OneWorldPage;
+export default OneWorldPages;

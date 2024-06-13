@@ -1,10 +1,12 @@
 import { DataTable } from '@/components';
 import { PageRoutes } from '@/constants';
 import { useSafePush, useConvertDate } from '@/hooks';
+import { useModalStore } from '@/stores';
 import { toUrl } from '@/utils';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { SummitModal } from '../SummitModal';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -17,6 +19,16 @@ const SummitTable = ({ summit, isLoading }: SummitTableProps) => {
   const { push } = useSafePush();
   const { t } = useTranslation();
   const convertDate = useConvertDate();
+
+  const { openModal } = useModalStore(['openModal']);
+
+  const handleModal = useCallback<(summit: any) => void>(
+    (summit) => {
+      if (!summit) return;
+      openModal(SummitModal, { summit });
+    },
+    [openModal]
+  );
 
   console.log(summit);
 
@@ -52,7 +64,8 @@ const SummitTable = ({ summit, isLoading }: SummitTableProps) => {
 
   const table = useReactTable({ data: summit, columns, getCoreRowModel: getCoreRowModel() });
 
-  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.SummitDetail, { id: row.original.order.id }))} />;
+  // return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.SummitDetail, { id: row.original.order.id }))} />;
+  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
 };
 
 export default SummitTable;

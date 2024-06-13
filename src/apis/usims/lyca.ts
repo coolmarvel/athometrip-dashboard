@@ -3,7 +3,7 @@ import { ApiRoutes } from '@/constants';
 import { useGetPage, PageQueryParams, usePost, useInvalidate } from '..';
 
 // [GET] /api/usims/lyca/portal
-export const useGetLycaPortal = (params: PageQueryParams) => {
+export const useGetLycaPortalByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.LycaPortal), params);
 };
 
@@ -13,11 +13,11 @@ export const useResetLycaPortal = () => {
 };
 
 // [GET] /api/usims/lyca/monthly-plan
-export const useGetLycaMonthlyPlan = (params: PageQueryParams) => {
+export const useGetLycaMonthlyPlanByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.LycaMonthlyPlan), params);
 };
 
 // [DELETE] /api/usims/lyca/monthly-plan/reset
-export const useResettLycaMonthlyPlan = () => {
+export const useResettLycaMonthlyPlanByPage = () => {
   return usePost(`${toUrl(ApiRoutes.LycaMonthlyPlan)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.LycaMonthlyPlan)) });
 };

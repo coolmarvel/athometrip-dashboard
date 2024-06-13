@@ -1,4 +1,5 @@
 import { WithLabel } from '@/components';
+import { statusColor } from '@/constants';
 import { useConvertDate } from '@/hooks';
 import {
   Badge,
@@ -31,15 +32,6 @@ interface EllisIslandModalProps {
   onClose: () => void;
 }
 
-const statusColorMapping: any = {
-  processing: 'yellow',
-  completed: 'green',
-  cancelled: 'red',
-  refunded: 'purple',
-  pending: 'gray',
-  failed: 'orange',
-};
-
 const EllisIslandModal = ({ ellisIsland, onClose }: EllisIslandModalProps) => {
   const { t } = useTranslation();
   const convertDate = useConvertDate();
@@ -55,17 +47,7 @@ const EllisIslandModal = ({ ellisIsland, onClose }: EllisIslandModalProps) => {
     [ellisIsland, convertDate, t]
   );
 
-  const columns = useMemo(
-    () =>
-      [
-        {
-          name: ellisIsland?.lineItem.name,
-          quantity: ellisIsland?.lineItem.quantity,
-          total: ellisIsland?.lineItem.total,
-        },
-      ] ?? [],
-    [ellisIsland]
-  );
+  const columns = useMemo(() => [{ name: ellisIsland?.lineItem.name, quantity: ellisIsland?.lineItem.quantity, total: ellisIsland?.lineItem.total }] ?? [], [ellisIsland]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -79,11 +61,11 @@ const EllisIslandModal = ({ ellisIsland, onClose }: EllisIslandModalProps) => {
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">
             Order #{ellisIsland?.order.id ?? t('Order ID')}
-            <Badge colorScheme={statusColorMapping[ellisIsland?.order.status] || 'gray'} fontSize={'x-large'}>
+            <Badge colorScheme={statusColor[ellisIsland?.order.status] || 'gray'} fontSize={'x-large'}>
               {ellisIsland?.order.status ? t(ellisIsland.order.status) : t('Status')}
             </Badge>
           </Flex>
-          <ModalCloseButton />
+          {/* <ModalCloseButton /> */}
         </ModalHeader>
 
         <ModalBody>
@@ -110,9 +92,13 @@ const EllisIslandModal = ({ ellisIsland, onClose }: EllisIslandModalProps) => {
               <Tbody>
                 {columns.map((product: any, idx: any) => (
                   <Tr key={idx}>
-                    <Td>{product.name}</Td>
-                    <Td isNumeric>{product.quantity}</Td>
-                    <Td isNumeric>${product.total}</Td>
+                    <Td fontSize={'small'}>{product.name}</Td>
+                    <Td isNumeric fontSize={'small'}>
+                      {product.quantity}
+                    </Td>
+                    <Td isNumeric fontSize={'small'}>
+                      ${product.total}
+                    </Td>
                   </Tr>
                 ))}
               </Tbody>

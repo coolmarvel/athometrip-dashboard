@@ -49,6 +49,6 @@ const getUNTourByPage = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });
     }
   } catch {
-    return res.status(500).send({ data: null, message: 'Failed to get un-tour' });
+    return res.status(500).send({ data: null, message: `Failed to get ${ticketName}` });
   }
 };
