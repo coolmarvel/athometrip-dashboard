@@ -1,6 +1,6 @@
 import { useGetTMobileByPage, useResetTMobile } from '@/apis';
 import { Pagination } from '@/components';
-import { TMobileDailyTable } from '@/containers';
+import { TMobileTable } from '@/containers';
 import { usePagination } from '@/hooks';
 import { QueryParser } from '@/utils';
 import { TableContainer } from '@chakra-ui/react';
@@ -23,7 +23,7 @@ const TMobileByPage = () => {
   return (
     <>
       <TableContainer flex={1} overflowY={'auto'}>
-        <TMobileDailyTable tMobileDaily={tMobileByPage?.data ?? []} isLoading={isLoading} />
+        <TMobileTable tMobile={tMobileByPage?.data ?? []} isLoading={isLoading} />
       </TableContainer>
       <Pagination currentPage={page} limit={limit} total={tMobileByPage?.total ?? 0} onChange={(page) => onPagination({ page })} />
     </>
