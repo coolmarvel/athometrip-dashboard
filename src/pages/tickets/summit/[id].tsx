@@ -6,7 +6,6 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 const SummitPage = () => {
-  console.log('here?');
   const router = useRouter();
   const { data: summit } = useGetSummit(QueryParser.toNumber(router.query.id));
 

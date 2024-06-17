@@ -13,7 +13,7 @@ const TMobileByPage = () => {
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
   const { mutate: resetTMobile } = useResetTMobile();
 
-  const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
+  const params = { page, limit, sort, order, after, before, mode: QueryParser.toString(router.query.mode) ?? '', search: QueryParser.toString(router.query.search) ?? '' };
   const { data: tMobileByPage, isLoading: isLoading } = useGetTMobileByPage(params);
 
   useEffect(() => {

@@ -9,7 +9,7 @@ interface LayoutProviderProps {
 
 const LayoutProvider = ({ children }: LayoutProviderProps) => {
   const { Provider } = useLayout();
-  const [layout, setLayout] = useState<Layout>('vertical');
+  const [layout, setLayout] = useState<Layout>('horizontal');
 
   const isMobile = useBreakpointValue({
     base: true,
