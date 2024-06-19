@@ -9,8 +9,6 @@ const MLBMetsPage = () => {
   const router = useRouter();
   const { data: mlbMets } = useGetMLBMets(QueryParser.toNumber(router.query.id));
 
-  console.log(mlbMets);
-
   return (
     <>
       <Head>

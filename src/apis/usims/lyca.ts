@@ -1,23 +1,18 @@
 import { toUrl } from '@/utils';
 import { ApiRoutes } from '@/constants';
-import { useGetPage, PageQueryParams, usePost, useInvalidate } from '..';
+import { useGetPage, PageQueryParams, usePost, useInvalidate, useFetch } from '..';
 
-// [GET] /api/usims/lyca/portal
-export const useGetLycaPortalByPage = (params: PageQueryParams) => {
-  return useGetPage<any[]>(toUrl(ApiRoutes.LycaPortal), params);
+// [GET] /api/usims/lyca?params
+export const useGetLycaByPage = (params: PageQueryParams) => {
+  return useGetPage<any[]>(toUrl(ApiRoutes.Lyca), params);
 };
 
-// [DELETE] /api/usims/lyca/portal/reset
-export const useResetLycaPortal = () => {
-  return usePost(`${toUrl(ApiRoutes.LycaPortal)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.LycaPortal)) });
+// [GET] /api/tickets/lyca/{id}
+export const useGetLyca = (id?: number) => {
+  return useFetch<any>(toUrl(ApiRoutes.Lyca, { id }));
 };
 
-// [GET] /api/usims/lyca/monthly-plan
-export const useGetLycaMonthlyPlanByPage = (params: PageQueryParams) => {
-  return useGetPage<any[]>(toUrl(ApiRoutes.LycaMonthlyPlan), params);
-};
-
-// [DELETE] /api/usims/lyca/monthly-plan/reset
-export const useResettLycaMonthlyPlanByPage = () => {
-  return usePost(`${toUrl(ApiRoutes.LycaMonthlyPlan)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.LycaMonthlyPlan)) });
+// [DELETE] /api/usims/lyca/reset
+export const useResetLyca = () => {
+  return usePost(`${toUrl(ApiRoutes.Lyca)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.Lyca)) });
 };

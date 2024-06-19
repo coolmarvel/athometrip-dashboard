@@ -1,3 +1,3 @@
 export * from './t-mobile';
-export * from './h2osim';
+export * from './h2o-esim';
 export * from './lyca';

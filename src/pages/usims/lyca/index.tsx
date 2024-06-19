@@ -1,22 +1,11 @@
 import { DatePickerOptions, PageOptions, ResponsiveLayout, Search } from '@/components';
-import { ViewQueries } from '@/constants';
+import { LycaByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
-import { useMemo } from 'react';
 
-const LycaMonthlyPlanPage = () => {
+const LycaPages = () => {
   const { router, push } = useSafePush();
-  const viewOption = router.query?.view as ViewQueries;
-
-  const display = useMemo(() => {
-    switch (viewOption) {
-      case ViewQueries.Table:
-        return '<LycaMonthlyPlanPage />';
-      default:
-        return null;
-    }
-  }, [viewOption]);
 
   return (
     <>
@@ -39,11 +28,11 @@ const LycaMonthlyPlanPage = () => {
               <PageOptions />
             </Flex>
           </Flex>
-          {display}
+          <LycaByPage />
         </Flex>
       </ResponsiveLayout>
     </>
   );
 };
 
-export default LycaMonthlyPlanPage;
+export default LycaPages;

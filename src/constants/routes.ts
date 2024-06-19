@@ -1,5 +1,5 @@
-import { format, subMonths } from 'date-fns';
-import { ko } from 'date-fns/locale';
+// import { format, subMonths } from 'date-fns';
+// import { ko } from 'date-fns/locale';
 import { MatchFunction, match } from 'path-to-regexp';
 import { IconType } from 'react-icons';
 import {
@@ -42,13 +42,8 @@ export enum ApiRoutes {
 
   // USIMs
   TMobile = 'api/usims/t-mobile/:id?',
-  TMobileDaily = 'api/usims/t-mobile/daily/:id?',
-  TMobileDailyOther = 'api/usims/t-mobile/other/:id?',
-  TMobileMonthly = 'api/usims/t-mobile/monthly/:id?',
-  TMobileMonthlyPlan = 'api/usims/t-mobile/monthly-plan/:id?',
-  H2OEsim = 'api/usims/h2osim/esim/:id?',
-  LycaPortal = 'api/usims/lyca/portal/:id?',
-  LycaMonthlyPlan = 'api/usims/lyca/monthly-plan/:id?',
+  H2OEsim = 'api/usims/h2o-esim/:id?',
+  Lyca = 'api/usims/lyca/:id?',
 }
 
 export enum PageRoutes {
@@ -90,22 +85,12 @@ export enum PageRoutes {
 
   TMobile = '/usims/t-mobile',
   TMobileDetail = '/usims/t-mobile/:id',
-  TMobileDaily = '/usims/t-mobile/daily',
-  TMobileDailyDetail = '/usims/t-mobile/daily/:id',
-  TMobileDailyOther = '/usims/t-mobile/other',
-  TMobileDailyOtherDetail = '/usims/t-mobile/other/:id',
-  TMobileMonthly = '/usims/t-mobile/monthly',
-  TMobileMonthlyDetail = '/usims/t-mobile/monthly/:id',
 
-  H2OSim = '/usims/h2osim',
-  H2OEsim = '/usims/h2osim/esim',
-  H2OEsimDetail = 'usims/h2osim/esim/:id',
+  H2OEsim = '/usims/h2o-esim',
+  H2OEsimDetail = 'usims/h2o-esim/:id',
 
   Lyca = '/usims/lyca',
-  LycaPortal = '/usims/lyca/portal',
-  LycaPortalDetail = '/usims/lyca/portal/:id',
-  LycaMonthlyPlan = '/usims/lyca/monthly-plan',
-  LycaMonthlyPlanDetail = '/usims/lyca/monthly-plan/:id',
+  LycaDetail = 'usims/lyca/:id',
 }
 
 export const whiteList = [PageRoutes.Home, PageRoutes.Signin, PageRoutes.Users, PageRoutes.UserDetail];
@@ -151,8 +136,8 @@ export const defaultQuery = {
   search: '',
 };
 
-const after: string = format(subMonths(new Date(), 1), 'yyyy-MM-dd', { locale: ko });
-const before: string = format(new Date(), 'yyyy-MM-dd', { locale: ko });
+// const after: string = format(subMonths(new Date(), 1), 'yyyy-MM-dd', { locale: ko });
+// const before: string = format(new Date(), 'yyyy-MM-dd', { locale: ko });
 
 export const ticketQuery = {
   page: 1,
@@ -169,8 +154,8 @@ export const usimQuery = {
   sort: 'id',
   order: 'desc',
   mode: ModeQueries.Usim,
-  after: after,
-  before: before,
+  // after: after,
+  // before: before,
 };
 
 // t("Users")
@@ -186,40 +171,34 @@ export const navs: Nav[] = [
     query: defaultQuery,
     icon: FaUser,
     matcher: match(PageRoutes.Users),
-    children: [
-      {
-        label: 'User Detail',
-        pathname: PageRoutes.UserDetail,
-        matcher: match(PageRoutes.UserDetail),
-      },
-    ],
+    children: [{ label: 'User Detail', pathname: PageRoutes.UserDetail, matcher: match(PageRoutes.UserDetail) }],
   },
 
   // Posts
-  {
-    label: 'Posts',
-    pathname: PageRoutes.Posts,
-    query: defaultQuery,
-    icon: BsFillPostcardFill,
-    matcher: match(PageRoutes.Posts),
-    children: [
-      {
-        label: 'Write Post',
-        pathname: PageRoutes.WritePost,
-        matcher: match(PageRoutes.WritePost),
-      },
-      {
-        label: 'Post Detail',
-        pathname: PageRoutes.PostDetail,
-        matcher: match(PageRoutes.PostDetail),
-      },
-      {
-        label: 'Edit Post',
-        pathname: PageRoutes.EditPost,
-        matcher: match(PageRoutes.EditPost),
-      },
-    ],
-  },
+  // {
+  //   label: 'Posts',
+  //   pathname: PageRoutes.Posts,
+  //   query: defaultQuery,
+  //   icon: BsFillPostcardFill,
+  //   matcher: match(PageRoutes.Posts),
+  //   children: [
+  //     {
+  //       label: 'Write Post',
+  //       pathname: PageRoutes.WritePost,
+  //       matcher: match(PageRoutes.WritePost),
+  //     },
+  //     {
+  //       label: 'Post Detail',
+  //       pathname: PageRoutes.PostDetail,
+  //       matcher: match(PageRoutes.PostDetail),
+  //     },
+  //     {
+  //       label: 'Edit Post',
+  //       pathname: PageRoutes.EditPost,
+  //       matcher: match(PageRoutes.EditPost),
+  //     },
+  //   ],
+  // },
 
   // Tickets
   {
@@ -235,13 +214,7 @@ export const navs: Nav[] = [
         matcher: match(PageRoutes.TopOfTheRock),
         icon: BsFill0SquareFill,
         query: ticketQuery,
-        children: [
-          {
-            label: 'Top of the Rock Detail',
-            pathname: PageRoutes.TopOfTheRockDetail,
-            matcher: match(PageRoutes.TopOfTheRockDetail),
-          },
-        ],
+        children: [{ label: 'Top of the Rock Detail', pathname: PageRoutes.TopOfTheRockDetail, matcher: match(PageRoutes.TopOfTheRockDetail) }],
       },
       {
         label: 'Summit',
@@ -249,13 +222,7 @@ export const navs: Nav[] = [
         matcher: match(PageRoutes.Summit),
         icon: BsFill1SquareFill,
         query: ticketQuery,
-        children: [
-          {
-            label: 'Summit Detail',
-            pathname: PageRoutes.SummitDetail,
-            matcher: match(PageRoutes.SummitDetail),
-          },
-        ],
+        children: [{ label: 'Summit Detail', pathname: PageRoutes.SummitDetail, matcher: match(PageRoutes.SummitDetail) }],
       },
       {
         label: 'Empire',
@@ -263,13 +230,7 @@ export const navs: Nav[] = [
         matcher: match(PageRoutes.Empire),
         icon: BsFill2SquareFill,
         query: ticketQuery,
-        children: [
-          {
-            label: 'Empire Detail',
-            pathname: PageRoutes.EmpireDetail,
-            matcher: match(PageRoutes.EmpireDetail),
-          },
-        ],
+        children: [{ label: 'Empire Detail', pathname: PageRoutes.EmpireDetail, matcher: match(PageRoutes.EmpireDetail) }],
       },
       {
         label: 'OneWorld',
@@ -277,13 +238,7 @@ export const navs: Nav[] = [
         matcher: match(PageRoutes.OneWorld),
         icon: BsFill3SquareFill,
         query: ticketQuery,
-        children: [
-          {
-            label: 'OneWorld Detail',
-            pathname: PageRoutes.OneWorldDetail,
-            matcher: match(PageRoutes.OneWorldDetail),
-          },
-        ],
+        children: [{ label: 'OneWorld Detail', pathname: PageRoutes.OneWorldDetail, matcher: match(PageRoutes.OneWorldDetail) }],
       },
       {
         label: 'Memorial911',
@@ -291,13 +246,7 @@ export const navs: Nav[] = [
         matcher: match(PageRoutes.Memorial911),
         icon: BsFill4SquareFill,
         query: ticketQuery,
-        children: [
-          {
-            label: 'Memorial911 Detail',
-            pathname: PageRoutes.Memorial911Detail,
-            matcher: match(PageRoutes.Memorial911Detail),
-          },
-        ],
+        children: [{ label: 'Memorial911 Detail', pathname: PageRoutes.Memorial911Detail, matcher: match(PageRoutes.Memorial911Detail) }],
       },
       {
         label: 'UNTour',
@@ -305,13 +254,7 @@ export const navs: Nav[] = [
         matcher: match(PageRoutes.UNTour),
         icon: BsFill5SquareFill,
         query: ticketQuery,
-        children: [
-          {
-            label: 'UNTour Detail',
-            pathname: PageRoutes.UNTourDetail,
-            matcher: match(PageRoutes.UNTourDetail),
-          },
-        ],
+        children: [{ label: 'UNTour Detail', pathname: PageRoutes.UNTourDetail, matcher: match(PageRoutes.UNTourDetail) }],
       },
       {
         label: 'Wollman',
@@ -319,13 +262,7 @@ export const navs: Nav[] = [
         matcher: match(PageRoutes.Wollman),
         icon: BsFill6SquareFill,
         query: ticketQuery,
-        children: [
-          {
-            label: 'Wollman Detail',
-            pathname: PageRoutes.WollmanDetail,
-            matcher: match(PageRoutes.WollmanDetail),
-          },
-        ],
+        children: [{ label: 'Wollman Detail', pathname: PageRoutes.WollmanDetail, matcher: match(PageRoutes.WollmanDetail) }],
       },
       {
         label: 'CityTrip',
@@ -333,13 +270,7 @@ export const navs: Nav[] = [
         matcher: match(PageRoutes.CityTrip),
         icon: BsFill7SquareFill,
         query: ticketQuery,
-        children: [
-          {
-            label: 'CityTrip Detail',
-            pathname: PageRoutes.CityTripDetail,
-            matcher: match(PageRoutes.CityTripDetail),
-          },
-        ],
+        children: [{ label: 'CityTrip Detail', pathname: PageRoutes.CityTripDetail, matcher: match(PageRoutes.CityTripDetail) }],
       },
       {
         label: 'EllisIsland',
@@ -347,13 +278,7 @@ export const navs: Nav[] = [
         matcher: match(PageRoutes.EllisIsland),
         icon: BsFill8SquareFill,
         query: ticketQuery,
-        children: [
-          {
-            label: 'EllisIsland Detail',
-            pathname: PageRoutes.EllisIslandDetail,
-            matcher: match(PageRoutes.EllisIslandDetail),
-          },
-        ],
+        children: [{ label: 'EllisIsland Detail', pathname: PageRoutes.EllisIslandDetail, matcher: match(PageRoutes.EllisIslandDetail) }],
       },
       {
         label: 'MLBMets',
@@ -361,13 +286,7 @@ export const navs: Nav[] = [
         matcher: match(PageRoutes.MLBMets),
         icon: BsFill9SquareFill,
         query: ticketQuery,
-        children: [
-          {
-            label: 'MLBMets Detail',
-            pathname: PageRoutes.MLBMetsDetail,
-            matcher: match(PageRoutes.MLBMetsDetail),
-          },
-        ],
+        children: [{ label: 'MLBMets Detail', pathname: PageRoutes.MLBMetsDetail, matcher: match(PageRoutes.MLBMetsDetail) }],
       },
     ],
   },
@@ -389,61 +308,20 @@ export const navs: Nav[] = [
         children: [{ label: 'T-Mobile Detail', pathname: PageRoutes.TMobileDetail, matcher: match(PageRoutes.TMobileDetail), query: usimQuery }],
       },
       {
-        label: 'H2OSim',
-        pathname: PageRoutes.H2OSim,
-        matcher: match(PageRoutes.H2OSim),
+        label: 'H2O(Esim)',
+        pathname: PageRoutes.H2OEsim,
+        matcher: match(PageRoutes.H2OEsim),
         icon: BsFill2SquareFill,
-        collapsible: true,
-        children: [
-          {
-            label: 'H2OEsim',
-            pathname: PageRoutes.H2OEsim,
-            matcher: match(PageRoutes.H2OEsim),
-            query: usimQuery,
-            children: [
-              {
-                label: 'H2OEsim Detail',
-                pathname: PageRoutes.H2OEsimDetail,
-                matcher: match(PageRoutes.H2OEsimDetail),
-              },
-            ],
-          },
-        ],
+        query: defaultQuery,
+        children: [{ label: 'H2O(Esim) Detail', pathname: PageRoutes.H2OEsimDetail, matcher: match(PageRoutes.H2OEsimDetail), query: defaultQuery }],
       },
       {
         label: 'Lyca',
         pathname: PageRoutes.Lyca,
         matcher: match(PageRoutes.Lyca),
         icon: BsFill3SquareFill,
-        collapsible: true,
-        children: [
-          {
-            label: 'Lyca Portal',
-            pathname: PageRoutes.LycaPortal,
-            matcher: match(PageRoutes.LycaPortal),
-            query: usimQuery,
-            children: [
-              {
-                label: 'Lyca Portal Detail',
-                pathname: PageRoutes.LycaPortalDetail,
-                matcher: match(PageRoutes.LycaPortalDetail),
-              },
-            ],
-          },
-          {
-            label: 'Monthly Plan',
-            pathname: PageRoutes.LycaMonthlyPlan,
-            matcher: match(PageRoutes.LycaMonthlyPlan),
-            query: usimQuery,
-            children: [
-              {
-                label: 'Monthly Plan Detail',
-                pathname: PageRoutes.LycaMonthlyPlanDetail,
-                matcher: match(PageRoutes.LycaMonthlyPlanDetail),
-              },
-            ],
-          },
-        ],
+        query: defaultQuery,
+        children: [{ label: 'Lyca Portal', pathname: PageRoutes.LycaDetail, matcher: match(PageRoutes.LycaDetail), query: usimQuery }],
       },
     ],
   },

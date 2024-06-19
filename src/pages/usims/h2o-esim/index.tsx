@@ -1,22 +1,11 @@
 import { DatePickerOptions, PageOptions, ResponsiveLayout, Search } from '@/components';
-import { ViewQueries } from '@/constants';
+import H2OEsimByPage from '@/containers/usims/h2o-esim/H2OEsimByPage';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
-import { useMemo } from 'react';
 
-const H2OEsimPage = () => {
+const H2OEsimPages = () => {
   const { router, push } = useSafePush();
-  const viewOption = router.query?.view as ViewQueries;
-
-  const display = useMemo(() => {
-    switch (viewOption) {
-      case ViewQueries.Table:
-        return '<H2OEsimPage />';
-      default:
-        return null;
-    }
-  }, [viewOption]);
 
   return (
     <>
@@ -39,11 +28,11 @@ const H2OEsimPage = () => {
               <PageOptions />
             </Flex>
           </Flex>
-          {display}
+          <H2OEsimByPage />
         </Flex>
       </ResponsiveLayout>
     </>
   );
 };
 
-export default H2OEsimPage;
+export default H2OEsimPages;

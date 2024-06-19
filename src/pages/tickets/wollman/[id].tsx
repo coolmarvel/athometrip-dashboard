@@ -9,8 +9,6 @@ const WollmanPage = () => {
   const router = useRouter();
   const { data: wollman } = useGetWollman(QueryParser.toNumber(router.query.id));
 
-  console.log(wollman);
-
   return (
     <>
       <Head>

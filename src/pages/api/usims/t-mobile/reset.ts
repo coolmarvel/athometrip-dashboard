@@ -9,7 +9,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-// [DELETE] /api/tickets/t-mobile/reset
 const resetTMobile = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     return res.status(200).send({ data: [], message: 'Successfully reset t-mobile posts' });

@@ -9,8 +9,6 @@ const SummitPage = () => {
   const router = useRouter();
   const { data: summit } = useGetSummit(QueryParser.toNumber(router.query.id));
 
-  console.log(summit);
-
   return (
     <>
       <Head>

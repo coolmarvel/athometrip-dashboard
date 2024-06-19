@@ -9,8 +9,6 @@ const EllisIslandPage = () => {
   const router = useRouter();
   const { data: ellisIsland } = useGetEllisIsland(QueryParser.toNumber(router.query.id));
 
-  console.log(ellisIsland);
-
   return (
     <>
       <Head>

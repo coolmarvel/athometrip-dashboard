@@ -1,24 +1,11 @@
-import { DatePickerOptions, PageOptions, ResponsiveLayout, Search } from '@/components';
-import TMobileOptions from '@/components/common/TMobileOptions/TMobileOptions';
-import { ViewQueries } from '@/constants';
+import { DatePickerOptions, PageOptions, ResponsiveLayout, Search, TMobileOptions } from '@/components';
 import { TMobileByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
-import { useMemo } from 'react';
 
 const TMobilePages = () => {
   const { router, push } = useSafePush();
-  const viewOption = router.query?.view as ViewQueries;
-
-  const display = useMemo(() => {
-    switch (viewOption) {
-      case ViewQueries.Table:
-        return <TMobileByPage />;
-      default:
-        return null;
-    }
-  }, [viewOption]);
 
   return (
     <>
@@ -42,7 +29,6 @@ const TMobilePages = () => {
               <PageOptions />
             </Flex>
           </Flex>
-          {/* {display} */}
           <TMobileByPage />
         </Flex>
       </ResponsiveLayout>

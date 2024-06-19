@@ -35,7 +35,7 @@ const TMobileTable = ({ tMobile, isLoading }: TMobileTableProps) => {
   const columns = useMemo(
     () => [
       columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
-      columnHelper.accessor('billing.first_name', { header: t('name'), meta: { sortable: true } }),
+      columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created', { header: t('date'), cell: (context) => convertDate(context.renderValue()!), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('period'), meta: { sortable: true } }),
       columnHelper.accessor((row) => `${row.usimInfo?.esim_device ?? ''}`, { header: t('model'), meta: { sortable: true } }),

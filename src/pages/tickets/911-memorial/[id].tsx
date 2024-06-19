@@ -9,8 +9,6 @@ const Memorial911Page = () => {
   const router = useRouter();
   const { data: memorial911 } = useGet911Memorial(QueryParser.toNumber(router.query.id));
 
-  console.log(memorial911);
-
   return (
     <>
       <Head>

@@ -9,8 +9,6 @@ const TopOfTheRockPage = () => {
   const router = useRouter();
   const { data: topOfTheRock } = useGetTopOfTheRock(QueryParser.toNumber(router.query.id));
 
-  console.log(topOfTheRock);
-
   return (
     <>
       <Head>

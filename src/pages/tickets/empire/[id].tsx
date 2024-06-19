@@ -9,8 +9,6 @@ const EmpirePage = () => {
   const router = useRouter();
   const { data: empire } = useGetEmpire(QueryParser.toNumber(router.query.id));
 
-  console.log(empire);
-
   return (
     <>
       <Head>

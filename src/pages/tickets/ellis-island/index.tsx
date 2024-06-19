@@ -1,25 +1,11 @@
-import { DatePickerOptions, PageOptions, ResponsiveLayout, Search, ViewOptions } from '@/components';
-import { ViewQueries } from '@/constants';
+import { DatePickerOptions, PageOptions, ResponsiveLayout, Search } from '@/components';
 import { EllisIslandByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
-import { useMemo } from 'react';
 
 const EllisIslandPages = () => {
   const { router, push } = useSafePush();
-  const viewOption = router.query?.view as ViewQueries;
-
-  const display = useMemo(() => {
-    switch (viewOption) {
-      case ViewQueries.Table:
-        return <EllisIslandByPage />;
-      case ViewQueries.List:
-        return '<EllisIslandPage usesObserver />';
-      default:
-        return null;
-    }
-  }, [viewOption]);
 
   return (
     <>
@@ -31,7 +17,6 @@ const EllisIslandPages = () => {
       </Head>
       <ResponsiveLayout>
         <Flex direction={'column'} gap={'4'} h={'100%'}>
-          {/* <EllisIslandUtils /> */}
           <Flex justifyContent={'space-between'} gap={'4'} wrap={'wrap'}>
             <Search
               onSubmit={(search) => {
@@ -39,12 +24,11 @@ const EllisIslandPages = () => {
               }}
             />
             <Flex gap={'4'}>
-              {/* <ViewOptions /> */}
               <DatePickerOptions />
               <PageOptions />
             </Flex>
           </Flex>
-          {display}
+          <EllisIslandByPage />
         </Flex>
       </ResponsiveLayout>
     </>

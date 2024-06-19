@@ -9,8 +9,6 @@ const UNTourPage = () => {
   const router = useRouter();
   const { data: unTour } = useGetUNTour(QueryParser.toNumber(router.query.id));
 
-  console.log(unTour);
-
   return (
     <>
       <Head>
