@@ -1,8 +1,6 @@
 import { DataTable } from '@/components';
-import { PageRoutes } from '@/constants';
-import { useSafePush, useConvertDate } from '@/hooks';
+import { useConvertDate } from '@/hooks';
 import { useModalStore } from '@/stores';
-import { toUrl } from '@/utils';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +14,6 @@ interface WollmanTableProps {
 }
 
 const WollmanTable = ({ wollman, isLoading }: WollmanTableProps) => {
-  const { push } = useSafePush();
   const { t } = useTranslation();
   const convertDate = useConvertDate();
 
@@ -30,14 +27,13 @@ const WollmanTable = ({ wollman, isLoading }: WollmanTableProps) => {
     [openModal]
   );
 
-  console.log(wollman);
-
   const columns = useMemo(
     () => [
-      columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
+      columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
-      columnHelper.accessor('order.date_created', { header: t('date'), cell: (context) => convertDate(context.renderValue()!), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? 'default', { header: t('type'), meta: { sortable: true } }),
+      columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
+      columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
+      columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? 'default', { header: t('type') }),
       columnHelper.accessor(
         (row) => {
           const date = row.tour.wollman_date;
@@ -45,7 +41,7 @@ const WollmanTable = ({ wollman, isLoading }: WollmanTableProps) => {
 
           return `${date} ${time}`;
         },
-        { header: t('schedule(1)'), meta: { sortable: true } }
+        { header: t('schedule(1)') }
       ),
       columnHelper.accessor(
         (row) => {
@@ -54,17 +50,15 @@ const WollmanTable = ({ wollman, isLoading }: WollmanTableProps) => {
 
           return `${date} ${time}`;
         },
-        { header: t('schedule(2)'), meta: { sortable: true } }
+        { header: t('schedule(2)') }
       ),
-      columnHelper.accessor('lineItem.quantity', { header: t('quantity'), meta: { sortable: true } }),
-      columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
+      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
     ],
     [t]
   );
 
   const table = useReactTable({ data: wollman, columns, getCoreRowModel: getCoreRowModel() });
 
-  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.WollmanDetail, { id: row.original.order.id }))} />;
   return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
 };
 

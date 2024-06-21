@@ -1,28 +1,7 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
 import { useConvertDate } from '@/hooks';
-import {
-  Badge,
-  Box,
-  Button,
-  Flex,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Skeleton,
-  Stack,
-  StackDivider,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-} from '@chakra-ui/react';
+import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
@@ -65,7 +44,6 @@ const WollmanModal = ({ wollman, onClose }: WollmanModalProps) => {
               {wollman?.order.status ? t(wollman.order.status) : t('Status')}
             </Badge>
           </Flex>
-          {/* <ModalCloseButton /> */}
         </ModalHeader>
 
         <ModalBody>

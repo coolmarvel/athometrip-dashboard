@@ -1,8 +1,6 @@
 import { DataTable } from '@/components';
-import { PageRoutes } from '@/constants';
-import { useSafePush, useConvertDate } from '@/hooks';
+import { useConvertDate } from '@/hooks';
 import { useModalStore } from '@/stores';
-import { toUrl } from '@/utils';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +14,6 @@ interface EllisIslandTableProps {
 }
 
 const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => {
-  const { push } = useSafePush();
   const { t } = useTranslation();
   const convertDate = useConvertDate();
 
@@ -30,15 +27,14 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
     [openModal]
   );
 
-  console.log(ellisIsland);
-
   const columns = useMemo(
     () => [
-      columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
+      columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
-      columnHelper.accessor('order.date_created', { header: t('date'), cell: (context) => convertDate(context.renderValue()!), meta: { sortable: true } }),
-      columnHelper.accessor('', { header: t('type'), meta: { sortable: true } }),
-      columnHelper.accessor((row) => `${row.tour?.ellis_island_date}`, { header: t('schedule(date)'), meta: { sortable: true } }),
+      columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
+      columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
+      columnHelper.accessor('', { header: t('type') }),
+      columnHelper.accessor((row) => `${row.tour?.ellis_island_date}`, { header: t('schedule(date)') }),
       columnHelper.accessor(
         (row) => {
           const ellisIslandTime = row.order.metadata.find((meta: any) => meta.key === 'ellis_island_time')?.value;
@@ -51,20 +47,15 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
 
           return schedule;
         },
-        {
-          header: t('schedule(time)'),
-          meta: { sortable: true },
-        }
+        { header: t('schedule(time)') }
       ),
-      columnHelper.accessor('lineItem.quantity', { header: t('quantity'), meta: { sortable: true } }),
-      columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
+      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
     ],
     [t]
   );
 
   const table = useReactTable({ data: ellisIsland, columns, getCoreRowModel: getCoreRowModel() });
 
-  // return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.EllisIslandDetail, { id: row.original.order.id }))} />;
   return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
 };
 

@@ -36,12 +36,12 @@ const TMobileUsimTable = ({ tMobile, isLoading }: TMobileUsimTableProps) => {
     () => [
       columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
-      columnHelper.accessor('order.date_created', { header: t('date'), cell: (context) => convertDate(context.renderValue()!), meta: { sortable: true } }),
+      columnHelper.accessor('order.date_created', { header: t('date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('period'), meta: { sortable: true } }),
       columnHelper.accessor((row) => `${row.usimInfo?.esim_device ?? ''}`, { header: t('model'), meta: { sortable: true } }),
       columnHelper.accessor((row) => `${row.usimInfo?.att_tmobile_date ?? ''}`, {
         header: t('activate'),
-        cell: (context: any) => convertDate(context.renderValue()!).split(' ')[0],
+        cell: (context: any) => convertDate(context.getValue()!).split(' ')[0],
         meta: { sortable: true },
       }),
       columnHelper.accessor('lineItem.quantity', { header: t('quantity'), meta: { sortable: true } }),

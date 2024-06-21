@@ -1,8 +1,6 @@
 import { DataTable } from '@/components';
-import { PageRoutes } from '@/constants';
-import { useSafePush, useConvertDate } from '@/hooks';
+import { useConvertDate } from '@/hooks';
 import { useModalStore } from '@/stores';
-import { toUrl } from '@/utils';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +14,6 @@ interface EmpireTableProps {
 }
 
 const EmpireTable = ({ empire, isLoading }: EmpireTableProps) => {
-  const { push } = useSafePush();
   const { t } = useTranslation();
   const convertDate = useConvertDate();
 
@@ -30,14 +27,13 @@ const EmpireTable = ({ empire, isLoading }: EmpireTableProps) => {
     [openModal]
   );
 
-  console.log(empire);
-
   const columns = useMemo(
     () => [
-      columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
+      columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
-      columnHelper.accessor('order.date_created', { header: t('date'), cell: (context) => convertDate(context.renderValue()!), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? 'default', { header: t('type'), meta: { sortable: true } }),
+      columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
+      columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!) }),
+      columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('type') }),
       columnHelper.accessor(
         (row) => {
           const date = row.tour?.empire_date;
@@ -45,17 +41,15 @@ const EmpireTable = ({ empire, isLoading }: EmpireTableProps) => {
 
           return `${date} ${time}`;
         },
-        { header: t('schedule'), meta: { sortable: true } }
+        { header: t('schedule') }
       ),
-      columnHelper.accessor('lineItem.quantity', { header: t('quantity'), meta: { sortable: true } }),
-      columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
+      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
     ],
     [t]
   );
 
   const table = useReactTable({ data: empire, columns, getCoreRowModel: getCoreRowModel() });
 
-  // return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.EmpireDetail, { id: row.original.order.id }))} />;
   return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
 };
 

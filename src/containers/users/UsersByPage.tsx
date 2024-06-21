@@ -9,13 +9,9 @@ import { useRouter } from 'next/router';
 const UsersByPage = () => {
   const router = useRouter();
   const { page, limit, sort, order, onPagination } = usePagination();
-  const { data: usersByPage, isLoading: usersIsLoading } = useGetUsersByPage({
-    page,
-    limit,
-    sort,
-    order,
-    search: QueryParser.toString(router.query.search) ?? '',
-  });
+  const { data: usersByPage, isLoading: usersIsLoading } = useGetUsersByPage({ page, limit, sort, order, search: QueryParser.toString(router.query.search) ?? '' });
+
+  console.log(usersByPage);
 
   return (
     <>

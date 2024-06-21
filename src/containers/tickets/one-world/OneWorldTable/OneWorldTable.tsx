@@ -1,8 +1,6 @@
 import { DataTable } from '@/components';
-import { PageRoutes } from '@/constants';
-import { useSafePush, useConvertDate } from '@/hooks';
+import { useConvertDate } from '@/hooks';
 import { useModalStore } from '@/stores';
-import { toUrl } from '@/utils';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +14,6 @@ interface OneWorldTableProps {
 }
 
 const OneWorldTable = ({ oneWorld, isLoading }: OneWorldTableProps) => {
-  const { push } = useSafePush();
   const { t } = useTranslation();
   const convertDate = useConvertDate();
 
@@ -30,24 +27,21 @@ const OneWorldTable = ({ oneWorld, isLoading }: OneWorldTableProps) => {
     [openModal]
   );
 
-  console.log(oneWorld);
-
   const columns = useMemo(
     () => [
-      columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
+      columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
-      columnHelper.accessor('order.date_created', { header: t('date'), cell: (context) => convertDate(context.renderValue()!), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? 'default', { header: t('type'), meta: { sortable: true } }),
-      columnHelper.accessor((row) => `${row.tour?.oneworld_date} ${row.tour?.oneworld_time}`, { header: t('schedule'), meta: { sortable: true } }),
-      columnHelper.accessor('lineItem.quantity', { header: t('quantity'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
+      columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!) }),
+      columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? 'default', { header: t('type') }),
+      columnHelper.accessor((row) => `${row.tour?.oneworld_date} ${row.tour?.oneworld_time}`, { header: t('schedule') }),
+      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
     ],
     [t]
   );
 
   const table = useReactTable({ data: oneWorld, columns, getCoreRowModel: getCoreRowModel() });
 
-  // return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.OneWorldDetail, { id: row.original.order.id }))} />;
   return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
 };
 

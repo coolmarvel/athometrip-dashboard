@@ -7,22 +7,11 @@ import { useTranslation } from 'react-i18next';
 const options = [
   {
     label: capitalize(ViewQueries.Table),
-    query: {
-      view: ViewQueries.Table,
-      page: 1,
-      limit: 10,
-      sort: 'id',
-      order: 'desc',
-    },
+    query: { view: ViewQueries.Table, page: 1, limit: 10, sort: 'id', order: 'desc' },
   },
   {
     label: capitalize(ViewQueries.List),
-    query: {
-      view: ViewQueries.List,
-      limit: 10,
-      sort: 'id',
-      order: 'desc',
-    },
+    query: { view: ViewQueries.List, limit: 10, sort: 'id', order: 'desc' },
   },
 ];
 

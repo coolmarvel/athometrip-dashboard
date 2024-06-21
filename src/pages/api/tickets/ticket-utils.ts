@@ -25,24 +25,44 @@ export const checkExistingDataInRange = async (name: string, after: string, befo
   return null;
 };
 
-export const sortTicket = (tickets: any, sort: RequiredKeysOf<any>, order: Order): Promise<any> => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      if (sort && order) {
-        tickets = tickets.map((ticket: any) => ({ ...ticket, id: parseInt(ticket.order.id, 10) }));
-        tickets = tickets.sort((a: any, b: any) => {
-          const ac = a[sort];
-          const bc = b[sort];
+const sortMap: any = {
+  id: 'order.id',
+  order_id: 'order.id',
+  email: 'billing.email',
+  name: 'billing.first_name',
+  order_date_created: 'order.date_created',
+};
 
-          if (ac > bc) return order === 'desc' ? -1 : 1;
-          else if (ac < bc) return order === 'desc' ? 1 : -1;
-          else return 0;
-        });
+export const sortTicket = (tickets: any, sort: RequiredKeysOf<any>, order: Order, search: string): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    try {
+      if (search.length > 0) {
+        tickets = tickets.filter(
+          (ticket: any) =>
+            ticket.order.id.includes(search.toLowerCase()) ||
+            ticket.billing.email.toLowerCase().includes(search.toLowerCase()) ||
+            ticket.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase())
+        );
       }
 
-      return resolve(tickets);
+      if (sort && order) {
+        const resolvedSortPath = sortMap[sort] || sort;
+        const deepValue = (obj: any, path: string) => path.split('.').reduce((acc, part) => acc && acc[part], obj);
+
+        tickets.sort((a: any, b: any) => {
+          const valueA = deepValue(a, resolvedSortPath);
+          const valueB = deepValue(b, resolvedSortPath);
+
+          if (typeof valueA === 'string' && typeof valueB === 'string') return order === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+          if (valueA > valueB) return order === 'asc' ? 1 : -1;
+          if (valueA < valueB) return order === 'asc' ? -1 : 1;
+
+          return 0;
+        });
+      }
+      resolve(tickets);
     } catch (error) {
-      return reject(error);
+      reject(error);
     }
   });
 };

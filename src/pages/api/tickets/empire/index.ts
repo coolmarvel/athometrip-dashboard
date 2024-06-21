@@ -34,7 +34,7 @@ const getEmpireByPage = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (tickets.length === 0) {
       const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
-      tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order);
+      tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order, search as string);
 
       await setValue(key, tickets);
 
@@ -43,7 +43,7 @@ const getEmpireByPage = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });
     } else {
       tickets = await filterTicket(tickets, after, before);
-      tickets = await sortTicket(tickets, sort as RequiredKeysOf<any>, order as Order);
+      tickets = await sortTicket(tickets, sort as RequiredKeysOf<any>, order as Order, search as string);
       const slicedTickets = tickets.slice(Number(offset), Number(offset) + Number(limit));
 
       return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });
