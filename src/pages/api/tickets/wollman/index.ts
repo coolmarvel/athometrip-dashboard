@@ -34,9 +34,9 @@ const getWollmanByPage = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (tickets.length === 0) {
       const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
-      tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order, search as string);
+      await setValue(key, data);
 
-      await setValue(key, tickets);
+      tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order, search as string);
 
       const slicedTickets = tickets.slice(Number(offset), Number(offset) + Number(limit));
 

@@ -30,19 +30,39 @@ const splitEsimData = (usims: any[]) => {
   });
 };
 
-export const sortUsim = (usims: any, sort: RequiredKeysOf<any>, order: Order): Promise<any> => {
+const sortMap: any = {
+  id: 'order.id',
+  order_id: 'order.id',
+  email: 'billing.email',
+  name: 'billing.first_name',
+  order_date_created: 'order.date_created',
+};
+
+export const sortUsim = (usims: any, sort: RequiredKeysOf<any>, order: Order, search: string): Promise<any> => {
   return new Promise(async (resolve, reject) => {
     try {
-      if (sort && order) {
-        usims = splitEsimData(usims);
-        usims = usims.map((usim: any) => ({ ...usim, id: parseInt(usim.order.id, 10) }));
-        usims = usims.sort((a: any, b: any) => {
-          const ac = a[sort];
-          const bc = b[sort];
+      if (search.length > 0) {
+        usims = usims.filter(
+          (usim: any) =>
+            usim.order.id.includes(search.toLowerCase()) ||
+            usim.billing.email.toLowerCase().includes(search.toLowerCase()) ||
+            usim.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase()),
+        );
+      }
 
-          if (ac > bc) return order === 'desc' ? -1 : 1;
-          else if (ac < bc) return order === 'desc' ? 1 : -1;
-          else return 0;
+      if (sort && order) {
+        const resolvedSortPath = sortMap[sort] || sort;
+        const deepValue = (obj: any, path: string) => path.split('.').reduce((acc, part) => acc && acc[part], obj);
+
+        usims.sort((a: any, b: any) => {
+          const valueA = deepValue(a, resolvedSortPath);
+          const valueB = deepValue(b, resolvedSortPath);
+
+          if (typeof valueA === 'string' && typeof valueB === 'string') return order === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+          if (valueA > valueB) return order === 'asc' ? 1 : -1;
+          if (valueA < valueB) return order === 'asc' ? -1 : 1;
+
+          return 0;
         });
       }
 
@@ -53,7 +73,7 @@ export const sortUsim = (usims: any, sort: RequiredKeysOf<any>, order: Order): P
   });
 };
 
-export const filterUsim = (usims: any, after: string, before: string, mode: string) => {
+export const filterUsim = (usims: any, after: string, before: string, region: string, mode: string) => {
   const start = new Date(after);
   const end = new Date(before);
 
@@ -61,9 +81,22 @@ export const filterUsim = (usims: any, after: string, before: string, mode: stri
     const usimDate = new Date(usim.order.date_created);
     const dateCondition = usimDate >= start && usimDate <= end;
 
-    if (mode === 'usim') return dateCondition && usim.usimInfo.esim_eid == null && usim.usimInfo.esim_imei == null;
-    else if (mode === 'esim') return dateCondition && typeof usim.usimInfo.esim_eid === 'string' && typeof usim.usimInfo.esim_imei === 'string';
+    const regionCondition = (region: string, usim: any) => {
+      if (region === 'usa')
+        return usim.lineItem.metadata.some((meta: any) => meta.key === '사용 지역 선택' && meta.value === '미국 내 사용');
+      else if (region === 'mexico/canada')
+        return usim.lineItem.metadata.some((meta: any) => meta.key === '사용 지역 선택 ($3)' && meta.value === '미국 및 캐나다/멕시코');
 
-    return false;
+      return false;
+    };
+
+    const modeCondition = (mode: string, usim: any) => {
+      if (mode === 'usim') return usim.usimInfo.esim_eid == null && usim.usimInfo.esim_imei == null;
+      else if (mode === 'esim') return typeof usim.usimInfo.esim_eid === 'string' && typeof usim.usimInfo.esim_imei === 'string';
+
+      return false;
+    };
+
+    return dateCondition && regionCondition(region, usim) && modeCondition(mode, usim);
   });
 };

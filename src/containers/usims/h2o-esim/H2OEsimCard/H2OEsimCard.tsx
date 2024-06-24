@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +10,6 @@ interface H2OEsimCardProps {
 
 const H2OEsimCard = ({ data: h2oEsim }: H2OEsimCardProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
@@ -20,7 +18,7 @@ const H2OEsimCard = ({ data: h2oEsim }: H2OEsimCardProps) => {
       { label: t('Phone'), value: h2oEsim?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${h2oEsim?.payment?.payment_method_title ?? 'Payment method'} (${h2oEsim?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [h2oEsim, convertDate, t]
+    [h2oEsim, t],
   );
 
   const columns = useMemo(() => [{ name: h2oEsim?.lineItem.name, quantity: h2oEsim?.lineItem.quantity, total: h2oEsim?.lineItem.total }] ?? [], [h2oEsim]);

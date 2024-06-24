@@ -23,7 +23,7 @@ const usimName = 't-mobile';
 const url = 'http://localhost:3000/api/production/adapter/orders';
 
 const getTMobileByPage = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { page, limit, sort, order, after, before, mode, search } = req.query as { [key: string]: string };
+  const { page, limit, sort, order, after, before, region, mode, search } = req.query as { [key: string]: string };
   const offset = (Number(page) - 1) * Number(limit);
 
   const key = `${usimName}_${after}_${before}`;
@@ -36,15 +36,14 @@ const getTMobileByPage = async (req: NextApiRequest, res: NextApiResponse) => {
       const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
       await setValue(key, data);
 
-      usims = await filterUsim(usims, after, before, mode);
-      usims = await sortUsim(data, sort as RequiredKeysOf<any>, order as Order);
-
+      usims = await filterUsim(usims, after, before, region, mode);
+      usims = await sortUsim(data, sort as RequiredKeysOf<any>, order as Order, search);
       const slicedUsims = usims.slice(Number(offset), Number(offset) + Number(limit));
 
       return res.status(200).send({ data: { total: usims.length, data: slicedUsims } });
     } else {
-      usims = await filterUsim(usims, after, before, mode);
-      usims = await sortUsim(usims, sort as RequiredKeysOf<any>, order as Order);
+      usims = await filterUsim(usims, after, before, region, mode);
+      usims = await sortUsim(usims, sort as RequiredKeysOf<any>, order as Order, search);
       const slicedUsims = usims.slice(Number(offset), Number(offset) + Number(limit));
 
       return res.status(200).send({ data: { total: usims.length, data: slicedUsims } });

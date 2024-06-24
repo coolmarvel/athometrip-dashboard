@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +11,6 @@ interface TMobileModalProps {
 
 const TMobileModal = ({ tMobile, onClose }: TMobileModalProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
@@ -22,7 +20,7 @@ const TMobileModal = ({ tMobile, onClose }: TMobileModalProps) => {
       { label: t('Phone'), value: tMobile?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${tMobile?.payment?.payment_method_title ?? 'Payment method'} (${tMobile?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [tMobile, convertDate, t]
+    [tMobile, t],
   );
 
   const columns = useMemo(() => [{ name: tMobile?.lineItem.name, quantity: tMobile?.lineItem.quantity, total: tMobile?.lineItem.total }] ?? [], [tMobile]);
@@ -34,7 +32,7 @@ const TMobileModal = ({ tMobile, onClose }: TMobileModalProps) => {
         as={'section'}
         onSubmit={useCallback(() => {
           setIsOpen(false);
-        }, [onClose])}
+        }, [])}
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">

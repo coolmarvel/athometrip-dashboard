@@ -41,7 +41,7 @@ export const sortTicket = (tickets: any, sort: RequiredKeysOf<any>, order: Order
           (ticket: any) =>
             ticket.order.id.includes(search.toLowerCase()) ||
             ticket.billing.email.toLowerCase().includes(search.toLowerCase()) ||
-            ticket.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase())
+            ticket.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase()),
         );
       }
 
@@ -60,6 +60,7 @@ export const sortTicket = (tickets: any, sort: RequiredKeysOf<any>, order: Order
           return 0;
         });
       }
+
       resolve(tickets);
     } catch (error) {
       reject(error);

@@ -15,7 +15,7 @@ const options = [
   },
 ];
 
-const TMobileOptions = () => {
+const ModeOptions = () => {
   const { router, push } = useSafePush();
   const { t } = useTranslation();
 
@@ -38,4 +38,4 @@ const TMobileOptions = () => {
   );
 };
 
-export default TMobileOptions;
+export default ModeOptions;

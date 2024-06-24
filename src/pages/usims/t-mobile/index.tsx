@@ -1,4 +1,4 @@
-import { DatePickerOptions, PageOptions, ResponsiveLayout, Search, TMobileOptions } from '@/components';
+import { DatePickerOptions, PageOptions, ResponsiveLayout, Search, ModeOptions, RegionOptions } from '@/components';
 import { TMobileByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
@@ -25,7 +25,8 @@ const TMobilePages = () => {
             />
             <Flex gap={'4'}>
               <DatePickerOptions />
-              <TMobileOptions />
+              <RegionOptions />
+              <ModeOptions />
               <PageOptions />
             </Flex>
           </Flex>

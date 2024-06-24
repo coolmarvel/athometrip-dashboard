@@ -1,9 +1,7 @@
-// import { format, subMonths } from 'date-fns';
-// import { ko } from 'date-fns/locale';
 import { MatchFunction, match } from 'path-to-regexp';
 import { IconType } from 'react-icons';
 import {
-  BsFillPostcardFill,
+  // BsFillPostcardFill,
   BsFill0SquareFill,
   BsFill1SquareFill,
   BsFill2SquareFill,
@@ -26,7 +24,7 @@ export enum ApiRoutes {
   User = 'api/users/:id?',
   ApproveUser = 'api/users/:id?/approve',
   Post = 'api/posts/:id?',
-  LikedPost = 'api/posts/liked',
+  // LikedPost = 'api/posts/liked',
 
   // Tickets
   Empire = 'api/tickets/empire/:id?',
@@ -44,6 +42,15 @@ export enum ApiRoutes {
   TMobile = 'api/usims/t-mobile/:id?',
   H2OEsim = 'api/usims/h2o-esim/:id?',
   Lyca = 'api/usims/lyca/:id?',
+
+  // Tours
+  Landmark = '/tours/landmark/:id?',
+  Woodbury = '/tours/woodburry/:id?',
+  MetroDocent = '/tours/metro-docent/:id?',
+  MomaDocent = '/tours/moma-docent/:id?',
+  GuggenheimDocent = '/tours/guggenheim-docent/:id?',
+  WhitneyDocent = '/tours/whitney-docent/:id?',
+  AMNHDocent = '/tours/amnh-docent/:id?', // American Museum Of Nature History
 }
 
 export enum PageRoutes {
@@ -58,7 +65,6 @@ export enum PageRoutes {
 
   // Tickets
   Tickets = '/tickets',
-
   TopOfTheRock = '/tickets/top-of-the-rock',
   TopOfTheRockDetail = '/tickets/top-of-the-rock/:id',
   Summit = '/tickets/summit',
@@ -82,15 +88,29 @@ export enum PageRoutes {
 
   // USIMs
   Usims = '/usims',
-
   TMobile = '/usims/t-mobile',
   TMobileDetail = '/usims/t-mobile/:id',
-
   H2OEsim = '/usims/h2o-esim',
   H2OEsimDetail = 'usims/h2o-esim/:id',
-
   Lyca = '/usims/lyca',
   LycaDetail = 'usims/lyca/:id',
+
+  // Tours
+  Tours = '/tours',
+  Landmark = '/tours/landmark',
+  LandmarkDetail = '/tours/landmark/:id',
+  Woodbury = '/tours/woodbury',
+  WoodburyDetail = '/tours/woodbury/:id',
+  MetroDocent = '/tours/metro-docent',
+  MetroDocentDetail = '/tours/metro-docent/:id',
+  MomaDocent = '/tours/moma-docent',
+  MomaDocentDetail = '/tours/moma-docent/:id',
+  GuggenheimDocent = '/tours/guggengeim-docent',
+  GuggenheimDocentDetail = '/tours/guggengeim-docent/:id',
+  WhitneyDocent = '/tours/whitney-docent',
+  WhitneyDocentDetail = '/tours/whitney-docent/:id',
+  AMNHDocent = '/tours/amnh-docent', // American Museum of Nature History
+  AMNHDocentDetail = '/tours/amnh-docent/:id',
 }
 
 export const whiteList = [PageRoutes.Home, PageRoutes.Signin, PageRoutes.Users, PageRoutes.UserDetail];
@@ -113,8 +133,11 @@ export enum ViewQueries {
 export enum ModeQueries {
   Usim = 'usim',
   Esim = 'esim',
-  Daily = 'daily',
-  Monthly = 'monthly',
+}
+
+export enum RegionQueries {
+  USA = 'usa',
+  Other = 'mexico/canada',
 }
 
 export interface Nav {
@@ -136,16 +159,12 @@ export const defaultQuery = {
   search: '',
 };
 
-// const after: string = format(subMonths(new Date(), 1), 'yyyy-MM-dd', { locale: ko });
-// const before: string = format(new Date(), 'yyyy-MM-dd', { locale: ko });
-
 export const ticketQuery = {
   page: 1,
   limit: 10,
   sort: 'id',
   order: 'desc',
-  // after: after,
-  // before: before,
+  search: '',
 };
 
 export const usimQuery = {
@@ -154,8 +173,8 @@ export const usimQuery = {
   sort: 'id',
   order: 'desc',
   mode: ModeQueries.Usim,
-  // after: after,
-  // before: before,
+  region: RegionQueries.USA,
+  search: '',
 };
 
 // t("Users")
@@ -312,16 +331,83 @@ export const navs: Nav[] = [
         pathname: PageRoutes.H2OEsim,
         matcher: match(PageRoutes.H2OEsim),
         icon: BsFill2SquareFill,
-        query: defaultQuery,
-        children: [{ label: 'H2O(Esim) Detail', pathname: PageRoutes.H2OEsimDetail, matcher: match(PageRoutes.H2OEsimDetail), query: defaultQuery }],
+        query: ticketQuery,
+        children: [{ label: 'H2O(Esim) Detail', pathname: PageRoutes.H2OEsimDetail, matcher: match(PageRoutes.H2OEsimDetail), query: ticketQuery }],
       },
       {
         label: 'Lyca',
         pathname: PageRoutes.Lyca,
         matcher: match(PageRoutes.Lyca),
         icon: BsFill3SquareFill,
-        query: defaultQuery,
-        children: [{ label: 'Lyca Portal', pathname: PageRoutes.LycaDetail, matcher: match(PageRoutes.LycaDetail), query: usimQuery }],
+        query: ticketQuery,
+        children: [{ label: 'Lyca Portal', pathname: PageRoutes.LycaDetail, matcher: match(PageRoutes.LycaDetail), query: ticketQuery }],
+      },
+    ],
+  },
+
+  // Tours
+  {
+    label: 'Tours',
+    icon: BsFillCollectionFill,
+    pathname: PageRoutes.Tours,
+    matcher: match(PageRoutes.Tours),
+    collapsible: true,
+    children: [
+      {
+        label: 'Landmark',
+        pathname: PageRoutes.Landmark,
+        matcher: match(PageRoutes.Landmark),
+        icon: BsFill1SquareFill,
+        query: ticketQuery,
+        children: [{ label: 'Landmark Detail', pathname: PageRoutes.LandmarkDetail, matcher: match(PageRoutes.LandmarkDetail), query: ticketQuery }],
+      },
+      {
+        label: 'Woodbury',
+        pathname: PageRoutes.Woodbury,
+        matcher: match(PageRoutes.Woodbury),
+        icon: BsFill2SquareFill,
+        query: ticketQuery,
+        children: [{ label: 'Woodbury Detail', pathname: PageRoutes.WoodburyDetail, matcher: match(PageRoutes.WoodburyDetail), query: ticketQuery }],
+      },
+      {
+        label: 'MetroDocent',
+        pathname: PageRoutes.MetroDocent,
+        matcher: match(PageRoutes.MetroDocent),
+        icon: BsFill3SquareFill,
+        query: ticketQuery,
+        children: [{ label: 'MetroDocent Detail', pathname: PageRoutes.MetroDocentDetail, matcher: match(PageRoutes.MetroDocentDetail), query: ticketQuery }],
+      },
+      {
+        label: 'MomaDocent',
+        pathname: PageRoutes.MomaDocent,
+        matcher: match(PageRoutes.MomaDocent),
+        icon: BsFill4SquareFill,
+        query: ticketQuery,
+        children: [{ label: 'MomaDocent Detail', pathname: PageRoutes.MomaDocentDetail, matcher: match(PageRoutes.MomaDocentDetail), query: ticketQuery }],
+      },
+      {
+        label: 'GuggenheimDocent',
+        pathname: PageRoutes.GuggenheimDocent,
+        matcher: match(PageRoutes.GuggenheimDocent),
+        icon: BsFill5SquareFill,
+        query: ticketQuery,
+        children: [{ label: 'GuggenheimDocent Detail', pathname: PageRoutes.GuggenheimDocentDetail, matcher: match(PageRoutes.GuggenheimDocentDetail), query: ticketQuery }],
+      },
+      {
+        label: 'WhitneyDocent',
+        pathname: PageRoutes.WhitneyDocent,
+        matcher: match(PageRoutes.WhitneyDocent),
+        icon: BsFill6SquareFill,
+        query: ticketQuery,
+        children: [{ label: 'WhitneyDocent Detail', pathname: PageRoutes.WhitneyDocentDetail, matcher: match(PageRoutes.WhitneyDocentDetail), query: ticketQuery }],
+      },
+      {
+        label: 'AMNHDocent',
+        pathname: PageRoutes.AMNHDocent,
+        matcher: match(PageRoutes.AMNHDocent),
+        icon: BsFill7SquareFill,
+        query: ticketQuery,
+        children: [{ label: 'AMNHDocent Detail', pathname: PageRoutes.AMNHDocentDetail, matcher: match(PageRoutes.AMNHDocentDetail), query: ticketQuery }],
       },
     ],
   },

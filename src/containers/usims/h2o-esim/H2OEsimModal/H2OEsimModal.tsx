@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +11,6 @@ interface H2OEsimModalProps {
 
 const H2OEsimModal = ({ h2oEsim, onClose }: H2OEsimModalProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
@@ -22,7 +20,7 @@ const H2OEsimModal = ({ h2oEsim, onClose }: H2OEsimModalProps) => {
       { label: t('Phone'), value: h2oEsim?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${h2oEsim?.payment?.payment_method_title ?? 'Payment method'} (${h2oEsim?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [h2oEsim, convertDate, t]
+    [h2oEsim, t],
   );
 
   const columns = useMemo(() => [{ name: h2oEsim?.lineItem.name, quantity: h2oEsim?.lineItem.quantity, total: h2oEsim?.lineItem.total }] ?? [], [h2oEsim]);
@@ -34,7 +32,7 @@ const H2OEsimModal = ({ h2oEsim, onClose }: H2OEsimModalProps) => {
         as={'section'}
         onSubmit={useCallback(() => {
           setIsOpen(false);
-        }, [onClose])}
+        }, [])}
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">

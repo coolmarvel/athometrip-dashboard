@@ -1,7 +1,6 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
-import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
+import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -11,7 +10,6 @@ interface TMobileCardProps {
 
 const TMobileCard = ({ data: tMobile }: TMobileCardProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
@@ -20,7 +18,7 @@ const TMobileCard = ({ data: tMobile }: TMobileCardProps) => {
       { label: t('Phone'), value: tMobile?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${tMobile?.payment?.payment_method_title ?? 'Payment method'} (${tMobile?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [tMobile, convertDate, t]
+    [tMobile, t],
   );
 
   const columns = useMemo(() => [{ name: tMobile?.lineItem.name, quantity: tMobile?.lineItem.quantity, total: tMobile?.lineItem.total }] ?? [], [tMobile]);

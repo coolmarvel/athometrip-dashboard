@@ -1,5 +1,5 @@
 import { DataTable } from '@/components';
-import { useSafePush, useConvertDate } from '@/hooks';
+import { useConvertDate } from '@/hooks';
 import { useModalStore } from '@/stores';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
@@ -24,29 +24,25 @@ const LycaTable = ({ lyca, isLoading }: LycaTableProps) => {
       if (!lyca) return;
       openModal(LycaModal, { lyca });
     },
-    [openModal]
+    [openModal],
   );
 
   console.log(lyca);
 
   const columns = useMemo(
     () => [
-      columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
+      columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
-      columnHelper.accessor('order.date_created', { header: t('date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('period'), meta: { sortable: true } }),
-      columnHelper.accessor((row) => `${row.usimInfo?.esim_device ?? ''}`, { header: t('model'), meta: { sortable: true } }),
-      columnHelper.accessor((row) => `${row.usimInfo?.esim_eid ?? ''}`, { header: t('eid'), meta: { sortable: true } }),
-      columnHelper.accessor((row) => `${row.usimInfo?.esim_imei ?? ''}`, { header: t('iemi'), meta: { sortable: true } }),
-      columnHelper.accessor((row) => `${row.usimInfo?.att_lyca_date ?? ''}`, {
-        header: t('activate'),
-        cell: (context: any) => convertDate(context.getValue()!).split(' ')[0],
-        meta: { sortable: true },
-      }),
-      columnHelper.accessor('lineItem.quantity', { header: t('quantity'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
+      columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
+      columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('period') }),
+      columnHelper.accessor((row) => `${row.usimInfo?.esim_device ?? ''}`, { header: t('model') }),
+      columnHelper.accessor((row) => `${row.usimInfo?.esim_eid ?? ''}`, { header: t('eid') }),
+      columnHelper.accessor((row) => `${row.usimInfo?.esim_imei ?? ''}`, { header: t('iemi') }),
+      columnHelper.accessor((row) => `${row.usimInfo?.att_tmobile_date ?? ''}`, { header: t('activate'), cell: (context: any) => convertDate(context.getValue()!).split(' ')[0] }),
+      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
     ],
-    [t]
+    [convertDate, t],
   );
 
   const table = useReactTable({ data: lyca, columns, getCoreRowModel: getCoreRowModel() });
