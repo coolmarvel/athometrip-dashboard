@@ -1,0 +1,1 @@
+export { default as AMNHDocentCard } from './AMNHDocentCard';

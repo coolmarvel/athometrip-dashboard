@@ -44,13 +44,13 @@ export enum ApiRoutes {
   Lyca = 'api/usims/lyca/:id?',
 
   // Tours
-  Landmark = '/tours/landmark/:id?',
-  Woodbury = '/tours/woodburry/:id?',
-  MetroDocent = '/tours/metro-docent/:id?',
-  MomaDocent = '/tours/moma-docent/:id?',
-  GuggenheimDocent = '/tours/guggenheim-docent/:id?',
-  WhitneyDocent = '/tours/whitney-docent/:id?',
-  AMNHDocent = '/tours/amnh-docent/:id?', // American Museum Of Nature History
+  Landmark = 'api/tours/landmark/:id?',
+  Woodbury = 'api/tours/woodburry/:id?',
+  MetroDocent = 'api/tours/metro-docent/:id?',
+  MomaDocent = 'api/tours/moma-docent/:id?',
+  GuggenheimDocent = 'api/tours/guggenheim-docent/:id?',
+  WhitneyDocent = 'api/tours/whitney-docent/:id?',
+  AMNHDocent = 'api/tours/amnh-docent/:id?',
 }
 
 export enum PageRoutes {

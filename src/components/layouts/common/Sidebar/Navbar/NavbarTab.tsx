@@ -1,6 +1,7 @@
+// NavbarTab.tsx
 import { useTranslation } from 'react-i18next';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
-import { Collapse, Center, Flex, Icon, ListItem, Text, Tooltip } from '@chakra-ui/react';
+import { Collapse, Center, Flex, Icon, ListItem, Text, Tooltip, UnorderedList } from '@chakra-ui/react';
 
 import { Nav } from '@/constants';
 import { useAlphaColor, useSafePush } from '@/hooks';
@@ -20,7 +21,7 @@ const NavbarTab = ({ nav, isActivated }: NavbarTabProps) => {
   const isOpenThisTab = isOpen[nav.label] || false;
 
   const handleClick = (event: React.MouseEvent) => {
-    event.stopPropagation(); // Prevent event bubbling to parent components
+    event.stopPropagation();
     if (nav.children && nav.collapsible) setIsOpen(nav.label);
     else push({ pathname: nav.pathname, query: nav.query });
   };
@@ -38,11 +39,11 @@ const NavbarTab = ({ nav, isActivated }: NavbarTabProps) => {
       </Flex>
       {nav.collapsible && (
         <Collapse in={isOpenThisTab} animateOpacity>
-          <Flex direction="column" pl="4">
+          <UnorderedList style={{ listStyle: 'none' }}>
             {nav.children?.map((child) => (
               <NavbarTab key={child.label} nav={child} isActivated={isActivated} />
             ))}
-          </Flex>
+          </UnorderedList>
         </Collapse>
       )}
     </ListItem>

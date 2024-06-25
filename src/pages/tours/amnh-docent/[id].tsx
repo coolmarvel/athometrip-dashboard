@@ -1,13 +1,13 @@
-import { useGet911Memorial } from '@/apis';
+import { useGetAMNHDocent } from '@/apis';
 import { ResponsiveLayout } from '@/components';
-import { Memorial911Card } from '@/containers';
+import { AMNHDocentCard } from '@/containers';
 import { QueryParser } from '@/utils';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 const AMNHPage = () => {
   const router = useRouter();
-  const { data: memorial911 } = useGet911Memorial(QueryParser.toNumber(router.query.id));
+  const { data: amnhDocent } = useGetAMNHDocent(QueryParser.toNumber(router.query.id));
 
   return (
     <>
@@ -18,7 +18,7 @@ const AMNHPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ResponsiveLayout>
-        <Memorial911Card data={memorial911} />
+        <AMNHDocentCard data={amnhDocent} />
       </ResponsiveLayout>
     </>
   );

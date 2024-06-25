@@ -1,5 +1,5 @@
 import { DatePickerOptions, PageOptions, ResponsiveLayout, Search } from '@/components';
-import { Memorial911ByPage } from '@/containers';
+import { AMNHDocentByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
@@ -28,7 +28,7 @@ const AMNHPages = () => {
               <PageOptions />
             </Flex>
           </Flex>
-          <Memorial911ByPage />
+          <AMNHDocentByPage />
         </Flex>
       </ResponsiveLayout>
     </>
