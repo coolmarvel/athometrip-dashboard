@@ -5,34 +5,34 @@ import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack,
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-interface GuggenheimDocentCardProps {
+interface LandmarkCardProps {
   data?: any;
 }
 
-const GuggenheimDocentCard = ({ data: guggenheimDocent }: GuggenheimDocentCardProps) => {
+const LandmarkCard = ({ data: landmark }: LandmarkCardProps) => {
   const { t } = useTranslation();
   const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
-      { label: t('Name'), value: guggenheimDocent?.billing.first_name ?? 'Name' },
-      { label: t('Email'), value: guggenheimDocent?.billing.email ?? 'Email' },
-      { label: t('Phone'), value: guggenheimDocent?.billing.phone ?? 'Phone' },
-      { label: t('Payment Via'), value: `${guggenheimDocent?.payment?.payment_method_title ?? 'Payment method'} (${guggenheimDocent?.payment?.transaction_id ?? 'Transaction ID'})` },
+      { label: t('Name'), value: landmark?.billing.first_name ?? 'Name' },
+      { label: t('Email'), value: landmark?.billing.email ?? 'Email' },
+      { label: t('Phone'), value: landmark?.billing.phone ?? 'Phone' },
+      { label: t('Payment Via'), value: `${landmark?.payment?.payment_method_title ?? 'Payment method'} (${landmark?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [guggenheimDocent, convertDate, t],
+    [landmark, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: guggenheimDocent?.lineItem.name, quantity: guggenheimDocent?.lineItem.quantity, total: guggenheimDocent?.lineItem.total }] ?? [], [guggenheimDocent]);
+  const columns = useMemo(() => [{ name: landmark?.lineItem.name, quantity: landmark?.lineItem.quantity, total: landmark?.lineItem.total }] ?? [], [landmark]);
 
   return (
     <Card>
       <CardHeader>
-        <Skeleton isLoaded={!!guggenheimDocent}>
+        <Skeleton isLoaded={!!landmark}>
           <Flex justifyContent="space-between" alignItems="center">
-            <Heading size="lg">Order #{guggenheimDocent?.order.id ?? t('Order ID')}</Heading>
-            <Badge colorScheme={statusColor[guggenheimDocent?.order.status] || 'gray'} fontSize={'x-large'}>
-              {guggenheimDocent?.order.status ? t(guggenheimDocent.order.status) : t('Status')}
+            <Heading size="lg">Order #{landmark?.order.id ?? t('Order ID')}</Heading>
+            <Badge colorScheme={statusColor[landmark?.order.status] || 'gray'} fontSize={'x-large'}>
+              {landmark?.order.status ? t(landmark.order.status) : t('Status')}
             </Badge>
           </Flex>
         </Skeleton>
@@ -42,7 +42,7 @@ const GuggenheimDocentCard = ({ data: guggenheimDocent }: GuggenheimDocentCardPr
         <Box p={5}>
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
-              <Skeleton key={index} isLoaded={!!guggenheimDocent}>
+              <Skeleton key={index} isLoaded={!!landmark}>
                 <WithLabel label={attribute.label} value={attribute.value} />
               </Skeleton>
             ))}
@@ -73,4 +73,4 @@ const GuggenheimDocentCard = ({ data: guggenheimDocent }: GuggenheimDocentCardPr
   );
 };
 
-export default GuggenheimDocentCard;
+export default LandmarkCard;

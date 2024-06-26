@@ -24,7 +24,7 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
       if (!ellisIsland) return;
       openModal(EllisIslandModal, { ellisIsland });
     },
-    [openModal]
+    [openModal],
   );
 
   const columns = useMemo(
@@ -33,7 +33,8 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
-      columnHelper.accessor('', { header: t('type') }),
+      // columnHelper.accessor('', { header: t('type') }),
+      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
       columnHelper.accessor((row) => `${row.tour?.ellis_island_date}`, { header: t('schedule(date)') }),
       columnHelper.accessor(
         (row) => {
@@ -47,11 +48,10 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
 
           return schedule;
         },
-        { header: t('schedule(time)') }
+        { header: t('schedule(time)') },
       ),
-      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
     ],
-    [t]
+    [convertDate, t],
   );
 
   const table = useReactTable({ data: ellisIsland, columns, getCoreRowModel: getCoreRowModel() });

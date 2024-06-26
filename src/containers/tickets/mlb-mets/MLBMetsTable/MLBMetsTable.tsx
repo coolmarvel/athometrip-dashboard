@@ -24,7 +24,7 @@ const MLBMetsTable = ({ mlbMets, isLoading }: MLBMetsTableProps) => {
       if (!mlbMets) return;
       openModal(MLBMetsModal, { mlbMets });
     },
-    [openModal]
+    [openModal],
   );
 
   const columns = useMemo(
@@ -34,6 +34,7 @@ const MLBMetsTable = ({ mlbMets, isLoading }: MLBMetsTableProps) => {
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!) }),
       // columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('type') }),
+      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
       columnHelper.accessor(
         (row) => {
           const date = convertDate(row.order.metadata.find((meta: any) => meta.key === 'yankees_off_date')?.value).split(' ')[0] ?? '';
@@ -41,11 +42,10 @@ const MLBMetsTable = ({ mlbMets, isLoading }: MLBMetsTableProps) => {
 
           return `${date} ${time}`;
         },
-        { header: t('schedule') }
+        { header: t('schedule') },
       ),
-      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
     ],
-    [t]
+    [convertDate, t],
   );
 
   const table = useReactTable({ data: mlbMets, columns, getCoreRowModel: getCoreRowModel() });

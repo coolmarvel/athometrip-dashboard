@@ -1,10 +1,10 @@
 import { DatePickerOptions, PageOptions, ResponsiveLayout, Search } from '@/components';
-import { AMNHDocentByPage } from '@/containers';
+import { GuggenheimDocentByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
 
-const AMNHPages = () => {
+const AMNHDocentPages = () => {
   const { router, push } = useSafePush();
 
   return (
@@ -28,11 +28,11 @@ const AMNHPages = () => {
               <PageOptions />
             </Flex>
           </Flex>
-          <AMNHDocentByPage />
+          <GuggenheimDocentByPage />
         </Flex>
       </ResponsiveLayout>
     </>
   );
 };
 
-export default AMNHPages;
+export default AMNHDocentPages;

@@ -5,7 +5,7 @@ import { QueryParser } from '@/utils';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-const AMNHPage = () => {
+const AMNHDocentPage = () => {
   const router = useRouter();
   const { data: amnhDocent } = useGetAMNHDocent(QueryParser.toNumber(router.query.id));
 
@@ -24,4 +24,4 @@ const AMNHPage = () => {
   );
 };
 
-export default AMNHPage;
+export default AMNHDocentPage;

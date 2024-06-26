@@ -35,12 +35,12 @@ const LycaTable = ({ lyca, isLoading }: LycaTableProps) => {
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
+      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
       columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('period') }),
       columnHelper.accessor((row) => `${row.usimInfo?.esim_device ?? ''}`, { header: t('model') }),
       columnHelper.accessor((row) => `${row.usimInfo?.esim_eid ?? ''}`, { header: t('eid') }),
       columnHelper.accessor((row) => `${row.usimInfo?.esim_imei ?? ''}`, { header: t('iemi') }),
       columnHelper.accessor((row) => `${row.usimInfo?.att_tmobile_date ?? ''}`, { header: t('activate'), cell: (context: any) => convertDate(context.getValue()!).split(' ')[0] }),
-      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
     ],
     [convertDate, t],
   );

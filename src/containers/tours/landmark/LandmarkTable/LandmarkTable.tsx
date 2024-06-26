@@ -4,30 +4,30 @@ import { useModalStore } from '@/stores';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { GuggenheimDocentModal } from '@/containers';
+import { LandmarkModal } from '@/containers';
 
 const columnHelper = createColumnHelper<any>();
 
-interface GuggenheimDocentTableProps {
-  guggenheimDocent: any;
+interface LandmarkTableProps {
+  landmark: any;
   isLoading?: boolean;
 }
 
-const GuggenheimDocentTable = ({ guggenheimDocent, isLoading }: GuggenheimDocentTableProps) => {
+const LandmarkTable = ({ landmark, isLoading }: LandmarkTableProps) => {
   const { t } = useTranslation();
   const convertDate = useConvertDate();
 
   const { openModal } = useModalStore(['openModal']);
 
-  const handleModal = useCallback<(guggenheimDocent: any) => void>(
-    (guggenheimDocent) => {
-      if (!guggenheimDocent) return;
-      openModal(GuggenheimDocentModal, { guggenheimDocent });
+  const handleModal = useCallback<(landmark: any) => void>(
+    (landmark) => {
+      if (!landmark) return;
+      openModal(LandmarkModal, { landmark });
     },
     [openModal],
   );
 
-  console.log(guggenheimDocent);
+  console.log(landmark);
 
   const columns = useMemo(
     () => [
@@ -38,18 +38,29 @@ const GuggenheimDocentTable = ({ guggenheimDocent, isLoading }: GuggenheimDocent
       // columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('type') }),
       columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
       columnHelper.accessor((row) => {
-        const date = convertDate(row.lineItem?.metadata?.find((meta: any) => meta.key === '날짜')?.value).split(' ')[0] ?? '';
-        const time = row.lineItem?.metadata?.find((meta: any) => meta.key === '시간')?.value ?? '';
+        const findMetadata = (metadataArray: any, key: string) => {
+          const metadata = metadataArray?.find((meta: any) => meta.key === key);
 
-        return `${date} ${time}`;
+          return metadata ? metadata.value : '';
+        };
+
+        const orderMetadata = row.order?.metadata;
+        const lineItemMetadata = row.lineItem?.metadata;
+
+        const date = findMetadata(orderMetadata, 'landmark_day_tour_date') || findMetadata(lineItemMetadata, '날짜');
+        const convertedDate = date ? convertDate(date).split(' ')[0] : '';
+
+        const time = findMetadata(orderMetadata, 'landmark_day_tour_time') || findMetadata(lineItemMetadata, '시간');
+
+        return `${convertedDate} ${time}`.trim();
       }, { header: t('schedule') }),
     ],
     [convertDate, t],
   );
 
-  const table = useReactTable({ data: guggenheimDocent, columns, getCoreRowModel: getCoreRowModel() });
+  const table = useReactTable({ data: landmark, columns, getCoreRowModel: getCoreRowModel() });
 
   return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
 };
 
-export default GuggenheimDocentTable;
+export default LandmarkTable;

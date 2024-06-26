@@ -29,7 +29,9 @@ const sortMap: any = {
   id: 'order.id',
   order_id: 'order.id',
   email: 'billing.email',
+  billing_email: 'billing.email',
   name: 'billing.first_name',
+  billing_name: 'billing.first_name',
   order_date_created: 'order.date_created',
 };
 

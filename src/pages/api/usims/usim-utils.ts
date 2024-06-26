@@ -12,29 +12,31 @@ export const checkExistingDataInRange = async (name: string, after: string, befo
   return null;
 };
 
-const splitEsimData = (usims: any[]) => {
-  return usims.flatMap((usim: any) => {
-    const esimKeys = Object.keys(usim.usimInfo).filter((key) => key.startsWith('esim_') && usim.usimInfo[key] && (usim.usimInfo[key].includes(',') || usim.usimInfo[key].includes('/')));
-    if (esimKeys.length === 0) return [usim];
-
-    const maxSplits = Math.max(...esimKeys.map((key) => usim.usimInfo[key].split(/[,/]/).length));
-
-    return Array.from({ length: maxSplits }, (_, index) => {
-      const newUsim = { ...usim, usimInfo: { ...usim.usimInfo } };
-      esimKeys.forEach((key) => {
-        const values = usim.usimInfo[key].split(/[,/]/);
-        newUsim.usimInfo[key] = values[index] ?? values[0];
-      });
-      return newUsim;
-    });
-  });
-};
+// const splitEsimData = (usims: any[]) => {
+//   return usims.flatMap((usim: any) => {
+//     const esimKeys = Object.keys(usim.usimInfo).filter((key) => key.startsWith('esim_') && usim.usimInfo[key] && (usim.usimInfo[key].includes(',') || usim.usimInfo[key].includes('/')));
+//     if (esimKeys.length === 0) return [usim];
+//
+//     const maxSplits = Math.max(...esimKeys.map((key) => usim.usimInfo[key].split(/[,/]/).length));
+//
+//     return Array.from({ length: maxSplits }, (_, index) => {
+//       const newUsim = { ...usim, usimInfo: { ...usim.usimInfo } };
+//       esimKeys.forEach((key) => {
+//         const values = usim.usimInfo[key].split(/[,/]/);
+//         newUsim.usimInfo[key] = values[index] ?? values[0];
+//       });
+//       return newUsim;
+//     });
+//   });
+// };
 
 const sortMap: any = {
   id: 'order.id',
   order_id: 'order.id',
   email: 'billing.email',
+  billing_email: 'billing.email',
   name: 'billing.first_name',
+  billing_name: 'billing.first_name',
   order_date_created: 'order.date_created',
 };
 

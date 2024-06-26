@@ -24,7 +24,7 @@ const SummitTable = ({ summit, isLoading }: SummitTableProps) => {
       if (!summit) return;
       openModal(SummitModal, { summit });
     },
-    [openModal]
+    [openModal],
   );
 
   const columns = useMemo(
@@ -33,7 +33,8 @@ const SummitTable = ({ summit, isLoading }: SummitTableProps) => {
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? 'default', { header: t('type') }),
+      columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('type') }),
+      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
       columnHelper.accessor(
         (row) => {
           const date = row.tour?.date_summit === null ? row.tour?.summit_night_date : row.tour?.date_summit;
@@ -41,7 +42,7 @@ const SummitTable = ({ summit, isLoading }: SummitTableProps) => {
 
           return `${date} ${time}`;
         },
-        { header: t('schedule(1)') }
+        { header: t('schedule(1)') },
       ),
       columnHelper.accessor(
         (row) => {
@@ -50,11 +51,10 @@ const SummitTable = ({ summit, isLoading }: SummitTableProps) => {
 
           return `${date} ${time2}`;
         },
-        { header: t('schedule(2)') }
+        { header: t('schedule(2)') },
       ),
-      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
     ],
-    [t]
+    [convertDate, t],
   );
 
   const table = useReactTable({ data: summit, columns, getCoreRowModel: getCoreRowModel() });

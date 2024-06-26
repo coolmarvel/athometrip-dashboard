@@ -9,30 +9,30 @@ interface AMNHDocentCardProps {
   data?: any;
 }
 
-const AMNHDocentCard = ({ data: memorial911 }: AMNHDocentCardProps) => {
+const AMNHDocentCard = ({ data: amnhDocent }: AMNHDocentCardProps) => {
   const { t } = useTranslation();
   const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
-      { label: t('Name'), value: memorial911?.billing.first_name ?? 'Name' },
-      { label: t('Email'), value: memorial911?.billing.email ?? 'Email' },
-      { label: t('Phone'), value: memorial911?.billing.phone ?? 'Phone' },
-      { label: t('Payment Via'), value: `${memorial911?.payment?.payment_method_title ?? 'Payment method'} (${memorial911?.payment?.transaction_id ?? 'Transaction ID'})` },
+      { label: t('Name'), value: amnhDocent?.billing.first_name ?? 'Name' },
+      { label: t('Email'), value: amnhDocent?.billing.email ?? 'Email' },
+      { label: t('Phone'), value: amnhDocent?.billing.phone ?? 'Phone' },
+      { label: t('Payment Via'), value: `${amnhDocent?.payment?.payment_method_title ?? 'Payment method'} (${amnhDocent?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [memorial911, convertDate, t],
+    [amnhDocent, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: memorial911?.lineItem.name, quantity: memorial911?.lineItem.quantity, total: memorial911?.lineItem.total }] ?? [], [memorial911]);
+  const columns = useMemo(() => [{ name: amnhDocent?.lineItem.name, quantity: amnhDocent?.lineItem.quantity, total: amnhDocent?.lineItem.total }] ?? [], [amnhDocent]);
 
   return (
     <Card>
       <CardHeader>
-        <Skeleton isLoaded={!!memorial911}>
+        <Skeleton isLoaded={!!amnhDocent}>
           <Flex justifyContent="space-between" alignItems="center">
-            <Heading size="lg">Order #{memorial911?.order.id ?? t('Order ID')}</Heading>
-            <Badge colorScheme={statusColor[memorial911?.order.status] || 'gray'} fontSize={'x-large'}>
-              {memorial911?.order.status ? t(memorial911.order.status) : t('Status')}
+            <Heading size="lg">Order #{amnhDocent?.order.id ?? t('Order ID')}</Heading>
+            <Badge colorScheme={statusColor[amnhDocent?.order.status] || 'gray'} fontSize={'x-large'}>
+              {amnhDocent?.order.status ? t(amnhDocent.order.status) : t('Status')}
             </Badge>
           </Flex>
         </Skeleton>
@@ -42,7 +42,7 @@ const AMNHDocentCard = ({ data: memorial911 }: AMNHDocentCardProps) => {
         <Box p={5}>
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
-              <Skeleton key={index} isLoaded={!!memorial911}>
+              <Skeleton key={index} isLoaded={!!amnhDocent}>
                 <WithLabel label={attribute.label} value={attribute.value} />
               </Skeleton>
             ))}

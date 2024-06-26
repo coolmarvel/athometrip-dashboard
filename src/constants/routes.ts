@@ -105,8 +105,8 @@ export enum PageRoutes {
   MetroDocentDetail = '/tours/metro-docent/:id',
   MomaDocent = '/tours/moma-docent',
   MomaDocentDetail = '/tours/moma-docent/:id',
-  GuggenheimDocent = '/tours/guggengeim-docent',
-  GuggenheimDocentDetail = '/tours/guggengeim-docent/:id',
+  GuggenheimDocent = '/tours/guggenheim-docent',
+  GuggenheimDocentDetail = '/tours/guggenheim-docent/:id',
   WhitneyDocent = '/tours/whitney-docent',
   WhitneyDocentDetail = '/tours/whitney-docent/:id',
   AMNHDocent = '/tours/amnh-docent', // American Museum of Nature History

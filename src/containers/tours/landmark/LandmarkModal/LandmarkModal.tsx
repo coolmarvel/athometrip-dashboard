@@ -5,27 +5,27 @@ import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, 
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-interface MetroDocentModalProps {
-  metroDocent: any;
+interface LandmarkModalProps {
+  landmark: any;
   onClose: () => void;
 }
 
-const MetroDocentModal = ({ metroDocent, onClose }: MetroDocentModalProps) => {
+const LandmarkModal = ({ landmark, onClose }: LandmarkModalProps) => {
   const { t } = useTranslation();
   const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
     () => [
-      { label: t('Name'), value: metroDocent?.billing.first_name ?? 'Name' },
-      { label: t('Email'), value: metroDocent?.billing.email ?? 'Email' },
-      { label: t('Phone'), value: metroDocent?.billing.phone ?? 'Phone' },
-      { label: t('Payment Via'), value: `${metroDocent?.payment?.payment_method_title ?? 'Payment method'} (${metroDocent?.payment?.transaction_id ?? 'Transaction ID'})` },
+      { label: t('Name'), value: landmark?.billing.first_name ?? 'Name' },
+      { label: t('Email'), value: landmark?.billing.email ?? 'Email' },
+      { label: t('Phone'), value: landmark?.billing.phone ?? 'Phone' },
+      { label: t('Payment Via'), value: `${landmark?.payment?.payment_method_title ?? 'Payment method'} (${landmark?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [metroDocent, convertDate, t],
+    [landmark, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: metroDocent?.lineItem.name, quantity: metroDocent?.lineItem.quantity, total: metroDocent?.lineItem.total }] ?? [], [metroDocent]);
+  const columns = useMemo(() => [{ name: landmark?.lineItem.name, quantity: landmark?.lineItem.quantity, total: landmark?.lineItem.total }] ?? [], [landmark]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -38,9 +38,9 @@ const MetroDocentModal = ({ metroDocent, onClose }: MetroDocentModalProps) => {
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">
-            Order #{metroDocent?.order.id ?? t('Order ID')}
-            <Badge colorScheme={statusColor[metroDocent?.order.status] || 'gray'} fontSize={'x-large'}>
-              {metroDocent?.order.status ? t(metroDocent.order.status) : t('Status')}
+            Order #{landmark?.order.id ?? t('Order ID')}
+            <Badge colorScheme={statusColor[landmark?.order.status] || 'gray'} fontSize={'x-large'}>
+              {landmark?.order.status ? t(landmark.order.status) : t('Status')}
             </Badge>
           </Flex>
         </ModalHeader>
@@ -50,7 +50,7 @@ const MetroDocentModal = ({ metroDocent, onClose }: MetroDocentModalProps) => {
             <Box p={5}>
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
-                  <Skeleton key={index} isLoaded={!!metroDocent}>
+                  <Skeleton key={index} isLoaded={!!landmark}>
                     <WithLabel label={attribute.label} value={attribute.value} />
                   </Skeleton>
                 ))}
@@ -93,4 +93,4 @@ const MetroDocentModal = ({ metroDocent, onClose }: MetroDocentModalProps) => {
   );
 };
 
-export default MetroDocentModal;
+export default LandmarkModal;
