@@ -4,30 +4,30 @@ import { useModalStore } from '@/stores';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { WhitneyDocentModal } from '@/containers';
+import { WoodburyModal } from '@/containers';
 
 const columnHelper = createColumnHelper<any>();
 
-interface WhitneyDocentTableProps {
-  whitneyDocent: any;
+interface WoodburyTableProps {
+  woodbury: any;
   isLoading?: boolean;
 }
 
-const WhitneyDocentTable = ({ whitneyDocent, isLoading }: WhitneyDocentTableProps) => {
+const WoodburyTable = ({ woodbury, isLoading }: WoodburyTableProps) => {
   const { t } = useTranslation();
   const convertDate = useConvertDate();
 
   const { openModal } = useModalStore(['openModal']);
 
-  const handleModal = useCallback<(whitneyDocent: any) => void>(
-    (whitneyDocent) => {
-      if (!whitneyDocent) return;
-      openModal(WhitneyDocentModal, { whitneyDocent });
+  const handleModal = useCallback<(woodbury: any) => void>(
+    (woodbury) => {
+      if (!woodbury) return;
+      openModal(WoodburyModal, { woodbury });
     },
     [openModal],
   );
 
-  console.log(whitneyDocent);
+  console.log(woodbury);
 
   const columns = useMemo(
     () => [
@@ -57,9 +57,9 @@ const WhitneyDocentTable = ({ whitneyDocent, isLoading }: WhitneyDocentTableProp
     [convertDate, t],
   );
 
-  const table = useReactTable({ data: whitneyDocent, columns, getCoreRowModel: getCoreRowModel() });
+  const table = useReactTable({ data: woodbury, columns, getCoreRowModel: getCoreRowModel() });
 
   return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
 };
 
-export default WhitneyDocentTable;
+export default WoodburyTable;

@@ -1,4 +1,4 @@
-import { useGetLandmark } from '@/apis';
+import { useGetMetroDocent } from '@/apis';
 import { ResponsiveLayout } from '@/components';
 import { MetroDocentCard } from '@/containers';
 import { QueryParser } from '@/utils';
@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 
 const MetroDocentPage = () => {
   const router = useRouter();
-  const { data: metroDocent } = useGetLandmark(QueryParser.toNumber(router.query.id));
+  const { data: metroDocent } = useGetMetroDocent(QueryParser.toNumber(router.query.id));
 
   return (
     <>

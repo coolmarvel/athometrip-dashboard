@@ -1,0 +1,1 @@
+export { default as MomaDocentTable } from './MomaDocentTable';

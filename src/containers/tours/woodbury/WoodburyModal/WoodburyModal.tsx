@@ -5,27 +5,27 @@ import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, 
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-interface WhitneyDocentModalProps {
-  whitneyDocent: any;
+interface WoodburyModalProps {
+  woodbury: any;
   onClose: () => void;
 }
 
-const WhitneyDocentModal = ({ whitneyDocent, onClose }: WhitneyDocentModalProps) => {
+const WoodburyModal = ({ woodbury, onClose }: WoodburyModalProps) => {
   const { t } = useTranslation();
   const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
     () => [
-      { label: t('Name'), value: whitneyDocent?.billing.first_name ?? 'Name' },
-      { label: t('Email'), value: whitneyDocent?.billing.email ?? 'Email' },
-      { label: t('Phone'), value: whitneyDocent?.billing.phone ?? 'Phone' },
-      { label: t('Payment Via'), value: `${whitneyDocent?.payment?.payment_method_title ?? 'Payment method'} (${whitneyDocent?.payment?.transaction_id ?? 'Transaction ID'})` },
+      { label: t('Name'), value: woodbury?.billing.first_name ?? 'Name' },
+      { label: t('Email'), value: woodbury?.billing.email ?? 'Email' },
+      { label: t('Phone'), value: woodbury?.billing.phone ?? 'Phone' },
+      { label: t('Payment Via'), value: `${woodbury?.payment?.payment_method_title ?? 'Payment method'} (${woodbury?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [whitneyDocent, convertDate, t],
+    [woodbury, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: whitneyDocent?.lineItem.name, quantity: whitneyDocent?.lineItem.quantity, total: whitneyDocent?.lineItem.total }] ?? [], [whitneyDocent]);
+  const columns = useMemo(() => [{ name: woodbury?.lineItem.name, quantity: woodbury?.lineItem.quantity, total: woodbury?.lineItem.total }] ?? [], [woodbury]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -38,9 +38,9 @@ const WhitneyDocentModal = ({ whitneyDocent, onClose }: WhitneyDocentModalProps)
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">
-            Order #{whitneyDocent?.order.id ?? t('Order ID')}
-            <Badge colorScheme={statusColor[whitneyDocent?.order.status] || 'gray'} fontSize={'x-large'}>
-              {whitneyDocent?.order.status ? t(whitneyDocent.order.status) : t('Status')}
+            Order #{woodbury?.order.id ?? t('Order ID')}
+            <Badge colorScheme={statusColor[woodbury?.order.status] || 'gray'} fontSize={'x-large'}>
+              {woodbury?.order.status ? t(woodbury.order.status) : t('Status')}
             </Badge>
           </Flex>
         </ModalHeader>
@@ -50,7 +50,7 @@ const WhitneyDocentModal = ({ whitneyDocent, onClose }: WhitneyDocentModalProps)
             <Box p={5}>
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
-                  <Skeleton key={index} isLoaded={!!whitneyDocent}>
+                  <Skeleton key={index} isLoaded={!!woodbury}>
                     <WithLabel label={attribute.label} value={attribute.value} />
                   </Skeleton>
                 ))}
@@ -93,4 +93,4 @@ const WhitneyDocentModal = ({ whitneyDocent, onClose }: WhitneyDocentModalProps)
   );
 };
 
-export default WhitneyDocentModal;
+export default WoodburyModal;

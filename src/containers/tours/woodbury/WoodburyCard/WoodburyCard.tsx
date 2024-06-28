@@ -5,34 +5,34 @@ import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack,
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-interface MomaDocentCardProps {
+interface WoodburyCardProps {
   data?: any;
 }
 
-const MomaDocentCard = ({ data: momaDocent }: MomaDocentCardProps) => {
+const WoodburyCard = ({ data: woodbury }: WoodburyCardProps) => {
   const { t } = useTranslation();
   const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
-      { label: t('Name'), value: momaDocent?.billing.first_name ?? 'Name' },
-      { label: t('Email'), value: momaDocent?.billing.email ?? 'Email' },
-      { label: t('Phone'), value: momaDocent?.billing.phone ?? 'Phone' },
-      { label: t('Payment Via'), value: `${momaDocent?.payment?.payment_method_title ?? 'Payment method'} (${momaDocent?.payment?.transaction_id ?? 'Transaction ID'})` },
+      { label: t('Name'), value: woodbury?.billing.first_name ?? 'Name' },
+      { label: t('Email'), value: woodbury?.billing.email ?? 'Email' },
+      { label: t('Phone'), value: woodbury?.billing.phone ?? 'Phone' },
+      { label: t('Payment Via'), value: `${woodbury?.payment?.payment_method_title ?? 'Payment method'} (${woodbury?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [momaDocent, convertDate, t],
+    [woodbury, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: momaDocent?.lineItem.name, quantity: momaDocent?.lineItem.quantity, total: momaDocent?.lineItem.total }] ?? [], [momaDocent]);
+  const columns = useMemo(() => [{ name: woodbury?.lineItem.name, quantity: woodbury?.lineItem.quantity, total: woodbury?.lineItem.total }] ?? [], [woodbury]);
 
   return (
     <Card>
       <CardHeader>
-        <Skeleton isLoaded={!!momaDocent}>
+        <Skeleton isLoaded={!!woodbury}>
           <Flex justifyContent="space-between" alignItems="center">
-            <Heading size="lg">Order #{momaDocent?.order.id ?? t('Order ID')}</Heading>
-            <Badge colorScheme={statusColor[momaDocent?.order.status] || 'gray'} fontSize={'x-large'}>
-              {momaDocent?.order.status ? t(momaDocent.order.status) : t('Status')}
+            <Heading size="lg">Order #{woodbury?.order.id ?? t('Order ID')}</Heading>
+            <Badge colorScheme={statusColor[woodbury?.order.status] || 'gray'} fontSize={'x-large'}>
+              {woodbury?.order.status ? t(woodbury.order.status) : t('Status')}
             </Badge>
           </Flex>
         </Skeleton>
@@ -42,7 +42,7 @@ const MomaDocentCard = ({ data: momaDocent }: MomaDocentCardProps) => {
         <Box p={5}>
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
-              <Skeleton key={index} isLoaded={!!momaDocent}>
+              <Skeleton key={index} isLoaded={!!woodbury}>
                 <WithLabel label={attribute.label} value={attribute.value} />
               </Skeleton>
             ))}
@@ -73,4 +73,4 @@ const MomaDocentCard = ({ data: momaDocent }: MomaDocentCardProps) => {
   );
 };
 
-export default MomaDocentCard;
+export default WoodburyCard;
