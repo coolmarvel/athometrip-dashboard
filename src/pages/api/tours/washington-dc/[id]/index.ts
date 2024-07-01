@@ -4,17 +4,17 @@ import axios from 'axios';
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
-      return getWoodbury(req, res);
+      return getWashingtonDC(req, res);
     default:
       return res.status(405).end();
   }
 }
 
-const productId = '433020';
-const tourName = 'woodbury';
+const productId = '169134,169167';
+const tourName = 'wasington-dc';
 const url = 'http://localhost:3000/api/production/adapter/order';
 
-const getWoodbury = async (req: NextApiRequest, res: NextApiResponse) => {
+const getWashingtonDC = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
 
   try {

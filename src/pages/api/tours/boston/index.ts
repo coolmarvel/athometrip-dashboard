@@ -9,7 +9,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
       const { page, limit } = req.query;
-      if (page && limit) return getWoodburyByPage(req, res);
+      if (page && limit) return getBostonByPage(req, res);
     case 'POST':
       return res.status(405).end();
     default:
@@ -17,11 +17,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '';
-const tourName = 'woodbury';
+const productId = '90443,169052,169088';
+const tourName = 'boston';
 const url = 'http://localhost:3000/api/production/adapter/orders';
 
-const getWoodburyByPage = async (req: NextApiRequest, res: NextApiResponse) => {
+const getBostonByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };
   const offset = (Number(page) - 1) * Number(limit);
 

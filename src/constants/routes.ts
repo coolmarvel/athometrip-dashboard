@@ -45,12 +45,17 @@ export enum ApiRoutes {
 
   // Tours
   Landmark = 'api/tours/landmark/:id?',
-  Woodbury = 'api/tours/woodburry/:id?',
-  MetroDocent = 'api/tours/metro-docent/:id?',
+  Woodbury = 'api/tours/woodbury/:id?',
   MomaDocent = 'api/tours/moma-docent/:id?',
-  GuggenheimDocent = 'api/tours/guggenheim-docent/:id?',
-  WhitneyDocent = 'api/tours/whitney-docent/:id?',
   AMNHDocent = 'api/tours/amnh-docent/:id?',
+  MetroDocent = 'api/tours/metro-docent/:id?',
+  WhitneyDocent = 'api/tours/whitney-docent/:id?',
+  GuggenheimDocent = 'api/tours/guggenheim-docent/:id?',
+
+  // Tours(Suburbs)
+  WashingtonDC = 'api/tours/washington-dc/:id?',
+  Niagara = 'api/tours/niagara/:id?',
+  Boston = 'api/tours/boston/:id?',
 }
 
 export enum PageRoutes {
@@ -111,6 +116,14 @@ export enum PageRoutes {
   WhitneyDocentDetail = '/tours/whitney-docent/:id',
   AMNHDocent = '/tours/amnh-docent', // American Museum of Nature History
   AMNHDocentDetail = '/tours/amnh-docent/:id',
+
+  // Tours(Suburbs)
+  WashingtonDC = '/tours/washington-dc',
+  WashingtonDCDetail = '/tours/washington-dc/:id',
+  Boston = '/tours/boston',
+  BostonDetail = '/tours/boston/:id',
+  Niagara = '/tours/niagara',
+  NiagaraDetail = '/tours/niagara/:id',
 }
 
 export const whiteList = [PageRoutes.Home, PageRoutes.Signin, PageRoutes.Users, PageRoutes.UserDetail];
@@ -408,6 +421,41 @@ export const navs: Nav[] = [
         icon: BsFill7SquareFill,
         query: ticketQuery,
         children: [{ label: 'AMNHDocent Detail', pathname: PageRoutes.AMNHDocentDetail, matcher: match(PageRoutes.AMNHDocentDetail), query: ticketQuery }],
+      },
+    ],
+  },
+
+  // Tours(Suburbs)
+  {
+    label: 'Tours(Suburbs)',
+    icon: BsFillCollectionFill,
+    pathname: PageRoutes.Tours,
+    matcher: match(PageRoutes.Tours),
+    collapsible: true,
+    children: [
+      {
+        label: 'WashingtonDC',
+        pathname: PageRoutes.WashingtonDC,
+        matcher: match(PageRoutes.WashingtonDC),
+        icon: BsFill1SquareFill,
+        query: ticketQuery,
+        children: [{ label: 'WashingtonDC Detail', pathname: PageRoutes.WashingtonDCDetail, matcher: match(PageRoutes.WashingtonDCDetail), query: ticketQuery }],
+      },
+      {
+        label: 'Boston',
+        pathname: PageRoutes.Boston,
+        matcher: match(PageRoutes.Boston),
+        icon: BsFill2SquareFill,
+        query: ticketQuery,
+        children: [{ label: 'Boston Detail', pathname: PageRoutes.BostonDetail, matcher: match(PageRoutes.BostonDetail), query: ticketQuery }],
+      },
+      {
+        label: 'Niagara',
+        pathname: PageRoutes.Niagara,
+        matcher: match(PageRoutes.Niagara),
+        icon: BsFill3SquareFill,
+        query: ticketQuery,
+        children: [{ label: 'Niagara Detail', pathname: PageRoutes.NiagaraDetail, matcher: match(PageRoutes.NiagaraDetail), query: ticketQuery }],
       },
     ],
   },
