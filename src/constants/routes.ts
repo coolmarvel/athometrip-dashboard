@@ -153,6 +153,11 @@ export enum RegionQueries {
   Other = 'mexico/canada',
 }
 
+export enum DayQueries {
+  OneDay = 'one-day',
+  TwoDay = 'two-day'
+}
+
 export interface Nav {
   label: string;
   pathname: PageRoutes;
@@ -187,6 +192,15 @@ export const usimQuery = {
   order: 'desc',
   mode: ModeQueries.Usim,
   region: RegionQueries.USA,
+  search: '',
+};
+
+export const tourQuery = {
+  page: 1,
+  limit: 10,
+  sort: 'id',
+  order: 'desc',
+  day: DayQueries.OneDay,
   search: '',
 };
 
@@ -454,8 +468,8 @@ export const navs: Nav[] = [
         pathname: PageRoutes.Niagara,
         matcher: match(PageRoutes.Niagara),
         icon: BsFill3SquareFill,
-        query: ticketQuery,
-        children: [{ label: 'Niagara Detail', pathname: PageRoutes.NiagaraDetail, matcher: match(PageRoutes.NiagaraDetail), query: ticketQuery }],
+        query: tourQuery,
+        children: [{ label: 'Niagara Detail', pathname: PageRoutes.NiagaraDetail, matcher: match(PageRoutes.NiagaraDetail), query: tourQuery }],
       },
     ],
   },

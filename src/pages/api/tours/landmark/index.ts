@@ -17,7 +17,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '418551,418620';
+const productId = '77287,418551,418620';
 const tourName = 'landmark';
 const url = 'http://localhost:3000/api/production/adapter/orders';
 
@@ -41,7 +41,6 @@ const getLandmarkByPage = async (req: NextApiRequest, res: NextApiResponse) => {
 
       return res.status(200).send({ data: { total: tours.length, data: slicedTours } });
     } else {
-      tours = await filterTour(tours, after, before);
       tours = await sortTour(tours, sort as RequiredKeysOf<any>, order as Order, search as string);
       const slicedTours = tours.slice(Number(offset), Number(offset) + Number(limit));
 

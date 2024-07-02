@@ -41,7 +41,6 @@ const getGuggenheimDocentByPage = async (req: NextApiRequest, res: NextApiRespon
 
       return res.status(200).send({ data: { total: tours.length, data: slicedTours } });
     } else {
-      tours = await filterTour(tours, after, before);
       tours = await sortTour(tours, sort as RequiredKeysOf<any>, order as Order, search as string);
       const slicedTours = tours.slice(Number(offset), Number(offset) + Number(limit));
 

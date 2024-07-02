@@ -34,14 +34,27 @@ const NiagaraTable = ({ niagara, isLoading }: NiagaraTableProps) => {
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
+      columnHelper.accessor('tourInfo.tour_kakaoid', { header: t('kakao'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('type') }),
+      // columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('type') }),
       columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
       columnHelper.accessor((row) => {
-        const date = convertDate(row.order?.metadata?.find((meta: any) => meta.key === 'amnh_docent_date')?.value).split(' ')[0] ?? '';
-        const time = row.order?.metadata?.find((meta: any) => meta.key === 'anmh_docent_time')?.value ?? '';
+        const findMetadata = (metadataArray: any, key: string) => {
+          const metadata = metadataArray?.find((meta: any) => meta.key === key);
 
-        return `${date} ${time}`;
+          return metadata ? metadata.value : '';
+        };
+
+        const orderMetadata = row.order?.metadata;
+        const lineItemMetadata = row.lineItem?.metadata;
+
+        const date = findMetadata(orderMetadata, 'niagara_tour_date')
+          || findMetadata(lineItemMetadata, '날짜')
+          || findMetadata(orderMetadata, 'niagara_day_bus_tour_date')
+          || findMetadata(orderMetadata, 'nicagara_day_date');
+        const convertedDate = date ? convertDate(date).split(' ')[0] : '';
+
+        return `${convertedDate}`.trim();
       }, { header: t('schedule') }),
     ],
     [convertDate, t],

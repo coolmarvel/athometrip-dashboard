@@ -5,7 +5,7 @@ import { usePagination } from '@/hooks';
 import { QueryParser } from '@/utils';
 import { TableContainer } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 const NiagaraByPage = () => {
   const router = useRouter();
@@ -13,7 +13,7 @@ const NiagaraByPage = () => {
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
   const { mutate: resetNiagara } = useResetNiagara();
 
-  const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
+  const params = { page, limit, sort, order, after, before, day: QueryParser.toString(router.query.day) ?? '', search: QueryParser.toString(router.query.search) ?? '' };
   const { data: niagaraByPage, isLoading: isLoading } = useGetNiagaraByPage(params);
 
   useEffect(() => {

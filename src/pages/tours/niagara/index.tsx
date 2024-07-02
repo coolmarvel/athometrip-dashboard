@@ -1,4 +1,4 @@
-import { DatePickerOptions, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, DayOptions, PageOptions, ResponsiveLayout, Search } from '@/components';
 import { NiagaraByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
@@ -25,6 +25,7 @@ const NiagaraPages = () => {
             />
             <Flex gap={'4'}>
               <DatePickerOptions />
+              <DayOptions />
               <PageOptions />
             </Flex>
           </Flex>
