@@ -27,8 +27,6 @@ const WashingtonDCTable = ({ washingtonDC, isLoading }: WashingtonDCTableProps) 
     [openModal],
   );
 
-  console.log(washingtonDC);
-
   const columns = useMemo(
     () => [
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),

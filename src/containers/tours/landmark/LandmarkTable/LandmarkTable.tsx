@@ -27,8 +27,6 @@ const LandmarkTable = ({ landmark, isLoading }: LandmarkTableProps) => {
     [openModal],
   );
 
-  console.log(landmark);
-
   const columns = useMemo(
     () => [
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),

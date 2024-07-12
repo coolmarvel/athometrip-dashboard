@@ -24,7 +24,7 @@ const SummitTable = ({ summit, isLoading }: SummitTableProps) => {
       if (!summit) return;
       openModal(SummitModal, { summit });
     },
-    [openModal],
+    [openModal]
   );
 
   const columns = useMemo(
@@ -33,28 +33,28 @@ const SummitTable = ({ summit, isLoading }: SummitTableProps) => {
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('type') }),
-      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
+      columnHelper.accessor((row) => row.line_items?.[0]?.meta_data?.['성인-어린이'] ?? '', { header: t('type') }),
+      columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
       columnHelper.accessor(
         (row) => {
-          const date = row.tour?.date_summit === null ? row.tour?.summit_night_date : row.tour?.date_summit;
-          const time = row.tour?.summit_daytime_time === null ? row.tour?.summit_night_time : row.tour?.summit_daytime_time;
+          const date = row.tour?.date_summit ?? row.tour?.summit_night_date ?? '';
+          const time = row.tour?.summit_daytime_time ?? row.tour?.summit_night_time ?? '';
 
           return `${date} ${time}`;
         },
-        { header: t('schedule(1)') },
+        { header: t('schedule(1)') }
       ),
       columnHelper.accessor(
         (row) => {
-          const date = row.tour?.date_summit === null ? row.tour?.summit_night_date : row.tour?.date_summit;
-          const time2 = row.tour?.summ_time_2 === null ? row.tour?.summit_night_time : row.tour?.summ_time_2;
+          const date = row.tour?.date_summit ?? row.tour?.summit_night_date ?? '';
+          const time2 = row.tour?.summit_night_time ?? row.tour?.summ_time_2 ?? '';
 
           return `${date} ${time2}`;
         },
-        { header: t('schedule(2)') },
+        { header: t('schedule(2)') }
       ),
     ],
-    [convertDate, t],
+    [convertDate, t]
   );
 
   const table = useReactTable({ data: summit, columns, getCoreRowModel: getCoreRowModel() });

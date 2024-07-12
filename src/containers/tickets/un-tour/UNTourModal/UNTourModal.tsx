@@ -26,7 +26,7 @@ const UNTourModal = ({ unTour, onClose }: UNTourModalProps) => {
     [unTour, convertDate, t]
   );
 
-  const columns = useMemo(() => [{ name: unTour?.lineItem.name, quantity: unTour?.lineItem.quantity, total: unTour?.lineItem.total }] ?? [], [unTour]);
+  const columns = useMemo(() => [{ name: unTour?.line_items[0]?.name, quantity: unTour?.line_items[0]?.quantity, total: unTour?.line_items[0]?.total }] ?? [], [unTour]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

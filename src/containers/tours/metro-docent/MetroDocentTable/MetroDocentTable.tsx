@@ -27,8 +27,6 @@ const MetroDocentTable = ({ metroDocent, isLoading }: MetroDocentTableProps) => 
     [openModal],
   );
 
-  console.log(metroDocent);
-
   const columns = useMemo(
     () => [
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),

@@ -26,7 +26,7 @@ const MLBMetsModal = ({ mlbMets, onClose }: MLBMetsModalProps) => {
     [mlbMets, convertDate, t]
   );
 
-  const columns = useMemo(() => [{ name: mlbMets?.lineItem.name, quantity: mlbMets?.lineItem.quantity, total: mlbMets?.lineItem.total }] ?? [], [mlbMets]);
+  const columns = useMemo(() => [{ name: mlbMets?.line_items[0]?.name, quantity: mlbMets?.line_items[0]?.quantity, total: mlbMets?.line_items[0]?.total }] ?? [], [mlbMets]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

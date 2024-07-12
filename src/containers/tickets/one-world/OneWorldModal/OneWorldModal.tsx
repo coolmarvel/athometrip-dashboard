@@ -26,7 +26,7 @@ const OneWorldModal = ({ oneWorld, onClose }: OneWorldModalProps) => {
     [oneWorld, convertDate, t]
   );
 
-  const columns = useMemo(() => [{ name: oneWorld?.lineItem.name, quantity: oneWorld?.lineItem.quantity, total: oneWorld?.lineItem.total }] ?? [], [oneWorld]);
+  const columns = useMemo(() => [{ name: oneWorld?.line_items[0]?.name, quantity: oneWorld?.line_items[0]?.quantity, total: oneWorld?.line_items[0]?.total }] ?? [], [oneWorld]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

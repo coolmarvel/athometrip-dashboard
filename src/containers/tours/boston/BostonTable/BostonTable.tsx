@@ -27,8 +27,6 @@ const BostonTable = ({ boston, isLoading }: BostonTableProps) => {
     [openModal],
   );
 
-  console.log(boston);
-
   const columns = useMemo(
     () => [
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),

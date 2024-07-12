@@ -12,7 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '169134,169167';
 const tourName = 'wasington-dc';
-const url = 'http://localhost:3000/api/production/adapter/order';
+const url = 'http://localhost:3000/api/adapter/order';
 
 const getWashingtonDC = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

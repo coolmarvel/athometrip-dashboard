@@ -12,7 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '126173,196976,197555,255271';
 const usimName = 't-mobile';
-const url = 'http://localhost:3000/api/production/adapter/order';
+const url = 'http://localhost:3000/api/adapter/order';
 
 const getTMobile = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

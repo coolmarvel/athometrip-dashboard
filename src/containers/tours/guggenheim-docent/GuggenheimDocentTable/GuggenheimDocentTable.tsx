@@ -27,8 +27,6 @@ const GuggenheimDocentTable = ({ guggenheimDocent, isLoading }: GuggenheimDocent
     [openModal],
   );
 
-  console.log(guggenheimDocent);
-
   const columns = useMemo(
     () => [
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),

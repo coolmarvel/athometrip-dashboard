@@ -10,9 +10,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '21721';
+const productId = '21721,446782';
 const ticketName = 'empire';
-const url = 'http://localhost:3000/api/production/adapter/order';
+const url = 'http://localhost:3000/api/adapter/order';
 
 const getEmpire = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

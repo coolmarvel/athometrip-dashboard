@@ -27,8 +27,6 @@ const TMobileTable = ({ tMobile, isLoading }: TMobileTableProps) => {
     [openModal],
   );
 
-  console.log(tMobile);
-
   const columns = useMemo(
     () => [
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),

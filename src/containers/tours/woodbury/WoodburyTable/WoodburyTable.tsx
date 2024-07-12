@@ -27,8 +27,6 @@ const WoodburyTable = ({ woodbury, isLoading }: WoodburyTableProps) => {
     [openModal],
   );
 
-  console.log(woodbury);
-
   const columns = useMemo(
     () => [
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),

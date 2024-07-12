@@ -24,43 +24,23 @@ const UNTourTable = ({ unTour, isLoading }: UNTourTableProps) => {
       if (!unTour) return;
       openModal(UNTourModal, { unTour });
     },
-    [openModal],
+    [openModal]
   );
+
+  console.log(unTour);
 
   const columns = useMemo(
     () => [
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor('billing.first_name', { header: t('name(kr)'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
-      columnHelper.accessor(
-        (row) => {
-          const enName = row.order.metadata.find((meta: any) => meta.key === 'un_name')?.value.toUpperCase() ?? '';
-
-          return `${enName}`;
-        },
-        { header: t('name(en)'), meta: { sortable: true } },
-      ),
+      columnHelper.accessor((row) => row.order.meta_data?.['un_name']?.toUpperCase() ?? '', { header: t('name(en)'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
-      // columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('type') }),
-      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
-      columnHelper.accessor(
-        (row) => {
-          const date = convertDate(row.order.metadata.find((meta: any) => meta.key === 'un_tour_date')?.value).split(' ')[0];
-
-          return `${date}`;
-        },
-        { header: t('schedule(date)') },
-      ),
-      columnHelper.accessor(
-        (row) => {
-          const time = row.order.metadata.find((meta: any) => meta.key === 'un_tour_time3')?.value ?? '';
-
-          return `${time}`;
-        },
-        { header: t('schedule(time)') },
-      ),
+      columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
+      columnHelper.accessor((row) => convertDate(row.order.meta_data?.['un_tour_date']).split(' ')[0], { header: t('schedule(date)') }),
+      columnHelper.accessor((row) => row.order.meta_data?.['un_tour_time3'] ?? '', { header: t('schedule(time)') }),
     ],
-    [convertDate, t],
+    [convertDate, t]
   );
 
   const table = useReactTable({ data: unTour, columns, getCoreRowModel: getCoreRowModel() });

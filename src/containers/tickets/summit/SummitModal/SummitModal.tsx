@@ -26,7 +26,7 @@ const SummitModal = ({ summit, onClose }: SummitModalProps) => {
     [summit, convertDate, t]
   );
 
-  const columns = useMemo(() => [{ name: summit?.lineItem.name, quantity: summit?.lineItem.quantity, total: summit?.lineItem.total }] ?? [], [summit]);
+  const columns = useMemo(() => [{ name: summit?.line_items[0]?.name, quantity: summit?.line_items[0]?.quantity, total: summit?.line_items[0]?.total }] ?? [], [summit]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

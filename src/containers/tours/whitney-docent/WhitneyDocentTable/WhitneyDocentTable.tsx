@@ -27,8 +27,6 @@ const WhitneyDocentTable = ({ whitneyDocent, isLoading }: WhitneyDocentTableProp
     [openModal],
   );
 
-  console.log(whitneyDocent);
-
   const columns = useMemo(
     () => [
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),

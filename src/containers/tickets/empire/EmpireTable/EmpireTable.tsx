@@ -24,7 +24,7 @@ const EmpireTable = ({ empire, isLoading }: EmpireTableProps) => {
       if (!empire) return;
       openModal(EmpireModal, { empire });
     },
-    [openModal],
+    [openModal]
   );
 
   const columns = useMemo(
@@ -33,8 +33,8 @@ const EmpireTable = ({ empire, isLoading }: EmpireTableProps) => {
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!) }),
-      columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('type') }),
-      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
+      columnHelper.accessor((row) => row.line_items?.[0]?.meta_data?.['성인-어린이'] ?? '', { header: t('type') }),
+      columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
       columnHelper.accessor(
         (row) => {
           const date = row.tour?.empire_date;
@@ -42,10 +42,10 @@ const EmpireTable = ({ empire, isLoading }: EmpireTableProps) => {
 
           return `${date} ${time}`;
         },
-        { header: t('schedule') },
+        { header: t('schedule') }
       ),
     ],
-    [convertDate, t],
+    [convertDate, t]
   );
 
   const table = useReactTable({ data: empire, columns, getCoreRowModel: getCoreRowModel() });

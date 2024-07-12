@@ -19,7 +19,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '90443,169052,169088';
 const tourName = 'boston';
-const url = 'http://localhost:3000/api/production/adapter/orders';
+const url = 'http://localhost:3000/api/adapter/orders';
 
 const getBostonByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };

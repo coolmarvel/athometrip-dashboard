@@ -12,7 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '141994';
 const tourName = 'amnh-docent';
-const url = 'http://localhost:3000/api/production/adapter/order';
+const url = 'http://localhost:3000/api/adapter/order';
 
 const getAMNHDocent = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

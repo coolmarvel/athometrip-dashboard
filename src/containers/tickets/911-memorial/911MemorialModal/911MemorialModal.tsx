@@ -25,7 +25,7 @@ const Memorial911Modal = ({ memorial911, onClose }: Memorial911ModalProps) => {
     [memorial911, convertDate, t]
   );
 
-  const columns = useMemo(() => [{ name: memorial911?.lineItem.name, quantity: memorial911?.lineItem.quantity, total: memorial911?.lineItem.total }] ?? [], [memorial911]);
+  const columns = useMemo(() => [{ name: memorial911?.line_items[0]?.name, quantity: memorial911?.line_items[0]?.quantity, total: memorial911?.line_items[0]?.total }] ?? [], [memorial911]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

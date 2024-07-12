@@ -24,8 +24,10 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
       if (!ellisIsland) return;
       openModal(EllisIslandModal, { ellisIsland });
     },
-    [openModal],
+    [openModal]
   );
+
+  console.log(ellisIsland);
 
   const columns = useMemo(
     () => [
@@ -34,12 +36,12 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
       // columnHelper.accessor('', { header: t('type') }),
-      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
+      columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
       columnHelper.accessor((row) => `${row.tour?.ellis_island_date}`, { header: t('schedule(date)') }),
       columnHelper.accessor(
         (row) => {
-          const ellisIslandTime = row.order.metadata.find((meta: any) => meta.key === 'ellis_island_time')?.value;
-          const ellisIslandTime2 = row.order.metadata.find((meta: any) => meta.key === 'ellis_island_time2')?.value;
+          const ellisIslandTime = row.order.meta_data?.['ellis_island_time'];
+          const ellisIslandTime2 = row.order.metadata?.['ellis_island_time2'];
 
           let schedule = '';
           if (ellisIslandTime && ellisIslandTime2) schedule = `${ellisIslandTime} / ${ellisIslandTime2}`;
@@ -48,10 +50,10 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
 
           return schedule;
         },
-        { header: t('schedule(time)') },
+        { header: t('schedule(time)') }
       ),
     ],
-    [convertDate, t],
+    [convertDate, t]
   );
 
   const table = useReactTable({ data: ellisIsland, columns, getCoreRowModel: getCoreRowModel() });

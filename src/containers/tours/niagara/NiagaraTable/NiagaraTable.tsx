@@ -27,8 +27,6 @@ const NiagaraTable = ({ niagara, isLoading }: NiagaraTableProps) => {
     [openModal],
   );
 
-  console.log(niagara);
-
   const columns = useMemo(
     () => [
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),

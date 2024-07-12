@@ -27,8 +27,6 @@ const TMobileEsimTable = ({ tMobile, isLoading }: TMobileEsimTableProps) => {
     [openModal],
   );
 
-  console.log(tMobile);
-
   const columns = useMemo(
       () => [
         columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),

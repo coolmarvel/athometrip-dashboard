@@ -27,8 +27,6 @@ const LycaTable = ({ lyca, isLoading }: LycaTableProps) => {
     [openModal],
   );
 
-  console.log(lyca);
-
   const columns = useMemo(
     () => [
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),

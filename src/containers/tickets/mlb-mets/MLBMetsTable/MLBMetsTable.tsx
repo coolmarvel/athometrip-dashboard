@@ -24,7 +24,7 @@ const MLBMetsTable = ({ mlbMets, isLoading }: MLBMetsTableProps) => {
       if (!mlbMets) return;
       openModal(MLBMetsModal, { mlbMets });
     },
-    [openModal],
+    [openModal]
   );
 
   const columns = useMemo(
@@ -34,18 +34,18 @@ const MLBMetsTable = ({ mlbMets, isLoading }: MLBMetsTableProps) => {
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!) }),
       // columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('type') }),
-      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
+      columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
       columnHelper.accessor(
         (row) => {
-          const date = convertDate(row.order.metadata.find((meta: any) => meta.key === 'yankees_off_date')?.value).split(' ')[0] ?? '';
-          const time = row.order.metadata.find((meta: any) => meta.key === 'yankees_off_time')?.value ?? '';
+          const date = convertDate(row.order.meta_data?.['yankees_off_date']).split(' ')[0] ?? '';
+          const time = row.order.meta_data?.['yankees_off_time'] ?? '';
 
           return `${date} ${time}`;
         },
-        { header: t('schedule') },
+        { header: t('schedule') }
       ),
     ],
-    [convertDate, t],
+    [convertDate, t]
   );
 
   const table = useReactTable({ data: mlbMets, columns, getCoreRowModel: getCoreRowModel() });

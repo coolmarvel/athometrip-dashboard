@@ -26,7 +26,7 @@ const EmpireModal = ({ empire, onClose }: EmpireModalProps) => {
     [empire, convertDate, t]
   );
 
-  const columns = useMemo(() => [{ name: empire?.lineItem.name, quantity: empire?.lineItem.quantity, total: empire?.lineItem.total }] ?? [], [empire]);
+  const columns = useMemo(() => [{ name: empire?.line_items[0]?.name, quantity: empire?.line_items[0]?.quantity, total: empire?.line_items[0]?.total }] ?? [], [empire]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

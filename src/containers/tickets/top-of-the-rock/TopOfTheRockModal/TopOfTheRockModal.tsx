@@ -26,7 +26,7 @@ const TopOfTheRockModal = ({ topOfTheRock, onClose }: TopOfTheRockModalProps) =>
     [topOfTheRock, convertDate, t]
   );
 
-  const columns = useMemo(() => [{ name: topOfTheRock?.lineItem.name, quantity: topOfTheRock?.lineItem.quantity, total: topOfTheRock?.lineItem.total }] ?? [], [topOfTheRock]);
+  const columns = useMemo(() => [{ name: topOfTheRock?.line_items[0]?.name, quantity: topOfTheRock?.line_items[0]?.quantity, total: topOfTheRock?.line_items[0]?.total }] ?? [], [topOfTheRock]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

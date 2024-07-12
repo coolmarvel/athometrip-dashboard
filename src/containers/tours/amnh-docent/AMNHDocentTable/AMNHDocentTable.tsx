@@ -27,8 +27,6 @@ const AMNHDocentTable = ({ amnhDocent, isLoading }: AMNHDocentTableProps) => {
     [openModal],
   );
 
-  console.log(amnhDocent);
-
   const columns = useMemo(
     () => [
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),

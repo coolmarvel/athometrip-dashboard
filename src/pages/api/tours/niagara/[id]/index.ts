@@ -12,7 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '166831,168762,252161,252526,424880,425875';
 const tourName = 'niagara';
-const url = 'http://localhost:3000/api/production/adapter/order';
+const url = 'http://localhost:3000/api/adapter/order';
 
 const getNiagara = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

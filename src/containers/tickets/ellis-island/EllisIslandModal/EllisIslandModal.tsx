@@ -26,7 +26,7 @@ const EllisIslandModal = ({ ellisIsland, onClose }: EllisIslandModalProps) => {
     [ellisIsland, convertDate, t]
   );
 
-  const columns = useMemo(() => [{ name: ellisIsland?.lineItem.name, quantity: ellisIsland?.lineItem.quantity, total: ellisIsland?.lineItem.total }] ?? [], [ellisIsland]);
+  const columns = useMemo(() => [{ name: ellisIsland?.line_items[0]?.name, quantity: ellisIsland?.line_items[0]?.quantity, total: ellisIsland?.line_items[0]?.total }] ?? [], [ellisIsland]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

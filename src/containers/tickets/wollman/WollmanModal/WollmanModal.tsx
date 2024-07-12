@@ -26,7 +26,7 @@ const WollmanModal = ({ wollman, onClose }: WollmanModalProps) => {
     [wollman, convertDate, t]
   );
 
-  const columns = useMemo(() => [{ name: wollman?.lineItem.name, quantity: wollman?.lineItem.quantity, total: wollman?.lineItem.total }] ?? [], [wollman]);
+  const columns = useMemo(() => [{ name: wollman?.line_items[0]?.name, quantity: wollman?.line_items[0]?.quantity, total: wollman?.line_items[0]?.total }] ?? [], [wollman]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

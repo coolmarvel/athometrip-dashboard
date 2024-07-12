@@ -12,7 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '68185,68536,88010,158082,158222';
 const tourName = 'metro-docent';
-const url = 'http://localhost:3000/api/production/adapter/order';
+const url = 'http://localhost:3000/api/adapter/order';
 
 const getMetroDocent = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

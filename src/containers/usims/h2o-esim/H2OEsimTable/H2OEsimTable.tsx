@@ -27,8 +27,6 @@ const H2OEsimTable = ({ h2oEsim, isLoading }: H2OEsimTableProps) => {
     [openModal],
   );
 
-  console.log(h2oEsim);
-
   const columns = useMemo(
       () => [
         columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),

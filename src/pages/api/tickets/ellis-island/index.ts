@@ -20,7 +20,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '24493';
 const ticketName = 'ellis-island';
-const url = 'http://localhost:3000/api/production/adapter/orders';
+const url = 'http://localhost:3000/api/adapter/orders';
 
 const getEllisIslandByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };

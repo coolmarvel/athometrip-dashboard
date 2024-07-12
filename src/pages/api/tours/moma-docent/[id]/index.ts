@@ -12,7 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '21740,68525,88034,232499';
 const tourName = 'moma-docent';
-const url = 'http://localhost:3000/api/production/adapter/order';
+const url = 'http://localhost:3000/api/adapter/order';
 
 const getMomaDocent = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
