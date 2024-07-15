@@ -1,9 +1,9 @@
-import { WithLabel } from '@/components';
-import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
-import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { WithLabel } from '@/components';
+import { statusColor } from '@/constants';
+import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
 interface UNTourCardProps {
   data?: any;
@@ -11,7 +11,6 @@ interface UNTourCardProps {
 
 const UNTourCard = ({ data: unTour }: UNTourCardProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
@@ -20,7 +19,7 @@ const UNTourCard = ({ data: unTour }: UNTourCardProps) => {
       { label: t('Phone'), value: unTour?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${unTour?.payment?.payment_method_title ?? 'Payment method'} (${unTour?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [unTour, convertDate, t]
+    [unTour, t],
   );
 
   const columns = useMemo(() => [{ name: unTour?.lineItem.name, quantity: unTour?.lineItem.quantity, total: unTour?.lineItem.total }] ?? [], [unTour]);

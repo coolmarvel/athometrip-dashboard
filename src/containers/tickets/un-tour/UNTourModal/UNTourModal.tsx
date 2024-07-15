@@ -1,10 +1,9 @@
+import { useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { useCallback, useMemo, useState } from 'react';
-
-import { useTranslation } from 'react-i18next';
 
 interface UNTourModalProps {
   unTour: any;
@@ -13,7 +12,6 @@ interface UNTourModalProps {
 
 const UNTourModal = ({ unTour, onClose }: UNTourModalProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
@@ -23,7 +21,7 @@ const UNTourModal = ({ unTour, onClose }: UNTourModalProps) => {
       { label: t('Phone'), value: unTour?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${unTour?.payment?.payment_method_title ?? 'Payment method'} (${unTour?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [unTour, convertDate, t]
+    [unTour, t],
   );
 
   const columns = useMemo(() => [{ name: unTour?.line_items[0]?.name, quantity: unTour?.line_items[0]?.quantity, total: unTour?.line_items[0]?.total }] ?? [], [unTour]);

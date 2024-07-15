@@ -1,9 +1,10 @@
-import { DataTable } from '@/components';
-import { useConvertDate } from '@/hooks';
-import { useModalStore } from '@/stores';
-import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+
+import { DataTable } from '@/components';
+import { useModalStore } from '@/stores';
+import { useConvertDate } from '@/hooks';
 import { Memorial911Modal } from '@/containers';
 
 const columnHelper = createColumnHelper<any>();
@@ -24,7 +25,7 @@ const Memorial911Table = ({ memorial911, isLoading }: Memorial911TableProps) => 
       if (!memorial911) return;
       openModal(Memorial911Modal, { memorial911 });
     },
-    [openModal]
+    [openModal],
   );
 
   const columns = useMemo(
@@ -35,10 +36,20 @@ const Memorial911Table = ({ memorial911, isLoading }: Memorial911TableProps) => 
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.line_items?.[0]?.meta_data?.['성인-어린이'] ?? '', { header: t('type') }),
       columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
-      columnHelper.accessor((row) => `${row.tour?.date_911} ${row.tour?.time_911}`, { header: t('schedule(1)') }),
-      columnHelper.accessor((row) => `${row.tour?.date_911_2} ${row.tour?.time_911_2}`, { header: t('schedule(2)') }),
+      columnHelper.accessor((row) => {
+        const date = convertDate(row.tour?.date_911 ?? row.line_items?.[0]?.meta_data['날짜'] ?? '').split(' ')[0];
+        const time = row.tour?.time_911 ?? row.line_items?.[0]?.meta_data['입장 희망시간(1순위)'] ?? '';
+
+        return `${date} ${time}`;
+      }, { header: t('schedule(1)') }),
+      columnHelper.accessor((row) => {
+        const date = convertDate(row.tour?.date_911_2 ?? row.line_items?.[0]?.meta_data['날짜'] ?? '').split(' ')[0];
+        const time = row.tour?.time_911_2 ?? row.line_items?.[0]?.meta_data['입장 희망시간(2순위)'] ?? '';
+
+        return `${date} ${time}`;
+      }, { header: t('schedule(2)') }),
     ],
-    [convertDate, t]
+    [convertDate, t],
   );
 
   const table = useReactTable({ data: memorial911, columns, getCoreRowModel: getCoreRowModel() });

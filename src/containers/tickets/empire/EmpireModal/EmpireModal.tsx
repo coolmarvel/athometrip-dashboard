@@ -1,10 +1,9 @@
+import { useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { useCallback, useMemo, useState } from 'react';
-
-import { useTranslation } from 'react-i18next';
 
 interface EmpireModalProps {
   empire: any;
@@ -13,7 +12,6 @@ interface EmpireModalProps {
 
 const EmpireModal = ({ empire, onClose }: EmpireModalProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
@@ -23,7 +21,7 @@ const EmpireModal = ({ empire, onClose }: EmpireModalProps) => {
       { label: t('Phone'), value: empire?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${empire?.payment?.payment_method_title ?? 'Payment method'} (${empire?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [empire, convertDate, t]
+    [empire,  t]
   );
 
   const columns = useMemo(() => [{ name: empire?.line_items[0]?.name, quantity: empire?.line_items[0]?.quantity, total: empire?.line_items[0]?.total }] ?? [], [empire]);

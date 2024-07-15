@@ -1,8 +1,9 @@
+import { useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { useCallback, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 interface TMobileModalProps {
   tMobile: any;
@@ -23,7 +24,11 @@ const TMobileModal = ({ tMobile, onClose }: TMobileModalProps) => {
     [tMobile, t],
   );
 
-  const columns = useMemo(() => [{ name: tMobile?.lineItem.name, quantity: tMobile?.lineItem.quantity, total: tMobile?.lineItem.total }] ?? [], [tMobile]);
+  const columns = useMemo(() => [{
+    name: tMobile?.line_items[0].name,
+    quantity: tMobile?.line_items[0].quantity,
+    total: tMobile?.line_items[0].total,
+  }] ?? [], [tMobile]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

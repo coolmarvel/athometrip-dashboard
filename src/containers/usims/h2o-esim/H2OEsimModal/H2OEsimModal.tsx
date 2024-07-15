@@ -23,7 +23,11 @@ const H2OEsimModal = ({ h2oEsim, onClose }: H2OEsimModalProps) => {
     [h2oEsim, t],
   );
 
-  const columns = useMemo(() => [{ name: h2oEsim?.lineItem.name, quantity: h2oEsim?.lineItem.quantity, total: h2oEsim?.lineItem.total }] ?? [], [h2oEsim]);
+  const columns = useMemo(() => [{
+    name: h2oEsim?.line_items[0].name,
+    quantity: h2oEsim?.line_items[0].quantity,
+    total: h2oEsim?.line_items[0].total,
+  }] ?? [], [h2oEsim]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

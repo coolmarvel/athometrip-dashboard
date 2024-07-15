@@ -1,9 +1,9 @@
-import { WithLabel } from '@/components';
-import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
-import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { WithLabel } from '@/components';
+import { statusColor } from '@/constants';
+import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
 interface EmpireCardProps {
   data?: any;
@@ -11,7 +11,6 @@ interface EmpireCardProps {
 
 const EmpireCard = ({ data: empire }: EmpireCardProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
@@ -20,7 +19,7 @@ const EmpireCard = ({ data: empire }: EmpireCardProps) => {
       { label: t('Phone'), value: empire?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${empire?.payment?.payment_method_title ?? 'Payment method'} (${empire?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [empire, convertDate, t]
+    [empire, t],
   );
 
   const columns = useMemo(() => [{ name: empire?.lineItem.name, quantity: empire?.lineItem.quantity, total: empire?.lineItem.total }] ?? [], [empire]);

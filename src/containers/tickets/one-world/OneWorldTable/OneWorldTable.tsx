@@ -24,10 +24,8 @@ const OneWorldTable = ({ oneWorld, isLoading }: OneWorldTableProps) => {
       if (!oneWorld) return;
       openModal(OneWorldModal, { oneWorld });
     },
-    [openModal]
+    [openModal],
   );
-
-  console.log(oneWorld);
 
   const columns = useMemo(
     () => [
@@ -37,9 +35,14 @@ const OneWorldTable = ({ oneWorld, isLoading }: OneWorldTableProps) => {
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!) }),
       columnHelper.accessor((row) => row.line_items?.[0]?.meta_data?.['성인-어린이'] ?? '', { header: t('type') }),
       columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
-      columnHelper.accessor((row) => `${row.tour?.oneworld_date} ${row.tour?.oneworld_time}`, { header: t('schedule') }),
+      columnHelper.accessor((row) => {
+        const date = convertDate(row.tour?.oneworld_date ?? row.line_items?.[0]?.meta_data['날짜'] ?? '').split(' ')[0];
+        const time = row.tour?.oneworld_time ?? row.line_items?.[0]?.meta_data['입장 희망시간'] ?? row.tour?.summ_time_2 ?? '';
+
+        return `${date} ${time}`;
+      }, { header: t('schedule') }),
     ],
-    [convertDate, t]
+    [convertDate, t],
   );
 
   const table = useReactTable({ data: oneWorld, columns, getCoreRowModel: getCoreRowModel() });

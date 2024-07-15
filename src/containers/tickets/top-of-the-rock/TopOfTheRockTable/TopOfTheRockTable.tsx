@@ -24,7 +24,7 @@ const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) 
       if (!topOfTheRock) return;
       openModal(TopOfTheRockModal, { topOfTheRock });
     },
-    [openModal]
+    [openModal],
   );
 
   const columns = useMemo(
@@ -35,10 +35,20 @@ const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) 
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.line_items?.[0]?.meta_data?.['성인-어린이'] ?? '', { header: t('type') }),
       columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
-      columnHelper.accessor((row) => `${row.tour?.top_date} ${row.tour?.top_sunset}`, { header: t('schedule(1)') }),
-      columnHelper.accessor((row) => `${row.tour?.top_date} ${row.tour?.tor_time_2}`, { header: t('schedule(2)') }),
+      columnHelper.accessor((row) => {
+        const date = convertDate(row.tour?.top_date ?? row.line_items?.[0]?.meta_data['날짜'] ?? '').split(' ')[0];
+        const time = row.tour?.top_sunset ?? row.line_items?.[0]?.meta_data['입장 희망시간(1순위)'] ?? '';
+
+        return `${date} ${time}`;
+      }, { header: t('schedule(1)') }),
+      columnHelper.accessor((row) => {
+        const date = convertDate(row.tour?.top_date ?? row.line_items?.[0]?.meta_data['날짜'] ?? '').split(' ')[0];
+        const time = row.tour?.tor_time_2 ?? row.line_items?.[0]?.meta_data['입장 희망시간(2순위)'] ?? '';
+
+        return `${date} ${time}`;
+      }, { header: t('schedule(2)') }),
     ],
-    [convertDate, t]
+    [convertDate, t],
   );
 
   const table = useReactTable({ data: topOfTheRock, columns, getCoreRowModel: getCoreRowModel() });

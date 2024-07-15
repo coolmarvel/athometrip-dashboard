@@ -1,9 +1,9 @@
-import { WithLabel } from '@/components';
-import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
-import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { WithLabel } from '@/components';
+import { statusColor } from '@/constants';
+import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
 interface TopOfTheRockCardProps {
   data?: any;
@@ -11,7 +11,6 @@ interface TopOfTheRockCardProps {
 
 const TopOfTheRockCard = ({ data: topOfTheRock }: TopOfTheRockCardProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
@@ -20,7 +19,7 @@ const TopOfTheRockCard = ({ data: topOfTheRock }: TopOfTheRockCardProps) => {
       { label: t('Phone'), value: topOfTheRock?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${topOfTheRock?.payment?.payment_method_title ?? 'Payment method'} (${topOfTheRock?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [topOfTheRock, convertDate, t]
+    [topOfTheRock, t],
   );
 
   const columns = useMemo(() => [{ name: topOfTheRock?.lineItem.name, quantity: topOfTheRock?.lineItem.quantity, total: topOfTheRock?.lineItem.total }] ?? [], [topOfTheRock]);

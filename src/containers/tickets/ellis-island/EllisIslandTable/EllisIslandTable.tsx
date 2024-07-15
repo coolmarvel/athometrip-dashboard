@@ -5,6 +5,7 @@ import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/re
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { EllisIslandModal } from '../EllisIslandModal';
+import { context } from 'esbuild';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -24,10 +25,8 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
       if (!ellisIsland) return;
       openModal(EllisIslandModal, { ellisIsland });
     },
-    [openModal]
+    [openModal],
   );
-
-  console.log(ellisIsland);
 
   const columns = useMemo(
     () => [
@@ -35,25 +34,23 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
-      // columnHelper.accessor('', { header: t('type') }),
+      columnHelper.accessor(row => '성인', { header: t('type') }),
       columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
-      columnHelper.accessor((row) => `${row.tour?.ellis_island_date}`, { header: t('schedule(date)') }),
-      columnHelper.accessor(
-        (row) => {
-          const ellisIslandTime = row.order.meta_data?.['ellis_island_time'];
-          const ellisIslandTime2 = row.order.metadata?.['ellis_island_time2'];
+      columnHelper.accessor((row) => {
+        const date = convertDate(row.tour?.ellis_island_date ?? '').split(' ')[0];
+        const ellisIslandTime = row.order.meta_data?.['ellis_island_time'];
+        const ellisIslandTime2 = row.order.meta_data?.['ellis_island_time2'];
 
-          let schedule = '';
-          if (ellisIslandTime && ellisIslandTime2) schedule = `${ellisIslandTime} / ${ellisIslandTime2}`;
-          else if (ellisIslandTime) schedule = ellisIslandTime;
-          else if (ellisIslandTime2) schedule = ellisIslandTime2;
+        let time;
+        if (ellisIslandTime && ellisIslandTime2) time = `${ellisIslandTime} / ${ellisIslandTime2}`;
+        else if (ellisIslandTime) time = ellisIslandTime;
+        else if (ellisIslandTime2) time = ellisIslandTime2;
+        else time = '';
 
-          return schedule;
-        },
-        { header: t('schedule(time)') }
-      ),
+        return `${date} ${time}`;
+      }, { header: t('schedule') }),
     ],
-    [convertDate, t]
+    [convertDate, t],
   );
 
   const table = useReactTable({ data: ellisIsland, columns, getCoreRowModel: getCoreRowModel() });

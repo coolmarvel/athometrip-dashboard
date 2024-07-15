@@ -1,10 +1,9 @@
+import { useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { useCallback, useMemo, useState } from 'react';
-
-import { useTranslation } from 'react-i18next';
 
 interface WollmanModalProps {
   wollman: any;
@@ -13,7 +12,6 @@ interface WollmanModalProps {
 
 const WollmanModal = ({ wollman, onClose }: WollmanModalProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
@@ -23,7 +21,7 @@ const WollmanModal = ({ wollman, onClose }: WollmanModalProps) => {
       { label: t('Phone'), value: wollman?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${wollman?.payment?.payment_method_title ?? 'Payment method'} (${wollman?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [wollman, convertDate, t]
+    [wollman, t],
   );
 
   const columns = useMemo(() => [{ name: wollman?.line_items[0]?.name, quantity: wollman?.line_items[0]?.quantity, total: wollman?.line_items[0]?.total }] ?? [], [wollman]);

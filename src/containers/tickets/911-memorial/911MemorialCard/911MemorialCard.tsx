@@ -1,9 +1,9 @@
-import { WithLabel } from '@/components';
-import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
-import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { WithLabel } from '@/components';
+import { statusColor } from '@/constants';
+import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
 interface Memorial911CardProps {
   data?: any;
@@ -11,7 +11,6 @@ interface Memorial911CardProps {
 
 const Memorial911Card = ({ data: memorial911 }: Memorial911CardProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
@@ -20,7 +19,7 @@ const Memorial911Card = ({ data: memorial911 }: Memorial911CardProps) => {
       { label: t('Phone'), value: memorial911?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${memorial911?.payment?.payment_method_title ?? 'Payment method'} (${memorial911?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [memorial911, convertDate, t]
+    [memorial911, t],
   );
 
   const columns = useMemo(() => [{ name: memorial911?.lineItem.name, quantity: memorial911?.lineItem.quantity, total: memorial911?.lineItem.total }] ?? [], [memorial911]);

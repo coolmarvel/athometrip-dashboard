@@ -1,9 +1,9 @@
-import { WithLabel } from '@/components';
-import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
-import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { WithLabel } from '@/components';
+import { statusColor } from '@/constants';
+import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
 interface WollmanCardProps {
   data?: any;
@@ -11,7 +11,6 @@ interface WollmanCardProps {
 
 const WollmanCard = ({ data: wollman }: WollmanCardProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
@@ -20,7 +19,7 @@ const WollmanCard = ({ data: wollman }: WollmanCardProps) => {
       { label: t('Phone'), value: wollman?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${wollman?.payment?.payment_method_title ?? 'Payment method'} (${wollman?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [wollman, convertDate, t]
+    [wollman, t],
   );
 
   const columns = useMemo(() => [{ name: wollman?.lineItem.name, quantity: wollman?.lineItem.quantity, total: wollman?.lineItem.total }] ?? [], [wollman]);

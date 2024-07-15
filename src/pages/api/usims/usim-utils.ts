@@ -66,17 +66,19 @@ export const filterUsim = (usims: any, after: string, before: string, region: st
     const dateCondition = usimDate >= start && usimDate <= end;
 
     const regionCondition = (region: string, usim: any) => {
-      if (region === 'usa')
-        return usim.lineItem.metadata.some((meta: any) => meta.key === '사용 지역 선택' && meta.value === '미국 내 사용');
-      else if (region === 'mexico/canada')
-        return usim.lineItem.metadata.some((meta: any) => meta.key === '사용 지역 선택 ($3)' && meta.value === '미국 및 캐나다/멕시코');
+      const metaData = usim.line_items[0]?.meta_data;
+      if (!metaData) return false;
+
+      if (region === 'usa') return Object.values(metaData).includes('미국 내 사용');
+      else if (region === 'mexico/canada') return Object.values(metaData).includes('미국 및 캐나다/멕시코');
 
       return false;
     };
 
     const modeCondition = (mode: string, usim: any) => {
-      if (mode === 'usim') return usim.usimInfo.esim_eid == null && usim.usimInfo.esim_imei == null;
-      else if (mode === 'esim') return typeof usim.usimInfo.esim_eid === 'string' && typeof usim.usimInfo.esim_imei === 'string';
+      const usimInfo = usim.usim_info;
+      if (mode === 'usim') return !usimInfo?.esim_eid && !usimInfo?.esim_imei;
+      else if (mode === 'esim') return typeof usimInfo?.esim_eid === 'string' && typeof usimInfo?.esim_imei === 'string';
 
       return false;
     };

@@ -1,10 +1,9 @@
+import { useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { useCallback, useMemo, useState } from 'react';
-
-import { useTranslation } from 'react-i18next';
 
 interface OneWorldModalProps {
   oneWorld: any;
@@ -13,7 +12,6 @@ interface OneWorldModalProps {
 
 const OneWorldModal = ({ oneWorld, onClose }: OneWorldModalProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
@@ -23,7 +21,7 @@ const OneWorldModal = ({ oneWorld, onClose }: OneWorldModalProps) => {
       { label: t('Phone'), value: oneWorld?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${oneWorld?.payment?.payment_method_title ?? 'Payment method'} (${oneWorld?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [oneWorld, convertDate, t]
+    [oneWorld, t],
   );
 
   const columns = useMemo(() => [{ name: oneWorld?.line_items[0]?.name, quantity: oneWorld?.line_items[0]?.quantity, total: oneWorld?.line_items[0]?.total }] ?? [], [oneWorld]);

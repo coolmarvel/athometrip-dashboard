@@ -23,7 +23,11 @@ const LycaCard = ({ data: lyca }: LycaCardProps) => {
     [lyca, convertDate, t]
   );
 
-  const columns = useMemo(() => [{ name: lyca?.lineItem.name, quantity: lyca?.lineItem.quantity, total: lyca?.lineItem.total }] ?? [], [lyca]);
+  const columns = useMemo(() => [{
+    name: lyca?.line_items[0].name,
+    quantity: lyca?.line_items[0].quantity,
+    total: lyca?.line_items[0].total,
+  }] ?? [], [lyca]);
 
   return (
     <Card>

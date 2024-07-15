@@ -22,10 +22,14 @@ const LycaModal = ({ lyca, onClose }: LycaModalProps) => {
       { label: t('Phone'), value: lyca?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${lyca?.payment?.payment_method_title ?? 'Payment method'} (${lyca?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [lyca, convertDate, t]
+    [lyca, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: lyca?.lineItem.name, quantity: lyca?.lineItem.quantity, total: lyca?.lineItem.total }] ?? [], [lyca]);
+  const columns = useMemo(() => [{
+    name: lyca?.line_items[0].name,
+    quantity: lyca?.line_items[0].quantity,
+    total: lyca?.line_items[0].total,
+  }] ?? [], [lyca]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

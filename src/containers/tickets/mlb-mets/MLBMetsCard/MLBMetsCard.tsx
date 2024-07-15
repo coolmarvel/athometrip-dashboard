@@ -1,9 +1,9 @@
-import { WithLabel } from '@/components';
-import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
-import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { WithLabel } from '@/components';
+import { statusColor } from '@/constants';
+import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
 interface MLBMetsCardProps {
   data?: any;
@@ -11,7 +11,6 @@ interface MLBMetsCardProps {
 
 const MLBMetsCard = ({ data: mlbMets }: MLBMetsCardProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
@@ -20,7 +19,7 @@ const MLBMetsCard = ({ data: mlbMets }: MLBMetsCardProps) => {
       { label: t('Phone'), value: mlbMets?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${mlbMets?.payment?.payment_method_title ?? 'Payment method'} (${mlbMets?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [mlbMets, convertDate, t]
+    [mlbMets,  t]
   );
 
   const columns = useMemo(() => [{ name: mlbMets?.lineItem.name, quantity: mlbMets?.lineItem.quantity, total: mlbMets?.lineItem.total }] ?? [], [mlbMets]);

@@ -1,8 +1,9 @@
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 
 interface TMobileCardProps {
   data?: any;
@@ -21,7 +22,11 @@ const TMobileCard = ({ data: tMobile }: TMobileCardProps) => {
     [tMobile, t],
   );
 
-  const columns = useMemo(() => [{ name: tMobile?.lineItem.name, quantity: tMobile?.lineItem.quantity, total: tMobile?.lineItem.total }] ?? [], [tMobile]);
+  const columns = useMemo(() => [{
+    name: tMobile?.line_items[0].name,
+    quantity: tMobile?.line_items[0].quantity,
+    total: tMobile?.line_items[0].total,
+  }] ?? [], [tMobile]);
 
   return (
     <Card>

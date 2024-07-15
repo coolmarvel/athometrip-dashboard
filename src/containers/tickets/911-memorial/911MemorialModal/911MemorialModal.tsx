@@ -1,9 +1,9 @@
-import { WithLabel } from '@/components';
-import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
-import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { WithLabel } from '@/components';
+import { statusColor } from '@/constants';
+import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 
 interface Memorial911ModalProps {
   memorial911: any;
@@ -12,7 +12,6 @@ interface Memorial911ModalProps {
 
 const Memorial911Modal = ({ memorial911, onClose }: Memorial911ModalProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
@@ -22,7 +21,7 @@ const Memorial911Modal = ({ memorial911, onClose }: Memorial911ModalProps) => {
       { label: t('Phone'), value: memorial911?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${memorial911?.payment?.payment_method_title ?? 'Payment method'} (${memorial911?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [memorial911, convertDate, t]
+    [memorial911, t],
   );
 
   const columns = useMemo(() => [{ name: memorial911?.line_items[0]?.name, quantity: memorial911?.line_items[0]?.quantity, total: memorial911?.line_items[0]?.total }] ?? [], [memorial911]);

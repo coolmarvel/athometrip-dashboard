@@ -1,9 +1,9 @@
-import { WithLabel } from '@/components';
-import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
-import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { WithLabel } from '@/components';
+import { statusColor } from '@/constants';
+import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
 interface OneWorldCardProps {
   data?: any;
@@ -11,7 +11,6 @@ interface OneWorldCardProps {
 
 const OneWorldCard = ({ data: oneWorld }: OneWorldCardProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
@@ -20,7 +19,7 @@ const OneWorldCard = ({ data: oneWorld }: OneWorldCardProps) => {
       { label: t('Phone'), value: oneWorld?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${oneWorld?.payment?.payment_method_title ?? 'Payment method'} (${oneWorld?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [oneWorld, convertDate, t]
+    [oneWorld, t],
   );
 
   const columns = useMemo(() => [{ name: oneWorld?.lineItem.name, quantity: oneWorld?.lineItem.quantity, total: oneWorld?.lineItem.total }] ?? [], [oneWorld]);
