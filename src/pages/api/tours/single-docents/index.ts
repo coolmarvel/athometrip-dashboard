@@ -9,7 +9,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
       const { page, limit } = req.query;
-      if (page && limit) return getLandmarkByPage(req, res);
+      if (page && limit) return getSingleDocentsByPage(req, res);
     case 'POST':
       return res.status(405).end();
     default:
@@ -17,11 +17,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '77287';
-const tourName = 'landmark';
+const productId = '76716,88010,88034,88667';
+const tourName = 'single-docents';
 const url = 'http://localhost:3000/api/adapter/orders';
 
-const getLandmarkByPage = async (req: NextApiRequest, res: NextApiResponse) => {
+const getSingleDocentsByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };
   const offset = (Number(page) - 1) * Number(limit);
 

@@ -23,7 +23,7 @@ const LandmarkCard = ({ data: landmark }: LandmarkCardProps) => {
     [landmark, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: landmark?.lineItem.name, quantity: landmark?.lineItem.quantity, total: landmark?.lineItem.total }] ?? [], [landmark]);
+  const columns = useMemo(() => [{ name: landmark?.line_items[0].name, quantity: landmark?.line_items[0].quantity, total: landmark?.line_items[0].total }] ?? [], [landmark]);
 
   return (
     <Card>

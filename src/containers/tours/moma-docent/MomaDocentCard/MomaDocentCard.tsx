@@ -20,10 +20,10 @@ const MomaDocentCard = ({ data: momaDocent }: MomaDocentCardProps) => {
       { label: t('Phone'), value: momaDocent?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${momaDocent?.payment?.payment_method_title ?? 'Payment method'} (${momaDocent?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [momaDocent, convertDate, t],
+    [momaDocent, convertDate, t]
   );
 
-  const columns = useMemo(() => [{ name: momaDocent?.lineItem.name, quantity: momaDocent?.lineItem.quantity, total: momaDocent?.lineItem.total }] ?? [], [momaDocent]);
+  const columns = useMemo(() => [{ name: momaDocent?.line_items[0].name, quantity: momaDocent?.line_items[0].quantity, total: momaDocent?.line_items[0].total }] ?? [], [momaDocent]);
 
   return (
     <Card>

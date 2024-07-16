@@ -4,17 +4,17 @@ import axios from 'axios';
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
-      return getLandmark(req, res);
+      return getMetroDocentPainting(req, res);
     default:
       return res.status(405).end();
   }
 }
 
-const productId = '77287';
-const tourName = 'landmark';
+const productId = '158082,158222';
+const tourName = 'metro-docent';
 const url = 'http://localhost:3000/api/adapter/order';
 
-const getLandmark = async (req: NextApiRequest, res: NextApiResponse) => {
+const getMetroDocentPainting = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
 
   try {

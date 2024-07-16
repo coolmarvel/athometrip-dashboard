@@ -5,34 +5,37 @@ import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack,
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-interface MetroDocentCardProps {
+interface MetroDocentPaintingCardProps {
   data?: any;
 }
 
-const MetroDocentCard = ({ data: metroDocent }: MetroDocentCardProps) => {
+const MetroDocentPaintingCard = ({ data: metroDocentPainting }: MetroDocentPaintingCardProps) => {
   const { t } = useTranslation();
   const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
-      { label: t('Name'), value: metroDocent?.billing.first_name ?? 'Name' },
-      { label: t('Email'), value: metroDocent?.billing.email ?? 'Email' },
-      { label: t('Phone'), value: metroDocent?.billing.phone ?? 'Phone' },
-      { label: t('Payment Via'), value: `${metroDocent?.payment?.payment_method_title ?? 'Payment method'} (${metroDocent?.payment?.transaction_id ?? 'Transaction ID'})` },
+      { label: t('Name'), value: metroDocentPainting?.billing.first_name ?? 'Name' },
+      { label: t('Email'), value: metroDocentPainting?.billing.email ?? 'Email' },
+      { label: t('Phone'), value: metroDocentPainting?.billing.phone ?? 'Phone' },
+      { label: t('Payment Via'), value: `${metroDocentPainting?.payment?.payment_method_title ?? 'Payment method'} (${metroDocentPainting?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [metroDocent, convertDate, t]
+    [metroDocentPainting, convertDate, t]
   );
 
-  const columns = useMemo(() => [{ name: metroDocent?.line_items[0].name, quantity: metroDocent?.line_items[0].quantity, total: metroDocent?.line_items[0].total }] ?? [], [metroDocent]);
+  const columns = useMemo(
+    () => [{ name: metroDocentPainting?.lineItem.name, quantity: metroDocentPainting?.lineItem.quantity, total: metroDocentPainting?.lineItem.total }] ?? [],
+    [metroDocentPainting]
+  );
 
   return (
     <Card>
       <CardHeader>
-        <Skeleton isLoaded={!!metroDocent}>
+        <Skeleton isLoaded={!!metroDocentPainting}>
           <Flex justifyContent="space-between" alignItems="center">
-            <Heading size="lg">Order #{metroDocent?.order.id ?? t('Order ID')}</Heading>
-            <Badge colorScheme={statusColor[metroDocent?.order.status] || 'gray'} fontSize={'x-large'}>
-              {metroDocent?.order.status ? t(metroDocent.order.status) : t('Status')}
+            <Heading size="lg">Order #{metroDocentPainting?.order.id ?? t('Order ID')}</Heading>
+            <Badge colorScheme={statusColor[metroDocentPainting?.order.status] || 'gray'} fontSize={'x-large'}>
+              {metroDocentPainting?.order.status ? t(metroDocentPainting.order.status) : t('Status')}
             </Badge>
           </Flex>
         </Skeleton>
@@ -42,7 +45,7 @@ const MetroDocentCard = ({ data: metroDocent }: MetroDocentCardProps) => {
         <Box p={5}>
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
-              <Skeleton key={index} isLoaded={!!metroDocent}>
+              <Skeleton key={index} isLoaded={!!metroDocentPainting}>
                 <WithLabel label={attribute.label} value={attribute.value} />
               </Skeleton>
             ))}
@@ -73,4 +76,4 @@ const MetroDocentCard = ({ data: metroDocent }: MetroDocentCardProps) => {
   );
 };
 
-export default MetroDocentCard;
+export default MetroDocentPaintingCard;

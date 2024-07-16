@@ -49,8 +49,10 @@ export enum ApiRoutes {
   MomaDocent = 'api/tours/moma-docent/:id?',
   AMNHDocent = 'api/tours/amnh-docent/:id?',
   MetroDocent = 'api/tours/metro-docent/:id?',
+  MetroDocentPainting = 'api/tours/metro-docent-painting/:id?',
   WhitneyDocent = 'api/tours/whitney-docent/:id?',
   GuggenheimDocent = 'api/tours/guggenheim-docent/:id?',
+  SingleDocents = 'api/tours/single-docents/:id?',
 
   // Tours(Suburbs)
   WashingtonDC = 'api/tours/washington-dc/:id?',
@@ -108,6 +110,8 @@ export enum PageRoutes {
   WoodburyDetail = '/tours/woodbury/:id',
   MetroDocent = '/tours/metro-docent',
   MetroDocentDetail = '/tours/metro-docent/:id',
+  MetroDocentPainting = '/tours/metro-docent-painting',
+  MetroDocentPaintingDetail = '/tours/metro-docent-painting/:id',
   MomaDocent = '/tours/moma-docent',
   MomaDocentDetail = '/tours/moma-docent/:id',
   GuggenheimDocent = '/tours/guggenheim-docent',
@@ -116,6 +120,8 @@ export enum PageRoutes {
   WhitneyDocentDetail = '/tours/whitney-docent/:id',
   AMNHDocent = '/tours/amnh-docent', // American Museum of Nature History
   AMNHDocentDetail = '/tours/amnh-docent/:id',
+  SingleDocents = '/tours/single-docents',
+  SingleDocentsDetail = '/tours/single-docents/:id',
 
   // Tours(Suburbs)
   WashingtonDC = '/tours/washington-dc',
@@ -155,7 +161,7 @@ export enum RegionQueries {
 
 export enum DayQueries {
   OneDay = 'one-day',
-  TwoDay = 'two-day'
+  TwoDay = 'two-day',
 }
 
 export interface Nav {
@@ -405,6 +411,14 @@ export const navs: Nav[] = [
         children: [{ label: 'MetroDocent Detail', pathname: PageRoutes.MetroDocentDetail, matcher: match(PageRoutes.MetroDocentDetail), query: ticketQuery }],
       },
       {
+        label: 'MetroDocent(Painting)',
+        pathname: PageRoutes.MetroDocentPainting,
+        matcher: match(PageRoutes.MetroDocentPainting),
+        icon: BsFill3SquareFill,
+        query: ticketQuery,
+        children: [{ label: 'MetroDocentPainting Detail', pathname: PageRoutes.MetroDocentPaintingDetail, matcher: match(PageRoutes.MetroDocentPaintingDetail), query: ticketQuery }],
+      },
+      {
         label: 'MomaDocent',
         pathname: PageRoutes.MomaDocent,
         matcher: match(PageRoutes.MomaDocent),
@@ -412,21 +426,29 @@ export const navs: Nav[] = [
         query: ticketQuery,
         children: [{ label: 'MomaDocent Detail', pathname: PageRoutes.MomaDocentDetail, matcher: match(PageRoutes.MomaDocentDetail), query: ticketQuery }],
       },
+      // {
+      //   label: 'GuggenheimDocent',
+      //   pathname: PageRoutes.GuggenheimDocent,
+      //   matcher: match(PageRoutes.GuggenheimDocent),
+      //   icon: BsFill5SquareFill,
+      //   query: ticketQuery,
+      //   children: [{ label: 'GuggenheimDocent Detail', pathname: PageRoutes.GuggenheimDocentDetail, matcher: match(PageRoutes.GuggenheimDocentDetail), query: ticketQuery }],
+      // },
+      // {
+      //   label: 'WhitneyDocent',
+      //   pathname: PageRoutes.WhitneyDocent,
+      //   matcher: match(PageRoutes.WhitneyDocent),
+      //   icon: BsFill6SquareFill,
+      //   query: ticketQuery,
+      //   children: [{ label: 'WhitneyDocent Detail', pathname: PageRoutes.WhitneyDocentDetail, matcher: match(PageRoutes.WhitneyDocentDetail), query: ticketQuery }],
+      // },
       {
-        label: 'GuggenheimDocent',
-        pathname: PageRoutes.GuggenheimDocent,
-        matcher: match(PageRoutes.GuggenheimDocent),
-        icon: BsFill5SquareFill,
+        label: 'SingleDocents',
+        pathname: PageRoutes.SingleDocents,
+        matcher: match(PageRoutes.SingleDocents),
+        icon: BsFill7SquareFill,
         query: ticketQuery,
-        children: [{ label: 'GuggenheimDocent Detail', pathname: PageRoutes.GuggenheimDocentDetail, matcher: match(PageRoutes.GuggenheimDocentDetail), query: ticketQuery }],
-      },
-      {
-        label: 'WhitneyDocent',
-        pathname: PageRoutes.WhitneyDocent,
-        matcher: match(PageRoutes.WhitneyDocent),
-        icon: BsFill6SquareFill,
-        query: ticketQuery,
-        children: [{ label: 'WhitneyDocent Detail', pathname: PageRoutes.WhitneyDocentDetail, matcher: match(PageRoutes.WhitneyDocentDetail), query: ticketQuery }],
+        children: [{ label: 'SingleDocents Detail', pathname: PageRoutes.SingleDocentsDetail, matcher: match(PageRoutes.SingleDocentsDetail), query: ticketQuery }],
       },
       {
         label: 'AMNHDocent',

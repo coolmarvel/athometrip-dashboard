@@ -4,30 +4,28 @@ import { useModalStore } from '@/stores';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MomaDocentModal } from '@/containers';
+import { MetroDocentPaintingModal } from '@/containers';
 
 const columnHelper = createColumnHelper<any>();
 
-interface MomaDocentTableProps {
-  momaDocent: any;
+interface MetroDocentPaintingTableProps {
+  metroDocentPainting: any;
   isLoading?: boolean;
 }
 
-const MomaDocentTable = ({ momaDocent, isLoading }: MomaDocentTableProps) => {
+const MetroDocentPaintingTable = ({ metroDocentPainting, isLoading }: MetroDocentPaintingTableProps) => {
   const { t } = useTranslation();
   const convertDate = useConvertDate();
 
   const { openModal } = useModalStore(['openModal']);
 
-  const handleModal = useCallback<(momaDocent: any) => void>(
-    (momaDocent) => {
-      if (!momaDocent) return;
-      openModal(MomaDocentModal, { momaDocent });
+  const handleModal = useCallback<(metroDocentPainting: any) => void>(
+    (metroDocentPainting) => {
+      if (!metroDocentPainting) return;
+      openModal(MetroDocentPaintingModal, { metroDocentPainting });
     },
     [openModal]
   );
-
-  console.log(momaDocent);
 
   const columns = useMemo(
     () => [
@@ -39,8 +37,8 @@ const MomaDocentTable = ({ momaDocent, isLoading }: MomaDocentTableProps) => {
       columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
       columnHelper.accessor(
         (row) => {
-          const date = convertDate(row.order.meta_data?.['docent_tour_moma'] ?? row.line_items[0].meta_data?.['날짜'] ?? '').split(' ')[0];
-          const time = row.order.meta_data?.['moma_docent_time'] ?? row.line_items[0].meta_data?.['시간'] ?? '';
+          const date = convertDate(row.order.meta_data?.['docent_tour_met'] ?? row.line_items[0].meta_data?.['날짜'] ?? row.order.meta_data?.['docent_tour_met_art'] ?? '').split(' ')[0];
+          const time = row.order.meta_data?.['met_docent_time'] ?? row.line_items[0].meta_data?.['시간'] ?? row.order.meta_data?.['docent_tour_met_art2'] ?? '';
 
           return `${date} ${time}`;
         },
@@ -50,9 +48,9 @@ const MomaDocentTable = ({ momaDocent, isLoading }: MomaDocentTableProps) => {
     [convertDate, t]
   );
 
-  const table = useReactTable({ data: momaDocent, columns, getCoreRowModel: getCoreRowModel() });
+  const table = useReactTable({ data: metroDocentPainting, columns, getCoreRowModel: getCoreRowModel() });
 
   return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
 };
 
-export default MomaDocentTable;
+export default MetroDocentPaintingTable;

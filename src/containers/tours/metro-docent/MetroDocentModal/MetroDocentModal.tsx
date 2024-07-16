@@ -22,10 +22,10 @@ const MetroDocentModal = ({ metroDocent, onClose }: MetroDocentModalProps) => {
       { label: t('Phone'), value: metroDocent?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${metroDocent?.payment?.payment_method_title ?? 'Payment method'} (${metroDocent?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [metroDocent, convertDate, t],
+    [metroDocent, convertDate, t]
   );
 
-  const columns = useMemo(() => [{ name: metroDocent?.lineItem.name, quantity: metroDocent?.lineItem.quantity, total: metroDocent?.lineItem.total }] ?? [], [metroDocent]);
+  const columns = useMemo(() => [{ name: metroDocent?.line_items[0].name, quantity: metroDocent?.line_items[0].quantity, total: metroDocent?.line_items[0].total }] ?? [], [metroDocent]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

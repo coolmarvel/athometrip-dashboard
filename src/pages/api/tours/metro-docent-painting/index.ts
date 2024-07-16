@@ -3,13 +3,13 @@ import axios from 'axios';
 import { RequiredKeysOf } from 'type-fest';
 import { Order } from '@/apis';
 import { setValue } from '../../redis';
-import { checkExistingDataInRange, filterTour, sortTour } from '../tour-utils';
+import { checkExistingDataInRange, sortTour } from '../tour-utils';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
       const { page, limit } = req.query;
-      if (page && limit) return getLandmarkByPage(req, res);
+      if (page && limit) return getMetroDocentPaintingByPage(req, res);
     case 'POST':
       return res.status(405).end();
     default:
@@ -17,11 +17,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '77287';
-const tourName = 'landmark';
+const productId = '158082,158222';
+const tourName = 'metro-docent-painting';
 const url = 'http://localhost:3000/api/adapter/orders';
 
-const getLandmarkByPage = async (req: NextApiRequest, res: NextApiResponse) => {
+const getMetroDocentPaintingByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };
   const offset = (Number(page) - 1) * Number(limit);
 

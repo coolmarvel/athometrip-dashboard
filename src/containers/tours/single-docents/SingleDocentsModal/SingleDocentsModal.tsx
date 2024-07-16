@@ -5,27 +5,27 @@ import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, 
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-interface MomaDocentModalProps {
-  momaDocent: any;
+interface SingleDocentsModalProps {
+  singleDocents: any;
   onClose: () => void;
 }
 
-const MomaDocentModal = ({ momaDocent, onClose }: MomaDocentModalProps) => {
+const SingleDocentsModal = ({ singleDocents, onClose }: SingleDocentsModalProps) => {
   const { t } = useTranslation();
   const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
     () => [
-      { label: t('Name'), value: momaDocent?.billing.first_name ?? 'Name' },
-      { label: t('Email'), value: momaDocent?.billing.email ?? 'Email' },
-      { label: t('Phone'), value: momaDocent?.billing.phone ?? 'Phone' },
-      { label: t('Payment Via'), value: `${momaDocent?.payment?.payment_method_title ?? 'Payment method'} (${momaDocent?.payment?.transaction_id ?? 'Transaction ID'})` },
+      { label: t('Name'), value: singleDocents?.billing.first_name ?? 'Name' },
+      { label: t('Email'), value: singleDocents?.billing.email ?? 'Email' },
+      { label: t('Phone'), value: singleDocents?.billing.phone ?? 'Phone' },
+      { label: t('Payment Via'), value: `${singleDocents?.payment?.payment_method_title ?? 'Payment method'} (${singleDocents?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [momaDocent, convertDate, t]
+    [singleDocents, convertDate, t]
   );
 
-  const columns = useMemo(() => [{ name: momaDocent?.line_items[0].name, quantity: momaDocent?.line_items[0].quantity, total: momaDocent?.line_items[0].total }] ?? [], [momaDocent]);
+  const columns = useMemo(() => [{ name: singleDocents?.line_items[0].name, quantity: singleDocents?.line_items[0].quantity, total: singleDocents?.line_items[0].total }] ?? [], [singleDocents]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -38,9 +38,9 @@ const MomaDocentModal = ({ momaDocent, onClose }: MomaDocentModalProps) => {
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">
-            Order #{momaDocent?.order.id ?? t('Order ID')}
-            <Badge colorScheme={statusColor[momaDocent?.order.status] || 'gray'} fontSize={'x-large'}>
-              {momaDocent?.order.status ? t(momaDocent.order.status) : t('Status')}
+            Order #{singleDocents?.order.id ?? t('Order ID')}
+            <Badge colorScheme={statusColor[singleDocents?.order.status] || 'gray'} fontSize={'x-large'}>
+              {singleDocents?.order.status ? t(singleDocents.order.status) : t('Status')}
             </Badge>
           </Flex>
         </ModalHeader>
@@ -50,7 +50,7 @@ const MomaDocentModal = ({ momaDocent, onClose }: MomaDocentModalProps) => {
             <Box p={5}>
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
-                  <Skeleton key={index} isLoaded={!!momaDocent}>
+                  <Skeleton key={index} isLoaded={!!singleDocents}>
                     <WithLabel label={attribute.label} value={attribute.value} />
                   </Skeleton>
                 ))}
@@ -93,4 +93,4 @@ const MomaDocentModal = ({ momaDocent, onClose }: MomaDocentModalProps) => {
   );
 };
 
-export default MomaDocentModal;
+export default SingleDocentsModal;
