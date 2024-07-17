@@ -25,7 +25,7 @@ const AMNHDocentModal = ({ amnhDocent, onClose }: AMNHDocentModalProps) => {
     [amnhDocent, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: amnhDocent?.lineItem.name, quantity: amnhDocent?.lineItem.quantity, total: amnhDocent?.lineItem.total }] ?? [], [amnhDocent]);
+  const columns = useMemo(() => [{ name: amnhDocent?.line_items[0].name, quantity: amnhDocent?.line_items[0].quantity, total: amnhDocent?.line_items[0].total }] ?? [], [amnhDocent]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

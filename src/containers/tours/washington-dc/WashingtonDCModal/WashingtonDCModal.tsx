@@ -25,7 +25,7 @@ const WashingtonDCModal = ({ washingtonDC, onClose }: WashingtonDCModalProps) =>
     [washingtonDC, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: washingtonDC?.lineItem.name, quantity: washingtonDC?.lineItem.quantity, total: washingtonDC?.lineItem.total }] ?? [], [washingtonDC]);
+  const columns = useMemo(() => [{ name: washingtonDC?.line_items[0].name, quantity: washingtonDC?.line_items[0].quantity, total: washingtonDC?.line_items[0].total }] ?? [], [washingtonDC]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

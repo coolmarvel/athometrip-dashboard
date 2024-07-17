@@ -70,7 +70,7 @@ export const sortTour = (tickets: any, sort: RequiredKeysOf<any>, order: Order, 
   });
 };
 
-export const filterTour = (tours: any, after: string, before: string, day: string) => {
+export const filterTour = (tours: any, after: string, before: string) => {
   const start = new Date(after);
   const end = new Date(before);
 
@@ -78,13 +78,14 @@ export const filterTour = (tours: any, after: string, before: string, day: strin
     const tourDate = new Date(tour.order.date_created);
     const dateCondition = tourDate >= start && tourDate <= end;
 
-    const dayCondition = (day: string, tour: any) => {
-      if (day === 'one-day') return tour.lineItem.name.includes('당일');
-      else if (day === 'two-day') return tour.lineItem.name.includes('1박');
+    // const dayCondition = (day: string, tour: any) => {
+    //   if (day === 'one-day') return tour.lineItem.name.includes('당일');
+    //   else if (day === 'two-day') return tour.lineItem.name.includes('1박');
+    //
+    //   return false;
+    // };
 
-      return false;
-    };
-
-    return dateCondition && dayCondition(day, tour);
+    // return dateCondition && dayCondition(day, tour);
+    return dateCondition;
   });
 };

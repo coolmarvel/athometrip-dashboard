@@ -24,9 +24,8 @@ const WoodburyTable = ({ woodbury, isLoading }: WoodburyTableProps) => {
       if (!woodbury) return;
       openModal(WoodburyModal, { woodbury });
     },
-    [openModal]
+    [openModal],
   );
-  console.log(woodbury);
 
   const columns = useMemo(
     () => [
@@ -34,29 +33,10 @@ const WoodburyTable = ({ woodbury, isLoading }: WoodburyTableProps) => {
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
-      // columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('type') }),
       columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
-      columnHelper.accessor(
-        (row) => {
-          const findMetadata = (metadataArray: any[], key: string) => {
-            const metadata = metadataArray?.find((meta) => meta.key === key);
-            return metadata ? metadata.value : '';
-          };
-
-          const orderMetadata = row.order?.metadata;
-          const lineItemMetadata = row.lineItem?.metadata;
-
-          const date = findMetadata(orderMetadata, 'docent_tour_met') || findMetadata(orderMetadata, 'docent_tour_met_art') || findMetadata(lineItemMetadata, '날짜');
-          const convertedDate = date ? convertDate(date).split(' ')[0] : '';
-
-          const time = findMetadata(orderMetadata, 'met_docent_time') || findMetadata(orderMetadata, 'docent_tour_met_art2') || findMetadata(lineItemMetadata, '시간');
-
-          return `${convertedDate} ${time}`.trim();
-        },
-        { header: t('schedule') }
-      ),
+      columnHelper.accessor((row) => convertDate(row.line_items[0].meta_data?.['날짜'] ?? '').split(' ')[0], { header: t('schedule') }),
     ],
-    [convertDate, t]
+    [convertDate, t],
   );
 
   const table = useReactTable({ data: woodbury, columns, getCoreRowModel: getCoreRowModel() });

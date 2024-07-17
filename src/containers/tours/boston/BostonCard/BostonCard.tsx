@@ -23,7 +23,7 @@ const BostonCard = ({ data: boston }: BostonCardProps) => {
     [boston, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: boston?.lineItem.name, quantity: boston?.lineItem.quantity, total: boston?.lineItem.total }] ?? [], [boston]);
+  const columns = useMemo(() => [{ name: boston?.line_items[0].name, quantity: boston?.line_items[0].quantity, total: boston?.line_items[0].total }] ?? [], [boston]);
 
   return (
     <Card>

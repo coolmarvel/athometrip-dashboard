@@ -23,7 +23,7 @@ const WoodburyCard = ({ data: woodbury }: WoodburyCardProps) => {
     [woodbury, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: woodbury?.lineItem.name, quantity: woodbury?.lineItem.quantity, total: woodbury?.lineItem.total }] ?? [], [woodbury]);
+  const columns = useMemo(() => [{ name: woodbury?.line_items[0].name, quantity: woodbury?.line_items[0].quantity, total: woodbury?.line_items[0].total }] ?? [], [woodbury]);
 
   return (
     <Card>

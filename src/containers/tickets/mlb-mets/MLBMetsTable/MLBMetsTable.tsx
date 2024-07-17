@@ -27,8 +27,6 @@ const MLBMetsTable = ({ mlbMets, isLoading }: MLBMetsTableProps) => {
     [openModal],
   );
 
-  console.log(mlbMets);
-
   const columns = useMemo(
     () => [
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),

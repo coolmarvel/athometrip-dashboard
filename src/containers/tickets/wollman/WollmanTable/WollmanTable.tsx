@@ -27,8 +27,6 @@ const WollmanTable = ({ wollman, isLoading }: WollmanTableProps) => {
     [openModal],
   );
 
-  console.log(wollman);
-
   const columns = useMemo(
     () => [
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),

@@ -1,5 +1,5 @@
 import { DatePickerOptions, PageOptions, ResponsiveLayout, Search } from '@/components';
-import { GuggenheimDocentByPage } from '@/containers';
+import { AMNHDocentByPage } from '@/containers';
 import { useSafePush } from '@/hooks';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
@@ -28,7 +28,7 @@ const AMNHDocentPages = () => {
               <PageOptions />
             </Flex>
           </Flex>
-          <GuggenheimDocentByPage />
+          <AMNHDocentByPage />
         </Flex>
       </ResponsiveLayout>
     </>

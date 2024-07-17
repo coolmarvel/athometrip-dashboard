@@ -9,5 +9,7 @@ export * from './guggenheim-docent';
 export * from './single-docents';
 
 export * from './boston';
-export * from './niagara';
 export * from './washington-dc';
+export * from './niagara-twodays';
+export * from './niagara-oneday-kingkong';
+export * from './niagara-oneday-athometrip';

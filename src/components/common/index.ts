@@ -14,6 +14,5 @@ export { Editor } from './Editor';
 export { Search } from './Search';
 export { Logo } from './Logo';
 
-export { DayOptions } from './NiagaraOptions';
 export { DatePickerOptions } from './DatePickerOptions';
 export { ModeOptions, RegionOptions } from './TMobileOptions';

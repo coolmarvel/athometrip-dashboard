@@ -1,9 +1,10 @@
+import { useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
 import { useConvertDate } from '@/hooks';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { useCallback, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 interface WoodburyModalProps {
   woodbury: any;
@@ -25,7 +26,7 @@ const WoodburyModal = ({ woodbury, onClose }: WoodburyModalProps) => {
     [woodbury, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: woodbury?.lineItem.name, quantity: woodbury?.lineItem.quantity, total: woodbury?.lineItem.total }] ?? [], [woodbury]);
+  const columns = useMemo(() => [{ name: woodbury?.line_items[0].name, quantity: woodbury?.line_items[0].quantity, total: woodbury?.line_items[0].total }] ?? [], [woodbury]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

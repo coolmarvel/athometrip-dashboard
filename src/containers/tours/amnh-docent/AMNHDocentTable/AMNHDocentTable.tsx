@@ -1,9 +1,10 @@
+import { useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+
 import { DataTable } from '@/components';
 import { useConvertDate } from '@/hooks';
 import { useModalStore } from '@/stores';
-import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { AMNHDocentModal } from '@/containers';
 
 const columnHelper = createColumnHelper<any>();
@@ -33,11 +34,11 @@ const AMNHDocentTable = ({ amnhDocent, isLoading }: AMNHDocentTableProps) => {
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('type') }),
-      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
+      columnHelper.accessor((row) => row.line_items?.[0]?.meta_data?.['성인-어린이'] ?? '', { header: t('type') }),
+      columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
       columnHelper.accessor((row) => {
-        const date = convertDate(row.order?.metadata?.find((meta: any) => meta.key === 'amnh_docent_date')?.value).split(' ')[0] ?? '';
-        const time = row.order?.metadata?.find((meta: any) => meta.key === 'anmh_docent_time')?.value ?? '';
+        const date = convertDate(row.order?.meta_data?.['amnh_docent_date']).split(' ')[0] ?? '';
+        const time = row.order?.meta_data?.['anmh_docent_time'] ?? '';
 
         return `${date} ${time}`;
       }, { header: t('schedule') }),

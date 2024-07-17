@@ -7,10 +7,11 @@ import { useTranslation } from 'react-i18next';
 
 interface SingleDocentsModalProps {
   singleDocents: any;
+  lineItem: any;
   onClose: () => void;
 }
 
-const SingleDocentsModal = ({ singleDocents, onClose }: SingleDocentsModalProps) => {
+const SingleDocentsModal = ({ singleDocents, lineItem, onClose }: SingleDocentsModalProps) => {
   const { t } = useTranslation();
   const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
@@ -22,10 +23,10 @@ const SingleDocentsModal = ({ singleDocents, onClose }: SingleDocentsModalProps)
       { label: t('Phone'), value: singleDocents?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${singleDocents?.payment?.payment_method_title ?? 'Payment method'} (${singleDocents?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [singleDocents, convertDate, t]
+    [singleDocents, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: singleDocents?.line_items[0].name, quantity: singleDocents?.line_items[0].quantity, total: singleDocents?.line_items[0].total }] ?? [], [singleDocents]);
+  const columns = useMemo(() => [{ name: lineItem.name, quantity: lineItem.quantity, total: lineItem.total }] ?? [], [lineItem]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

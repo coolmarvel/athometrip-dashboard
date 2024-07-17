@@ -32,24 +32,15 @@ const BostonTable = ({ boston, isLoading }: BostonTableProps) => {
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
-      columnHelper.accessor('tourInfo.tour_kakaoid', { header: t('kakao'), meta: { sortable: true } }),
+      columnHelper.accessor('tour_info.tour_kakakoid', { header: t('kakao talk'), meta: { sortable: true } }),
+      columnHelper.accessor('billing.phone', { header: t('phone') }),
       columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
       // columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('type') }),
-      columnHelper.accessor('lineItem.quantity', { header: t('quantity') }),
+      columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
       columnHelper.accessor((row) => {
-        const findMetadata = (metadataArray: any, key: string) => {
-          const metadata = metadataArray?.find((meta: any) => meta.key === key);
+        const date = convertDate(row.order?.meta_data?.['boston_tour_date'] ?? row.line_items[0].meta_data['날짜']).split(' ')[0] ?? '';
 
-          return metadata ? metadata.value : '';
-        };
-
-        const orderMetadata = row.order?.metadata;
-        const lineItemMetadata = row.lineItem?.metadata;
-
-        const date = findMetadata(orderMetadata, 'boston_tour_date') || findMetadata(lineItemMetadata, '날짜');
-        const convertedDate = date ? convertDate(date).split(' ')[0] : '';
-
-        return `${convertedDate}`.trim();
+        return `${date}`;
       }, { header: t('schedule') }),
     ],
     [convertDate, t],

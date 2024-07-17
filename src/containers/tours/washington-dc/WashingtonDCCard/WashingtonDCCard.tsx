@@ -23,7 +23,7 @@ const WashingtonDCCard = ({ data: washington }: WashingtonDCCardProps) => {
     [washington, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: washington?.lineItem.name, quantity: washington?.lineItem.quantity, total: washington?.lineItem.total }] ?? [], [washington]);
+  const columns = useMemo(() => [{ name: washington?.line_items[0].name, quantity: washington?.line_items[0].quantity, total: washington?.line_items[0].total }] ?? [], [washington]);
 
   return (
     <Card>

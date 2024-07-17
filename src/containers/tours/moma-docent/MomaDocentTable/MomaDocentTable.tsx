@@ -24,10 +24,8 @@ const MomaDocentTable = ({ momaDocent, isLoading }: MomaDocentTableProps) => {
       if (!momaDocent) return;
       openModal(MomaDocentModal, { momaDocent });
     },
-    [openModal]
+    [openModal],
   );
-
-  console.log(momaDocent);
 
   const columns = useMemo(
     () => [
@@ -44,10 +42,10 @@ const MomaDocentTable = ({ momaDocent, isLoading }: MomaDocentTableProps) => {
 
           return `${date} ${time}`;
         },
-        { header: t('schedule') }
+        { header: t('schedule') },
       ),
     ],
-    [convertDate, t]
+    [convertDate, t],
   );
 
   const table = useReactTable({ data: momaDocent, columns, getCoreRowModel: getCoreRowModel() });

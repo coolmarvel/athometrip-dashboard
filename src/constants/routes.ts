@@ -56,8 +56,10 @@ export enum ApiRoutes {
 
   // Tours(Suburbs)
   WashingtonDC = 'api/tours/washington-dc/:id?',
-  Niagara = 'api/tours/niagara/:id?',
   Boston = 'api/tours/boston/:id?',
+  NiagaraTwoDays = 'api/tours/niagara-twodays/:id?',
+  NiagaraOneDayKingKong = 'api/tours/niagara-oneday-kingkong/:id?',
+  NiagaraOneDayAthometrip = 'api/tours/niagara-oneday-athometrip/:id?',
 }
 
 export enum PageRoutes {
@@ -114,10 +116,10 @@ export enum PageRoutes {
   MetroDocentPaintingDetail = '/tours/metro-docent-painting/:id',
   MomaDocent = '/tours/moma-docent',
   MomaDocentDetail = '/tours/moma-docent/:id',
-  GuggenheimDocent = '/tours/guggenheim-docent',
-  GuggenheimDocentDetail = '/tours/guggenheim-docent/:id',
-  WhitneyDocent = '/tours/whitney-docent',
-  WhitneyDocentDetail = '/tours/whitney-docent/:id',
+  // GuggenheimDocent = '/tours/guggenheim-docent',
+  // GuggenheimDocentDetail = '/tours/guggenheim-docent/:id',
+  // WhitneyDocent = '/tours/whitney-docent',
+  // WhitneyDocentDetail = '/tours/whitney-docent/:id',
   AMNHDocent = '/tours/amnh-docent', // American Museum of Nature History
   AMNHDocentDetail = '/tours/amnh-docent/:id',
   SingleDocents = '/tours/single-docents',
@@ -128,8 +130,12 @@ export enum PageRoutes {
   WashingtonDCDetail = '/tours/washington-dc/:id',
   Boston = '/tours/boston',
   BostonDetail = '/tours/boston/:id',
-  Niagara = '/tours/niagara',
-  NiagaraDetail = '/tours/niagara/:id',
+  NiagaraTwoDays = '/tours/niagara-twodays',
+  NiagaraTwoDaysDetail = '/tours/niagara-twodays/:id',
+  NiagaraOneDayKingKong = '/tours/niagara-oneday-kingkong',
+  NiagaraOneDayKingKongDetail = '/tours/niagara-oneday-kingkong/:id',
+  NiagaraOneDayAthometrip = '/tours/niagara-oneday-athometrip',
+  NiagaraOneDayAthometripDetail = '/tours/niagara-oneday-athometrip/:id',
 }
 
 export const whiteList = [PageRoutes.Home, PageRoutes.Signin, PageRoutes.Users, PageRoutes.UserDetail];
@@ -201,14 +207,14 @@ export const usimQuery = {
   search: '',
 };
 
-export const tourQuery = {
-  page: 1,
-  limit: 10,
-  sort: 'id',
-  order: 'desc',
-  day: DayQueries.OneDay,
-  search: '',
-};
+// export const tourQuery = {
+//   page: 1,
+//   limit: 10,
+//   sort: 'id',
+//   order: 'desc',
+//   day: DayQueries.OneDay,
+//   search: '',
+// };
 
 // t("Users")
 // t("User Detail")
@@ -486,12 +492,28 @@ export const navs: Nav[] = [
         children: [{ label: 'Boston Detail', pathname: PageRoutes.BostonDetail, matcher: match(PageRoutes.BostonDetail), query: ticketQuery }],
       },
       {
-        label: 'Niagara',
-        pathname: PageRoutes.Niagara,
-        matcher: match(PageRoutes.Niagara),
+        label: 'Niagara(TwoDays)',
+        pathname: PageRoutes.NiagaraTwoDays,
+        matcher: match(PageRoutes.NiagaraTwoDays),
         icon: BsFill3SquareFill,
-        query: tourQuery,
-        children: [{ label: 'Niagara Detail', pathname: PageRoutes.NiagaraDetail, matcher: match(PageRoutes.NiagaraDetail), query: tourQuery }],
+        query: ticketQuery,
+        children: [{ label: 'Niagara(TwoDays) Detail', pathname: PageRoutes.NiagaraTwoDaysDetail, matcher: match(PageRoutes.NiagaraTwoDaysDetail), query: ticketQuery }],
+      },
+      {
+        label: 'Niagara(Athometrip)',
+        pathname: PageRoutes.NiagaraOneDayAthometrip,
+        matcher: match(PageRoutes.NiagaraOneDayAthometrip),
+        icon: BsFill3SquareFill,
+        query: ticketQuery,
+        children: [{ label: 'Niagara(Athometrip) Detail', pathname: PageRoutes.NiagaraOneDayAthometripDetail, matcher: match(PageRoutes.NiagaraOneDayAthometripDetail), query: ticketQuery }],
+      },
+      {
+        label: 'Niagara(KingKong)',
+        pathname: PageRoutes.NiagaraOneDayKingKong,
+        matcher: match(PageRoutes.NiagaraOneDayKingKong),
+        icon: BsFill3SquareFill,
+        query: ticketQuery,
+        children: [{ label: 'Niagara(KingKong) Detail', pathname: PageRoutes.NiagaraOneDayKingKongDetail, matcher: match(PageRoutes.NiagaraOneDayKingKongDetail), query: ticketQuery }],
       },
     ],
   },
