@@ -18,7 +18,7 @@ interface PostTableProps {
 const PostTable = ({ posts, isLoading }: PostTableProps) => {
   const { t } = useTranslation();
   const { push } = useSafePush();
-  const formatDate = useFormatDate();
+  const { original } = useFormatDate();
 
   const columns = useMemo(
     () => [
@@ -37,16 +37,16 @@ const PostTable = ({ posts, isLoading }: PostTableProps) => {
       }),
       columnHelper.accessor('createdAt', {
         header: t('Created At'),
-        cell: (context) => formatDate(context.renderValue()!),
+        cell: (context) => original(context.renderValue()!),
         meta: { sortable: true },
       }),
       columnHelper.accessor('updatedAt', {
         header: t('Updated At'),
-        cell: (context) => formatDate(context.renderValue()!),
+        cell: (context) => original(context.renderValue()!),
         meta: { sortable: true },
       }),
     ],
-    [formatDate, t]
+    [original, t]
   );
 
   const table = useReactTable({

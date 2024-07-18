@@ -22,7 +22,11 @@ const Memorial911Card = ({ data: memorial911 }: Memorial911CardProps) => {
     [memorial911, t],
   );
 
-  const columns = useMemo(() => [{ name: memorial911?.lineItem.name, quantity: memorial911?.lineItem.quantity, total: memorial911?.lineItem.total }] ?? [], [memorial911]);
+  const columns = useMemo(() => [{
+    name: memorial911?.line_items[0].name,
+    quantity: memorial911?.line_items[0].quantity,
+    total: memorial911?.line_items[0].total,
+  }] ?? [], [memorial911]);
 
   return (
     <Card>

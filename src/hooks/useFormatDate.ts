@@ -1,3 +1,8 @@
+/**
+ * 날짜 포맷 형식
+ *
+ * @author 이성현
+ */
 import { fillZero } from '@/utils';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,8 +16,10 @@ const YEAR = 365 * DAY;
 const useFormatDate = () => {
   const { t } = useTranslation();
 
-  return useCallback(
-    (value?: string) => {
+  /**
+   * TODO 최초에 사용했던 날짜 포맷 코드, 수정 필요
+   */
+  const original = useCallback((value?: string) => {
       if (!value) return '';
 
       const now = new Date();
@@ -39,8 +46,37 @@ const useFormatDate = () => {
         return `${year}-${month}-${day}`;
       }
     },
-    [t]
+    [t],
   );
+
+  /**
+   * YYYY-MM-DD 형태로 날짜 출력
+   */
+  const formatDateToYYYYMMDD = useCallback((value?: Date, format?: string) => {
+      if (!value) return '';
+
+      const date = new Date(value);
+      const year = date.getFullYear();
+      const month = fillZero(date.getMonth() + 1, 2);
+      const day = fillZero(date.getDate(), 2);
+
+      switch (format) {
+        case 'YYYY-MM-DD':
+          return `${year}-${month}-${day}`;
+        case 'MM-DD':
+          return `${month}-${day}`;
+        default:
+          return `${year}-${month}-${day}`;
+      }
+    },
+    [],
+  );
+
+  return {
+    original,
+    formatDateToYYYYMMDD,
+  };
+
 };
 
 export default useFormatDate;

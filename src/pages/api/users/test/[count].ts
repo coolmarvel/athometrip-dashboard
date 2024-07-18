@@ -13,7 +13,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-// [PUT] /api/users/test/:count
+// [PUT] /api/user-management/test/:count
 const createTestUsers = async (req: NextApiRequest, res: NextApiResponse) => {
   const { count } = req.query;
 
@@ -21,7 +21,7 @@ const createTestUsers = async (req: NextApiRequest, res: NextApiResponse) => {
     const users = await readUsers();
 
     if (users.length > 10000) {
-      return res.status(409).json({ data: null, message: 'Maximum number of users reached' });
+      return res.status(409).json({ data: null, message: 'Maximum number of user-management reached' });
     }
 
     const lastId = users[users.length - 1]?.id ?? 0;
@@ -40,8 +40,8 @@ const createTestUsers = async (req: NextApiRequest, res: NextApiResponse) => {
 
     await writeUsers(users);
 
-    return res.status(200).json({ data: users, message: 'Successfully created test users' });
+    return res.status(200).json({ data: users, message: 'Successfully created test user-management' });
   } catch {
-    return res.status(500).json({ data: null, message: 'Failed to create test users' });
+    return res.status(500).json({ data: null, message: 'Failed to create test user-management' });
   }
 };

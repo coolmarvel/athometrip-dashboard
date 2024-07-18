@@ -17,7 +17,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-// [GET] /api/users/:id
+// [GET] /api/user-management/:id
 const getUser = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
 
@@ -34,7 +34,7 @@ const getUser = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-// [PUT] /api/users/:id
+// [PUT] /api/user-management/:id
 const updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   const { name, email, phone, profile } = req.body;
@@ -63,7 +63,7 @@ const updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-// [DELETE] /api/users/:id
+// [DELETE] /api/user-management/:id
 const deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
   parseIP(req)
     .then(async (ip) => {

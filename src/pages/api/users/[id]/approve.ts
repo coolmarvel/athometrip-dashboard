@@ -10,7 +10,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-// [PUT] /api/users/:id/approve
+// [PUT] /api/user-management/:id/approve
 const approveUser = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
 

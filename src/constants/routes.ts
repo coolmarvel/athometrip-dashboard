@@ -1,7 +1,6 @@
 import { MatchFunction, match } from 'path-to-regexp';
 import { IconType } from 'react-icons';
 import {
-  // BsFillPostcardFill,
   BsFill0SquareFill,
   BsFill1SquareFill,
   BsFill2SquareFill,
@@ -14,45 +13,45 @@ import {
   BsFill9SquareFill,
   BsFillCollectionFill,
 } from 'react-icons/bs';
-import { FaUser } from 'react-icons/fa';
+import { FaCogs, FaUser } from 'react-icons/fa';
 
 export enum ApiRoutes {
-  Upload = 'api/upload',
-  Signin = 'api/auth/signin',
-  Signout = 'api/auth/signout',
-  Me = 'api/auth/me',
-  User = 'api/users/:id?',
-  ApproveUser = 'api/users/:id?/approve',
-  Post = 'api/posts/:id?',
-  // LikedPost = 'api/posts/liked',
+  Upload = '/api/upload',
+  Signin = '/api/auth/signin',
+  Signout = '/api/auth/signout',
+  Me = '/api/auth/me',
+  User = '/api/users/:id?',
+  ApproveUser = '/api/users/:id?/approve',
+  Post = '/api/posts/:id?',
+  // LikedPost = '/api/posts/liked',
 
   // Tickets
-  Empire = 'api/tickets/empire/:id?',
-  Summit = 'api/tickets/summit/:id?',
-  UNTour = 'api/tickets/un-tour/:id?',
-  Wollman = 'api/tickets/wollman/:id?',
-  MLBMets = 'api/tickets/mlb-mets/:id?',
-  CityTrip = 'api/tickets/city-trip/:id?',
-  OneWorld = 'api/tickets/one-world/:id?',
-  EllisIsland = 'api/tickets/ellis-island/:id?',
-  Memorial911 = 'api/tickets/911-memorial/:id?',
-  TopOfTheRock = 'api/tickets/top-of-the-rock/:id?',
+  Empire = '/api/tickets/empire/:id?',
+  Summit = '/api/tickets/summit/:id?',
+  UNTour = '/api/tickets/un-tour/:id?',
+  Wollman = '/api/tickets/wollman/:id?',
+  MLBMets = '/api/tickets/mlb-mets/:id?',
+  CityTrip = '/api/tickets/city-trip/:id?',
+  OneWorld = '/api/tickets/one-world/:id?',
+  EllisIsland = '/api/tickets/ellis-island/:id?',
+  Memorial911 = '/api/tickets/911-memorial/:id?',
+  TopOfTheRock = '/api/tickets/top-of-the-rock/:id?',
 
   // USIMs
-  TMobile = 'api/usims/t-mobile/:id?',
-  H2OEsim = 'api/usims/h2o-esim/:id?',
-  Lyca = 'api/usims/lyca/:id?',
+  TMobile = '/api/usims/t-mobile/:id?',
+  H2OEsim = '/api/usims/h2o-esim/:id?',
+  Lyca = '/api/usims/lyca/:id?',
 
   // Tours
-  Landmark = 'api/tours/landmark/:id?',
-  Woodbury = 'api/tours/woodbury/:id?',
-  MomaDocent = 'api/tours/moma-docent/:id?',
-  AMNHDocent = 'api/tours/amnh-docent/:id?',
-  MetroDocent = 'api/tours/metro-docent/:id?',
-  MetroDocentPainting = 'api/tours/metro-docent-painting/:id?',
-  WhitneyDocent = 'api/tours/whitney-docent/:id?',
-  GuggenheimDocent = 'api/tours/guggenheim-docent/:id?',
-  SingleDocents = 'api/tours/single-docents/:id?',
+  Landmark = '/api/tours/landmark/:id?',
+  Woodbury = '/api/tours/woodbury/:id?',
+  MomaDocent = '/api/tours/moma-docent/:id?',
+  AMNHDocent = '/api/tours/amnh-docent/:id?',
+  MetroDocent = '/api/tours/metro-docent/:id?',
+  MetroDocentPainting = '/api/tours/metro-docent-painting/:id?',
+  WhitneyDocent = '/api/tours/whitney-docent/:id?',
+  GuggenheimDocent = '/api/tours/guggenheim-docent/:id?',
+  SingleDocents = '/api/tours/single-docents/:id?',
 
   // Tours(Suburbs)
   WashingtonDC = 'api/tours/washington-dc/:id?',
@@ -60,6 +59,18 @@ export enum ApiRoutes {
   NiagaraTwoDays = 'api/tours/niagara-twodays/:id?',
   NiagaraOneDayKingKong = 'api/tours/niagara-oneday-kingkong/:id?',
   NiagaraOneDayAthometrip = 'api/tours/niagara-oneday-athometrip/:id?',
+
+  // System
+  UserManagement = 'api/system/user-management',
+  UserDetailInformation = 'api/system/user-management/user/:id',
+
+  // Shuttle
+  ToJFK = '/api/shuttles/to-jfk/:id?', // JFK -> NY, JFK -> NJ
+  ToNYNJ = '/api/shuttles/to-nynj/:id?', // NY -> JFK, JFK -> NJ, EWR -> NY/NJ
+  ToEWR = '/api/shuttles/to-ewr/:id?', // NY/NJ -> EWR
+  ToNYNJEWR = '/api/shuttles/to-nynj-ewr/:id?',
+  ToJFKNight = '/api/shuttles/to-jfk-night/:id?',
+  ToNJNight = '/api/shuttles/to-nj-night/:id?',
 }
 
 export enum PageRoutes {
@@ -136,6 +147,29 @@ export enum PageRoutes {
   NiagaraOneDayKingKongDetail = '/tours/niagara-oneday-kingkong/:id',
   NiagaraOneDayAthometrip = '/tours/niagara-oneday-athometrip',
   NiagaraOneDayAthometripDetail = '/tours/niagara-oneday-athometrip/:id',
+
+  /**
+   * SystemManagement: 시스템 관리
+   * UserManagement: 유저 관리
+   */
+  SystemManagement = '/system',
+  UserManagement = '/system/user-management',
+  UserDetailInformation = '/system/user-management/user/:id',
+
+  // Shuttles
+  Shuttles = '/shuttles',
+  ToJFK = '/shuttles/to-jfk',
+  ToJFKDetail = '/shuttles/to-jfk/:id',
+  ToNYNJ = '/shuttles/to-nynj',
+  ToNYNJDetail = '/shuttles/to-nynj/:id',
+  ToEWR = '/shuttles/to-ewr',
+  ToEWRDetail = '/shuttles/to-ewr/:id',
+  ToNYNJEWR = '/shuttles/to-nynj-ewr',
+  ToNYNJEWRDetail = '/shuttles/to-nynj-ewr/:id',
+  ToJFKNight = '/shuttles/to-jfk-night',
+  ToJFKNightDetail = '/shuttles/to-jfk-night/:id',
+  ToNJNight = '/shuttles/to-nj-night',
+  ToNJNightDetail = '/shuttles/to-nj-night/:id',
 }
 
 export const whiteList = [PageRoutes.Home, PageRoutes.Signin, PageRoutes.Users, PageRoutes.UserDetail];
@@ -165,11 +199,6 @@ export enum RegionQueries {
   Other = 'mexico/canada',
 }
 
-export enum DayQueries {
-  OneDay = 'one-day',
-  TwoDay = 'two-day',
-}
-
 export interface Nav {
   label: string;
   pathname: PageRoutes;
@@ -182,6 +211,14 @@ export interface Nav {
 
 export const defaultQuery = {
   view: ViewQueries.Table,
+  page: 1,
+  limit: 10,
+  sort: 'id',
+  order: 'desc',
+  search: '',
+};
+
+export const normalQuery = {
   page: 1,
   limit: 10,
   sort: 'id',
@@ -207,30 +244,21 @@ export const usimQuery = {
   search: '',
 };
 
-// export const tourQuery = {
-//   page: 1,
-//   limit: 10,
-//   sort: 'id',
-//   order: 'desc',
-//   day: DayQueries.OneDay,
-//   search: '',
-// };
+export const userQuery = {
+  page: 1,
+  limit: 10,
+  sort: 'id',
+  order: 'desc',
+  search: '',
+};
 
+// t("UserPageContainer")
 // t("Users")
 // t("User Detail")
 // t("Posts")
 // t("Write Post")
 // t("Post Detail")
 export const navs: Nav[] = [
-  // Users
-  {
-    label: 'Users',
-    pathname: PageRoutes.Users,
-    query: defaultQuery,
-    icon: FaUser,
-    matcher: match(PageRoutes.Users),
-    children: [{ label: 'User Detail', pathname: PageRoutes.UserDetail, matcher: match(PageRoutes.UserDetail) }],
-  },
 
   // Posts
   // {
@@ -397,72 +425,72 @@ export const navs: Nav[] = [
         pathname: PageRoutes.Landmark,
         matcher: match(PageRoutes.Landmark),
         icon: BsFill1SquareFill,
-        query: ticketQuery,
-        children: [{ label: 'Landmark Detail', pathname: PageRoutes.LandmarkDetail, matcher: match(PageRoutes.LandmarkDetail), query: ticketQuery }],
+        query: normalQuery,
+        children: [{ label: 'Landmark Detail', pathname: PageRoutes.LandmarkDetail, matcher: match(PageRoutes.LandmarkDetail), query: normalQuery }],
       },
       {
         label: 'Woodbury',
         pathname: PageRoutes.Woodbury,
         matcher: match(PageRoutes.Woodbury),
         icon: BsFill2SquareFill,
-        query: ticketQuery,
-        children: [{ label: 'Woodbury Detail', pathname: PageRoutes.WoodburyDetail, matcher: match(PageRoutes.WoodburyDetail), query: ticketQuery }],
+        query: normalQuery,
+        children: [{ label: 'Woodbury Detail', pathname: PageRoutes.WoodburyDetail, matcher: match(PageRoutes.WoodburyDetail), query: normalQuery }],
       },
       {
         label: 'MetroDocent',
         pathname: PageRoutes.MetroDocent,
         matcher: match(PageRoutes.MetroDocent),
         icon: BsFill3SquareFill,
-        query: ticketQuery,
-        children: [{ label: 'MetroDocent Detail', pathname: PageRoutes.MetroDocentDetail, matcher: match(PageRoutes.MetroDocentDetail), query: ticketQuery }],
+        query: normalQuery,
+        children: [{ label: 'MetroDocent Detail', pathname: PageRoutes.MetroDocentDetail, matcher: match(PageRoutes.MetroDocentDetail), query: normalQuery }],
       },
       {
         label: 'MetroDocent(Painting)',
         pathname: PageRoutes.MetroDocentPainting,
         matcher: match(PageRoutes.MetroDocentPainting),
         icon: BsFill3SquareFill,
-        query: ticketQuery,
-        children: [{ label: 'MetroDocentPainting Detail', pathname: PageRoutes.MetroDocentPaintingDetail, matcher: match(PageRoutes.MetroDocentPaintingDetail), query: ticketQuery }],
+        query: normalQuery,
+        children: [{ label: 'MetroDocentPainting Detail', pathname: PageRoutes.MetroDocentPaintingDetail, matcher: match(PageRoutes.MetroDocentPaintingDetail), query: normalQuery }],
       },
       {
         label: 'MomaDocent',
         pathname: PageRoutes.MomaDocent,
         matcher: match(PageRoutes.MomaDocent),
         icon: BsFill4SquareFill,
-        query: ticketQuery,
-        children: [{ label: 'MomaDocent Detail', pathname: PageRoutes.MomaDocentDetail, matcher: match(PageRoutes.MomaDocentDetail), query: ticketQuery }],
+        query: normalQuery,
+        children: [{ label: 'MomaDocent Detail', pathname: PageRoutes.MomaDocentDetail, matcher: match(PageRoutes.MomaDocentDetail), query: normalQuery }],
       },
       // {
       //   label: 'GuggenheimDocent',
       //   pathname: PageRoutes.GuggenheimDocent,
       //   matcher: match(PageRoutes.GuggenheimDocent),
       //   icon: BsFill5SquareFill,
-      //   query: ticketQuery,
-      //   children: [{ label: 'GuggenheimDocent Detail', pathname: PageRoutes.GuggenheimDocentDetail, matcher: match(PageRoutes.GuggenheimDocentDetail), query: ticketQuery }],
+      //   query: normalQuery,
+      //   children: [{ label: 'GuggenheimDocent Detail', pathname: PageRoutes.GuggenheimDocentDetail, matcher: match(PageRoutes.GuggenheimDocentDetail), query: normalQuery }],
       // },
       // {
       //   label: 'WhitneyDocent',
       //   pathname: PageRoutes.WhitneyDocent,
       //   matcher: match(PageRoutes.WhitneyDocent),
       //   icon: BsFill6SquareFill,
-      //   query: ticketQuery,
-      //   children: [{ label: 'WhitneyDocent Detail', pathname: PageRoutes.WhitneyDocentDetail, matcher: match(PageRoutes.WhitneyDocentDetail), query: ticketQuery }],
+      //   query: normalQuery,
+      //   children: [{ label: 'WhitneyDocent Detail', pathname: PageRoutes.WhitneyDocentDetail, matcher: match(PageRoutes.WhitneyDocentDetail), query: normalQuery }],
       // },
       {
         label: 'SingleDocents',
         pathname: PageRoutes.SingleDocents,
         matcher: match(PageRoutes.SingleDocents),
         icon: BsFill7SquareFill,
-        query: ticketQuery,
-        children: [{ label: 'SingleDocents Detail', pathname: PageRoutes.SingleDocentsDetail, matcher: match(PageRoutes.SingleDocentsDetail), query: ticketQuery }],
+        query: normalQuery,
+        children: [{ label: 'SingleDocents Detail', pathname: PageRoutes.SingleDocentsDetail, matcher: match(PageRoutes.SingleDocentsDetail), query: normalQuery }],
       },
       {
         label: 'AMNHDocent',
         pathname: PageRoutes.AMNHDocent,
         matcher: match(PageRoutes.AMNHDocent),
         icon: BsFill7SquareFill,
-        query: ticketQuery,
-        children: [{ label: 'AMNHDocent Detail', pathname: PageRoutes.AMNHDocentDetail, matcher: match(PageRoutes.AMNHDocentDetail), query: ticketQuery }],
+        query: normalQuery,
+        children: [{ label: 'AMNHDocent Detail', pathname: PageRoutes.AMNHDocentDetail, matcher: match(PageRoutes.AMNHDocentDetail), query: normalQuery }],
       },
     ],
   },
@@ -480,40 +508,123 @@ export const navs: Nav[] = [
         pathname: PageRoutes.WashingtonDC,
         matcher: match(PageRoutes.WashingtonDC),
         icon: BsFill1SquareFill,
-        query: ticketQuery,
-        children: [{ label: 'WashingtonDC Detail', pathname: PageRoutes.WashingtonDCDetail, matcher: match(PageRoutes.WashingtonDCDetail), query: ticketQuery }],
+        query: normalQuery,
+        children: [{ label: 'WashingtonDC Detail', pathname: PageRoutes.WashingtonDCDetail, matcher: match(PageRoutes.WashingtonDCDetail), query: normalQuery }],
       },
       {
         label: 'Boston',
         pathname: PageRoutes.Boston,
         matcher: match(PageRoutes.Boston),
         icon: BsFill2SquareFill,
-        query: ticketQuery,
-        children: [{ label: 'Boston Detail', pathname: PageRoutes.BostonDetail, matcher: match(PageRoutes.BostonDetail), query: ticketQuery }],
+        query: normalQuery,
+        children: [{ label: 'Boston Detail', pathname: PageRoutes.BostonDetail, matcher: match(PageRoutes.BostonDetail), query: normalQuery }],
       },
       {
         label: 'Niagara(TwoDays)',
         pathname: PageRoutes.NiagaraTwoDays,
         matcher: match(PageRoutes.NiagaraTwoDays),
         icon: BsFill3SquareFill,
-        query: ticketQuery,
-        children: [{ label: 'Niagara(TwoDays) Detail', pathname: PageRoutes.NiagaraTwoDaysDetail, matcher: match(PageRoutes.NiagaraTwoDaysDetail), query: ticketQuery }],
+        query: normalQuery,
+        children: [{ label: 'Niagara(TwoDays) Detail', pathname: PageRoutes.NiagaraTwoDaysDetail, matcher: match(PageRoutes.NiagaraTwoDaysDetail), query: normalQuery }],
       },
       {
         label: 'Niagara(Athometrip)',
         pathname: PageRoutes.NiagaraOneDayAthometrip,
         matcher: match(PageRoutes.NiagaraOneDayAthometrip),
         icon: BsFill3SquareFill,
-        query: ticketQuery,
-        children: [{ label: 'Niagara(Athometrip) Detail', pathname: PageRoutes.NiagaraOneDayAthometripDetail, matcher: match(PageRoutes.NiagaraOneDayAthometripDetail), query: ticketQuery }],
+        query: normalQuery,
+        children: [{ label: 'Niagara(Athometrip) Detail', pathname: PageRoutes.NiagaraOneDayAthometripDetail, matcher: match(PageRoutes.NiagaraOneDayAthometripDetail), query: normalQuery }],
       },
       {
         label: 'Niagara(KingKong)',
         pathname: PageRoutes.NiagaraOneDayKingKong,
         matcher: match(PageRoutes.NiagaraOneDayKingKong),
         icon: BsFill3SquareFill,
-        query: ticketQuery,
-        children: [{ label: 'Niagara(KingKong) Detail', pathname: PageRoutes.NiagaraOneDayKingKongDetail, matcher: match(PageRoutes.NiagaraOneDayKingKongDetail), query: ticketQuery }],
+        query: normalQuery,
+        children: [{ label: 'Niagara(KingKong) Detail', pathname: PageRoutes.NiagaraOneDayKingKongDetail, matcher: match(PageRoutes.NiagaraOneDayKingKongDetail), query: normalQuery }],
+      },
+    ],
+  },
+
+  // Shuttles
+  {
+    label: 'Shuttles',
+    icon: BsFillCollectionFill,
+    pathname: PageRoutes.Shuttles,
+    matcher: match(PageRoutes.Shuttles),
+    collapsible: true,
+    children: [
+      {
+        label: 'To JFK',
+        pathname: PageRoutes.ToJFK,
+        matcher: match(PageRoutes.ToJFK),
+        icon: BsFill1SquareFill,
+        query: normalQuery,
+        children: [{ label: 'To JFK Detail', pathname: PageRoutes.ToJFKDetail, matcher: match(PageRoutes.ToJFKDetail), query: normalQuery }],
+      },
+      {
+        label: 'To NY/NJ',
+        pathname: PageRoutes.ToNYNJ,
+        matcher: match(PageRoutes.ToNYNJ),
+        icon: BsFill2SquareFill,
+        query: normalQuery,
+        children: [{ label: 'To NY/NJ Detail', pathname: PageRoutes.ToNYNJDetail, matcher: match(PageRoutes.ToNYNJDetail), query: normalQuery }],
+      },
+      {
+        label: 'To EWR',
+        pathname: PageRoutes.ToEWR,
+        matcher: match(PageRoutes.ToEWR),
+        icon: BsFill3SquareFill,
+        query: normalQuery,
+        children: [{ label: 'To EWR Detail', pathname: PageRoutes.ToEWRDetail, matcher: match(PageRoutes.ToEWRDetail), query: normalQuery }],
+      },
+      {
+        label: 'To NY/NJ/EWR',
+        pathname: PageRoutes.ToNYNJEWR,
+        matcher: match(PageRoutes.ToNYNJEWR),
+        icon: BsFill3SquareFill,
+        query: normalQuery,
+        children: [{ label: 'To NY/NJ/EWR Detail', pathname: PageRoutes.ToNYNJEWRDetail, matcher: match(PageRoutes.ToNYNJEWRDetail), query: normalQuery }],
+      },
+      {
+        label: 'To JFK(Night)',
+        pathname: PageRoutes.ToJFKNight,
+        matcher: match(PageRoutes.ToJFKNight),
+        icon: BsFill3SquareFill,
+        query: normalQuery,
+        children: [{ label: 'To JFK(Night) Detail', pathname: PageRoutes.ToJFKNightDetail, matcher: match(PageRoutes.ToJFKNightDetail), query: normalQuery }],
+      },
+      {
+        label: 'To NJ(Night)',
+        pathname: PageRoutes.ToNJNight,
+        matcher: match(PageRoutes.ToNJNight),
+        icon: BsFill3SquareFill,
+        query: normalQuery,
+        children: [{ label: 'To NJ(Night) Detail', pathname: PageRoutes.ToNJNightDetail, matcher: match(PageRoutes.ToNJNightDetail), query: normalQuery }],
+      },
+    ],
+  },
+
+  // Systems
+  {
+    label: '시스템 관리',
+    icon: FaCogs,
+    pathname: PageRoutes.SystemManagement,
+    matcher: match(PageRoutes.SystemManagement),
+    collapsible: true,
+    children: [
+      {
+        label: '유저 관리',
+        pathname: PageRoutes.UserManagement,
+        matcher: match(PageRoutes.UserManagement),
+        icon: FaUser,
+        query: userQuery,
+        children: [{
+          label: '유저 상세 정보',
+          pathname: PageRoutes.UserDetailInformation,
+          matcher: match(PageRoutes.UserDetailInformation),
+          query: userQuery,
+        }],
       },
     ],
   },

@@ -13,7 +13,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-// [DELETE] /api/users/test/reset
+// [DELETE] /api/user-management/test/reset
 const resetTestUsers = async (req: NextApiRequest, res: NextApiResponse) => {
   await parseIP(req)
     .then(async (ip) => {
@@ -23,15 +23,15 @@ const resetTestUsers = async (req: NextApiRequest, res: NextApiResponse) => {
         if (session[ip]) {
           return res.status(409).json({
             data: null,
-            message: 'Please sign out before resetting test users',
+            message: 'Please sign out before resetting test user-management',
           });
         }
 
         await writeUsers([]);
 
-        return res.status(200).json({ data: [], message: 'Successfully reset test users' });
+        return res.status(200).json({ data: [], message: 'Successfully reset test user-management' });
       } catch {
-        return res.status(500).json({ data: null, message: 'Failed to reset test users' });
+        return res.status(500).json({ data: null, message: 'Failed to reset test user-management' });
       }
     })
     .catch(() => {

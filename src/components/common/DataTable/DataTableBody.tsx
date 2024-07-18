@@ -10,6 +10,19 @@ interface DataTableBodyProps<T> {
 const DataTableBody = <T,>({ table, onRowClick }: DataTableBodyProps<T>) => {
   const alphaColor = useAlphaColor();
 
+  // TODO 새로고침하면 에러 발생하는 문제 및 검색 결과 없는 결과 노출로 수정 필요
+  if (!table.getRowModel.length && !table.getRowModel().rows) {
+    const columnCount = table?.getAllColumns().length;
+
+    return (
+      <Tbody>
+          <Tr>
+            <Td colSpan={columnCount} textAlign="center">검색 결과가 없어요.</Td>
+          </Tr>
+      </Tbody>
+    );
+  }
+
   return (
     <Tbody>
       {table.getRowModel().rows.map((row) => (

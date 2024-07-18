@@ -26,7 +26,6 @@ const NiagaraTwoDaysTable = ({ niagaraTwoDays, isLoading }: NiagaraTwoDaysTableP
     },
     [openModal],
   );
-  console.log(niagaraTwoDays);
 
   const columns = useMemo(
     () => [

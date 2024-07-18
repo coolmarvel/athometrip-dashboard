@@ -26,7 +26,6 @@ const NiagaraOneDayKingKongTable = ({ niagaraOneDayKingKong, isLoading }: Niagar
     },
     [openModal],
   );
-  console.log(niagaraOneDayKingKong);
 
   const columns = useMemo(
     () => [

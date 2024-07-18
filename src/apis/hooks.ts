@@ -86,10 +86,10 @@ export const useMutation = <TCached, TRequest, TResponse>(
 
 /**
  * @example
- * url: "/api/users/1"
+ * url: "/api/system/user-management/1"
  * params: undefined
- * request: "/api/users/1"
- * queryKey: ["/api/users/1", undefined]
+ * request: "/api/system/user-management/1"
+ * queryKey: ["/api/system/user-management/1", undefined]
  * @description Fetch data
  * @param url Request URL
  * @param params Query parameters
@@ -102,10 +102,10 @@ export const useFetch = <TResponse>(url: string, params?: object, options?: Quer
 
 /**
  * @example
- * url: "/api/users"
+ * url: "/api/system/user-management"
  * params: { page: 1, limit: 10, sort: "id", order: "desc", search: "" }
- * request: "/api/users?page=1&limit=10&sort=id&order=desc&search="
- * queryKey: ["/api/users", { page: 1, limit: 10, sort: "id", order: "desc", search: "" }]
+ * request: "/api/system/user-management?page=1&limit=10&sort=id&order=desc&search="
+ * queryKey: ["/api/system/user-management", { page: 1, limit: 10, sort: "id", order: "desc", search: "" }]
  * @description Fetch data by page
  * @param url Request URL
  * @param params Query parameters
@@ -121,10 +121,10 @@ export const useGetPage = <TResponse>(url: string, params?: object, options?: Pa
 
 /**
  * @example
- * url: "/api/users"
+ * url: "/api/system/user-management"
  * params: { limit: 10, sort: "id", order: "desc", search: "" }
- * request: "/api/users?limit=10&sort=id&order=desc&search="
- * queryKey: ["/api/users", { limit: 10, sort: "id", order: "desc", search: "" }]
+ * request: "/api/system/user-management?limit=10&sort=id&order=desc&search="
+ * queryKey: ["/api/system/user-management", { limit: 10, sort: "id", order: "desc", search: "" }]
  * @description Fetch data by cursor
  * @param url Request URL
  * @param params Query parameters
@@ -137,10 +137,10 @@ export const useLoadMore = <TResponse>(url: string, params?: object, options?: I
 
 /**
  * @example
- * url: "/api/users"
+ * url: "/api/system/user-management"
  * params: { page: 1, limit: 10, sort: "id", order: "desc", search: "" }
- * request: "/api/users"
- * invalidate queryKey: ["/api/users", { page: 1, limit: 10, sort: "id", order: "desc", search: "" }]
+ * request: "/api/system/user-management"
+ * invalidate queryKey: ["/api/system/user-management", { page: 1, limit: 10, sort: "id", order: "desc", search: "" }]
  * @description Request to post data
  * @param url Request URL
  * @param params Parameters to be used when creating the query key to invalidate
@@ -159,10 +159,10 @@ export const usePost = <TCached, TRequest extends object | void = void, TRespons
 
 /**
  * @example
- * url: "/api/users/1"
+ * url: "/api/system/user-management/1"
  * params: undefined
- * request: "/api/users/1"
- * invalidate queryKey: ["/api/users/1", undefined]
+ * request: "/api/system/user-management/1"
+ * invalidate queryKey: ["/api/system/user-management/1", undefined]
  * @description Request to update data in the detail view
  * @param url Request URL
  * @param params Parameters to be used when creating the query key to invalidate
@@ -181,10 +181,10 @@ export const useUpdate = <TCached, TRequest extends object & { id?: ID }, TRespo
 
 /**
  * @example
- * url: "/api/users"
+ * url: "/api/system/user-management"
  * params: { page: 1, limit: 10, sort: "id", order: "desc", search: "" }
- * request: "/api/users/1"
- * invalidate queryKey: ["/api/users", { page: 1, limit: 10, sort: "id", order: "desc", search: "" }]
+ * request: "/api/system/user-management/1"
+ * invalidate queryKey: ["/api/system/user-management", { page: 1, limit: 10, sort: "id", order: "desc", search: "" }]
  * @description Request to update data in the list view
  * @param url Request URL
  * @param params Parameters to be used when creating the query key to invalidate
@@ -212,10 +212,10 @@ export const useUpdateInList = <TCached, TRequest extends object & { id?: ID }, 
 
 /**
  * @example
- * url: "/api/users"
+ * url: "/api/system/user-management"
  * params: { page: 1, limit: 10, sort: "id", order: "desc", search: "" }
- * request: "/api/users/1"
- * invalidate queryKey: ["/api/users", { page: 1, limit: 10, sort: "id", order: "desc", search: "" }]
+ * request: "/api/system/user-management/1"
+ * invalidate queryKey: ["/api/system/user-management", { page: 1, limit: 10, sort: "id", order: "desc", search: "" }]
  * @description Request to delete data
  * @param url Request URL
  * @param params Parameters to be used when creating the query key to invalidate
@@ -251,10 +251,10 @@ export const usePostForm = <TCached, TRequest extends FormData, TResponse = unkn
 
 /**
  * @example
- * url: "/api/users/1/approve"
- * queryKey: ["/api/users", undefined]
- * request: "/api/users/1/approve"
- * invalidate queryKey: ["/api/users", undefined]
+ * url: "/api/system/user-management/1/approve"
+ * queryKey: ["/api/system/user-management", undefined]
+ * request: "/api/system/user-management/1/approve"
+ * invalidate queryKey: ["/api/system/user-management", undefined]
  * @description Send a command to the server
  * @param url Request URL
  * @param queryKey Query key to invalidate

@@ -19,20 +19,20 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-// [GET] /api/users
+// [GET] /api/user-management
 const getUsers = async (req: NextApiRequest, res: NextApiResponse) => {
   const { sort, order } = req.query;
 
   try {
     const users = await readUsers(sort as RequiredKeysOf<User>, order as Order);
 
-    return res.status(200).json({ data: users, message: 'Successfully retrieved users' });
+    return res.status(200).json({ data: users, message: 'Successfully retrieved user-management' });
   } catch {
-    return res.status(500).json({ data: null, message: 'Failed to get users' });
+    return res.status(500).json({ data: null, message: 'Failed to get user-management' });
   }
 };
 
-// [GET] /api/users
+// [GET] /api/user-management
 const getUsersByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, search } = req.query;
   const offset = (Number(page) - 1) * Number(limit);
@@ -43,14 +43,14 @@ const getUsersByPage = async (req: NextApiRequest, res: NextApiResponse) => {
 
     return res.status(200).json({
       data: { total: users.length, data: slicedUsers },
-      message: 'Successfully retrieved users',
+      message: 'Successfully retrieved user-management',
     });
   } catch {
-    return res.status(500).json({ data: null, message: 'Failed to get users' });
+    return res.status(500).json({ data: null, message: 'Failed to get user-management' });
   }
 };
 
-// [GET] /api/users
+// [GET] /api/user-management
 const getUsersByCursor = async (req: NextApiRequest, res: NextApiResponse) => {
   const { cursor, limit, sort, order, search } = req.query;
 
@@ -68,14 +68,14 @@ const getUsersByCursor = async (req: NextApiRequest, res: NextApiResponse) => {
         next: next < users.length ? next : null,
         data: slicedUsers,
       },
-      message: 'Successfully retrieved users',
+      message: 'Successfully retrieved user-management',
     });
   } catch {
-    return res.status(500).json({ data: null, message: 'Failed to get users' });
+    return res.status(500).json({ data: null, message: 'Failed to get user-management' });
   }
 };
 
-// [POST] /api/users
+// [POST] /api/user-management
 const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
   const { name, email, phone, profile } = req.body;
 
@@ -83,7 +83,7 @@ const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     const users = await readUsers();
 
     if (users.length > 999) {
-      return res.status(409).json({ data: null, message: 'Maximum number of users reached' });
+      return res.status(409).json({ data: null, message: 'Maximum number of user-management reached' });
     }
 
     if (users.some((user) => user.email === email)) {
