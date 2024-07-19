@@ -70,7 +70,7 @@ export enum ApiRoutes {
   ToEWR = '/api/shuttles/to-ewr/:id?', // NY/NJ -> EWR
   ToNYNJEWR = '/api/shuttles/to-nynj-ewr/:id?',
   ToJFKNight = '/api/shuttles/to-jfk-night/:id?',
-  ToNJNight = '/api/shuttles/to-nj-night/:id?',
+  ToNYNight = '/api/shuttles/to-ny-night/:id?',
 }
 
 export enum PageRoutes {
@@ -168,8 +168,8 @@ export enum PageRoutes {
   ToNYNJEWRDetail = '/shuttles/to-nynj-ewr/:id',
   ToJFKNight = '/shuttles/to-jfk-night',
   ToJFKNightDetail = '/shuttles/to-jfk-night/:id',
-  ToNJNight = '/shuttles/to-nj-night',
-  ToNJNightDetail = '/shuttles/to-nj-night/:id',
+  ToNYNight = '/shuttles/to-ny-night',
+  ToNYNightDetail = '/shuttles/to-ny-night/:id',
 }
 
 export const whiteList = [PageRoutes.Home, PageRoutes.Signin, PageRoutes.Users, PageRoutes.UserDetail];
@@ -259,7 +259,6 @@ export const userQuery = {
 // t("Write Post")
 // t("Post Detail")
 export const navs: Nav[] = [
-
   // Posts
   // {
   //   label: 'Posts',
@@ -595,12 +594,12 @@ export const navs: Nav[] = [
         children: [{ label: 'To JFK(Night) Detail', pathname: PageRoutes.ToJFKNightDetail, matcher: match(PageRoutes.ToJFKNightDetail), query: normalQuery }],
       },
       {
-        label: 'To NJ(Night)',
-        pathname: PageRoutes.ToNJNight,
-        matcher: match(PageRoutes.ToNJNight),
+        label: 'To NY/NJ(Night)',
+        pathname: PageRoutes.ToNYNight,
+        matcher: match(PageRoutes.ToNYNight),
         icon: BsFill3SquareFill,
         query: normalQuery,
-        children: [{ label: 'To NJ(Night) Detail', pathname: PageRoutes.ToNJNightDetail, matcher: match(PageRoutes.ToNJNightDetail), query: normalQuery }],
+        children: [{ label: 'To NY/NJ(Night) Detail', pathname: PageRoutes.ToNYNightDetail, matcher: match(PageRoutes.ToNYNightDetail), query: normalQuery }],
       },
     ],
   },
@@ -619,12 +618,14 @@ export const navs: Nav[] = [
         matcher: match(PageRoutes.UserManagement),
         icon: FaUser,
         query: userQuery,
-        children: [{
-          label: '유저 상세 정보',
-          pathname: PageRoutes.UserDetailInformation,
-          matcher: match(PageRoutes.UserDetailInformation),
-          query: userQuery,
-        }],
+        children: [
+          {
+            label: '유저 상세 정보',
+            pathname: PageRoutes.UserDetailInformation,
+            matcher: match(PageRoutes.UserDetailInformation),
+            query: userQuery,
+          },
+        ],
       },
     ],
   },
