@@ -38,7 +38,6 @@ const getToNYNightsByPage = async (req: NextApiRequest, res: NextApiResponse) =>
 
       shuttles = await filterShuttle(shuttles, after, before, false);
       shuttles = await sortShuttle(data, sort as RequiredKeysOf<any>, order as Order, search as string);
-
       const slicedshuttles = shuttles.slice(Number(offset), Number(offset) + Number(limit));
 
       return res.status(200).send({ data: { total: shuttles.length, data: slicedshuttles } });

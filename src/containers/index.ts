@@ -11,4 +11,7 @@ export * from './shuttles';
 export * from './tickets';
 export * from './usims';
 export * from './tours';
+export * from './snaps';
+export * from './stays';
+
 export * from './system';

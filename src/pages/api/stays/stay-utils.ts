@@ -22,15 +22,15 @@ const sortMap: any = {
   order_date_created_gmt: 'order.date_created_gmt',
 };
 
-export const sortTicket = (tickets: any, sort: RequiredKeysOf<any>, order: Order, search: string): Promise<any> => {
+export const sortStay = (stays: any, sort: RequiredKeysOf<any>, order: Order, search: string): Promise<any> => {
   return new Promise((resolve, reject) => {
     try {
       if (search.length > 0) {
-        tickets = tickets.filter(
-          (ticket: any) =>
-            ticket.order.id.includes(search.toLowerCase()) ||
-            ticket.billing.email.toLowerCase().includes(search.toLowerCase()) ||
-            ticket.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase()),
+        stays = stays.filter(
+          (stay: any) =>
+            stay.order.id.includes(search.toLowerCase()) ||
+            stay.billing.email.toLowerCase().includes(search.toLowerCase()) ||
+            stay.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase()),
         );
       }
 
@@ -38,7 +38,7 @@ export const sortTicket = (tickets: any, sort: RequiredKeysOf<any>, order: Order
         const resolvedSortPath = sortMap[sort] || sort;
         const deepValue = (obj: any, path: string) => path.split('.').reduce((acc, part) => acc && acc[part], obj);
 
-        tickets.sort((a: any, b: any) => {
+        stays.sort((a: any, b: any) => {
           const valueA = deepValue(a, resolvedSortPath);
           const valueB = deepValue(b, resolvedSortPath);
 
@@ -50,21 +50,22 @@ export const sortTicket = (tickets: any, sort: RequiredKeysOf<any>, order: Order
         });
       }
 
-      resolve(tickets);
+      resolve(stays);
     } catch (error) {
       reject(error);
     }
   });
 };
 
-export const filterTicket = (tickets: any, after: string, before: string) => {
+export const filterStay = (stays: any, after: string, before: string) => {
   const start = new Date(after);
   const end = new Date(before);
 
-  return tickets.filter((ticket: any) => {
-    const ticketDate = new Date(ticket.order.date_created);
+  return stays.filter((stay: any) => {
+    const stayDate = new Date(stay.order.date_created_gmt);
 
-    // return ticketDate >= start && ticketDate <= end;
-    return ticket.order.date_created_gmt >= after && ticket.order.date_created_gmt <= before;
+    // return stayDate >= start && stayDate <= end;
+    return stay.order.date_created_gmt >= after && stay.order.date_created_gmt <= before;
   });
+
 };

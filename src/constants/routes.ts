@@ -54,15 +54,15 @@ export enum ApiRoutes {
   SingleDocents = '/api/tours/single-docents/:id?',
 
   // Tours(Suburbs)
-  WashingtonDC = 'api/tours/washington-dc/:id?',
-  Boston = 'api/tours/boston/:id?',
-  NiagaraTwoDays = 'api/tours/niagara-twodays/:id?',
-  NiagaraOneDayKingKong = 'api/tours/niagara-oneday-kingkong/:id?',
-  NiagaraOneDayAthometrip = 'api/tours/niagara-oneday-athometrip/:id?',
+  WashingtonDC = '/api/tours/washington-dc/:id?',
+  Boston = '/api/tours/boston/:id?',
+  NiagaraTwoDays = '/api/tours/niagara-twodays/:id?',
+  NiagaraOneDayKingKong = '/api/tours/niagara-oneday-kingkong/:id?',
+  NiagaraOneDayAthometrip = '/api/tours/niagara-oneday-athometrip/:id?',
 
   // System
-  UserManagement = 'api/system/user-management',
-  UserDetailInformation = 'api/system/user-management/user/:id',
+  UserManagement = '/api/system/user-management',
+  UserDetailInformation = '/api/system/user-management/user/:id',
 
   // Shuttle
   ToJFK = '/api/shuttles/to-jfk/:id?', // JFK -> NY, JFK -> NJ
@@ -71,6 +71,13 @@ export enum ApiRoutes {
   ToNYNJEWR = '/api/shuttles/to-nynj-ewr/:id?',
   ToJFKNight = '/api/shuttles/to-jfk-night/:id?',
   ToNYNight = '/api/shuttles/to-ny-night/:id?',
+
+  // Snaps
+  Modern = '/api/snaps/modern/:id?',
+  Vintage = '/api/snaps/vintage/:id?',
+
+  // Stays
+  Stays = '/api/stays/:id?'
 }
 
 export enum PageRoutes {
@@ -170,6 +177,17 @@ export enum PageRoutes {
   ToJFKNightDetail = '/shuttles/to-jfk-night/:id',
   ToNYNight = '/shuttles/to-ny-night',
   ToNYNightDetail = '/shuttles/to-ny-night/:id',
+
+  // Snaps
+  Snaps = '/snaps',
+  Modern = '/snaps/modern',
+  ModernDetail = '/snaps/modern/:id',
+  Vintage = '/snaps/vintage',
+  VintageDetail = '/snaps/vintage/:id',
+
+  // Stays
+  Stays = '/stays',
+  StaysDetail = '/stays/:id',
 }
 
 export const whiteList = [PageRoutes.Home, PageRoutes.Signin, PageRoutes.Users, PageRoutes.UserDetail];
@@ -600,6 +618,49 @@ export const navs: Nav[] = [
         icon: BsFill3SquareFill,
         query: normalQuery,
         children: [{ label: 'To NY/NJ(Night) Detail', pathname: PageRoutes.ToNYNightDetail, matcher: match(PageRoutes.ToNYNightDetail), query: normalQuery }],
+      },
+    ],
+  },
+
+  // Snaps
+  {
+    label: 'Snaps',
+    icon: BsFillCollectionFill,
+    pathname: PageRoutes.Snaps,
+    matcher: match(PageRoutes.Snaps),
+    collapsible: true,
+    children: [
+      {
+        label: 'Modern',
+        pathname: PageRoutes.Modern,
+        matcher: match(PageRoutes.Modern),
+        icon: BsFill1SquareFill,
+        query: normalQuery,
+        children: [{ label: 'Modern Detail', pathname: PageRoutes.ModernDetail, matcher: match(PageRoutes.ModernDetail), query: normalQuery }],
+      },
+      {
+        label: 'Vintage',
+        pathname: PageRoutes.Vintage,
+        matcher: match(PageRoutes.Vintage),
+        icon: BsFill2SquareFill,
+        query: normalQuery,
+        children: [{ label: 'Vintage Detail', pathname: PageRoutes.VintageDetail, matcher: match(PageRoutes.VintageDetail), query: normalQuery }],
+      },
+    ],
+  },
+
+  // Posts
+  {
+    label: 'Stays',
+    pathname: PageRoutes.Stays,
+    query: normalQuery,
+    icon: FaCogs,
+    matcher: match(PageRoutes.Stays),
+    children: [
+      {
+        label: 'Stays Detail',
+        pathname: PageRoutes.StaysDetail,
+        matcher: match(PageRoutes.StaysDetail),
       },
     ],
   },
