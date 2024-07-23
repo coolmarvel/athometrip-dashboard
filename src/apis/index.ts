@@ -5,6 +5,7 @@ export * from './types';
 export * from './user';
 export * from './utils';
 
+export * from './musicals';
 export * from './shuttles';
 export * from './tickets';
 export * from './usims';

@@ -17,7 +17,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '2384'; //'2351,2384,3141,109359,110212,110362,110367,110369,114974,114976,131999,132365,387120';
+const productId = '2351,2384,3141,109359,110212,110362,110367,110369,114974,114976,131999,132365,387120';
 const stayName = 'stays';
 const url = 'http://localhost:3000/api/adapter/orders';
 

@@ -77,7 +77,10 @@ export enum ApiRoutes {
   Vintage = '/api/snaps/vintage/:id?',
 
   // Stays
-  Stays = '/api/stays/:id?'
+  Stays = '/api/stays/:id?',
+
+  // Musicals
+  Musicals = '/api/musicals/:id?',
 }
 
 export enum PageRoutes {
@@ -188,6 +191,10 @@ export enum PageRoutes {
   // Stays
   Stays = '/stays',
   StaysDetail = '/stays/:id',
+
+  // Musicals
+  Musicals = '/musicals',
+  MusicalsDetail = '/musicals/:id',
 }
 
 export const whiteList = [PageRoutes.Home, PageRoutes.Signin, PageRoutes.Users, PageRoutes.UserDetail];
@@ -649,18 +656,34 @@ export const navs: Nav[] = [
     ],
   },
 
-  // Posts
+  // Stays
   {
     label: 'Stays',
     pathname: PageRoutes.Stays,
     query: normalQuery,
-    icon: FaCogs,
+    icon: BsFillCollectionFill,
     matcher: match(PageRoutes.Stays),
     children: [
       {
         label: 'Stays Detail',
         pathname: PageRoutes.StaysDetail,
         matcher: match(PageRoutes.StaysDetail),
+      },
+    ],
+  },
+
+  // Musicals
+  {
+    label: 'Musicals',
+    pathname: PageRoutes.Musicals,
+    query: normalQuery,
+    icon: BsFillCollectionFill,
+    matcher: match(PageRoutes.Musicals),
+    children: [
+      {
+        label: 'Musicals Detail',
+        pathname: PageRoutes.MusicalsDetail,
+        matcher: match(PageRoutes.MusicalsDetail),
       },
     ],
   },
