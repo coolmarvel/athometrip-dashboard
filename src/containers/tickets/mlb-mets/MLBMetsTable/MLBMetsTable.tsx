@@ -32,7 +32,7 @@ const MLBMetsTable = ({ mlbMets, isLoading }: MLBMetsTableProps) => {
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
-      columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!) }),
+      columnHelper.accessor('order.date_created_gmt', { header: t('order date'), cell: (context) => convertDate(context.getValue()!) }),
       columnHelper.accessor((row) => '성인', { header: t('type') }),
       columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
       columnHelper.accessor(

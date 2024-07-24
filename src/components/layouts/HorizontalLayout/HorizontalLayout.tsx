@@ -12,11 +12,12 @@ const HorizontalLayout = ({ children }: HorizontalLayoutProps) => {
 
   return (
     <Flex>
-      <Sidebar isOpen={isOpen} />
+      {/*<Sidebar isOpen={isOpen} />*/}
+      <Sidebar />
       <Flex flex={1} direction={'column'} p={'8'} gap={'4'} maxH={'100vh'} overflow={'hidden'}>
         <Flex justify="start" align="center">
           {/* Toggle Button */}
-          <IconButton icon={isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />} onClick={onToggle} aria-label={isOpen ? 'Close Sidebar' : 'Open Sidebar'} size={'sm'} bgColor={iconButtonBg} mr={2} />
+          {/*<IconButton icon={isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />} onClick={onToggle} aria-label={isOpen ? 'Close Sidebar' : 'Open Sidebar'} size={'sm'} bgColor={iconButtonBg} mr={2} />*/}
           <SubHeader />
         </Flex>
         <Flex as={'main'} flex={1} direction={'column'} overflowY={'auto'} p={'0.5'}>

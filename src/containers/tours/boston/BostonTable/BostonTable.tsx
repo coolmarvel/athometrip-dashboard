@@ -34,7 +34,7 @@ const BostonTable = ({ boston, isLoading }: BostonTableProps) => {
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('tour_info.tour_kakakoid', { header: t('kakao talk'), meta: { sortable: true } }),
       columnHelper.accessor('billing.phone', { header: t('phone') }),
-      columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
+      columnHelper.accessor('order.date_created_gmt', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
       // columnHelper.accessor((row) => row.lineItem?.metadata?.[0]?.value ?? '', { header: t('type') }),
       columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
       columnHelper.accessor((row) => {

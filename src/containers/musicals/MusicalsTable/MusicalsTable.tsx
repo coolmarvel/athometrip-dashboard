@@ -35,7 +35,7 @@ const MusicalsTable = ({ musicals, isLoading }: MusicalsTableProps) => {
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.line_items[0]?.meta_data?.['대표자 여권영문이름'].toUpperCase(), { header: t('en name') }),
       columnHelper.accessor((row) => row.billing.phone, { header: t('phone') }),
-      columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
+      columnHelper.accessor('order.date_created_gmt', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.line_items[0]?.name ?? '', { header: t('show name') }),
       columnHelper.accessor((row) => row.line_items[0]?.quantity ?? '', { header: t('quantity') }),
       columnHelper.accessor((row) => {
@@ -44,7 +44,6 @@ const MusicalsTable = ({ musicals, isLoading }: MusicalsTableProps) => {
 
         return `${date} ${time}`;
       }, { header: t('schedule') }),
-      // columnHelper.accessor((row) => row.line_items[0]?.meta_data?.['추가로 가능한 날 옵션'] ?? '', { header: t('option') }),
     ],
     [convertDate, t],
   );

@@ -34,7 +34,7 @@ const SingleDocentsTable = ({ singleDocents, isLoading }: SingleDocentsTableProp
       columnHelper.accessor((row) => row.line_item.meta_data[Object.keys(row.line_item.meta_data).find((key) => key.includes('인원')) as string] ?? '', {
         header: t('personnel'), meta: { sortable: true },
       }),
-      columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
+      columnHelper.accessor('order.date_created_gmt', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
       columnHelper.accessor((row) => `${convertDate(row.line_item.meta_data?.['날짜'] ?? '').split(' ')[0]} ${row.line_item.meta_data?.['시간'] ?? ''}`, {
         header: t('schedule'),
       }),

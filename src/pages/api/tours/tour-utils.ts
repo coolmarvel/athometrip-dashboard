@@ -32,7 +32,7 @@ const sortMap: any = {
   billing_email: 'billing.email',
   name: 'billing.first_name',
   billing_name: 'billing.first_name',
-  order_date_created: 'order.date_created',
+  order_date_created_gmt: 'order.date_created_gmt',
 };
 
 export const sortTour = (tickets: any, sort: RequiredKeysOf<any>, order: Order, search: string): Promise<any> => {
@@ -43,7 +43,7 @@ export const sortTour = (tickets: any, sort: RequiredKeysOf<any>, order: Order, 
           (ticket: any) =>
             ticket.order.id.includes(search.toLowerCase()) ||
             ticket.billing.email.toLowerCase().includes(search.toLowerCase()) ||
-            ticket.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase()),
+            ticket.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase())
         );
       }
 
@@ -78,14 +78,6 @@ export const filterTour = (tours: any, after: string, before: string) => {
     const tourDate = new Date(tour.order.date_created);
     const dateCondition = tourDate >= start && tourDate <= end;
 
-    // const dayCondition = (day: string, tour: any) => {
-    //   if (day === 'one-day') return tour.lineItem.name.includes('당일');
-    //   else if (day === 'two-day') return tour.lineItem.name.includes('1박');
-    //
-    //   return false;
-    // };
-
-    // return dateCondition && dayCondition(day, tour);
     return dateCondition;
   });
 };

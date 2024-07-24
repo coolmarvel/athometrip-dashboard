@@ -34,7 +34,7 @@ const ToNYNightTable = ({ toNYNight, isLoading }: ToNYNightTableProps) => {
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.billing.phone, { header: t('phone') }),
-      columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
+      columnHelper.accessor('order.date_created_gmt', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.jfk_oneway.kakao_id1 ?? row.order.meta_data.kakao_id1 ?? '', { header: t('kakao talk') }),
       columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('personnel') }),
       columnHelper.accessor((row) => convertDate(row.jfk_oneway?.jfk_shuttle_date2 ?? row.jfk_oneway?.pickup_date_to_nj).split(' ')[0] ?? '', { header: t('pickup date') }),

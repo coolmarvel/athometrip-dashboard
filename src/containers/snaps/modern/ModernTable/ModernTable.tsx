@@ -34,7 +34,7 @@ const ModernTable = ({ modern, isLoading }: ModernTableProps) => {
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.billing.phone, { header: t('phone') }),
-      columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
+      columnHelper.accessor('order.date_created_gmt', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.snap_info.mobile_snap ?? '', { header: t('kakao talk') }),
       columnHelper.accessor((row) => {
         const date = convertDate(row.line_items[0]?.meta_data?.['날짜']).split(' ')[0] ?? '';

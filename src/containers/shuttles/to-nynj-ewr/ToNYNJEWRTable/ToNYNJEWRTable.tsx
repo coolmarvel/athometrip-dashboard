@@ -34,7 +34,7 @@ const ToNYNJEWRTable = ({ toNYNJEWR, isLoading }: ToNYNJEWRTableProps) => {
       columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.billing.phone, { header: t('phone') }),
-      columnHelper.accessor('order.date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
+      columnHelper.accessor('order.date_created_gmt', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.jfk_oneway.kakao_id1 ?? row.jfk_shuttle_rt.kakao_id2 ?? '', { header: t('kakao talk') }),
       columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('personnel') }),
       columnHelper.accessor((row) => convertDate(row.jfk_oneway?.ewr_depart_date).split(' ')[0] ?? '', { header: t('pickup date') }),

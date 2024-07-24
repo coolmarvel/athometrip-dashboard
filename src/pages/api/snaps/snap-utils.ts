@@ -19,7 +19,7 @@ const sortMap: any = {
   billing_email: 'billing.email',
   name: 'billing.first_name',
   billing_name: 'billing.first_name',
-  order_date_created: 'order.date_created',
+  order_date_created_gmt: 'order.date_created_gmt',
 };
 
 export const sortSnap = (snaps: any, sort: RequiredKeysOf<any>, order: Order, search: string): Promise<any> => {
