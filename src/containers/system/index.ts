@@ -4,3 +4,4 @@
  * @author 김이안
  */
 export * from './user-management';
+export * from './authority-management';

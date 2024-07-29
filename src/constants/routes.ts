@@ -1,3 +1,8 @@
+/**
+ * 라우팅 로직을 처리하는 파일
+ *
+ * @author 이성현
+ */
 import { MatchFunction, match } from 'path-to-regexp';
 import { IconType } from 'react-icons';
 import {
@@ -13,7 +18,7 @@ import {
   BsFill9SquareFill,
   BsFillCollectionFill,
 } from 'react-icons/bs';
-import { FaCogs, FaUser } from 'react-icons/fa';
+import { FaCogs, FaUser, FaKey } from 'react-icons/fa';
 
 export enum ApiRoutes {
   Upload = '/api/upload',
@@ -63,6 +68,8 @@ export enum ApiRoutes {
   // System
   UserManagement = '/api/system/user-management',
   UserDetailInformation = '/api/system/user-management/user/:id',
+  AuthorityManagement = '/api/system/authority-management',
+  RoleSettings = '/api/system/authority-management/role-settings',
 
   // Shuttle
   ToJFK = '/api/shuttles/to-jfk/:id?', // JFK -> NY, JFK -> NJ
@@ -165,6 +172,7 @@ export enum PageRoutes {
   SystemManagement = '/system',
   UserManagement = '/system/user-management',
   UserDetailInformation = '/system/user-management/user/:id',
+  AuthorityManagement = '/system/authority-management',
 
   // Shuttles
   Shuttles = '/shuttles',
@@ -571,6 +579,15 @@ export const navs: Nav[] = [
   },
 
   // Shuttles
+  /**
+   * 권한 관련 데이터값
+   *
+   * 권한 하드 코딩으로 일단 처리하는 것으로
+   *
+   * 권한, 역할에 대한 비교 작업의 코드가 필요함
+   *
+   *
+   */
   {
     label: 'Shuttles',
     icon: BsFillCollectionFill,
@@ -707,6 +724,22 @@ export const navs: Nav[] = [
             label: '유저 상세 정보',
             pathname: PageRoutes.UserDetailInformation,
             matcher: match(PageRoutes.UserDetailInformation),
+            query: userQuery,
+          },
+        ],
+      },
+      {
+        label: '권한 관리',
+        pathname: PageRoutes.AuthorityManagement,
+        matcher: match(PageRoutes.AuthorityManagement),
+        icon: FaKey,
+        query: userQuery,
+        // 세부 메뉴가 탭으로 관리되어 있어서 임시로 children 생성
+        children: [
+          {
+            label: '',
+            pathname: PageRoutes.AuthorityManagement,
+            matcher: match(PageRoutes.AuthorityManagement),
             query: userQuery,
           },
         ],

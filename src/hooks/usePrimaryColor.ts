@@ -2,7 +2,7 @@ import { PrimaryColor } from '@/types';
 import { createContext, useContext } from 'react';
 
 const PrimaryColorContext = createContext<{ primaryColor: PrimaryColor; changePrimaryColor: (color: PrimaryColor) => void }>({
-  primaryColor: 'teal',
+  primaryColor: 'linkedin',
   changePrimaryColor: () => {},
 });
 

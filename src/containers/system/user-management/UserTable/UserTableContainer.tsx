@@ -10,8 +10,8 @@ import { toUrl } from '@/utils';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { UseYn } from '@/enums/useYn';
-import { CompanyCodeEnum } from '@/enums/CompanyCodeEnum';
+import { UseYnEnum } from '@/enums/use-yn.enum';
+import { CompanyCodeEnum, getCompanyCodeValue } from '@/enums/company-code.enum';
 
 const columnHelper = createColumnHelper<User>();
 
@@ -24,7 +24,7 @@ type User = {
   department: string;
   createdAt: Date;
   updatedAt: Date;
-  useYn: UseYn;
+  useYn: UseYnEnum;
 }
 
 interface UsersTableProps {
@@ -54,6 +54,7 @@ const UserTableContainer = ({ users, isLoading }: UsersTableProps) => {
       }),
       columnHelper.accessor('companyCode', {
         header: t('회사명'),
+        cell: (context) => getCompanyCodeValue(context.getValue()),
         meta: { sortable: true },
       }),
       columnHelper.accessor('department', {
@@ -80,7 +81,7 @@ const UserTableContainer = ({ users, isLoading }: UsersTableProps) => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  return <DataTable<User> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.UserDetailInformation, { id: row.original.userId }))} />;
+  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => push(toUrl(PageRoutes.UserDetailInformation, { id: row.original.userId }))} />;
 };
 
 export default UserTableContainer;

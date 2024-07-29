@@ -7,25 +7,25 @@ interface DataTableBodyProps<T> {
   onRowClick?: (row: Row<T>) => void;
 }
 
-const DataTableBody = <T,>({ table, onRowClick }: DataTableBodyProps<T>) => {
+const DataTableBody = <T, >({ table, onRowClick }: DataTableBodyProps<T>) => {
   const alphaColor = useAlphaColor();
+  const rowModel = (typeof table.getRowModel === 'function' ? table.getRowModel() : table.getRowModel) || {};
 
-  // TODO 새로고침하면 에러 발생하는 문제 및 검색 결과 없는 결과 노출로 수정 필요
-  if (!table.getRowModel.length && !table.getRowModel().rows) {
+  if (!rowModel?.rows || rowModel.rows.length === 0) {
     const columnCount = table?.getAllColumns().length;
 
     return (
       <Tbody>
-          <Tr>
-            <Td colSpan={columnCount} textAlign="center">검색 결과가 없어요.</Td>
-          </Tr>
+        <Tr>
+          <Td colSpan={columnCount} textAlign="center">검색 결과가 없어요.</Td>
+        </Tr>
       </Tbody>
     );
   }
 
   return (
     <Tbody>
-      {table.getRowModel().rows.map((row) => (
+      {rowModel.rows.map((row) => (
         <Tr key={row.id} onClick={() => onRowClick?.(row)} _hover={{ cursor: onRowClick ? 'pointer' : 'default', bgColor: onRowClick ? alphaColor(50) : undefined }}>
           {row.getVisibleCells().map((cell) => (
             <Td key={cell.id} py={'2'} px={'4'}>

@@ -24,7 +24,7 @@ const UserTable = ({ users, isLoading }: UsersTableProps) => {
   const { openConfirm } = useModalStore(['openConfirm']);
   const { push } = useSafePush();
   const { t } = useTranslation();
-  const formatDate = useFormatDate();
+  const { original } = useFormatDate();
   const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.User));
   const { mutate: deleteUser } = useDeleteUser(queryKeyParams);
   const { mutate: approveUser } = useApproveUser(queryKeyParams);
@@ -34,7 +34,7 @@ const UserTable = ({ users, isLoading }: UsersTableProps) => {
       if (!user) return;
       openModal(UserUpdateModal, { user });
     },
-    [openModal]
+    [openModal],
   );
 
   const handleApprove = useCallback<(id: number) => void>(
@@ -45,7 +45,7 @@ const UserTable = ({ users, isLoading }: UsersTableProps) => {
         onConfirm: () => approveUser({ id }),
       });
     },
-    [approveUser, openConfirm, t]
+    [approveUser, openConfirm, t],
   );
 
   const handleDelete = useCallback<(id: number) => void>(
@@ -56,7 +56,7 @@ const UserTable = ({ users, isLoading }: UsersTableProps) => {
         onConfirm: () => deleteUser(id),
       });
     },
-    [deleteUser, openConfirm, t]
+    [deleteUser, openConfirm, t],
   );
 
   const columns = useMemo(
@@ -95,12 +95,12 @@ const UserTable = ({ users, isLoading }: UsersTableProps) => {
       }),
       columnHelper.accessor('createdAt', {
         header: t('Created At'),
-        cell: (context) => formatDate(context.renderValue()!),
+        cell: (context) => original(context.renderValue()!),
         meta: { sortable: true },
       }),
       columnHelper.accessor('updatedAt', {
         header: t('Updated At'),
-        cell: (context) => formatDate(context.renderValue()!),
+        cell: (context) => original(context.renderValue()!),
         meta: { sortable: true },
       }),
       columnHelper.display({
@@ -120,7 +120,7 @@ const UserTable = ({ users, isLoading }: UsersTableProps) => {
         ),
       }),
     ],
-    [formatDate, handleApprove, handleDelete, handleUpdate, t]
+    [original, handleApprove, handleDelete, handleUpdate, t],
   );
 
   const table = useReactTable({

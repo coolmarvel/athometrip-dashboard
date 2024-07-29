@@ -15,7 +15,7 @@ interface UserCardProps {
 const UserCard = ({ data: user }: UserCardProps) => {
   const { openModal } = useModalStore(['openModal']);
   const { t } = useTranslation();
-  const formatDate = useFormatDate();
+  const { original } = useFormatDate();
 
   const attributes = useMemo(
     () => [
@@ -24,14 +24,14 @@ const UserCard = ({ data: user }: UserCardProps) => {
       { label: t('Phone'), value: user?.phone ?? 'Phone' },
       {
         label: t('Created At'),
-        value: user?.createdAt ? formatDate(user.createdAt) : 'Created At',
+        value: user?.createdAt ? original(user.createdAt) : 'Created At',
       },
       {
         label: t('Updated At'),
-        value: user?.updatedAt ? formatDate(user.updatedAt) : 'Updated At',
+        value: user?.updatedAt ? original(user.updatedAt) : 'Updated At',
       },
     ],
-    [formatDate, t, user]
+    [original, t, user],
   );
 
   return (

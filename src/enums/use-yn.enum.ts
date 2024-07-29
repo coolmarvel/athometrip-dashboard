@@ -3,7 +3,7 @@
  *
  * @author 김이안
  */
-export enum UseYn {
+export enum UseYnEnum {
   Yes = 'Y',
   No = 'N',
 }

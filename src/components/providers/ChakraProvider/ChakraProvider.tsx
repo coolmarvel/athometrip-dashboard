@@ -12,7 +12,7 @@ const { ToastContainer } = createStandaloneToast();
 
 const ChakraProvider = ({ children }: ChakraProviderProps) => {
   const { Provider } = usePrimaryColor();
-  const [primaryColor, setPrimaryColor] = useState<PrimaryColor>('teal');
+  const [primaryColor, setPrimaryColor] = useState<PrimaryColor>('linkedin');
 
   useEffect(() => {
     const primaryColor = localStorage.getItem('primaryColor') as PrimaryColor;

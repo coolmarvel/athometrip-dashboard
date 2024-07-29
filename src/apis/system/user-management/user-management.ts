@@ -5,7 +5,7 @@
  */
 import { useGetPage, useInvalidate, usePost } from '@/apis';
 import { ApiRoutes } from '@/constants';
-import { UseYn } from '@/enums/useYn';
+import { UseYnEnum } from '@/enums/use-yn.enum';
 import { toUrl } from '@/utils';
 
 type User = {
@@ -17,7 +17,7 @@ type User = {
   department: string;
   createdAt: Date;
   updatedAt: Date;
-  useYn: UseYn;
+  useYn: UseYnEnum;
 }
 
 /**

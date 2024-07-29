@@ -11,7 +11,7 @@ interface PostWriterProps {
 
 const PostWriter = ({ post }: PostWriterProps) => {
   const { push } = useSafePush();
-  const formatDate = useFormatDate();
+  const { original } = useFormatDate();
   const { t } = useTranslation();
 
   const user = post?.user;
@@ -33,7 +33,7 @@ const PostWriter = ({ post }: PostWriterProps) => {
       />
       <Flex direction={'column'} gap={'2'}>
         {user ? <Text>{`${user.name ?? t('User Name')} (${user.email ?? t('User Email')})`}</Text> : <Text>{t('Deleted User')}</Text>}
-        <Text>{post?.createdAt ? formatDate(post?.createdAt) : t('Created At')}</Text>
+        <Text>{post?.createdAt ? original(post?.createdAt) : t('Created At')}</Text>
       </Flex>
     </Flex>
   );
