@@ -16,15 +16,19 @@ const MusicalsModal = ({ musicals, onClose }: MusicalsModalProps) => {
 
   const attributes = useMemo(
     () => [
-      { label: t('name'), value: musicals?.billing.first_name ?? 'name' },
-      { label: t('email'), value: musicals?.billing.email ?? 'email' },
-      { label: t('phone'), value: musicals?.billing.phone ?? 'phone' },
-      { label: t('payment via'), value: `${musicals?.payment?.payment_method_title ?? 'payment via'} (${musicals?.payment?.transaction_id ?? 'Transaction ID'})` },
+      { label: t('Name'), value: musicals?.billing.first_name ?? 'Name' },
+      { label: t('Email'), value: musicals?.billing.email ?? 'Email' },
+      { label: t('Phone'), value: musicals?.billing.phone ?? 'Phone' },
+      { label: t('Payment Via'), value: `${musicals?.payment?.payment_method_title ?? 'Payment method'} (${musicals?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
     [musicals, t],
   );
 
-  const columns = useMemo(() => [{ name: musicals?.line_items[0]?.name, quantity: musicals?.line_items[0]?.quantity, total: musicals?.line_items[0]?.total }] ?? [], [musicals]);
+  const columns = useMemo(() => [{
+    name: musicals?.line_items[0]?.name,
+    quantity: musicals?.line_items[0]?.quantity,
+    total: musicals?.line_items[0]?.total,
+  }] ?? [], [musicals]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -59,9 +63,9 @@ const MusicalsModal = ({ musicals, onClose }: MusicalsModalProps) => {
             <Table variant="simple">
               <Thead>
                 <Tr>
-                  <Th>{t('product')}</Th>
-                  <Th isNumeric>{t('quantity')}</Th>
-                  <Th isNumeric>{t('total')}</Th>
+                  <Th>{t('Product')}</Th>
+                  <Th isNumeric>{t('Quantity')}</Th>
+                  <Th isNumeric>{t('Total')}</Th>
                 </Tr>
               </Thead>
 

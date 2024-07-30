@@ -7,6 +7,7 @@ import { SidebarFooter } from './SidebarFooter';
 import { Typography } from './components/Typography';
 import { Navbar } from '@/components/layouts/common/Sidebar/Navbar';
 import { CollapseToggle } from '@/components/layouts/Sidebar/Toggle';
+import { useTranslation } from 'react-i18next';
 
 type Theme = 'light' | 'dark';
 
@@ -50,12 +51,14 @@ const Sidebar: React.FC = () => {
   const [hasImage, setHasImage] = React.useState(false);
   const [collapsed, setCollapsed] = React.useState(false);
 
+  const { t } = useTranslation();
+
   useEffect(() => {
     setTheme(colorMode);
   }, [colorMode, toggleColorMode]);
 
   const menuItemStyles: MenuItemStyles = {
-    root: { fontSize: '13px', fontWeight: 400 },
+    root: { fontSize: '11px', fontWeight: 300 },
     icon: {
       color: themes[theme].menu.icon,
       [`&.${menuClasses.disabled}`]: { color: themes[theme].menu.disabled.color },
@@ -91,10 +94,9 @@ const Sidebar: React.FC = () => {
             <SidebarHeader rtl={rtl} colorMode={colorMode} toggleColorMode={toggleColorMode} style={{ marginBottom: '24px', marginTop: '16px' }} />
 
             <div style={{ flex: 1, marginBottom: '32px' }}>
-
               <div style={{ padding: '0 24px', marginBottom: '8px' }}>
                 <Typography variant="body2" fontWeight={600} style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: '0.5px' }}>
-                  General
+                  {t('General')}
                 </Typography>
               </div>
 
@@ -104,10 +106,9 @@ const Sidebar: React.FC = () => {
 
               <div style={{ padding: '0 24px', marginBottom: '8px', marginTop: '32px' }}>
                 <Typography variant="body2" fontWeight={600} style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: '0.5px' }}>
-                  Extra
+                  {t('Extra')}
                 </Typography>
               </div>
-
             </div>
 
             <SidebarFooter collapsed={collapsed} />

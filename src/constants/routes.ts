@@ -707,14 +707,14 @@ export const navs: Nav[] = [
 
   // Systems
   {
-    label: '시스템 관리',
+    label: 'System Management',
     icon: FaCogs,
     pathname: PageRoutes.SystemManagement,
     matcher: match(PageRoutes.SystemManagement),
     collapsible: true,
     children: [
       {
-        label: '유저 관리',
+        label: 'User Management',
         pathname: PageRoutes.UserManagement,
         matcher: match(PageRoutes.UserManagement),
         icon: FaUser,
@@ -729,7 +729,7 @@ export const navs: Nav[] = [
         ],
       },
       {
-        label: '권한 관리',
+        label: 'Authority Management',
         pathname: PageRoutes.AuthorityManagement,
         matcher: match(PageRoutes.AuthorityManagement),
         icon: FaKey,

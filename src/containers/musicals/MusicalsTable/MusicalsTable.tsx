@@ -27,7 +27,6 @@ const MusicalsTable = ({ musicals, isLoading }: MusicalsTableProps) => {
     },
     [openModal],
   );
-  console.log(musicals);
 
   const columns = useMemo(
     () => [

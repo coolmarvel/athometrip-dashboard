@@ -4,6 +4,7 @@ import { MenuItem, SubMenu } from 'react-pro-sidebar';
 import { Nav } from '@/constants';
 import { useSafePush } from '@/hooks';
 import { BarChart } from '@/components/layouts/Sidebar/icons/BarChart';
+import { useTranslation } from 'react-i18next';
 
 interface NavbarTabProps {
   nav: Nav;
@@ -12,6 +13,7 @@ interface NavbarTabProps {
 
 const NavbarTab = ({ nav, isActivated }: NavbarTabProps) => {
   const { push } = useSafePush();
+  const { t } = useTranslation();
 
   const handleClick = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -22,9 +24,11 @@ const NavbarTab = ({ nav, isActivated }: NavbarTabProps) => {
     <>
       {nav.children && nav.children?.length > 0 ? (
         nav.children.length === 1 ? (
-          <MenuItem icon={<BarChart />} onClick={handleClick}>{nav.label}</MenuItem>
+          <MenuItem icon={<BarChart />} onClick={handleClick}>
+            {t(`${nav.label}`)}
+          </MenuItem>
         ) : (
-          <SubMenu label={nav.label} icon={<BarChart />} onClick={handleClick}>
+          <SubMenu label={t(`${nav.label}`)} icon={<BarChart />} onClick={handleClick}>
             {nav.children.map((child, i) => (
               <NavbarTab key={child.label} nav={child} isActivated={isActivated} />
             ))}
