@@ -1,8 +1,4 @@
-import styled from '@emotion/styled';
 import React from 'react';
-import { Github } from './icons/Github';
-import { Typography } from './components/Typography';
-import packageJson from '../../../../package.json';
 import { useSafePush } from '@/hooks';
 import { useGetMe, useSignout } from '@/apis';
 import { useTranslation } from 'react-i18next';
