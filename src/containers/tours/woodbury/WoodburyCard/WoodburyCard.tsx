@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +10,6 @@ interface WoodburyCardProps {
 
 const WoodburyCard = ({ data: woodbury }: WoodburyCardProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
@@ -20,7 +18,7 @@ const WoodburyCard = ({ data: woodbury }: WoodburyCardProps) => {
       { label: t('Phone'), value: woodbury?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${woodbury?.payment?.payment_method_title ?? 'Payment method'} (${woodbury?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [woodbury, convertDate, t],
+    [woodbury, t],
   );
 
   const columns = useMemo(() => [{ name: woodbury?.line_items[0].name, quantity: woodbury?.line_items[0].quantity, total: woodbury?.line_items[0].total }] ?? [], [woodbury]);

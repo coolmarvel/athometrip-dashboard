@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +11,6 @@ interface AMNHDocentModalProps {
 
 const AMNHDocentModal = ({ amnhDocent, onClose }: AMNHDocentModalProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
@@ -22,7 +20,7 @@ const AMNHDocentModal = ({ amnhDocent, onClose }: AMNHDocentModalProps) => {
       { label: t('Phone'), value: amnhDocent?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${amnhDocent?.payment?.payment_method_title ?? 'Payment method'} (${amnhDocent?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [amnhDocent, convertDate, t],
+    [amnhDocent, t],
   );
 
   const columns = useMemo(() => [{ name: amnhDocent?.line_items[0].name, quantity: amnhDocent?.line_items[0].quantity, total: amnhDocent?.line_items[0].total }] ?? [], [amnhDocent]);
@@ -34,7 +32,7 @@ const AMNHDocentModal = ({ amnhDocent, onClose }: AMNHDocentModalProps) => {
         as={'section'}
         onSubmit={useCallback(() => {
           setIsOpen(false);
-        }, [onClose])}
+        }, [])}
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">

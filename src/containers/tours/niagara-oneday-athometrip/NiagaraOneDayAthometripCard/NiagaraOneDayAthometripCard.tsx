@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +10,6 @@ interface NiagaraOneDayAthometripCardProps {
 
 const NiagaraOneDayAthometripCard = ({ data: niagaraOneDayAthometrip }: NiagaraOneDayAthometripCardProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
@@ -20,7 +18,7 @@ const NiagaraOneDayAthometripCard = ({ data: niagaraOneDayAthometrip }: NiagaraO
       { label: t('Phone'), value: niagaraOneDayAthometrip?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${niagaraOneDayAthometrip?.payment?.payment_method_title ?? 'Payment method'} (${niagaraOneDayAthometrip?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [niagaraOneDayAthometrip, convertDate, t],
+    [niagaraOneDayAthometrip, t],
   );
 
   const columns = useMemo(() => [{

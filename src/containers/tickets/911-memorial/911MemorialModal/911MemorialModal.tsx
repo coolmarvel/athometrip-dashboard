@@ -37,7 +37,7 @@ const Memorial911Modal = ({ memorial911, onClose }: Memorial911ModalProps) => {
         as={'section'}
         onSubmit={useCallback(() => {
           setIsOpen(false);
-        }, [onClose])}
+        }, [])}
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">

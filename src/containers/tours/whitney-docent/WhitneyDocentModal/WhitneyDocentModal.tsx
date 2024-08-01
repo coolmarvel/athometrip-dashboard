@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +11,6 @@ interface WhitneyDocentModalProps {
 
 const WhitneyDocentModal = ({ whitneyDocent, onClose }: WhitneyDocentModalProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
@@ -22,7 +20,7 @@ const WhitneyDocentModal = ({ whitneyDocent, onClose }: WhitneyDocentModalProps)
       { label: t('Phone'), value: whitneyDocent?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${whitneyDocent?.payment?.payment_method_title ?? 'Payment method'} (${whitneyDocent?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [whitneyDocent, convertDate, t],
+    [whitneyDocent, t],
   );
 
   const columns = useMemo(() => [{ name: whitneyDocent?.lineItem.name, quantity: whitneyDocent?.lineItem.quantity, total: whitneyDocent?.lineItem.total }] ?? [], [whitneyDocent]);
@@ -34,7 +32,7 @@ const WhitneyDocentModal = ({ whitneyDocent, onClose }: WhitneyDocentModalProps)
         as={'section'}
         onSubmit={useCallback(() => {
           setIsOpen(false);
-        }, [onClose])}
+        }, [])}
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">

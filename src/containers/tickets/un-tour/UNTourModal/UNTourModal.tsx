@@ -33,7 +33,7 @@ const UNTourModal = ({ unTour, onClose }: UNTourModalProps) => {
         as={'section'}
         onSubmit={useCallback(() => {
           setIsOpen(false);
-        }, [onClose])}
+        }, [])}
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">

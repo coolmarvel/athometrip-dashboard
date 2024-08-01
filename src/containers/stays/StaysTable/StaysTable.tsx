@@ -27,7 +27,6 @@ const StaysTable = ({ stays, isLoading }: StaysTableProps) => {
     },
     [openModal],
   );
-  console.log(stays);
 
   const columns = useMemo(
     () => [

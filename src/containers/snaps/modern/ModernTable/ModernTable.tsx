@@ -27,7 +27,6 @@ const ModernTable = ({ modern, isLoading }: ModernTableProps) => {
     },
     [openModal],
   );
-  console.log(modern);
 
   const columns = useMemo(
     () => [

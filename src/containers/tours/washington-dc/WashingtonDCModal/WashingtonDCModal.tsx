@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +11,6 @@ interface WashingtonDCModalProps {
 
 const WashingtonDCModal = ({ washingtonDC, onClose }: WashingtonDCModalProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
@@ -22,7 +20,7 @@ const WashingtonDCModal = ({ washingtonDC, onClose }: WashingtonDCModalProps) =>
       { label: t('Phone'), value: washingtonDC?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${washingtonDC?.payment?.payment_method_title ?? 'Payment method'} (${washingtonDC?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [washingtonDC, convertDate, t],
+    [washingtonDC, t],
   );
 
   const columns = useMemo(() => [{ name: washingtonDC?.line_items[0].name, quantity: washingtonDC?.line_items[0].quantity, total: washingtonDC?.line_items[0].total }] ?? [], [washingtonDC]);
@@ -34,7 +32,7 @@ const WashingtonDCModal = ({ washingtonDC, onClose }: WashingtonDCModalProps) =>
         as={'section'}
         onSubmit={useCallback(() => {
           setIsOpen(false);
-        }, [onClose])}
+        }, [])}
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">

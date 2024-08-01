@@ -8,10 +8,12 @@ const fontClassnames = Object.values(fonts)
 export default function Document() {
   return (
     <Html lang="en" className={fontClassnames}>
-      <Head />
+      <Head>
+        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+      </Head>
       <body>
-        <Main />
-        <NextScript />
+      <Main />
+      <NextScript />
       </body>
     </Html>
   );

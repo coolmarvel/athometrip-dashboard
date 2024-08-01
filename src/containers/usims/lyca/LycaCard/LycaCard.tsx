@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +10,6 @@ interface LycaCardProps {
 
 const LycaCard = ({ data: lyca }: LycaCardProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
@@ -20,7 +18,7 @@ const LycaCard = ({ data: lyca }: LycaCardProps) => {
       { label: t('Phone'), value: lyca?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${lyca?.payment?.payment_method_title ?? 'Payment method'} (${lyca?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [lyca, convertDate, t]
+    [lyca, t]
   );
 
   const columns = useMemo(() => [{

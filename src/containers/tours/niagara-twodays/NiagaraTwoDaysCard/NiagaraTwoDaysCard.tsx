@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +10,6 @@ interface NiagaraTwoDaysCardProps {
 
 const NiagaraTwoDaysCard = ({ data: niagaraTwoDays }: NiagaraTwoDaysCardProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
@@ -20,7 +18,7 @@ const NiagaraTwoDaysCard = ({ data: niagaraTwoDays }: NiagaraTwoDaysCardProps) =
       { label: t('Phone'), value: niagaraTwoDays?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${niagaraTwoDays?.payment?.payment_method_title ?? 'Payment method'} (${niagaraTwoDays?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [niagaraTwoDays, convertDate, t],
+    [niagaraTwoDays, t],
   );
 
   const columns = useMemo(() => [{

@@ -36,7 +36,7 @@ const NiagaraTwoDaysModal = ({ niagaraTwoDays, onClose }: NiagaraTwoDaysModalPro
         as={'section'}
         onSubmit={useCallback(() => {
           setIsOpen(false);
-        }, [onClose])}
+        }, [])}
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">

@@ -33,7 +33,7 @@ const EllisIslandModal = ({ ellisIsland, onClose }: EllisIslandModalProps) => {
         as={'section'}
         onSubmit={useCallback(() => {
           setIsOpen(false);
-        }, [onClose])}
+        }, [])}
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">

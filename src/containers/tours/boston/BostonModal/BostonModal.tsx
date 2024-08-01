@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +11,6 @@ interface BostonModalProps {
 
 const BostonModal = ({ boston, onClose }: BostonModalProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
@@ -22,7 +20,7 @@ const BostonModal = ({ boston, onClose }: BostonModalProps) => {
       { label: t('Phone'), value: boston?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${boston?.payment?.payment_method_title ?? 'Payment method'} (${boston?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [boston, convertDate, t],
+    [boston, t],
   );
 
   const columns = useMemo(() => [{ name: boston?.line_items[0].name, quantity: boston?.line_items[0].quantity, total: boston?.line_items[0].total }] ?? [], [boston]);
@@ -34,7 +32,7 @@ const BostonModal = ({ boston, onClose }: BostonModalProps) => {
         as={'section'}
         onSubmit={useCallback(() => {
           setIsOpen(false);
-        }, [onClose])}
+        }, [])}
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">

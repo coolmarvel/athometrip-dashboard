@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +10,6 @@ interface MetroDocentPaintingCardProps {
 
 const MetroDocentPaintingCard = ({ data: metroDocentPainting }: MetroDocentPaintingCardProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
@@ -20,7 +18,7 @@ const MetroDocentPaintingCard = ({ data: metroDocentPainting }: MetroDocentPaint
       { label: t('Phone'), value: metroDocentPainting?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${metroDocentPainting?.payment?.payment_method_title ?? 'Payment method'} (${metroDocentPainting?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [metroDocentPainting, convertDate, t]
+    [metroDocentPainting, t]
   );
 
   const columns = useMemo(

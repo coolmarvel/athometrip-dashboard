@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +11,6 @@ interface NiagaraOneDayAthometripModalProps {
 
 const NiagaraOneDayAthometripModal = ({ niagaraOneDayAthometrip, onClose }: NiagaraOneDayAthometripModalProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
@@ -22,7 +20,7 @@ const NiagaraOneDayAthometripModal = ({ niagaraOneDayAthometrip, onClose }: Niag
       { label: t('Phone'), value: niagaraOneDayAthometrip?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${niagaraOneDayAthometrip?.payment?.payment_method_title ?? 'Payment method'} (${niagaraOneDayAthometrip?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [niagaraOneDayAthometrip, convertDate, t],
+    [niagaraOneDayAthometrip, t],
   );
 
   const columns = useMemo(() => [{
@@ -38,7 +36,7 @@ const NiagaraOneDayAthometripModal = ({ niagaraOneDayAthometrip, onClose }: Niag
         as={'section'}
         onSubmit={useCallback(() => {
           setIsOpen(false);
-        }, [onClose])}
+        }, [])}
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">

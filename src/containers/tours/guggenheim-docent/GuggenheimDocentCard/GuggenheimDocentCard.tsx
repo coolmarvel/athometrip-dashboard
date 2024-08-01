@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +10,6 @@ interface GuggenheimDocentCardProps {
 
 const GuggenheimDocentCard = ({ data: guggenheimDocent }: GuggenheimDocentCardProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
@@ -20,7 +18,7 @@ const GuggenheimDocentCard = ({ data: guggenheimDocent }: GuggenheimDocentCardPr
       { label: t('Phone'), value: guggenheimDocent?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${guggenheimDocent?.payment?.payment_method_title ?? 'Payment method'} (${guggenheimDocent?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [guggenheimDocent, convertDate, t],
+    [guggenheimDocent, t],
   );
 
   const columns = useMemo(() => [{ name: guggenheimDocent?.lineItem.name, quantity: guggenheimDocent?.lineItem.quantity, total: guggenheimDocent?.lineItem.total }] ?? [], [guggenheimDocent]);

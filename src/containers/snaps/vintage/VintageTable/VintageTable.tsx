@@ -27,7 +27,6 @@ const VintageTable = ({ vintage, isLoading }: VintageTableProps) => {
     },
     [openModal],
   );
-  console.log(vintage);
 
   const columns = useMemo(
     () => [

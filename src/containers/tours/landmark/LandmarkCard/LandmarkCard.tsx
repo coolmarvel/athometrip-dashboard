@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +10,6 @@ interface LandmarkCardProps {
 
 const LandmarkCard = ({ data: landmark }: LandmarkCardProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
 
   const attributes = useMemo(
     () => [
@@ -20,7 +18,7 @@ const LandmarkCard = ({ data: landmark }: LandmarkCardProps) => {
       { label: t('Phone'), value: landmark?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${landmark?.payment?.payment_method_title ?? 'Payment method'} (${landmark?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [landmark, convertDate, t],
+    [landmark, t],
   );
 
   const columns = useMemo(() => [{ name: landmark?.line_items[0].name, quantity: landmark?.line_items[0].quantity, total: landmark?.line_items[0].total }] ?? [], [landmark]);

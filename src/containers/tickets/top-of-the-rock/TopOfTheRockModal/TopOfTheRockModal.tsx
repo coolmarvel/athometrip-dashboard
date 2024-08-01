@@ -33,7 +33,7 @@ const TopOfTheRockModal = ({ topOfTheRock, onClose }: TopOfTheRockModalProps) =>
         as={'section'}
         onSubmit={useCallback(() => {
           setIsOpen(false);
-        }, [onClose])}
+        }, [])}
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">

@@ -27,7 +27,6 @@ const ToJFkNightTable = ({ toJFKNight, isLoading }: ToJFkNightTableProps) => {
     },
     [openModal],
   );
-  console.log(toJFKNight);
 
   const columns = useMemo(
     () => [

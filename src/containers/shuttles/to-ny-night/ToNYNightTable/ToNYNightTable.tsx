@@ -27,7 +27,6 @@ const ToNYNightTable = ({ toNYNight, isLoading }: ToNYNightTableProps) => {
     },
     [openModal]
   );
-  console.log(toNYNight);
 
   const columns = useMemo(
     () => [

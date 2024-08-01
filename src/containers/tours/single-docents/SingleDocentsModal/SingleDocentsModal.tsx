@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +12,6 @@ interface SingleDocentsModalProps {
 
 const SingleDocentsModal = ({ singleDocents, lineItem, onClose }: SingleDocentsModalProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
@@ -23,7 +21,7 @@ const SingleDocentsModal = ({ singleDocents, lineItem, onClose }: SingleDocentsM
       { label: t('Phone'), value: singleDocents?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${singleDocents?.payment?.payment_method_title ?? 'Payment method'} (${singleDocents?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [singleDocents, convertDate, t],
+    [singleDocents, t],
   );
 
   const columns = useMemo(() => [{ name: lineItem.name, quantity: lineItem.quantity, total: lineItem.total }] ?? [], [lineItem]);
@@ -35,7 +33,7 @@ const SingleDocentsModal = ({ singleDocents, lineItem, onClose }: SingleDocentsM
         as={'section'}
         onSubmit={useCallback(() => {
           setIsOpen(false);
-        }, [onClose])}
+        }, [])}
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">

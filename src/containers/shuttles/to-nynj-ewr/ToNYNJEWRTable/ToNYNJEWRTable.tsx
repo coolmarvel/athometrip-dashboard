@@ -27,7 +27,6 @@ const ToNYNJEWRTable = ({ toNYNJEWR, isLoading }: ToNYNJEWRTableProps) => {
     },
     [openModal]
   );
-  console.log(toNYNJEWR);
 
   const columns = useMemo(
     () => [

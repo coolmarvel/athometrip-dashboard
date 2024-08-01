@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +11,6 @@ interface NiagaraOneDayKingKongModalProps {
 
 const NiagaraOneDayKingKongModal = ({ niagaraOneDayKingKong, onClose }: NiagaraOneDayKingKongModalProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
@@ -22,7 +20,7 @@ const NiagaraOneDayKingKongModal = ({ niagaraOneDayKingKong, onClose }: NiagaraO
       { label: t('Phone'), value: niagaraOneDayKingKong?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${niagaraOneDayKingKong?.payment?.payment_method_title ?? 'Payment method'} (${niagaraOneDayKingKong?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [niagaraOneDayKingKong, convertDate, t],
+    [niagaraOneDayKingKong, t],
   );
 
   const columns = useMemo(() => [{
@@ -38,7 +36,7 @@ const NiagaraOneDayKingKongModal = ({ niagaraOneDayKingKong, onClose }: NiagaraO
         as={'section'}
         onSubmit={useCallback(() => {
           setIsOpen(false);
-        }, [onClose])}
+        }, [])}
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">

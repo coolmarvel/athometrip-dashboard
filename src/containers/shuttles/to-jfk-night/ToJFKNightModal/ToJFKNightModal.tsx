@@ -37,7 +37,7 @@ const ToJFKNightModal = ({ toJFKNight, onClose }: ToJFKNightModalProps) => {
         as={'section'}
         onSubmit={useCallback(() => {
           setIsOpen(false);
-        }, [onClose])}
+        }, [])}
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">

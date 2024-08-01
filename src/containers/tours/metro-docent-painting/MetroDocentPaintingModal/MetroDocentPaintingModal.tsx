@@ -1,6 +1,5 @@
 import { WithLabel } from '@/components';
 import { statusColor } from '@/constants';
-import { useConvertDate } from '@/hooks';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +11,6 @@ interface MetroDocentPaintingModalProps {
 
 const MetroDocentPaintingModal = ({ metroDocentPainting, onClose }: MetroDocentPaintingModalProps) => {
   const { t } = useTranslation();
-  const convertDate = useConvertDate();
   const [isOpen, setIsOpen] = useState(true);
 
   const attributes = useMemo(
@@ -22,7 +20,7 @@ const MetroDocentPaintingModal = ({ metroDocentPainting, onClose }: MetroDocentP
       { label: t('Phone'), value: metroDocentPainting?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${metroDocentPainting?.payment?.payment_method_title ?? 'Payment method'} (${metroDocentPainting?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [metroDocentPainting, convertDate, t]
+    [metroDocentPainting, t]
   );
 
   const columns = useMemo(
@@ -37,7 +35,7 @@ const MetroDocentPaintingModal = ({ metroDocentPainting, onClose }: MetroDocentP
         as={'section'}
         onSubmit={useCallback(() => {
           setIsOpen(false);
-        }, [onClose])}
+        }, [])}
       >
         <ModalHeader>
           <Flex justifyContent="space-between" alignItems="center">
