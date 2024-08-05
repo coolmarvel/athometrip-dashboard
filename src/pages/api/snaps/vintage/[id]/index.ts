@@ -12,7 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '400198,406254,406273,406279,406551,406557,406631,406634,406747,408224,408287';
 const snapName = 'snap-vintage';
-const url = 'http://localhost:3000/api/adapter/order';
+const url = process.env.NEXT_PUBLIC_API_URL;
 
 const getVintage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

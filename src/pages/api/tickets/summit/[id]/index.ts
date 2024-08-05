@@ -12,7 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '150083,150425,446760,446771';
 const ticketName = 'summit';
-const url = 'http://localhost:3000/api/adapter/order';
+const url = process.env.NEXT_PUBLIC_API_URL;
 
 const getSummit = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

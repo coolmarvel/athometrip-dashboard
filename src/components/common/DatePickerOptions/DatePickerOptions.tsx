@@ -1,14 +1,14 @@
 // import { useReset911Memorial } from '@/apis';
 import { useSafePush } from '@/hooks';
 import { RangeDatepicker } from 'chakra-dayzed-datepicker';
-import { format, subMonths } from 'date-fns';
+import { format, subWeeks } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { useState } from 'react';
 
 const DatePickerOptions = () => {
   const { router, push } = useSafePush();
 
-  const after = new Date(router.query?.after !== undefined ? (router.query?.after as string) : subMonths(new Date(), 1));
+  const after = new Date(router.query?.after !== undefined ? (router.query?.after as string) : subWeeks(new Date(), 1));
   const before = new Date(router.query?.before !== undefined ? (router.query?.before as string) : new Date());
   const [selectedDates, setSelectedDates] = useState<Date[]>([after, before]);
 

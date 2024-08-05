@@ -12,7 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '158582,159803,395630,397359,399005,399012';
 const ticketName = 'mlb-mets';
-const url = 'http://localhost:3000/api/adapter/order';
+const url = process.env.NEXT_PUBLIC_API_URL;
 
 const getMLBMets = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

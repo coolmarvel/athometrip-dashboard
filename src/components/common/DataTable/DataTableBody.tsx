@@ -7,7 +7,7 @@ interface DataTableBodyProps<T> {
   onRowClick?: (row: Row<T>) => void;
 }
 
-const DataTableBody = <T, >({ table, onRowClick }: DataTableBodyProps<T>) => {
+const DataTableBody = <T,>({ table, onRowClick }: DataTableBodyProps<T>) => {
   const alphaColor = useAlphaColor();
   const rowModel = (typeof table.getRowModel === 'function' ? table.getRowModel() : table.getRowModel) || {};
 
@@ -17,14 +17,16 @@ const DataTableBody = <T, >({ table, onRowClick }: DataTableBodyProps<T>) => {
     return (
       <Tbody>
         <Tr>
-          <Td colSpan={columnCount} textAlign="center">검색 결과가 없어요.</Td>
+          <Td colSpan={columnCount} textAlign="center">
+            검색 결과가 없어요.
+          </Td>
         </Tr>
       </Tbody>
     );
   }
 
   return (
-    <Tbody>
+    <Tbody _selected={{}}>
       {rowModel.rows.map((row) => (
         <Tr key={row.id} onClick={() => onRowClick?.(row)} _hover={{ cursor: onRowClick ? 'pointer' : 'default', bgColor: onRowClick ? alphaColor(50) : undefined }}>
           {row.getVisibleCells().map((cell) => (

@@ -20,7 +20,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '484,486,487,489,4387,30005,56960,98460,98932,99152,128657';
 const musicalName = 'musicals';
-const url = 'http://localhost:3000/api/adapter/orders';
+const url = process.env.NEXT_PUBLIC_APIS_URL;
 
 const getMusicalsByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };

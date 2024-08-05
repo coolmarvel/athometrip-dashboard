@@ -1,10 +1,10 @@
 import axios, { AxiosInstance } from 'axios';
 import { QueryKey, UrlBuilder } from './types';
 
-const protoc = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? 'https' : 'http';
+const protoc = process.env.NODE_ENV === 'production' ? 'https' : 'http'; // NEXT_PUBLIC_VERCEL_ENV
 
 const getDomain = () => {
-  return process.env.NODE_ENV === 'production' ? window.location.host : process.env.NEXT_PUBLIC_SERVER_DOMAIN;
+  return process.env.NODE_ENV === 'production' ? window.location.host : process.env.NEXT_PUBLIC_SERVER_DOMAIN; // NEXT_PUBLIC_VERCEL_ENV
 };
 
 export class Api {

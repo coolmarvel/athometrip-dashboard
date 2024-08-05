@@ -12,7 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '143688,144281,411754,446790,447602,447618';
 const shuttleName = 'to-nynj';
-const url = 'http://localhost:3000/api/adapter/order';
+const url = process.env.NEXT_PUBLIC_API_URL;
 
 const getToNYNight = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

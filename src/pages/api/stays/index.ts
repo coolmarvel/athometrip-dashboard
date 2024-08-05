@@ -19,7 +19,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '2351,2384,3141,109359,110212,110362,110367,110369,114974,114976,131999,132365,387120';
 const stayName = 'stays';
-const url = 'http://localhost:3000/api/adapter/orders';
+const url = process.env.NEXT_PUBLIC_APIS_URL;
 
 const getModernsByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };

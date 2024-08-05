@@ -12,7 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '21729,406803,444816';
 const ticketName = 'top-of-the-rock';
-const url = 'http://localhost:3000/api/adapter/order';
+const url = process.env.NEXT_PUBLIC_API_URL;
 
 const getTopOfTheRock = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

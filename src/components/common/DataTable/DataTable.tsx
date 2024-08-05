@@ -13,7 +13,7 @@ interface DataTableProps<T> {
 const DataTable = <T,>({ table, isLoading, onRowClick }: DataTableProps<T>) => {
   return (
     <>
-      <Table>
+      <Table variant="striped" colorScheme="blue">
         <DataTableHeader table={table} />
         {!isLoading && <DataTableBody table={table} onRowClick={onRowClick} />}
         <DataTableFooter table={table} />

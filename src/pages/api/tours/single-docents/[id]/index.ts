@@ -12,7 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '76716,88010,88034,88667';
 const tourName = 'single-docents';
-const url = 'http://localhost:3000/api/adapter/order';
+const url = process.env.NEXT_PUBLIC_API_URL;
 
 const getSingleDocents = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

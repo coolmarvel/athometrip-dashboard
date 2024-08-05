@@ -19,7 +19,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '406389,406413,406451,406786,406789,406791,406797,406803,408367';
 const snapName = 'snap-modern';
-const url = 'http://localhost:3000/api/adapter/orders';
+const url = process.env.NEXT_PUBLIC_APIS_URL;
 
 const getModernsByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };

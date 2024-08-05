@@ -12,7 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '222755';
 const usimName = 'h2o-esim';
-const url = 'http://localhost:3000/api/adapter/order';
+const url = process.env.NEXT_PUBLIC_API_URL;
 
 const getH2OEsim = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

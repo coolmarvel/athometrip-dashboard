@@ -12,7 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '80375,113901,125884,125889,125894,125899,127670,152531';
 const usimName = 'lyca';
-const url = 'http://localhost:3000/api/adapter/order';
+const url = process.env.NEXT_PUBLIC_API_URL;
 
 const getLyca = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

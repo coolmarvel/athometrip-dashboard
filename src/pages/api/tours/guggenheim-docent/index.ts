@@ -19,7 +19,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '76716';
 const tourName = 'guggenheim-docent';
-const url = 'http://localhost:3000/api/adapter/orders';
+const url = process.env.NEXT_PUBLIC_APIS_URL;
 
 const getGuggenheimDocentByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };

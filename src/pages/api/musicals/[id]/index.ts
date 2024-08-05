@@ -12,7 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const productId = '484,486,487,489,4387,30005,56960,98460,98932,99152,128657';
 const musicalName = 'musicals';
-const url = 'http://localhost:3000/api/adapter/order';
+const url = process.env.NEXT_PUBLIC_API_URL;
 
 const getMusical = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
