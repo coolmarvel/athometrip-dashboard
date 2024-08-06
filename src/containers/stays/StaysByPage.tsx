@@ -1,8 +1,7 @@
 import { TableContainer } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
-import { useGetStaysByPage, useResetStays } from '@/apis';
+import { useGetStaysByPage } from '@/apis';
 import { Pagination } from '@/components';
 import { StaysTable } from '@/containers';
 import { usePagination } from '@/hooks';
@@ -12,14 +11,9 @@ const StaysByPage = () => {
   const router = useRouter();
 
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
-  const { mutate: resetStays } = useResetStays();
 
   const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
   const { data: modernByPage, isLoading: isLoading } = useGetStaysByPage(params);
-
-  useEffect(() => {
-    resetStays();
-  }, [before, resetStays]);
 
   return (
     <>

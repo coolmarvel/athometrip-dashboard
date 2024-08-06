@@ -1,24 +1,19 @@
-import { useGetTopOfTheRockByPage, useResetTopOfTheRock } from '@/apis';
-import { Pagination } from '@/components';
-import { TopOfTheRockTable } from '@/containers';
-import { usePagination } from '@/hooks';
-import { QueryParser } from '@/utils';
 import { TableContainer } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+
+import { useGetTopOfTheRockByPage } from '@/apis';
+import { TopOfTheRockTable } from '@/containers';
+import { Pagination } from '@/components';
+import { usePagination } from '@/hooks';
+import { QueryParser } from '@/utils';
 
 const TopOfTheRockByPage = () => {
   const router = useRouter();
 
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
-  const { mutate: resetTopOfTheRock } = useResetTopOfTheRock();
 
   const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
   const { data: topOfTheRockByPage, isLoading: isLoading } = useGetTopOfTheRockByPage(params);
-
-  useEffect(() => {
-    resetTopOfTheRock();
-  }, [before, resetTopOfTheRock]);
 
   return (
     <>

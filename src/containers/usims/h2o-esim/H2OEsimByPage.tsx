@@ -1,24 +1,19 @@
-import { useGetH2OEsimByPage, useResetH2OEsim } from '@/apis';
+import { useRouter } from 'next/router';
+import { TableContainer } from '@chakra-ui/react';
+
+import { useGetH2OEsimByPage } from '@/apis';
+import { H2OEsimTable } from '@/containers';
 import { Pagination } from '@/components';
 import { usePagination } from '@/hooks';
 import { QueryParser } from '@/utils';
-import { TableContainer } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { H2OEsimTable } from '.';
 
 const H2OEsimByPage = () => {
   const router = useRouter();
 
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
-  const { mutate: resetH2oEsim } = useResetH2OEsim();
 
   const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
   const { data: h2oEsimByPage, isLoading: isLoading } = useGetH2OEsimByPage(params);
-
-  useEffect(() => {
-    resetH2oEsim();
-  }, [before, resetH2oEsim]);
 
   return (
     <>

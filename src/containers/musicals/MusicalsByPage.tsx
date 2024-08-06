@@ -1,10 +1,9 @@
-import { TableContainer } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { TableContainer } from '@chakra-ui/react';
 
-import { useGetMusicalsByPage, useResetMusicals } from '@/apis';
-import { Pagination } from '@/components';
+import { useGetMusicalsByPage } from '@/apis';
 import { MusicalsTable } from '@/containers';
+import { Pagination } from '@/components';
 import { usePagination } from '@/hooks';
 import { QueryParser } from '@/utils';
 
@@ -12,14 +11,9 @@ const MusicalsByPage = () => {
   const router = useRouter();
 
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
-  const { mutate: resetMusicals } = useResetMusicals();
 
   const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
   const { data: musicalsByPage, isLoading: isLoading } = useGetMusicalsByPage(params);
-
-  useEffect(() => {
-    resetMusicals();
-  }, [before, resetMusicals]);
 
   return (
     <>

@@ -14,5 +14,6 @@ export { Editor } from './Editor';
 export { Search } from './Search';
 export { Logo } from './Logo';
 
+export { GaiaHead } from './GaiaHead';
 export { DatePickerOptions } from './DatePickerOptions';
 export { ModeOptions, RegionOptions } from './TMobileOptions';

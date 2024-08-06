@@ -1,8 +1,7 @@
 import { TableContainer } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
-import { useGetToJFKByPage, useResetToJFK } from '@/apis';
+import { useGetToJFKByPage } from '@/apis';
 import { Pagination } from '@/components';
 import { ToJFKTable } from '@/containers';
 import { usePagination } from '@/hooks';
@@ -12,14 +11,9 @@ const ToJFKByPage = () => {
   const router = useRouter();
 
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
-  const { mutate: resetToJFK } = useResetToJFK();
 
   const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
   const { data: toJFKByPage, isLoading: isLoading } = useGetToJFKByPage(params);
-
-  useEffect(() => {
-    resetToJFK();
-  }, [before, resetToJFK]);
 
   return (
     <>

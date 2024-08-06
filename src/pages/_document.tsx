@@ -1,5 +1,6 @@
-import { fonts } from '@/constants';
 import { Head, Html, Main, NextScript } from 'next/document';
+
+import { fonts } from '@/constants';
 
 const fontClassnames = Object.values(fonts)
   .map((font) => font.variable)
@@ -12,8 +13,8 @@ export default function Document() {
         <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       </Head>
       <body>
-      <Main />
-      <NextScript />
+        <Main />
+        <NextScript />
       </body>
     </Html>
   );

@@ -1,24 +1,19 @@
-import { useGetEmpireByPage, useResetEmpire } from '@/apis';
-import { Pagination } from '@/components';
-import { EmpireTable } from '@/containers';
-import { usePagination } from '@/hooks';
-import { QueryParser } from '@/utils';
 import { TableContainer } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+
+import { useGetEmpireByPage } from '@/apis';
+import { EmpireTable } from '@/containers';
+import { Pagination } from '@/components';
+import { usePagination } from '@/hooks';
+import { QueryParser } from '@/utils';
 
 const EmpireByPage = () => {
   const router = useRouter();
 
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
-  const { mutate: resetEmpire } = useResetEmpire();
 
   const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
   const { data: empireByPage, isLoading: isLoading } = useGetEmpireByPage(params);
-
-  useEffect(() => {
-    resetEmpire();
-  }, [before, resetEmpire]);
 
   return (
     <>

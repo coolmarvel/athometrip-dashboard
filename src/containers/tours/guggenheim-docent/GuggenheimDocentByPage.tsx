@@ -1,24 +1,19 @@
-import { useGetGuggenheimDocentByPage, useResetGuggenheimDocent } from '@/apis';
-import { Pagination } from '@/components';
-import { GuggenheimDocentTable } from '@/containers';
-import { usePagination } from '@/hooks';
-import { QueryParser } from '@/utils';
 import { TableContainer } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+
+import { useGetGuggenheimDocentByPage } from '@/apis';
+import { GuggenheimDocentTable } from '@/containers';
+import { Pagination } from '@/components';
+import { usePagination } from '@/hooks';
+import { QueryParser } from '@/utils';
 
 const GuggenheimDocentByPage = () => {
   const router = useRouter();
 
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
-  const { mutate: resetGuggenheimDocent } = useResetGuggenheimDocent();
 
   const params = { page, limit, sort, order, after, before, search: QueryParser.toString(router.query.search) ?? '' };
   const { data: guggenheimDocentByPage, isLoading: isLoading } = useGetGuggenheimDocentByPage(params);
-
-  useEffect(() => {
-    resetGuggenheimDocent();
-  }, [before, resetGuggenheimDocent]);
 
   return (
     <>

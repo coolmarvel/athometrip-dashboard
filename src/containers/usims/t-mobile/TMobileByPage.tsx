@@ -1,9 +1,9 @@
 import { TableContainer } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
-import { useGetTMobileByPage, useResetTMobile } from '@/apis';
 import { TMobileEsimTable, TMobileUsimTable } from '@/containers';
+import { useGetTMobileByPage } from '@/apis';
 import { Pagination } from '@/components';
 import { ModeQueries } from '@/constants';
 import { usePagination } from '@/hooks';
@@ -14,7 +14,6 @@ const TMobileByPage = () => {
   const modeOption = router.query?.mode as ModeQueries;
 
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
-  const { mutate: resetTMobile } = useResetTMobile();
 
   const params = {
     page,
@@ -28,10 +27,6 @@ const TMobileByPage = () => {
     search: QueryParser.toString(router.query.search) ?? '',
   };
   const { data: tMobileByPage, isLoading: isLoading } = useGetTMobileByPage(params);
-
-  useEffect(() => {
-    resetTMobile();
-  }, [before, resetTMobile]);
 
   const display = useMemo(() => {
     switch (modeOption) {
