@@ -33,7 +33,7 @@ const useInfiniteQuery = <TResponse>(url: Nullable<string>, params?: object, opt
       ...options,
       getPreviousPageParam: (firstPage) => firstPage.previous,
       getNextPageParam: (lastPage) => lastPage.next,
-    }
+    },
   );
 };
 
@@ -41,7 +41,7 @@ export const useMutation = <TCached, TRequest, TResponse>(
   mutationFn: MutationFunction<TResponse, TRequest>,
   options?: UseMutationOptions<TResponse, AxiosError<ApiError>, TRequest>,
   queryKey?: QueryKey<TRequest>,
-  updater?: (old: TCached, data: TRequest) => Optional<TCached>
+  updater?: (old: TCached, data: TRequest) => Optional<TCached>,
 ) => {
   const queryClient = useQueryClient();
 
@@ -152,7 +152,7 @@ export const usePost = <TCached, TRequest extends object | void = void, TRespons
   url: UrlBuilder<TRequest>,
   params?: object,
   options?: MutationOptions<TResponse, TRequest>,
-  updater?: (old: TCached, data: TRequest) => TCached
+  updater?: (old: TCached, data: TRequest) => TCached,
 ) => {
   return useMutation<TCached, TRequest, ApiResponse<TResponse>>((data) => Api.post<ApiResponse<TResponse>>(buildUrl(url, data), data ?? {}), options, [url, params], updater);
 };
@@ -174,7 +174,7 @@ export const useUpdate = <TCached, TRequest extends object & { id?: ID }, TRespo
   url: UrlBuilder<TRequest>,
   params?: object,
   options?: MutationOptions<TResponse, TRequest>,
-  updater?: (old: TCached, data: TRequest) => TCached
+  updater?: (old: TCached, data: TRequest) => TCached,
 ) => {
   return useMutation<TCached, TRequest, ApiResponse<TResponse>>((data) => Api.put<ApiResponse<TResponse>>(buildUrl(url, data), data), options, [url, params], updater);
 };
@@ -196,7 +196,7 @@ export const useUpdateInList = <TCached, TRequest extends object & { id?: ID }, 
   url: UrlBuilder<TRequest>,
   params?: object,
   options?: MutationOptions<TResponse, TRequest>,
-  updater?: (old: TCached, data: TRequest) => TCached
+  updater?: (old: TCached, data: TRequest) => TCached,
 ) => {
   return useMutation<TCached, TRequest, ApiResponse<TResponse>>(
     (data) => {
@@ -206,7 +206,7 @@ export const useUpdateInList = <TCached, TRequest extends object & { id?: ID }, 
     },
     options,
     [url, params],
-    updater
+    updater,
   );
 };
 
@@ -227,7 +227,7 @@ export const useDelete = <TCached, TRequest = ID | void, TResponse = unknown>(
   url: string,
   params?: object,
   options?: MutationOptions<TResponse, TRequest>,
-  updater?: (old: TCached, id: TRequest) => TCached
+  updater?: (old: TCached, id: TRequest) => TCached,
 ) => {
   return useMutation<TCached, TRequest, ApiResponse<TResponse>>((id) => Api.delete<ApiResponse<TResponse>>(id ? `${url}/${id}` : url), options, [url, params], updater);
 };
@@ -244,7 +244,7 @@ export const usePostForm = <TCached, TRequest extends FormData, TResponse = unkn
   url: UrlBuilder<TRequest>,
   params?: object,
   options?: MutationOptions<TResponse, TRequest>,
-  updater?: (old: TCached, data: TRequest) => TCached
+  updater?: (old: TCached, data: TRequest) => TCached,
 ) => {
   return useMutation<TCached, TRequest, ApiResponse<TResponse>>((data) => Api.postForm<ApiResponse<TResponse>>(buildUrl(url, data), data), options, [url, params], updater);
 };
@@ -268,7 +268,7 @@ export const useCommand = <TCached, TRequest extends object & { id: ID }, TRespo
   queryKey?: QueryKey<TRequest>,
   options?: MutationOptions<TResponse, TRequest>,
   updater?: (old: TCached, data: TRequest) => TCached,
-  method: 'POST' | 'PUT' | 'PATCH' = 'POST'
+  method: 'POST' | 'PUT' | 'PATCH' = 'POST',
 ) => {
   return useMutation<TCached, TRequest, ApiResponse<TResponse>>(
     (data) => {
@@ -285,7 +285,7 @@ export const useCommand = <TCached, TRequest extends object & { id: ID }, TRespo
     },
     options,
     queryKey,
-    updater
+    updater,
   );
 };
 

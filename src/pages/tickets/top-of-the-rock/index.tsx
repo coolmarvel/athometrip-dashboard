@@ -1,6 +1,6 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search, RefetchButton } from '@/components';
 import { TopOfTheRockByPage } from '@/containers';
 import { useResetTopOfTheRock } from '@/apis';
 import { useSafePush } from '@/hooks';
@@ -21,6 +21,7 @@ const TopOfTheRockPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton />
               <DatePickerOptions setMutate={resetTopOfTheRock} />
               <PageOptions />
             </Flex>

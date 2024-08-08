@@ -58,13 +58,13 @@ export const sortTicket = (tickets: any, sort: RequiredKeysOf<any>, order: Order
 };
 
 export const filterTicket = (tickets: any, after: string, before: string) => {
-  const start = new Date(after);
-  const end = new Date(before);
+  // const start = new Date(after);
+  // const end = new Date(before);
 
   return tickets.filter((ticket: any) => {
-    const ticketDate = new Date(ticket.order.date_created);
-
+    // const ticketDate = new Date(ticket.order.date_created);
     // return ticketDate >= start && ticketDate <= end;
+
     return ticket.order.date_created_gmt >= after && ticket.order.date_created_gmt <= before;
   });
 };

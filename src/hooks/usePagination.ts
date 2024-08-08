@@ -1,9 +1,10 @@
-import { Order } from '@/apis';
-import { QueryParser } from '@/utils';
 import { useCallback, useMemo } from 'react';
-import { useSafePush } from '.';
-import { format, subMonths } from 'date-fns';
+import { format, subWeeks } from 'date-fns';
 import { ko } from 'date-fns/locale';
+
+import { QueryParser } from '@/utils';
+import { useSafePush } from '.';
+import { Order } from '@/apis';
 
 export interface OnPaginationParams {
   page?: number;
@@ -23,7 +24,7 @@ const usePagination = () => {
       limit: QueryParser.toNumber(router.query.limit) ?? 10,
       sort: QueryParser.toString(router.query.sort) ?? '',
       order: (QueryParser.toString(router.query.order) ?? 'desc') as Order,
-      after: QueryParser.toString(router.query.after) ?? format(subMonths(new Date(), 1), 'yyyy-MM-dd', { locale: ko }),
+      after: QueryParser.toString(router.query.after) ?? format(subWeeks(new Date(), 1), 'yyyy-MM-dd', { locale: ko }),
       before: QueryParser.toString(router.query.before) ?? format(new Date(), 'yyyy-MM-dd', { locale: ko }),
     };
   }, [router.query]);
@@ -32,7 +33,7 @@ const usePagination = () => {
     (params) => {
       push({ pathname: router.pathname, query: { ...router.query, ...params } });
     },
-    [push, router.pathname, router.query]
+    [push, router.pathname, router.query],
   );
 
   return { ...params, onPagination };
