@@ -16,3 +16,7 @@ export const useGetWollman = (id?: number) => {
 export const useResetWollman = () => {
   return usePost(`${toUrl(ApiRoutes.Wollman)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.Wollman)) });
 };
+
+export const useRefetchWollmanByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.Wollman)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.Wollman)) });
+};

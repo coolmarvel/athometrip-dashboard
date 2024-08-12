@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchBostonByPage, useResetBoston } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { BostonByPage } from '@/containers';
-import { useResetBoston } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const BostonPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetBoston } = useResetBoston();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.Boston));
+  const { mutate: refetchBoston, isLoading } = useRefetchBostonByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const BostonPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchBoston} />
               <DatePickerOptions setMutate={resetBoston} />
               <PageOptions />
             </Flex>

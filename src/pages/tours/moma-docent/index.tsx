@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchMomaDocentByPage, useResetMomaDocent } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { MomaDocentByPage } from '@/containers';
-import { useResetMomaDocent } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const MomaDocentPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetMomaDocent } = useResetMomaDocent();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.MomaDocent));
+  const { mutate: refetchMomaDocent, isLoading } = useRefetchMomaDocentByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const MomaDocentPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchMomaDocent} />
               <DatePickerOptions setMutate={resetMomaDocent} />
               <PageOptions />
             </Flex>

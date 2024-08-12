@@ -21,3 +21,7 @@ export const useUpdateModern = () => {
 export const useResetModern = () => {
   return usePost(`${toUrl(ApiRoutes.Modern)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.Modern)) });
 };
+
+export const useRefetchModernByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.Modern)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.Modern)) });
+};

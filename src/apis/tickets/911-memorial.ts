@@ -21,3 +21,7 @@ export const useUpdate911Memorial = () => {
 export const useReset911Memorial = () => {
   return usePost(`${toUrl(ApiRoutes.Memorial911)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.Memorial911)) });
 };
+
+export const useRefetchMemorial911ByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.Memorial911)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.Memorial911)) });
+};

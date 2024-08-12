@@ -21,3 +21,7 @@ export const useUpdateWashingtonDC = () => {
 export const useResetWashingtonDC = () => {
   return usePost(`${toUrl(ApiRoutes.WashingtonDC)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.WashingtonDC)) });
 };
+
+export const useRefetchWashingtonDCByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.WashingtonDC)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.WashingtonDC)) });
+};

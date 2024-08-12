@@ -21,3 +21,7 @@ export const useUpdateToNYNight = () => {
 export const useResetToNYNight = () => {
   return usePost(`${toUrl(ApiRoutes.ToNYNight)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.ToNYNight)) });
 };
+
+export const useRefetchToNYNightByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.ToNYNight)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.ToNYNight)) });
+};

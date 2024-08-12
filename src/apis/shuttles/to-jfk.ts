@@ -21,3 +21,7 @@ export const useUpdateToJFK = () => {
 export const useResetToJFK = () => {
   return usePost(`${toUrl(ApiRoutes.ToJFK)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.ToJFK)) });
 };
+
+export const useRefetchToJFKByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.ToJFK)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.ToJFK)) });
+};

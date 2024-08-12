@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchNiagaraOneDayAthometripByPage, useResetNiagaraOneDayAthometrip } from '@/apis';
 import { NiagaraOneDayAthometripByPage } from '@/containers';
-import { useResetNiagaraOneDayAthometrip } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const NiagaraOneDayAthometripPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetNiagaraOneDayAthometrip } = useResetNiagaraOneDayAthometrip();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.NiagaraOneDayAthometrip));
+  const { mutate: refetchNiagaraOneDayAthometrip, isLoading } = useRefetchNiagaraOneDayAthometripByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const NiagaraOneDayAthometripPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchNiagaraOneDayAthometrip} />
               <DatePickerOptions setMutate={resetNiagaraOneDayAthometrip} />
               <PageOptions />
             </Flex>

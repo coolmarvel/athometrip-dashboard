@@ -21,3 +21,7 @@ export const useUpdateWhitneyDocent = () => {
 export const useResetWhitneyDocent = () => {
   return usePost(`${toUrl(ApiRoutes.WhitneyDocent)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.WhitneyDocent)) });
 };
+
+export const useRefetchWhitneyDocentByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.WhitneyDocent)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.WhitneyDocent)) });
+};

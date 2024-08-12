@@ -21,3 +21,7 @@ export const useUpdateMLBMets = () => {
 export const useResetMLBMets = () => {
   return usePost(`${toUrl(ApiRoutes.MLBMets)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.MLBMets)) });
 };
+
+export const useRefetchMLBMetsByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.MLBMets)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.MLBMets)) });
+};

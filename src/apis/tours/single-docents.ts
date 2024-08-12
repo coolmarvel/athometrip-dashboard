@@ -21,3 +21,7 @@ export const useUpdateSingleDocents = () => {
 export const useResetSingleDocents = () => {
   return usePost(`${toUrl(ApiRoutes.SingleDocents)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.SingleDocents)) });
 };
+
+export const useRefetchSingleDocentsByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.SingleDocents)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.SingleDocents)) });
+};

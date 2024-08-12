@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
 import { EllisIslandByPage } from '@/containers';
-import { useResetEllisIsland } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { useRefetchEllisIslandByPage, useResetEllisIsland } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
+import { toUrl } from '@/utils';
+import { ApiRoutes } from '@/constants';
 
 const EllisIslandPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetEllisIsland } = useResetEllisIsland();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.EllisIsland));
+  const { mutate: refetchEllisIsland, isLoading } = useRefetchEllisIslandByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const EllisIslandPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchEllisIsland} />
               <DatePickerOptions setMutate={resetEllisIsland} />
               <PageOptions />
             </Flex>

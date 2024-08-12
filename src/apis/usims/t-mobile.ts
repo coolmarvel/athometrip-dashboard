@@ -16,3 +16,7 @@ export const useGetTMobile = (id?: number) => {
 export const useResetTMobile = () => {
   return usePost(`${toUrl(ApiRoutes.TMobile)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.TMobile)) });
 };
+
+export const useRefetchTMobileByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.TMobile)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.TMobile)) });
+};

@@ -16,3 +16,7 @@ export const useGetH2OEsim = (id?: number) => {
 export const useResetH2OEsim = () => {
   return usePost(`${toUrl(ApiRoutes.H2OEsim)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.H2OEsim)) });
 };
+
+export const useRefetchH2OEsimByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.H2OEsim)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.H2OEsim)) });
+};

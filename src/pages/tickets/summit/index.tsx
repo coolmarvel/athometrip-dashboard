@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchSummitByPage, useResetSummit } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { SummitByPage } from '@/containers';
-import { useResetSummit } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const SummitPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetSummit } = useResetSummit();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.Summit));
+  const { mutate: refetchSummit, isLoading } = useRefetchSummitByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const SummitPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchSummit} />
               <DatePickerOptions setMutate={resetSummit} />
               <PageOptions />
             </Flex>

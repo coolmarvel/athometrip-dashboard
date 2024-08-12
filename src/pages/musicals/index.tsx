@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
 import { MusicalsByPage } from '@/containers';
-import { useResetMusicals } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { useRefetchMusicalsByPage, useResetMusicals } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
+import { toUrl } from '@/utils';
+import { ApiRoutes } from '@/constants';
 
 const MusicalsPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetMusicals } = useResetMusicals();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.Musicals));
+  const { mutate: refetchMusicals, isLoading } = useRefetchMusicalsByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const MusicalsPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchMusicals} />
               <DatePickerOptions setMutate={resetMusicals} />
               <PageOptions />
             </Flex>

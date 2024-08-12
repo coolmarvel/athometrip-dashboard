@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchWashingtonDCByPage, useResetWashingtonDC } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { WashingtonDCByPage } from '@/containers';
-import { useResetWashingtonDC } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const WashingtonDCPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetWashingtonDC } = useResetWashingtonDC();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.WashingtonDC));
+  const { mutate: refetchWashingtonDC, isLoading } = useRefetchWashingtonDCByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const WashingtonDCPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchWashingtonDC} />
               <DatePickerOptions setMutate={resetWashingtonDC} />
               <PageOptions />
             </Flex>

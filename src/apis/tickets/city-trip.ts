@@ -16,3 +16,7 @@ export const useUpdateCityTrip = () => {
 export const useResetCityTrip = () => {
   return usePost(`${toUrl(ApiRoutes.CityTrip)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.CityTrip)) });
 };
+
+export const useRefetchCityTripByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.CityTrip)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.CityTrip)) });
+};

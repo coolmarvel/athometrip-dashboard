@@ -16,3 +16,7 @@ export const useGetEmpire = (id?: number) => {
 export const useResetEmpire = () => {
   return usePost(`${toUrl(ApiRoutes.Empire)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.Empire)) });
 };
+
+export const useRefetchEmpireByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.Empire)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.Empire)) });
+};

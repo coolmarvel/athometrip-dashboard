@@ -21,3 +21,7 @@ export const useUpdateMomaDocent = () => {
 export const useResetMomaDocent = () => {
   return usePost(`${toUrl(ApiRoutes.MomaDocent)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.MomaDocent)) });
 };
+
+export const useRefetchMomaDocentByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.MomaDocent)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.MomaDocent)) });
+};

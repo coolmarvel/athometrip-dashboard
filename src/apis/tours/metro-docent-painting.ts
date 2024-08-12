@@ -21,3 +21,7 @@ export const useUpdateMetroDocentPainting = () => {
 export const useResetMetroDocentPainting = () => {
   return usePost(`${toUrl(ApiRoutes.MetroDocentPainting)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.MetroDocentPainting)) });
 };
+
+export const useRefetchMetroDocentPaintingByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.MetroDocentPainting)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.MetroDocentPainting)) });
+};

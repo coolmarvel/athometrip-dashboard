@@ -21,3 +21,7 @@ export const useUpdateLandmark = () => {
 export const useResetLandmark = () => {
   return usePost(`${toUrl(ApiRoutes.Landmark)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.Landmark)) });
 };
+
+export const useRefetchLandmarkByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.Landmark)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.Landmark)) });
+};

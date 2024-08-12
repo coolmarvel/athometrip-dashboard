@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchToEWRByPage, useResetToEWR } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { ToEWRByPage } from '@/containers';
-import { useSafePush } from '@/hooks';
-import { useResetToEWR } from '@/apis';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const ToEWRPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetToEWR } = useResetToEWR();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.ToEWR));
+  const { mutate: refetchToEWR, isLoading } = useRefetchToEWRByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const ToEWRPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchToEWR} />
               <DatePickerOptions setMutate={resetToEWR} />
               <PageOptions />
             </Flex>

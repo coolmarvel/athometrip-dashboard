@@ -21,3 +21,7 @@ export const useUpdateMusicals = () => {
 export const useResetMusicals = () => {
   return usePost(`${toUrl(ApiRoutes.Musicals)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.Musicals)) });
 };
+
+export const useRefetchMusicalsByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.Musicals)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.TopOfTheRock)) });
+};

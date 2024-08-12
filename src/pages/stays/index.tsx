@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchStaysByPage, useResetStays } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { StaysByPage } from '@/containers';
-import { useResetStays } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const StaysPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetStays } = useResetStays();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.Stays));
+  const { mutate: refetchStays, isLoading } = useRefetchStaysByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const StaysPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchStays} />
               <DatePickerOptions setMutate={resetStays} />
               <PageOptions />
             </Flex>

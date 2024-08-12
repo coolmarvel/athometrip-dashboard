@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchWollmanByPage, useResetWollman } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { WollmanByPage } from '@/containers';
-import { useResetWollman } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const WollmanPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetWollman } = useResetWollman();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.Wollman));
+  const { mutate: refetchWollman, isLoading } = useRefetchWollmanByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const WollmanPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchWollman} />
               <DatePickerOptions setMutate={resetWollman} />
               <PageOptions />
             </Flex>

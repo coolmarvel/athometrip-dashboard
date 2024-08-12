@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchToJFKNightByPage, useResetToJFKNight } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { ToJFKNightByPage } from '@/containers';
-import { useResetToJFKNight } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const ToJFKNightPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetToJFKNight } = useResetToJFKNight();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.ToJFKNight));
+  const { mutate: refetchToJFKNight, isLoading } = useRefetchToJFKNightByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const ToJFKNightPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchToJFKNight} />
               <DatePickerOptions setMutate={resetToJFKNight} />
               <PageOptions />
             </Flex>

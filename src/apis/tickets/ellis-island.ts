@@ -21,3 +21,7 @@ export const useUpdateEllisIsland = () => {
 export const useResetEllisIsland = () => {
   return usePost(`${toUrl(ApiRoutes.EllisIsland)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.EllisIsland)) });
 };
+
+export const useRefetchEllisIslandByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.EllisIsland)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.EllisIsland)) });
+};

@@ -24,8 +24,8 @@ const usePagination = () => {
       limit: QueryParser.toNumber(router.query.limit) ?? 10,
       sort: QueryParser.toString(router.query.sort) ?? '',
       order: (QueryParser.toString(router.query.order) ?? 'desc') as Order,
-      after: QueryParser.toString(router.query.after) ?? format(subWeeks(new Date(), 1), 'yyyy-MM-dd', { locale: ko }),
-      before: QueryParser.toString(router.query.before) ?? format(new Date(), 'yyyy-MM-dd', { locale: ko }),
+      after: QueryParser.toString(router.query?.after ?? format(subWeeks(new Date(), 1), 'yyyy-MM-dd', { locale: ko })),
+      before: QueryParser.toString(router.query?.before ?? format(new Date(), 'yyyy-MM-dd', { locale: ko })),
     };
   }, [router.query]);
 

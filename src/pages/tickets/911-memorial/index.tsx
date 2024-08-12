@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchMemorial911ByPage, useReset911Memorial } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { Memorial911ByPage } from '@/containers';
-import { useReset911Memorial } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const Memorial911Pages = () => {
   const { router, push } = useSafePush();
   const { mutate: reset911Memorial } = useReset911Memorial();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.Memorial911));
+  const { mutate: refetchMemorial911, isLoading } = useRefetchMemorial911ByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const Memorial911Pages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchMemorial911} />
               <DatePickerOptions setMutate={reset911Memorial} />
               <PageOptions />
             </Flex>

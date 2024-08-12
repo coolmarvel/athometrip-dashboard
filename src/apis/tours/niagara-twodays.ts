@@ -21,3 +21,7 @@ export const useUpdateNiagaraTwoDays = () => {
 export const useResetNiagaraTwoDays = () => {
   return usePost(`${toUrl(ApiRoutes.NiagaraTwoDays)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.NiagaraTwoDays)) });
 };
+
+export const useRefetchNiagaraTwoDaysByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.NiagaraTwoDays)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.NiagaraTwoDays)) });
+};

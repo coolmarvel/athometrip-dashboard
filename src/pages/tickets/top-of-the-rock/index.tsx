@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
 import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search, RefetchButton } from '@/components';
+import { useRefetchTopOfTheRockByPage, useResetTopOfTheRock } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { TopOfTheRockByPage } from '@/containers';
-import { useResetTopOfTheRock } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const TopOfTheRockPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetTopOfTheRock } = useResetTopOfTheRock();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.TopOfTheRock));
+  const { mutate: refetchTopOfTheRock, isLoading } = useRefetchTopOfTheRockByPage(queryKeyParams);
 
   return (
     <>
@@ -21,7 +26,7 @@ const TopOfTheRockPages = () => {
               }}
             />
             <Flex gap={'4'}>
-              <RefetchButton />
+              <RefetchButton isLoading={isLoading} setMutate={refetchTopOfTheRock} />
               <DatePickerOptions setMutate={resetTopOfTheRock} />
               <PageOptions />
             </Flex>

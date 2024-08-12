@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchGuggenheimDocentByPage, useResetGuggenheimDocent } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { GuggenheimDocentByPage } from '@/containers';
-import { useResetGuggenheimDocent } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const GuggenheimDocentPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetGuggenheimDocent } = useResetGuggenheimDocent();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.GuggenheimDocent));
+  const { mutate: refetchGuggenheimDocent, isLoading } = useRefetchGuggenheimDocentByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const GuggenheimDocentPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchGuggenheimDocent} />
               <DatePickerOptions setMutate={resetGuggenheimDocent} />
               <PageOptions />
             </Flex>

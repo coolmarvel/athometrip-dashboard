@@ -21,3 +21,7 @@ export const useUpdateToJFKNight = () => {
 export const useResetToJFKNight = () => {
   return usePost(`${toUrl(ApiRoutes.ToJFKNight)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.ToJFKNight)) });
 };
+
+export const useRefetchToJFKNightByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.ToJFKNight)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.ToJFKNight)) });
+};

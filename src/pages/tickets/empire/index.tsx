@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchEmpireByPage, useResetEmpire } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { EmpireByPage } from '@/containers';
-import { useResetEmpire } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const EmpirePages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetEmpire } = useResetEmpire();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.Empire));
+  const { mutate: refetchEmpire, isLoading } = useRefetchEmpireByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const EmpirePages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchEmpire} />
               <DatePickerOptions setMutate={resetEmpire} />
               <PageOptions />
             </Flex>

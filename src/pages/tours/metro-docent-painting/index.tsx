@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchMetroDocentPaintingByPage, useResetMetroDocentPainting } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { MetroDocentPaintingByPage } from '@/containers';
-import { useResetMetroDocentPainting } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const MetroDocentPaintingPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetMetroDocentPainting } = useResetMetroDocentPainting();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.MetroDocentPainting));
+  const { mutate: refetchMetroDocentPainting, isLoading } = useRefetchMetroDocentPaintingByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const MetroDocentPaintingPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchMetroDocentPainting} />
               <DatePickerOptions setMutate={resetMetroDocentPainting} />
               <PageOptions />
             </Flex>

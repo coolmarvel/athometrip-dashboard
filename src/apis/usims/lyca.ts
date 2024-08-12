@@ -16,3 +16,7 @@ export const useGetLyca = (id?: number) => {
 export const useResetLyca = () => {
   return usePost(`${toUrl(ApiRoutes.Lyca)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.Lyca)) });
 };
+
+export const useRefetchLycaByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.Lyca)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.Lyca)) });
+};

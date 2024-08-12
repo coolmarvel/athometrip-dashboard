@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchLandmarkByPage, useResetLandmark } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { LandmarkByPage } from '@/containers';
-import { useResetLandmark } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const LandmarkPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetLandmark } = useResetLandmark();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.Landmark));
+  const { mutate: refetchLandmark, isLoading } = useRefetchLandmarkByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const LandmarkPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchLandmark} />
               <DatePickerOptions setMutate={resetLandmark} />
               <PageOptions />
             </Flex>

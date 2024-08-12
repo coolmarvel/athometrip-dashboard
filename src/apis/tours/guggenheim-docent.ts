@@ -21,3 +21,7 @@ export const useUpdateGuggenheimDocent = () => {
 export const useResetGuggenheimDocent = () => {
   return usePost(`${toUrl(ApiRoutes.GuggenheimDocent)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.GuggenheimDocent)) });
 };
+
+export const useRefetchGuggenheimDocentByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.GuggenheimDocent)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.GuggenheimDocent)) });
+};

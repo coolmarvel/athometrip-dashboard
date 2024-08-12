@@ -21,3 +21,7 @@ export const useUpdateBoston = () => {
 export const useResetBoston = () => {
   return usePost(`${toUrl(ApiRoutes.Boston)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.Boston)) });
 };
+
+export const useRefetchBostonByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.Boston)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.Boston)) });
+};

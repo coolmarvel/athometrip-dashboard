@@ -21,3 +21,7 @@ export const useUpdateAMNHDocent = () => {
 export const useResetAMNHDocent = () => {
   return usePost(`${toUrl(ApiRoutes.AMNHDocent)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.AMNHDocent)) });
 };
+
+export const useRefetchAMNHDocentByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.AMNHDocent)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.AMNHDocent)) });
+};

@@ -21,3 +21,7 @@ export const useUpdateToEWR = () => {
 export const useResetToEWR = () => {
   return usePost(`${toUrl(ApiRoutes.ToEWR)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.ToEWR)) });
 };
+
+export const useRefetchToEWRByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.ToEWR)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.ToEWR)) });
+};

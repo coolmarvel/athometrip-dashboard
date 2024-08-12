@@ -21,3 +21,7 @@ export const useUpdateNiagaraOneDayKingKong = () => {
 export const useResetNiagaraOneDayKingKong = () => {
   return usePost(`${toUrl(ApiRoutes.NiagaraOneDayKingKong)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.NiagaraOneDayKingKong)) });
 };
+
+export const useRefetchNiagaraOneDayKingKongByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.NiagaraOneDayKingKong)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.NiagaraOneDayKingKong)) });
+};

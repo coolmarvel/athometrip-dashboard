@@ -16,3 +16,7 @@ export const useGetOneWorld = (id?: number) => {
 export const useResetOneWorld = () => {
   return usePost(`${toUrl(ApiRoutes.OneWorld)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.OneWorld)) });
 };
+
+export const useRefetchOneWorldByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.OneWorld)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.OneWorld)) });
+};

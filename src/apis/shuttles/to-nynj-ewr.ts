@@ -21,3 +21,7 @@ export const useUpdateToNYNJEWR = () => {
 export const useResetToNYNJEWR = () => {
   return usePost(`${toUrl(ApiRoutes.ToNYNJEWR)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.ToNYNJEWR)) });
 };
+
+export const useRefetchToNYNJEWRByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.ToNYNJEWR)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.ToNYNJEWR)) });
+};

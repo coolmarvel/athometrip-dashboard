@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchModernByPage, useResetModern } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { ModernByPage } from '@/containers';
-import { useResetModern } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const ModernPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetModern } = useResetModern();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.Modern));
+  const { mutate: refetchModern, isLoading } = useRefetchModernByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const ModernPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchModern} />
               <DatePickerOptions setMutate={resetModern} />
               <PageOptions />
             </Flex>

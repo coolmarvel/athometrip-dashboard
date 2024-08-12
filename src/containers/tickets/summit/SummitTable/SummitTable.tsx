@@ -24,7 +24,7 @@ const SummitTable = ({ summit, isLoading }: SummitTableProps) => {
       if (!summit) return;
       openModal(SummitModal, { summit });
     },
-    [openModal],
+    [openModal]
   );
 
   const columns = useMemo(
@@ -37,24 +37,34 @@ const SummitTable = ({ summit, isLoading }: SummitTableProps) => {
       columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
       columnHelper.accessor(
         (row) => {
-          const date = convertDate(row.tour?.date_summit ?? row.tour?.summit_night_date ?? row.line_items?.[0]?.meta_data['날짜'] ?? '').split(' ')[0];
-          const time = row.tour?.summit_daytime_time ?? row.line_items?.[0]?.meta_data['입장 희망시간(1순위)'] ?? row.tour?.summit_night_time ?? '';
+          const date = convertDate(
+            row.order.meta_data?.date_summit ?? row.order.meta_data?.summit_night_date ?? row.tour?.date_summit ?? row.tour?.summit_night_date ?? row.line_items?.[0]?.meta_data['날짜'] ?? ''
+          ).split(' ')[0];
+          const time =
+            row.order.meta_data?.summit_daytime_time ??
+            row.order.meta_data?.summit_night_time ??
+            row.tour?.summit_daytime_time ??
+            row.line_items?.[0]?.meta_data['입장 희망시간(1순위)'] ??
+            row.tour?.summit_night_time ??
+            '';
 
           return `${date} ${time}`;
         },
-        { header: t('schedule(1)') },
+        { header: t('schedule(1)') }
       ),
       columnHelper.accessor(
         (row) => {
-          const date = convertDate(row.tour?.date_summit ?? row.tour?.summit_night_date ?? row.line_items?.[0]?.meta_data['날짜'] ?? '').split(' ')[0];
-          const time = row.tour?.summit_night_time ?? row.line_items?.[0]?.meta_data['입장 희망시간(2순위)'] ?? row.tour?.summ_time_2 ?? '';
+          const date = convertDate(
+            row.order.meta_data?.date_summit ?? row.order.meta_data?.summit_night_date ?? row.tour?.date_summit ?? row.tour?.summit_night_date ?? row.line_items?.[0]?.meta_data['날짜'] ?? ''
+          ).split(' ')[0];
+          const time = row.tour?.summit_night_time ?? row.order.meta_data?.summ_time_2 ?? row.line_items?.[0]?.meta_data['입장 희망시간(2순위)'] ?? row.tour?.summ_time_2 ?? '';
 
           return `${date} ${time}`;
         },
-        { header: t('schedule(2)') },
+        { header: t('schedule(2)') }
       ),
     ],
-    [convertDate, t],
+    [convertDate, t]
   );
 
   const table = useReactTable({ data: summit, columns, getCoreRowModel: getCoreRowModel() });

@@ -21,3 +21,7 @@ export const useUpdateWoodbury = () => {
 export const useResetWoodbury = () => {
   return usePost(`${toUrl(ApiRoutes.Woodbury)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.Woodbury)) });
 };
+
+export const useRefetchWoodburyByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.Woodbury)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.Woodbury)) });
+};

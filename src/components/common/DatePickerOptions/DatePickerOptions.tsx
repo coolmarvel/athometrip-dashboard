@@ -1,8 +1,8 @@
-import { useSafePush } from '@/hooks';
 import { RangeDatepicker } from 'chakra-dayzed-datepicker';
-import { format, subWeeks } from 'date-fns';
+import { useCallback, useState } from 'react';
+import { useSafePush } from '@/hooks';
 import { ko } from 'date-fns/locale';
-import { useState } from 'react';
+import { format, subWeeks } from 'date-fns';
 
 interface DatePickerOptionsProps {
   setMutate: () => void;
@@ -11,19 +11,20 @@ interface DatePickerOptionsProps {
 const DatePickerOptions = ({ setMutate }: DatePickerOptionsProps) => {
   const { router, push } = useSafePush();
 
-  const after = new Date(router.query?.after !== undefined ? (router.query?.after as string) : subWeeks(new Date(), 1));
-  const before = new Date(router.query?.before !== undefined ? (router.query?.before as string) : new Date());
-  const [selectedDates, setSelectedDates] = useState<Date[]>([after, before]);
+  const after = router.query?.after as string ?? subWeeks(new Date(), 1).toISOString().split('T')[0];
+  const before = router.query?.before as string ?? new Date().toISOString().split('T')[0];
+  const [selectedDates, setSelectedDates] = useState<Date[]>([new Date(after), new Date(before)]);
 
-  const handleDateChange = (dates: Date[]) => {
+  const handleDateChange = useCallback((dates: Date[]) => {
     setSelectedDates(dates);
 
     if (dates.length === 2) {
       setMutate();
+
       const formattedDates = dates.map((date) => format(date, 'yyyy-MM-dd', { locale: ko }));
       push({ query: { ...router.query, after: formattedDates[0], before: formattedDates[1] } });
     }
-  };
+  }, [push, router.query, setMutate]);
 
   return <RangeDatepicker selectedDates={selectedDates} onDateChange={handleDateChange} />;
 };

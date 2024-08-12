@@ -6,7 +6,7 @@ const useConvertDate = () => {
     if (!value) return '';
 
     // 다양한 날짜 형식을 처리할 수 있는 파싱 로직
-    const dateFormats = ['MM/dd/yy', 'dd/MM/yy', "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"];
+    const dateFormats = ['yyyy/MM/dd', 'MM/dd/yy', 'dd/MM/yy', "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"];
     let date: Date | null = null; // null로 초기화
 
     // 여러 날짜 형식을 시도하며 파싱

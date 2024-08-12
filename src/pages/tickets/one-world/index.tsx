@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchOneWorldByPage, useResetOneWorld } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { OneWorldByPage } from '@/containers';
-import { useResetOneWorld } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const OneWorldPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetOneWorld } = useResetOneWorld();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.OneWorld));
+  const { mutate: refetchOneWorld, isLoading } = useRefetchOneWorldByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const OneWorldPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchOneWorld} />
               <DatePickerOptions setMutate={resetOneWorld} />
               <PageOptions />
             </Flex>

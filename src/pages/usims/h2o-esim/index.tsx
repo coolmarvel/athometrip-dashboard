@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchH2OEsimByPage, useResetH2OEsim } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { H2OEsimByPage } from '@/containers';
-import { useResetH2OEsim } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const H2OEsimPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetH2OEsim } = useResetH2OEsim();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.H2OEsim));
+  const { mutate: refetchH2OEsim, isLoading } = useRefetchH2OEsimByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const H2OEsimPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchH2OEsim} />
               <DatePickerOptions setMutate={resetH2OEsim} />
               <PageOptions />
             </Flex>

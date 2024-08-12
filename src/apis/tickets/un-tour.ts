@@ -16,3 +16,7 @@ export const useGetUNTour = (id?: number) => {
 export const useResetUNTour = () => {
   return usePost(`${toUrl(ApiRoutes.UNTour)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.UNTour)) });
 };
+
+export const useRefetchUNTourByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.UNTour)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.UNTour)) });
+};

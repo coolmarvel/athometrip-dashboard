@@ -25,8 +25,8 @@ const refetchTopOfTheRock = async (req: NextApiRequest, res: NextApiResponse) =>
     const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
     await setValue(key, data);
 
-    return res.status(200).send({ data: [], message: 'Successfully refetch top-of-the-rock posts' });
+    return res.status(200).send({ data: [], message: `Successfully refetch ${ticketName}` });
   } catch {
-    return res.status(500).send({ data: null, message: 'Failed to refetch top-of-the-rock posts' });
+    return res.status(500).send({ data: null, message: `Failed to refetch ${ticketName}` });
   }
 };

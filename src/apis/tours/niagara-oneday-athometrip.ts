@@ -21,3 +21,7 @@ export const useUpdateNiagaraOneDayAthometrip = () => {
 export const useResetNiagaraOneDayAthometrip = () => {
   return usePost(`${toUrl(ApiRoutes.NiagaraOneDayAthometrip)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.NiagaraOneDayAthometrip)) });
 };
+
+export const useRefetchNiagaraOneDayAthometripByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.NiagaraOneDayAthometrip)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.NiagaraOneDayAthometrip)) });
+};

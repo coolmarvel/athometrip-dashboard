@@ -21,3 +21,7 @@ export const useUpdateVintage = () => {
 export const useResetVintage = () => {
   return usePost(`${toUrl(ApiRoutes.Vintage)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.Vintage)) });
 };
+
+export const useRefetchVintageByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.Vintage)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.Vintage)) });
+};

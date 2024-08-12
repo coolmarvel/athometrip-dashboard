@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchSingleDocentsByPage, useResetSingleDocents } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { SingleDocentsByPage } from '@/containers';
-import { useResetSingleDocents } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const SingleDocentsPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetSingleDocents } = useResetSingleDocents();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.SingleDocents));
+  const { mutate: refetchSingleDocents, isLoading } = useRefetchSingleDocentsByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const SingleDocentsPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchSingleDocents} />
               <DatePickerOptions setMutate={resetSingleDocents} />
               <PageOptions />
             </Flex>

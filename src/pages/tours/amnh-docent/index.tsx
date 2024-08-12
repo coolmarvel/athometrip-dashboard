@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchAMNHDocentByPage, useResetAMNHDocent } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { AMNHDocentByPage } from '@/containers';
-import { useResetAMNHDocent } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const AMNHDocentPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetAMNHDocent } = useResetAMNHDocent();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.AMNHDocent));
+  const { mutate: refetchAMNHDocent, isLoading } = useRefetchAMNHDocentByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const AMNHDocentPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchAMNHDocent} />
               <DatePickerOptions setMutate={resetAMNHDocent} />
               <PageOptions />
             </Flex>

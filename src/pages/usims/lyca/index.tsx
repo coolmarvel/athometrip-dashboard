@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
 import { LycaByPage } from '@/containers';
-import { useResetLyca } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { useRefetchLycaByPage, useResetLyca } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
+import { toUrl } from '@/utils';
+import { ApiRoutes } from '@/constants';
 
 const LycaPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetLyca } = useResetLyca();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.Lyca));
+  const { mutate: refetchLyca, isLoading } = useRefetchLycaByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const LycaPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchLyca} />
               <DatePickerOptions setMutate={resetLyca} />
               <PageOptions />
             </Flex>

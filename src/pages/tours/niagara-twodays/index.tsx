@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchNiagaraTwoDaysByPage, useResetNiagaraTwoDays } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { NiagaraTwoDaysByPage } from '@/containers';
-import { useResetNiagaraTwoDays } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const NiagaraTwoDaysPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetNiagaraTwoDays } = useResetNiagaraTwoDays();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.NiagaraTwoDays));
+  const { mutate: refetchNiagaraTwoDays, isLoading } = useRefetchNiagaraTwoDaysByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const NiagaraTwoDaysPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchNiagaraTwoDays} />
               <DatePickerOptions setMutate={resetNiagaraTwoDays} />
               <PageOptions />
             </Flex>

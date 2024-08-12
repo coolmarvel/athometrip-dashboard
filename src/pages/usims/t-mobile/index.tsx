@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, PageOptions, ResponsiveLayout, Search, ModeOptions, RegionOptions, GaiaHead } from '@/components';
+import { DatePickerOptions, PageOptions, ResponsiveLayout, Search, ModeOptions, RegionOptions, GaiaHead, RefetchButton } from '@/components';
+import { useRefetchTMobileByPage, useResetTMobile } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { TMobileByPage } from '@/containers';
-import { useResetTMobile } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const TMobilePages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetTMobile } = useResetTMobile();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.TMobile));
+  const { mutate: refetchTMobile, isLoading } = useRefetchTMobileByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const TMobilePages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchTMobile} />
               <DatePickerOptions setMutate={resetTMobile} />
               <RegionOptions />
               <ModeOptions />

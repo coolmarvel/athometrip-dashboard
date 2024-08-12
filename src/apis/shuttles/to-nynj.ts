@@ -21,3 +21,7 @@ export const useUpdateToNYNJ = () => {
 export const useResetToNYNJ = () => {
   return usePost(`${toUrl(ApiRoutes.ToNYNJ)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.ToNYNJ)) });
 };
+
+export const useRefetchToNYNJByPage = (params?: object) => {
+  return usePost<any>(`${toUrl(ApiRoutes.ToNYNJ)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.ToNYNJ)) });
+};

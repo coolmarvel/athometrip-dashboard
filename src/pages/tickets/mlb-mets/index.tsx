@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react';
 
-import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search } from '@/components';
+import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
+import { useRefetchMLBMetsByPage, useResetMLBMets } from '@/apis';
+import { useQueryKeyParams, useSafePush } from '@/hooks';
 import { MLBMetsByPage } from '@/containers';
-import { useResetMLBMets } from '@/apis';
-import { useSafePush } from '@/hooks';
+import { ApiRoutes } from '@/constants';
+import { toUrl } from '@/utils';
 
 const MLBMetsPages = () => {
   const { router, push } = useSafePush();
   const { mutate: resetMLBMets } = useResetMLBMets();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.MLBMets));
+  const { mutate: refetchMLBMets, isLoading } = useRefetchMLBMetsByPage(queryKeyParams);
 
   return (
     <>
@@ -21,6 +26,7 @@ const MLBMetsPages = () => {
               }}
             />
             <Flex gap={'4'}>
+              <RefetchButton isLoading={isLoading} setMutate={refetchMLBMets} />
               <DatePickerOptions setMutate={resetMLBMets} />
               <PageOptions />
             </Flex>
