@@ -1,11 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { RiLoginBoxLine, RiLogoutBoxRLine } from 'react-icons/ri';
+import { Center, Flex, Icon, IconButton, Text, Tooltip } from '@chakra-ui/react';
+
+import { toUrl } from '@/utils';
 import { useSafePush } from '@/hooks';
 import { useGetMe, useSignout } from '@/apis';
-import { useTranslation } from 'react-i18next';
-import { Center, Flex, Icon, IconButton, Text, Tooltip } from '@chakra-ui/react';
 import { PageRoutes, styles } from '@/constants';
-import { RiLoginBoxLine, RiLogoutBoxRLine } from 'react-icons/ri';
-import { toUrl } from '@/utils';
 
 interface SidebarFooterProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;

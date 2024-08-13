@@ -13,7 +13,7 @@ const LanguageToggle = () => {
       i18n.changeLanguage(language);
       localStorage.setItem('language', language);
     },
-    [i18n],
+    [i18n]
   );
 
   const handleToggle = useCallback(() => {

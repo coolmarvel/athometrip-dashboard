@@ -6,12 +6,12 @@ import { toUrl } from '@/utils';
 import { Logo } from '@/components';
 import { useSafePush } from '@/hooks';
 import { PageRoutes } from '@/constants';
-import { ColorToggle, LanguageToggle } from '@/components/layouts/Sidebar/Toggle';
+import { ColorToggle, LanguageToggle } from './Toggle';
 
 interface SidebarHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
   rtl: boolean;
-  colorMode: 'light' | 'dark',
+  colorMode: 'light' | 'dark';
   toggleColorMode: () => void;
 }
 

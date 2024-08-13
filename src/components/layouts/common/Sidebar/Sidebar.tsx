@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, useColorMode } from '@chakra-ui/react';
 import { Sidebar as SideBar, Menu, menuClasses, MenuItemStyles } from 'react-pro-sidebar';
 
 import { SidebarHeader } from './SidebarHeader';
 import { SidebarFooter } from './SidebarFooter';
 import { Typography } from './components/Typography';
-import { Navbar } from '@/components/layouts/common/Sidebar/Navbar';
-import { CollapseToggle } from '@/components/layouts/Sidebar/Toggle';
-import { useTranslation } from 'react-i18next';
+import { Navbar, CollapseToggle } from '@/components/layouts/common/Sidebar';
+import { musicalsNav, Nav, shuttlesNav, snapsNav, staysNav, systemsNav, ticketsNav, toursNav, toursSuburbsNav, usimsNav } from '@/constants';
 
 type Theme = 'light' | 'dark';
 
@@ -42,6 +42,7 @@ const hexToRgba = (hex: string, alpha: number) => {
 };
 
 const Sidebar: React.FC = () => {
+  const { t } = useTranslation();
   const { colorMode, toggleColorMode } = useColorMode();
   const [theme, setTheme] = React.useState<Theme>(localStorage.getItem('chakra-ui-color-mode') as Theme);
 
@@ -51,7 +52,8 @@ const Sidebar: React.FC = () => {
   const [hasImage, setHasImage] = React.useState(false);
   const [collapsed, setCollapsed] = React.useState(false);
 
-  const { t } = useTranslation();
+  const generalNavs: Nav[] = [ticketsNav, usimsNav, toursNav, toursSuburbsNav, shuttlesNav, snapsNav, staysNav, musicalsNav];
+  const extraNavs: Nav[] = [systemsNav];
 
   useEffect(() => {
     setTheme(colorMode);
@@ -101,7 +103,7 @@ const Sidebar: React.FC = () => {
               </div>
 
               <Menu menuItemStyles={menuItemStyles}>
-                <Navbar />
+                <Navbar navs={generalNavs} />
               </Menu>
 
               <div style={{ padding: '0 24px', marginBottom: '8px', marginTop: '32px' }}>
@@ -109,6 +111,10 @@ const Sidebar: React.FC = () => {
                   {t('Extra')}
                 </Typography>
               </div>
+
+              <Menu menuItemStyles={menuItemStyles}>
+                <Navbar navs={extraNavs} />
+              </Menu>
             </div>
 
             <SidebarFooter collapsed={collapsed} />

@@ -2,9 +2,13 @@ import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import NavbarTab from './NavbarTab';
-import { findNavInHierarchy, navs } from '@/constants';
+import { findNavInHierarchy, Nav } from '@/constants';
 
-const Navbar = () => {
+interface NavbarProps {
+  navs: Nav[];
+}
+
+const Navbar = ({ navs }: NavbarProps) => {
   const router = useRouter();
   const hierarchy = useMemo(() => findNavInHierarchy(router.pathname), [router.pathname]);
 

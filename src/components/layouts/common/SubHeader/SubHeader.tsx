@@ -1,11 +1,12 @@
-import { PageRoutes, findNavInHierarchy } from '@/constants';
-import { useSafePush } from '@/hooks';
-import { toUrl } from '@/utils';
-import { Link } from '@chakra-ui/next-js';
-import { Flex, Icon, Text } from '@chakra-ui/react';
 import { useMemo } from 'react';
+import { Link } from '@chakra-ui/next-js';
 import { useTranslation } from 'react-i18next';
+import { Flex, Icon, Text } from '@chakra-ui/react';
+import { PageRoutes, findNavInHierarchy } from '@/constants';
 import { MdHome, MdKeyboardArrowRight } from 'react-icons/md';
+
+import { toUrl } from '@/utils';
+import { useSafePush } from '@/hooks';
 
 const SubHeader = () => {
   const { router, push } = useSafePush();
@@ -25,9 +26,7 @@ const SubHeader = () => {
             <Flex key={nav.label} gap={'2'} align={'center'}>
               {idx !== hierarchy.length - 1 ? (
                 <>
-                  <Link href={{ pathname: nav.pathname, query: nav.query }} fontSize={'sm'}>
-                    <Text>{t(nav.label)}</Text>
-                  </Link>
+                  <Text fontSize={'sm'}>{t(nav.label)}</Text>
                   {idx !== hierarchy.length - 1 && <Icon as={MdKeyboardArrowRight} />}
                 </>
               ) : (

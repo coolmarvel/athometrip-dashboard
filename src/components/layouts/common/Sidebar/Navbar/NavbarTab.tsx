@@ -1,10 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { MenuItem, SubMenu } from 'react-pro-sidebar';
 
 import { Nav } from '@/constants';
 import { useSafePush } from '@/hooks';
-import { BarChart } from '@/components/layouts/Sidebar/icons/BarChart';
-import { useTranslation } from 'react-i18next';
+import { BarChart } from '../icons/BarChart';
 
 interface NavbarTabProps {
   nav: Nav;
