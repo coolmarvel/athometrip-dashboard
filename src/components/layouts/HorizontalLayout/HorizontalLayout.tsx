@@ -1,6 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 
-import { Sidebar, SubHeader } from '../common';
+import { Sidebar } from '../common';
+import { HorizontalLayoutHeader } from './HorizontalLayoutHeader';
 
 interface HorizontalLayoutProps {
   children?: React.ReactNode;
@@ -8,13 +9,11 @@ interface HorizontalLayoutProps {
 
 const HorizontalLayout = ({ children }: HorizontalLayoutProps) => {
   return (
-    <Flex>
-      <Sidebar />
-      <Flex flex={1} direction={'column'} p={'8'} gap={'4'} maxH={'100vh'} overflow={'hidden'}>
-        <Flex justify="start" align="center">
-          <SubHeader />
-        </Flex>
-        <Flex as={'main'} flex={1} direction={'column'} overflowY={'auto'} p={'0.5'}>
+    <Flex direction="column" minH="100vh">
+      <Flex>
+        <Sidebar />
+        <Flex as={'main'} flex={1} direction="column" p={2} gap={4} overflowY="auto">
+          <HorizontalLayoutHeader />
           {children}
         </Flex>
       </Flex>

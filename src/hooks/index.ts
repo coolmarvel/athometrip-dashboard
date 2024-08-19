@@ -8,3 +8,4 @@ export { default as useQueryKeyParams } from './useQueryKeyParams';
 export { default as useSafePush } from './useSafePush';
 export { default as useShallow } from './useShallow';
 export { default as useConvertDate } from './useConvertDate';
+export { default as useSidebar } from './useSidebar';

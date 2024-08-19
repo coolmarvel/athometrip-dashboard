@@ -1,12 +1,11 @@
 import React from 'react';
 import { AiOutlineHome } from 'react-icons/ai';
-import { Box, Center, Flex, IconButton, Tooltip } from '@chakra-ui/react';
+import { Box, Center, IconButton, Tooltip } from '@chakra-ui/react';
 
 import { toUrl } from '@/utils';
 import { Logo } from '@/components';
 import { useSafePush } from '@/hooks';
 import { PageRoutes } from '@/constants';
-import { ColorToggle, LanguageToggle } from './Toggle';
 
 interface SidebarHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
@@ -28,10 +27,6 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({ children, rtl, col
           <IconButton aria-label={'home'} icon={<AiOutlineHome />} onClick={() => push(toUrl(PageRoutes.Home))} />
         </Tooltip>
       </Box>
-      <Flex gap={'2'} direction={{ base: 'row', lg: 'column', xl: 'row' }}>
-        <ColorToggle colorMode={colorMode} toggleColorMode={toggleColorMode} />
-        <LanguageToggle />
-      </Flex>
     </Center>
   );
 };

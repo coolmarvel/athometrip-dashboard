@@ -9,3 +9,7 @@ export { systemsNav } from './systems';
 export { musicalsNav } from './musicals';
 export { shuttlesNav } from './shuttles';
 export { toursSuburbsNav } from './tours-suburbs';
+
+// TEST
+export { postsNav } from './posts';
+export { usersNav } from './users';

@@ -14,9 +14,13 @@ const CollapseToggle: React.FC<CollapseToggleProps> = ({ collapsed, setCollapsed
       icon={collapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
       onClick={() => setCollapsed(!collapsed)}
       position="absolute"
-      top="100px"
-      right={collapsed ? '-17px' : '-17px'}
+      top="10"
+      right="-4"
       zIndex="overlay"
+      fontSize="2xl"
+      border="4px"
+      borderColor="currentColor"
+      borderRadius="full"
     />
   );
 };

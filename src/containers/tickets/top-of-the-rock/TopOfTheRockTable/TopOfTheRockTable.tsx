@@ -5,6 +5,7 @@ import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/re
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TopOfTheRockModal } from '../TopOfTheRockModal';
+import { Box, Checkbox } from '@chakra-ui/react';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -24,12 +25,29 @@ const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) 
       if (!topOfTheRock) return;
       openModal(TopOfTheRockModal, { topOfTheRock });
     },
-    [openModal]
+    [openModal],
   );
 
   const columns = useMemo(
     () => [
-      columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
+      columnHelper.accessor('select', {
+        id: 'selection',
+        header: ({ table }) => (
+          <Checkbox
+            isChecked={table.getIsAllRowsSelected()}
+            onChange={table.getToggleAllRowsSelectedHandler()}
+            aria-label="Select all rows"
+          />
+        ),
+        cell: ({ row }) => (
+          <Checkbox
+            isChecked={row.getIsSelected()}
+            onChange={row.getToggleSelectedHandler()}
+            aria-label={`Select row ${row.id}`}
+          />
+        ),
+      }),
+      columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created_gmt', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
@@ -42,7 +60,7 @@ const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) 
 
           return `${date} ${time}`;
         },
-        { header: t('schedule(1)') }
+        { header: t('schedule(1)') },
       ),
       columnHelper.accessor(
         (row) => {
@@ -51,15 +69,16 @@ const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) 
 
           return `${date} ${time}`;
         },
-        { header: t('schedule(2)') }
+        { header: t('schedule(2)') },
       ),
     ],
-    [convertDate, t]
+    [convertDate, t],
   );
 
   const table = useReactTable({ data: topOfTheRock, columns, getCoreRowModel: getCoreRowModel() });
 
   return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
+
 };
 
 export default TopOfTheRockTable;

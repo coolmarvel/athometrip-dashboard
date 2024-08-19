@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Divider, Flex } from '@chakra-ui/react';
 
 import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search, RefetchButton } from '@/components';
 import { useRefetchTopOfTheRockByPage, useResetTopOfTheRock } from '@/apis';
@@ -20,6 +20,7 @@ const TopOfTheRockPages = () => {
       <ResponsiveLayout>
         <Flex direction={'column'} gap={'4'} h={'100%'}>
           <Flex justifyContent={'space-between'} gap={'4'} wrap={'wrap'}>
+            <Divider orientation="horizontal" />
             <Search
               onSubmit={(search) => {
                 push({ pathname: router.pathname, query: { ...router.query, search } });
@@ -31,6 +32,7 @@ const TopOfTheRockPages = () => {
               <PageOptions />
             </Flex>
           </Flex>
+          <Divider orientation="horizontal" />
           <TopOfTheRockByPage />
         </Flex>
       </ResponsiveLayout>

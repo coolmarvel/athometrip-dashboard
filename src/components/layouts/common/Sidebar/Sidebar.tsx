@@ -7,7 +7,7 @@ import { SidebarHeader } from './SidebarHeader';
 import { SidebarFooter } from './SidebarFooter';
 import { Typography } from './components/Typography';
 import { Navbar, CollapseToggle } from '@/components/layouts/common/Sidebar';
-import { musicalsNav, Nav, shuttlesNav, snapsNav, staysNav, systemsNav, ticketsNav, toursNav, toursSuburbsNav, usimsNav } from '@/constants';
+import { musicalsNav, Nav, postsNav, shuttlesNav, snapsNav, staysNav, systemsNav, ticketsNav, toursNav, toursSuburbsNav, usersNav, usimsNav } from '@/constants';
 
 type Theme = 'light' | 'dark';
 
@@ -54,6 +54,7 @@ const Sidebar: React.FC = () => {
 
   const generalNavs: Nav[] = [ticketsNav, usimsNav, toursNav, toursSuburbsNav, shuttlesNav, snapsNav, staysNav, musicalsNav];
   const extraNavs: Nav[] = [systemsNav];
+  const testNavs: Nav[] = [postsNav, usersNav];
 
   useEffect(() => {
     setTheme(colorMode);
@@ -114,6 +115,16 @@ const Sidebar: React.FC = () => {
 
               <Menu menuItemStyles={menuItemStyles}>
                 <Navbar navs={extraNavs} />
+              </Menu>
+
+              <div style={{ padding: '0 24px', marginBottom: '8px', marginTop: '32px' }}>
+                <Typography variant="body2" fontWeight={600} style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: '0.5px' }}>
+                  {t('Test')}
+                </Typography>
+              </div>
+
+              <Menu menuItemStyles={menuItemStyles}>
+                <Navbar navs={testNavs} />
               </Menu>
             </div>
 

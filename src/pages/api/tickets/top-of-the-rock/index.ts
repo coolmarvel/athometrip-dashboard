@@ -34,6 +34,7 @@ const getTopOfTheRockByPage = async (req: NextApiRequest, res: NextApiResponse) 
 
     if (tickets.length === 0) {
       const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
+      data.map((v: any) => v.id = parseInt(v.order.id, 10));
       await setValue(key, data);
 
       tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order, search as string);
