@@ -23,6 +23,7 @@ const refetchTopOfTheRock = async (req: NextApiRequest, res: NextApiResponse) =>
 
   try {
     const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
+    data.map((v: any) => (v.id = parseInt(v.order.id, 10)));
     await setValue(key, data);
 
     return res.status(200).send({ data: [], message: `Successfully refetch ${ticketName}` });

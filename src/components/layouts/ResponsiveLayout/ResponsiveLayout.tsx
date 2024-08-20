@@ -1,8 +1,9 @@
-import { useLayout } from '@/hooks';
 import { useMemo } from 'react';
-import { HorizontalLayout } from '../HorizontalLayout';
+
+import { useLayout } from '@/hooks';
 import { MobileLayout } from '../MobileLayout';
 import { VerticalLayout } from '../VerticalLayout';
+import { HorizontalLayout } from '../HorizontalLayout';
 
 interface ResponsiveLayoutProps {
   children?: React.ReactNode;

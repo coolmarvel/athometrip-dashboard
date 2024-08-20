@@ -13,13 +13,13 @@ interface DataTableProps<T> {
 const DataTable = <T, >({ table, isLoading, onRowClick }: DataTableProps<T>) => {
   return (
     <>
-      {/*<Box maxH="calc(425px)" overflowY="auto" overflowX="auto" borderWidth="1px" borderRadius="md" borderColor="gray.200">*/}
+      {/* <Box maxH="calc(425px)" overflowY="auto" overflowX="auto" borderWidth="1px" borderRadius="md" borderColor="gray.200"> */}
         <Table variant="striped" colorScheme="blue" width="full">
           <DataTableHeader table={table} />
           {!isLoading && <DataTableBody table={table} onRowClick={onRowClick} />}
           {/*<DataTableFooter table={table} />*/}
         </Table>
-      {/*</Box>*/}
+      {/* </Box> */}
       {isLoading && (
         <Center my={'4'}>
           <Spinner color={'primary.500'} />

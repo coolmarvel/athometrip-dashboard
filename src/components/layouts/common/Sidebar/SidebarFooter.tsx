@@ -1,12 +1,12 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { RiLoginBoxLine, RiLogoutBoxRLine } from 'react-icons/ri';
+// import { useTranslation } from 'react-i18next';
+// import { RiLoginBoxLine, RiLogoutBoxRLine } from 'react-icons/ri';
 import { Center, Flex, Icon, IconButton, Text, Tooltip } from '@chakra-ui/react';
 
-import { toUrl } from '@/utils';
-import { useSafePush } from '@/hooks';
-import { useGetMe, useSignout } from '@/apis';
-import { PageRoutes, styles } from '@/constants';
+// import { toUrl } from '@/utils';
+// import { useSafePush } from '@/hooks';
+// import { useGetMe, useSignout } from '@/apis';
+// import { PageRoutes, styles } from '@/constants';
 
 interface SidebarFooterProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
@@ -14,14 +14,14 @@ interface SidebarFooterProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const SidebarFooter: React.FC<SidebarFooterProps> = ({ children, collapsed, ...rest }) => {
-  const { push } = useSafePush();
-  const { data: me } = useGetMe();
-  const { mutate: signout } = useSignout();
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
+  // const { push } = useSafePush();
+  // const { data: me } = useGetMe();
+  // const { mutate: signout } = useSignout();
 
   return (
     <Center as={'footer'} mt={'auto'} gap={'4'} py={'4'}>
-      {me ? (
+      {/* {me ? (
         <Flex gap={'4'} align={'center'} overflow={'hidden'}>
           <Text display={{ base: 'block', lg: 'none', xl: 'block' }} {...styles.ellipsis}>
             {`${t('Welcome')} `}
@@ -44,7 +44,7 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({ children, collapse
             </IconButton>
           </Tooltip>
         </>
-      )}
+      )} */}
     </Center>
   );
 };

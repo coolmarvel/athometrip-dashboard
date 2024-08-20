@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 
 import { Sidebar } from '../common';
 import { HorizontalLayoutHeader } from './HorizontalLayoutHeader';
