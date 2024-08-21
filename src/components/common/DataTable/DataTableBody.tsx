@@ -7,7 +7,7 @@ interface DataTableBodyProps<T> {
   onRowClick?: (row: Row<T>) => void;
 }
 
-const DataTableBody = <T,>({ table, onRowClick }: DataTableBodyProps<T>) => {
+const DataTableBody = <T, >({ table, onRowClick }: DataTableBodyProps<T>) => {
   const alphaColor = useAlphaColor();
   const rowModel = (typeof table.getRowModel === 'function' ? table.getRowModel() : table.getRowModel) || {};
 
@@ -28,7 +28,8 @@ const DataTableBody = <T,>({ table, onRowClick }: DataTableBodyProps<T>) => {
   return (
     <Tbody _selected={{}}>
       {rowModel.rows.map((row) => (
-        <Tr key={row.id} onClick={() => onRowClick?.(row)} _hover={{ cursor: onRowClick ? 'pointer' : 'default', bgColor: onRowClick ? alphaColor(50) : undefined }}>
+        // <Tr key={row.id} onClick={() => onRowClick?.(row)} _hover={{ cursor: onRowClick ? 'pointer' : 'default', bgColor: onRowClick ? alphaColor(50) : undefined }}>
+        <Tr key={row.id}>
           {row.getVisibleCells().map((cell) => (
             <Td key={cell.id} py={'2'} px={'4'}>
               {flexRender(cell.column.columnDef.cell, cell.getContext())}

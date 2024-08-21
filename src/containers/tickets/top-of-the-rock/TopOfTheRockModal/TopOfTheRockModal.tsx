@@ -16,11 +16,11 @@ const TopOfTheRockModal = ({ topOfTheRock, onClose }: TopOfTheRockModalProps) =>
 
   const attributes = useMemo(
     () => [
-      { label: t('Name'), value: topOfTheRock?.billing.first_name ?? 'Name' },
-      { label: t('Email'), value: topOfTheRock?.billing.email ?? 'Email' },
-      { label: t('Phone'), value: topOfTheRock?.billing.phone ?? 'Phone' },
-      { label: t('Payment Via'), value: `${topOfTheRock?.payment?.payment_method_title ?? 'Payment method'} (${topOfTheRock?.payment?.transaction_id ?? 'Transaction ID'})` },
-    ],
+        { label: t('Name'), value: topOfTheRock?.billing.first_name ?? 'Name' },
+        { label: t('Email'), value: topOfTheRock?.billing.email ?? 'Email' },
+        { label: t('Phone'), value: topOfTheRock?.billing.phone ?? 'Phone' },
+        { label: t('Payment Via'), value: `${topOfTheRock?.payment?.payment_method_title ?? 'Payment method'} (${topOfTheRock?.payment?.transaction_id ?? 'Transaction ID'})` },
+      ],
     [topOfTheRock, t],
   );
 
