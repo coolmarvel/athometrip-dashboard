@@ -1,6 +1,6 @@
 import { useModalStore } from '@/stores';
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
+import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react';
 
 const Alert = () => {
   const { alert, closeAlert } = useModalStore(['alert', 'closeAlert']);

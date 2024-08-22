@@ -1,7 +1,13 @@
-import { Layout } from '@/types';
 import { createContext, useContext } from 'react';
 
-const LayoutContext = createContext<{ layout: Layout; toggleLayout: () => void }>({
+import { Layout } from '@/types';
+
+type LayoutContextType = {
+  layout: Layout;
+  toggleLayout: () => void;
+}
+
+const LayoutContext = createContext<LayoutContextType>({
   layout: 'horizontal',
   toggleLayout: () => {},
 });

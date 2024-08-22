@@ -3,8 +3,9 @@ import { RequiredKeysOf } from 'type-fest';
 import axios from 'axios';
 
 import { Order } from '../../types';
-import { checkExistingDataInRange, filterTicket, sortTicket } from '../ticket-utils';
 import { setValue } from '../../redis';
+import { ResponseType } from '@/types';
+import { checkExistingDataInRange, filterTicket, sortTicket } from '../ticket-utils';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -30,7 +31,7 @@ const getTopOfTheRockByPage = async (req: NextApiRequest, res: NextApiResponse) 
 
   try {
     const existingData = await checkExistingDataInRange(ticketName, after, before);
-    let tickets: any = existingData ? existingData : [];
+    let tickets: ResponseType[] = existingData ? existingData : [];
 
     if (tickets.length === 0) {
       const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);

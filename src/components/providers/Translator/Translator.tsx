@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
+
 import config from './config';
 
 interface TranslatorProps {
@@ -11,6 +12,7 @@ const Translator = ({ children }: TranslatorProps) => {
 
   useEffect(() => {
     const language = localStorage.getItem('language');
+
     if (language) i18n.changeLanguage(language);
   }, [i18n]);
 

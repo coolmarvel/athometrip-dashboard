@@ -1,8 +1,9 @@
 import { RangeDatepicker } from 'chakra-dayzed-datepicker';
 import { useCallback, useState } from 'react';
-import { useSafePush } from '@/hooks';
-import { ko } from 'date-fns/locale';
 import { format, subWeeks } from 'date-fns';
+import { ko } from 'date-fns/locale';
+
+import { useSafePush } from '@/hooks';
 
 interface DatePickerOptionsProps {
   setMutate: () => void;
@@ -22,7 +23,7 @@ const DatePickerOptions = ({ setMutate }: DatePickerOptionsProps) => {
       setMutate();
 
       const formattedDates = dates.map((date) => format(date, 'yyyy-MM-dd', { locale: ko }));
-      push({ query: { ...router.query, after: formattedDates[0], before: formattedDates[1] } });
+      push({ query: { ...router.query, page: 1, after: formattedDates[0], before: formattedDates[1] } });
     }
   }, [push, router.query, setMutate]);
 

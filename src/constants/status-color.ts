@@ -1,8 +1,8 @@
 export const statusColor: any = {
   processing: 'yellow',
   completed: 'green',
+  pending: 'yellow',
   cancelled: 'red',
-  refunded: 'purple',
-  pending: 'gray',
-  failed: 'orange',
+  refunded: 'red',
+  failed: 'red',
 } as const;

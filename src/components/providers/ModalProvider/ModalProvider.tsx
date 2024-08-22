@@ -1,6 +1,6 @@
 import Alert from './Alert';
-import Confirm from './Confirm';
 import Modals from './Modals';
+import Confirm from './Confirm';
 
 const ModalProvider = () => {
   return (

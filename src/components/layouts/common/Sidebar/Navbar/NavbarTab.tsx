@@ -25,10 +25,10 @@ const NavbarTab = ({ nav, isActivated }: NavbarTabProps) => {
       {nav.children && nav.children?.length > 0 ? (
         nav.children.length === 1 ? (
           <MenuItem icon={<BarChart />} onClick={handleClick}>
-            {t(`${nav.label}`)}
+            {t(nav.label)}
           </MenuItem>
         ) : (
-          <SubMenu label={t(`${nav.label}`)} icon={<BarChart />} onClick={handleClick}>
+          <SubMenu label={t(nav.label)} icon={<BarChart />} onClick={handleClick}>
             {nav.children.map((child, i) => (
               <NavbarTab key={child.label} nav={child} isActivated={isActivated} />
             ))}

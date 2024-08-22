@@ -1,12 +1,14 @@
-import { Order } from '@/apis';
 import { RequiredKeysOf } from 'type-fest';
+
+import { Order } from '@/apis';
+import { ResponseType } from '@/types';
 import { getKeys, getValue } from '../redis';
 
 export const checkExistingDataInRange = async (name: string, after: string, before: string) => {
   const keys = await getKeys(`${name}_*`);
   for (const key of keys) {
     const [_, savedAfter, savedBefore] = key.split('_');
-    if (new Date(savedAfter) <= new Date(after) && new Date(savedBefore) >= new Date(before)) return await getValue(key);
+    if (new Date(savedAfter) <= new Date(after) && new Date(savedBefore) >= new Date(before)) return await getValue(key) as ResponseType[];
   }
 
   return null;

@@ -36,7 +36,7 @@ const getTheme = (primaryColor: PrimaryColor = 'teal') =>
     },
     withDefaultColorScheme({
       colorScheme: 'primary',
-    })
+    }),
   );
 
 export default getTheme;

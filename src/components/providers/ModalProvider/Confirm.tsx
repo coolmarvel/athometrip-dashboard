@@ -1,7 +1,8 @@
-import { useModalStore } from '@/stores';
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react';
+
+import { useModalStore } from '@/stores';
 
 const Confirm = () => {
   const { confirm, closeConfirm } = useModalStore(['confirm', 'closeConfirm']);

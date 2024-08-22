@@ -1,8 +1,9 @@
-import { usePrimaryColor } from '@/hooks';
-import { PrimaryColor } from '@/types';
-import { ChakraProvider as _ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 import { useCallback, useEffect, useState } from 'react';
+import { ChakraProvider as _ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
+
 import getTheme from './theme';
+import { PrimaryColor } from '@/types';
+import { usePrimaryColor } from '@/hooks';
 
 interface ChakraProviderProps {
   children: React.ReactNode;
