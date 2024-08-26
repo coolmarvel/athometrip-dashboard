@@ -1,13 +1,15 @@
 import { match } from 'path-to-regexp';
-import { BsFill1SquareFill, BsFill2SquareFill, BsFill3SquareFill, BsFillCollectionFill } from 'react-icons/bs';
+import { MdTour } from 'react-icons/md';
+import { RxTransparencyGrid } from 'react-icons/rx';
+import { BsFill1SquareFill, BsFill2SquareFill, BsFill3SquareFill } from 'react-icons/bs';
 
-import { Nav } from './nav-interface';
+import { Nav } from '@/constants';
 import { PageRoutes } from '../routes';
 import { normalQuery } from '../queires';
 
 export const toursSuburbsNav: Nav = {
   label: 'Tours(Suburbs)',
-  icon: BsFillCollectionFill,
+  icon: MdTour,
   pathname: PageRoutes.Tours,
   matcher: match(PageRoutes.Tours),
   collapsible: true,
@@ -18,7 +20,7 @@ export const toursSuburbsNav: Nav = {
       matcher: match(PageRoutes.WashingtonDC),
       icon: BsFill1SquareFill,
       query: normalQuery,
-      children: [{ label: 'WashingtonDC Detail', pathname: PageRoutes.WashingtonDCDetail, matcher: match(PageRoutes.WashingtonDCDetail), query: normalQuery }],
+      children: [{ label: 'WashingtonDC Detail', icon: RxTransparencyGrid, pathname: PageRoutes.WashingtonDCDetail, matcher: match(PageRoutes.WashingtonDCDetail), query: normalQuery }],
     },
     {
       label: 'Boston',
@@ -26,7 +28,7 @@ export const toursSuburbsNav: Nav = {
       matcher: match(PageRoutes.Boston),
       icon: BsFill2SquareFill,
       query: normalQuery,
-      children: [{ label: 'Boston Detail', pathname: PageRoutes.BostonDetail, matcher: match(PageRoutes.BostonDetail), query: normalQuery }],
+      children: [{ label: 'Boston Detail', icon: RxTransparencyGrid, pathname: PageRoutes.BostonDetail, matcher: match(PageRoutes.BostonDetail), query: normalQuery }],
     },
     {
       label: 'Niagara(TwoDays)',
@@ -34,7 +36,7 @@ export const toursSuburbsNav: Nav = {
       matcher: match(PageRoutes.NiagaraTwoDays),
       icon: BsFill3SquareFill,
       query: normalQuery,
-      children: [{ label: 'Niagara(TwoDays) Detail', pathname: PageRoutes.NiagaraTwoDaysDetail, matcher: match(PageRoutes.NiagaraTwoDaysDetail), query: normalQuery }],
+      children: [{ label: 'Niagara(TwoDays) Detail', icon: RxTransparencyGrid, pathname: PageRoutes.NiagaraTwoDaysDetail, matcher: match(PageRoutes.NiagaraTwoDaysDetail), query: normalQuery }],
     },
     {
       label: 'Niagara(Athometrip)',
@@ -42,7 +44,13 @@ export const toursSuburbsNav: Nav = {
       matcher: match(PageRoutes.NiagaraOneDayAthometrip),
       icon: BsFill3SquareFill,
       query: normalQuery,
-      children: [{ label: 'Niagara(Athometrip) Detail', pathname: PageRoutes.NiagaraOneDayAthometripDetail, matcher: match(PageRoutes.NiagaraOneDayAthometripDetail), query: normalQuery }],
+      children: [{
+        label: 'Niagara(Athometrip) Detail',
+        icon: RxTransparencyGrid,
+        pathname: PageRoutes.NiagaraOneDayAthometripDetail,
+        matcher: match(PageRoutes.NiagaraOneDayAthometripDetail),
+        query: normalQuery,
+      }],
     },
     {
       label: 'Niagara(KingKong)',
@@ -50,7 +58,13 @@ export const toursSuburbsNav: Nav = {
       matcher: match(PageRoutes.NiagaraOneDayKingKong),
       icon: BsFill3SquareFill,
       query: normalQuery,
-      children: [{ label: 'Niagara(KingKong) Detail', pathname: PageRoutes.NiagaraOneDayKingKongDetail, matcher: match(PageRoutes.NiagaraOneDayKingKongDetail), query: normalQuery }],
+      children: [{
+        label: 'Niagara(KingKong) Detail',
+        icon: RxTransparencyGrid,
+        pathname: PageRoutes.NiagaraOneDayKingKongDetail,
+        matcher: match(PageRoutes.NiagaraOneDayKingKongDetail),
+        query: normalQuery,
+      }],
     },
   ],
 };

@@ -4,7 +4,6 @@ import { MenuItem, SubMenu } from 'react-pro-sidebar';
 
 import { Nav } from '@/constants';
 import { useSafePush } from '@/hooks';
-import { BarChart } from '../icons/BarChart';
 
 interface NavbarTabProps {
   nav: Nav;
@@ -23,16 +22,16 @@ const NavbarTab = ({ nav, isActivated }: NavbarTabProps) => {
   return (
     <>
       {nav.children && nav.children?.length > 0 ? (
-        nav.children.length === 1 ? (
-          <MenuItem icon={<BarChart />} onClick={handleClick}>
-            {t(nav.label)}
-          </MenuItem>
-        ) : (
-          <SubMenu label={t(nav.label)} icon={<BarChart />} onClick={handleClick}>
+        nav.collapsible === true ? (
+          <SubMenu label={t(nav.label)} icon={<nav.icon size={18} />}>
             {nav.children.map((child, i) => (
               <NavbarTab key={child.label} nav={child} isActivated={isActivated} />
             ))}
           </SubMenu>
+        ) : (
+          <MenuItem icon={<nav.icon size={18} />} onClick={handleClick}>
+            {t(nav.label)}
+          </MenuItem>
         )
       ) : null}
     </>

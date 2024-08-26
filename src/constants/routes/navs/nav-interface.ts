@@ -7,7 +7,7 @@ export interface Nav {
   label: string;
   pathname: PageRoutes;
   query?: Record<string, number | string>;
-  icon?: IconType;
+  icon: IconType;
   matcher: MatchFunction;
   children?: Nav[];
   collapsible?: boolean;

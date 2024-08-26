@@ -1,7 +1,7 @@
 import { match } from 'path-to-regexp';
 
-import { Nav, usimsNav, staysNav, toursNav, snapsNav, ticketsNav, systemsNav, musicalsNav, shuttlesNav, toursSuburbsNav } from './navs';
 import { PageRoutes } from './routes';
+import { Nav, usimsNav, staysNav, toursNav, snapsNav, ticketsNav, systemsNav, musicalsNav, shuttlesNav, toursSuburbsNav } from './navs';
 
 export const whiteList = [PageRoutes.Home, PageRoutes.Signin, PageRoutes.Users, PageRoutes.UserDetail];
 
@@ -23,7 +23,7 @@ export const findNavInHierarchy = (pathname: string, items = navs, parents: Nav[
     if (nav.children) {
       const navs = findNavInHierarchy(pathname, nav.children, [...parents, nav]);
       if (navs.length) return navs;
-    } else continue;
+    }
   }
 
   return [];

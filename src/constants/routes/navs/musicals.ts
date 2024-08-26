@@ -1,7 +1,8 @@
 import { match } from 'path-to-regexp';
-import { BsFillCollectionFill } from 'react-icons/bs';
+import { IoMusicalNotes } from 'react-icons/io5';
+import { RxTransparencyGrid } from 'react-icons/rx';
 
-import { Nav } from './nav-interface';
+import { Nav } from '@/constants';
 import { PageRoutes } from '../routes';
 import { normalQuery } from '../queires';
 
@@ -9,13 +10,8 @@ export const musicalsNav: Nav = {
   label: 'Musicals',
   pathname: PageRoutes.Musicals,
   query: normalQuery,
-  icon: BsFillCollectionFill,
+  icon: IoMusicalNotes,
   matcher: match(PageRoutes.Musicals),
-  children: [
-    {
-      label: 'Musicals Detail',
-      pathname: PageRoutes.MusicalsDetail,
-      matcher: match(PageRoutes.MusicalsDetail),
-    },
-  ],
+  collapsible: false,
+  children: [{ label: 'Musicals Detail', icon: RxTransparencyGrid, pathname: PageRoutes.MusicalsDetail, matcher: match(PageRoutes.MusicalsDetail) }],
 };

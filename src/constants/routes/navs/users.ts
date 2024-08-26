@@ -1,9 +1,10 @@
-import { FaUser } from 'react-icons/fa';
 import { match } from 'path-to-regexp';
+import { FaUser } from 'react-icons/fa';
+import { RxTransparencyGrid } from 'react-icons/rx';
 
-import { defaultQuery } from '../queires';
+import { Nav } from '@/constants';
 import { PageRoutes } from '../routes';
-import { Nav } from './nav-interface';
+import { defaultQuery } from '../queires';
 
 export const usersNav: Nav = {
   label: 'Users',
@@ -11,5 +12,6 @@ export const usersNav: Nav = {
   query: defaultQuery,
   icon: FaUser,
   matcher: match(PageRoutes.Users),
-  children: [{ label: 'User Detail', pathname: PageRoutes.UserDetail, matcher: match(PageRoutes.UserDetail) }],
+  collapsible: false,
+  children: [{ label: 'User Detail', icon: RxTransparencyGrid, pathname: PageRoutes.UserDetail, matcher: match(PageRoutes.UserDetail) }],
 };

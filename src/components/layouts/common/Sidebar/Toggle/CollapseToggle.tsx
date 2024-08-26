@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { IconButton } from '@chakra-ui/react';
 import { ChevronRightIcon, ChevronLeftIcon } from '@chakra-ui/icons';
 
@@ -8,11 +8,16 @@ interface CollapseToggleProps {
 }
 
 const CollapseToggle: React.FC<CollapseToggleProps> = ({ collapsed, setCollapsed }) => {
+  const handleCollapse = useCallback(() => {
+    setCollapsed(!collapsed);
+    localStorage.setItem('collapsed', collapsed.toString());
+  }, [collapsed, setCollapsed]);
+
   return (
     <IconButton
       aria-label={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
       icon={collapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-      onClick={() => setCollapsed(!collapsed)}
+      onClick={() => handleCollapse()}
       position="absolute"
       top="10"
       right="-4"

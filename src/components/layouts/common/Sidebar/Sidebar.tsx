@@ -44,13 +44,13 @@ const hexToRgba = (hex: string, alpha: number) => {
 const Sidebar: React.FC = () => {
   const { t } = useTranslation();
   const { colorMode, toggleColorMode } = useColorMode();
-  const [theme, setTheme] = React.useState<Theme>(localStorage.getItem('chakra-ui-color-mode') as Theme);
 
   const [rtl, setRtl] = React.useState(false);
   const [broken, setBroken] = React.useState(false);
   const [toggled, setToggled] = React.useState(false);
   const [hasImage, setHasImage] = React.useState(false);
-  const [collapsed, setCollapsed] = React.useState(false);
+  const [theme, setTheme] = React.useState<Theme>(localStorage.getItem('chakra-ui-color-mode') as Theme);
+  const [collapsed, setCollapsed] = React.useState(!!localStorage.getItem('collapsed') ?? false);
 
   const generalNavs: Nav[] = [ticketsNav, usimsNav, toursNav, toursSuburbsNav, shuttlesNav, snapsNav, staysNav, musicalsNav];
   const extraNavs: Nav[] = [systemsNav];
@@ -128,7 +128,7 @@ const Sidebar: React.FC = () => {
               </Menu>
             </div>
 
-            <SidebarFooter collapsed={collapsed} />
+            {/*<SidebarFooter collapsed={collapsed} />*/}
           </div>
         </SideBar>
 

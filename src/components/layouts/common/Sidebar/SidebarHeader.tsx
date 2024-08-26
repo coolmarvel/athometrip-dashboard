@@ -18,7 +18,7 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({ children, rtl, col
   const { push } = useSafePush();
 
   return (
-    <Center as={'header'} flexDirection={'column'} gap={'4'} py={'4'}>
+    <Center as={'header'} flexDirection={'column'} gap={'4'} py={'4'} height={'64px'} minHeight={'64px'} display={'flex'} alignItems={'center'} padding={'0px 20px'} overflow={'hidden'}>
       <Box display={{ base: 'block', lg: 'none', xl: 'block' }}>
         <Logo onClick={() => push(toUrl(PageRoutes.Home))} />
       </Box>
