@@ -1,5 +1,5 @@
 import { RangeDatepicker } from 'chakra-dayzed-datepicker';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { format, subWeeks } from 'date-fns';
 import { ko } from 'date-fns/locale';
 
@@ -12,9 +12,18 @@ interface DatePickerOptionsProps {
 const DatePickerOptions = ({ setMutate }: DatePickerOptionsProps) => {
   const { router, push } = useSafePush();
 
-  const after = router.query?.after as string ?? subWeeks(new Date(), 1).toISOString().split('T')[0];
-  const before = router.query?.before as string ?? new Date().toISOString().split('T')[0];
-  const [selectedDates, setSelectedDates] = useState<Date[]>([new Date(after), new Date(before)]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [selectedDates, setSelectedDates] = useState<Date[]>([new Date(), new Date()]);
+
+  useEffect(() => {
+    if (Object.keys(router.query).length !== 0) {
+      const after = router.query?.after as string ?? subWeeks(new Date(), 1).toISOString().split('T')[0];
+      const before = router.query?.before as string ?? new Date().toISOString().split('T')[0];
+
+      setSelectedDates([new Date(after), new Date(before)]);
+      setLoading(false);
+    }
+  }, [router.query]);
 
   const handleDateChange = useCallback((dates: Date[]) => {
     setSelectedDates(dates);
@@ -27,7 +36,8 @@ const DatePickerOptions = ({ setMutate }: DatePickerOptionsProps) => {
     }
   }, [push, router.query, setMutate]);
 
-  return <RangeDatepicker selectedDates={selectedDates} onDateChange={handleDateChange} />;
+  if (loading) return <>loading...</>;
+  else return <RangeDatepicker selectedDates={selectedDates} onDateChange={handleDateChange} />;
 };
 
 export default DatePickerOptions;
