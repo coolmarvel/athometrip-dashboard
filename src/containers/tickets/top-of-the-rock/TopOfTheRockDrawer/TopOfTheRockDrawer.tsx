@@ -1,25 +1,8 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Tag,
-  Box,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
-  Flex,
-  Skeleton,
-  Stack,
-  StackDivider,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-} from '@chakra-ui/react';
+import { Divider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { Tag, Box, Flex, Skeleton, Stack, StackDivider } from '@chakra-ui/react';
+import { Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay } from '@chakra-ui/react';
 
 import { statusColor } from '@/constants';
 import { WithLabel } from '@/components';
@@ -58,6 +41,7 @@ const TopOfTheRockDrawer = ({ topOfTheRock, onClose }: TopOfTheRockDrawerProps) 
         return `${date} ${time}`;
       })(),
     },
+    { label: t('Memo'), value: topOfTheRock.order.memo ?? '' },
   ], [topOfTheRock, convertDate, t]);
 
   const columns = useMemo(() => [{ name: topOfTheRock?.line_items?.[0]?.name, quantity: topOfTheRock?.line_items?.[0]?.quantity, total: topOfTheRock?.line_items?.[0]?.total }] ?? [], [topOfTheRock]);
@@ -87,6 +71,8 @@ const TopOfTheRockDrawer = ({ topOfTheRock, onClose }: TopOfTheRockDrawerProps) 
                   ))}
                 </Stack>
               </Box>
+
+              <Divider />
 
               <Table variant="simple">
                 <Thead>

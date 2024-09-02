@@ -25,9 +25,11 @@ export const HorizontalLayoutHeader = () => {
           {me ? (
             <Flex gap={'4'} align={'center'} overflow={'hidden'}>
               <Menu>
-                <MenuButton as={IconButton} aria-label={'User menu'}>
-                  <Icon as={AiOutlineUser} fontSize={'1rem'} />
-                </MenuButton>
+                <Tooltip hasArrow label={t('Settings')}>
+                  <MenuButton as={IconButton} aria-label={'User menu'}>
+                    <Icon as={AiOutlineUser} fontSize={'1rem'} />
+                  </MenuButton>
+                </Tooltip>
                 <MenuList>
                   <VStack spacing={0} align="start" px={3} py={1}>
                     <Box fontWeight="bold">{me?.name}</Box>

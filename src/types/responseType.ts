@@ -31,6 +31,8 @@ export type Order = {
   date_modified: Date;
   date_modified_gmt: Date;
   meta_data: StringKeyValue;
+  double_checked?: boolean;
+  memo: string;
 }
 
 export function handleStringKeyValue(input: string | StringKeyValue): StringKeyValue {

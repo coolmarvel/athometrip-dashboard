@@ -94,7 +94,7 @@ const Sidebar: React.FC = () => {
           rootStyles={{ color: themes[theme].sidebar.color }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-            <SidebarHeader rtl={rtl} colorMode={colorMode} toggleColorMode={toggleColorMode} style={{ marginBottom: '24px', marginTop: '16px' }} />
+            <SidebarHeader rtl={rtl} collapsed={collapsed} colorMode={colorMode} toggleColorMode={toggleColorMode} style={{ marginBottom: '24px', marginTop: '16px' }} />
 
             <div style={{ flex: 1, marginBottom: '32px' }}>
               <div style={{ padding: '0 24px', marginBottom: '8px' }}>
