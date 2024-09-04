@@ -3,7 +3,7 @@ import { match } from 'path-to-regexp';
 import { PageRoutes } from './routes';
 import { Nav, usimsNav, staysNav, toursNav, snapsNav, ticketsNav, systemsNav, musicalsNav, shuttlesNav, toursSuburbsNav } from './navs';
 
-export const whiteList = [PageRoutes.Home, PageRoutes.Signin, PageRoutes.Users, PageRoutes.UserDetail];
+export const whiteList = [PageRoutes.Signin];
 
 export const isExistPage = (pathname: string) => {
   return Object.values(PageRoutes).some((route) => match(route)(pathname));

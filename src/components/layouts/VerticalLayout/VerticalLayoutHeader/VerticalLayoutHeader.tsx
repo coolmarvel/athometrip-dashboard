@@ -36,7 +36,7 @@ const VerticalLayoutHeader = () => {
           <Text>
             {`${t('Welcome')} `}
             <Text as={'b'} color={'primary.500'}>
-              {me?.name}
+              {me?.userName}
             </Text>
           </Text>
         </Flex>

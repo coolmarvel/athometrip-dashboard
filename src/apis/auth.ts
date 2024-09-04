@@ -1,12 +1,17 @@
-import { ApiRoutes } from '@/constants';
+import { ApiRoutes, PageRoutes } from '@/constants';
 import { Nullable } from '@/types';
 import { toUrl } from '@/utils';
-import { User, useFetch, useInvalidate, usePost } from '.';
+import { User, useFetch, usePost, useInvalidate } from '.';
+import { useRouter } from 'next/router';
 
 export interface AuthSignin {
-  email: User['email'];
+  userId: User['userId'];
+  password: User['password'];
 }
 
+/**
+ * 로그인 API
+ */
 export const useSignin = () => {
   return usePost<unknown, AuthSignin, User>(toUrl(ApiRoutes.Signin), undefined, {
     onSuccess: useInvalidate(toUrl(ApiRoutes.Me)),
@@ -14,9 +19,18 @@ export const useSignin = () => {
   });
 };
 
+/**
+ * 로그아웃 API
+ */
 export const useSignout = () => {
+  const router = useRouter();
+  const invalidate = useInvalidate(toUrl(ApiRoutes.Me));
+
   return usePost<unknown>(toUrl(ApiRoutes.Signout), undefined, {
-    onSuccess: useInvalidate(toUrl(ApiRoutes.Me)),
+    onSuccess: () => {
+      router.push(PageRoutes.Signin);
+      invalidate();
+    },
     meta: { successMessage: 'Signout successfully' },
   });
 };

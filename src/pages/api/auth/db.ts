@@ -1,7 +1,15 @@
 import { Nullable } from '@/types';
 import { NextApiRequest } from 'next';
-import { readDB, writeDB } from '../db';
 import { Session } from '../types';
+import axios from 'axios';
+
+/**
+ * 세션 관리 API
+ *
+ * @author 이성현
+ */
+const API_READ_SESSION_URL = process.env.NEXT_PUBLIC_API_READ_SESSION;
+const API_CREATE_SESSION_URL = process.env.NEXT_PUBLIC_API_CREATE_SESSION;
 
 export const parseIP = (req: NextApiRequest) => {
   return new Promise<string>((resolve) => {
@@ -15,11 +23,11 @@ export const parseIP = (req: NextApiRequest) => {
 
 export const readSession = async (): Promise<Session> => {
   try {
-    const db = await readDB();
+    const response = await axios.post(`${API_READ_SESSION_URL}`);
 
-    return db.session;
+    return response.data;
   } catch (err) {
-    console.log('Failed to read db.json');
+    console.log('### Failed to read data from API');
     throw err;
   }
 };
@@ -35,13 +43,11 @@ export const readMySession = async (ip: string): Promise<Nullable<number>> => {
   }
 };
 
-export const writeSession = async (session: Session) => {
+export const writeSession = async (session: number) => {
   try {
-    const db = await readDB();
-
-    await writeDB({ ...db, session });
+    await axios.post(`${API_CREATE_SESSION_URL}`, session);
   } catch (err) {
-    console.log('Failed to write db.json');
+    console.log('Failed to write data to API');
     throw err;
   }
 };

@@ -19,7 +19,7 @@ const UserPageContainer = () => {
   return (
     <>
       <TableContainer flex={1} overflowY={'auto'}>
-        <UserTableContainer users={usersAll} isLoading={isLoading} />
+        <UserTableContainer users={usersAll ?? []} isLoading={isLoading} />
       </TableContainer>
       <Pagination currentPage={page} limit={limit} total={usersAll?.total ?? 0} onChange={(page) => onPagination({ page })} />
     </>

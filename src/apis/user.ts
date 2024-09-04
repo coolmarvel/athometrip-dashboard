@@ -2,13 +2,19 @@ import { ApiRoutes } from '@/constants';
 import { toUrl } from '@/utils';
 import { cloneDeep } from 'lodash-es';
 import { CursorQueryParams, PageQueryParams, PageQueryResponse, Scheme, useCommand, useDelete, useFetch, useGetPage, useInvalidate, useLoadMore, usePost, useUpdate, useUpdateInList } from '.';
+import { UseYnEnum } from '@/enums/use-yn.enum';
 
+/**
+ * 유저 정보
+ */
 export interface User extends Scheme {
-  name: string;
-  email: string;
-  phone: string;
-  profile?: string;
-  approved: boolean;
+  userId: string;
+  userName: string;
+  emailAddress: string;
+  password: string;
+  companyCode: string;
+  department: string;
+  useYn: UseYnEnum;
 }
 
 export type UserCreate = Omit<User, 'approved' | keyof Scheme>;
@@ -42,9 +48,8 @@ export const useCreateUser = (params?: object) => {
 const updateUser = (user: User, update: UserUpdate) => {
   return {
     ...user,
-    name: update.name,
-    email: update.email,
-    phone: update.phone,
+    name: update.userName,
+    email: update.emailAddress,
     updatedAt: new Date().toISOString(),
   };
 };
@@ -90,7 +95,7 @@ export const useApproveUser = (params?: object) => {
           return item;
         }),
       };
-    }
+    },
   );
 };
 

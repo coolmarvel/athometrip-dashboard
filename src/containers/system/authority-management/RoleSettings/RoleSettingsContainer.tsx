@@ -15,7 +15,7 @@ const RoleSettingsContainer = () => {
 
   return (
     <>
-      <RoleTableContainer roles={rolesAll} isLoading={isLoading} />
+      <RoleTableContainer roles={rolesAll ?? []} isLoading={isLoading} />
     </>
   );
 };

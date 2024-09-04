@@ -1,12 +1,12 @@
-/**
- * 백엔드에 통신하기 위한 권한 관리 API
- *
- * @author 김이안
- */
 import type { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 
-const url = 'http://localhost:4000/api/system/roles';
+/**
+ * 권한 관리 API
+ *
+ * @author 김이안
+ */
+const API_GET_ROLES_URL = process.env.NEXT_PUBLIC_APIS_ROLES;
 
 export default async function handler(
   req: NextApiRequest,
@@ -29,7 +29,7 @@ export default async function handler(
  */
 const getRolesAll = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { data } = await axios.get(url);
+    const { data } = await axios.get(`${API_GET_ROLES_URL}`);
     return res.status(200).send({ data: data, message: 'Success' });
   } catch (error) {
     return res.status(500).send({ data: null, message: `Failed to get roles` });

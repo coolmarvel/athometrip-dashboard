@@ -16,7 +16,7 @@ const Authenticator = () => {
   useEffect(() => {
     if (isFetching) return;
 
-    if (data) Api.addToken(data.id.toString());
+    if (data) Api.addToken(data.userId);
     else Api.removeToken();
   }, [data, isFetching]);
 

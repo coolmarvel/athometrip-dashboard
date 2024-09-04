@@ -32,8 +32,8 @@ export const HorizontalLayoutHeader = () => {
                 </Tooltip>
                 <MenuList>
                   <VStack spacing={0} align="start" px={3} py={1}>
-                    <Box fontWeight="bold">{me?.name}</Box>
-                    <Box fontSize="sm">{me?.email}</Box>
+                    <Box fontWeight="bold">{me?.userName}</Box>
+                    <Box fontSize="sm">{me?.emailAddress}</Box>
                   </VStack>
                   <MenuDivider />
                   <MenuItem icon={<Icon as={RiSettingsLine} />}>

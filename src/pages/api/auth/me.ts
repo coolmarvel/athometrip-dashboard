@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { readUsers } from '../users/db';
+import { getUser } from '../users/db';
 import { parseIP, readMySession } from './db';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -14,17 +14,15 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 export const me = async (req: NextApiRequest, res: NextApiResponse) => {
   await parseIP(req)
     .then(async (ip) => {
-      try {
-        const users = await readUsers();
+      const sessionId = req.cookies.sessionId;
 
-        const session = await readMySession(ip);
+      const users = await getUser();
 
-        const user = users.find((user) => user.id === session);
+      const session = await readMySession(ip);
 
-        return res.status(200).json({ data: user ?? null, message: 'Success' });
-      } catch {
-        return res.status(500).json({ data: null, message: 'Failed' });
-      }
+      const user = users.find((user: any) => user.userId === req.cookies.userId);
+
+      return res.status(200).json({ data: user ?? null, message: 'Success' });
     })
     .catch(() => {
       return res.status(400).json({ data: null, message: 'Failed to parse IP' });

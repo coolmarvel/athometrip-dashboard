@@ -36,7 +36,7 @@ export const readDB = () => {
 };
 
 export const writeDB = (db: DB) => {
-  return isProd ? writeCloubDB(db) : writeLocalDB(db);
+  return isProd ? writeCloudDB(db) : writeLocalDB(db);
 };
 
 export const fileUpload = (req: NextApiRequest) => {
@@ -75,7 +75,7 @@ const readCloudDB = async (): Promise<DB> => {
         },
         (err) => {
           reject(err);
-        }
+        },
       )
       .catch((err) => {
         reject(err);
@@ -85,7 +85,7 @@ const readCloudDB = async (): Promise<DB> => {
 
 const writeLocalDB = (db: DB) => {
   return new Promise<void>((resolve, reject) => {
-    fs.writeFile(dbDir, makeJson(db), 'utf8', (err) => {
+    fs.writeFile(dbDir, makeJson(db), 'utf8', (err) => { // makeJson(db) 부분에
       if (err) {
         reject(err);
         return;
@@ -95,7 +95,7 @@ const writeLocalDB = (db: DB) => {
   });
 };
 
-const writeCloubDB = async (db: DB) => {
+const writeCloudDB = async (db: DB) => {
   return new Promise<void>(async (resolve, reject) => {
     await cloudStorage
       .putObject({

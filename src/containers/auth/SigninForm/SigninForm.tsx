@@ -1,5 +1,5 @@
 import { AuthSignin, useSignin } from '@/apis/auth';
-import { Logo, WithFormLabel } from '@/components';
+import { Logo } from '@/components';
 import { PageRoutes } from '@/constants';
 import { useSafePush } from '@/hooks';
 import { toUrl } from '@/utils';
@@ -8,6 +8,11 @@ import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * 로그인 페이지 Container
+ *
+ * @constructor
+ */
 const SigninForm = () => {
   const { router, push } = useSafePush();
   const { register, handleSubmit } = useForm<AuthSignin>();
@@ -30,13 +35,12 @@ const SigninForm = () => {
                   router.push(router.query.redirect?.toString() ?? toUrl(PageRoutes.Home));
                 },
               }),
-            [router, signin]
-          )
+            [router, signin],
+          ),
         )}
       >
-        <WithFormLabel label={t('Email')}>
-          <Input {...register('email')} />
-        </WithFormLabel>
+        <Input {...register('userId')} placeholder={t('ID')} />
+        <Input {...register('password')} type="password" placeholder={t('Password')} />
         <Button type={'submit'} isLoading={isLoading || isSuccess} isDisabled={isLoading || isSuccess}>
           {t('Sign In')}
         </Button>
