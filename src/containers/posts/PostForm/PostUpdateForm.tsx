@@ -1,26 +1,24 @@
-import { Post, PostUpdate, useUpdatePost } from '@/apis';
-import { FormField } from '@/components';
-import { PageRoutes } from '@/constants';
-import { useSafePush } from '@/hooks';
-import { toUrl } from '@/utils';
-import { Button, Flex } from '@chakra-ui/react';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { Button, Flex } from '@chakra-ui/react';
+
+import { toUrl } from '@/utils';
+import { useSafePush } from '@/hooks';
+import { FormField } from '@/components';
+import { PageRoutes } from '@/constants';
+import { PostUpdate, useUpdatePost } from '@/apis';
 
 interface PostUpdateFormProps {
-  post: Post;
+  post: any;
 }
 
 const PostUpdateForm = ({ post }: PostUpdateFormProps) => {
   const { push } = useSafePush();
-  const { register, handleSubmit, control } = useForm<PostUpdate>({
-    defaultValues: {
-      ...post,
-    },
-  });
-  const { mutate: updatePost, isLoading, isSuccess } = useUpdatePost(post.id);
   const { t } = useTranslation();
+
+  const { mutate: updatePost, isLoading, isSuccess } = useUpdatePost(post.id);
+  const { register, handleSubmit, control } = useForm<PostUpdate>({ defaultValues: { ...post } });
 
   return (
     <Flex
@@ -35,8 +33,8 @@ const PostUpdateForm = ({ post }: PostUpdateFormProps) => {
                 push(toUrl(PageRoutes.PostDetail, { id: res.data }));
               },
             }),
-          [updatePost, push]
-        )
+          [updatePost, push],
+        ),
       )}
     >
       <FormField fieldType={'string'} isRequired label={t('Title')} placeholder={t('Title')} {...register('title')} />

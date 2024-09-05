@@ -1,22 +1,18 @@
-import { useGetPostsByPage } from '@/apis';
-import { Pagination } from '@/components';
-import { PostTable } from '@/containers';
-import { usePagination } from '@/hooks';
-import { QueryParser } from '@/utils';
-import { TableContainer } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { TableContainer } from '@chakra-ui/react';
+
+import { QueryParser } from '@/utils';
+import { usePagination } from '@/hooks';
+import { PostTable } from '@/containers';
+import { Pagination } from '@/components';
+import { useGetPostsByPage } from '@/apis';
 
 const PostsByPage = () => {
   const router = useRouter();
   const { page, limit, sort, order, onPagination } = usePagination();
 
-  const { data: postsByPage, isLoading: postsIsLoading } = useGetPostsByPage({
-    page,
-    limit,
-    sort,
-    order,
-    search: QueryParser.toString(router.query.search) ?? '',
-  });
+  const params = { page, limit, sort, order, search: QueryParser.toString(router.query.search) ?? '' };
+  const { data: postsByPage, isLoading: postsIsLoading } = useGetPostsByPage(params);
 
   return (
     <>

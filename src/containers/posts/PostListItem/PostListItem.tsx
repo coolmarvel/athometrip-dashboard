@@ -1,19 +1,20 @@
-import { Post } from '@/apis';
-import { PageRoutes } from '@/constants';
-import { useAlphaColor, useSafePush } from '@/hooks';
-import { toUrl } from '@/utils';
-import { Box, Card, CardBody, CardHeader, Flex, Heading } from '@chakra-ui/react';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Box, Card, CardBody, CardHeader, Flex, Heading } from '@chakra-ui/react';
+
+import { toUrl } from '@/utils';
+import { PageRoutes } from '@/constants';
+import { useAlphaColor, useSafePush } from '@/hooks';
+
 import { PostWriter } from '../PostWriter';
 
 interface PostListItemProps {
-  data: Post;
+  data: any;
 }
 
 const PostListItem = ({ data: post }: PostListItemProps) => {
-  const alphaColor = useAlphaColor();
   const { push } = useSafePush();
+  const alphaColor = useAlphaColor();
   const { t } = useTranslation();
 
   const handleClick = useCallback(() => {

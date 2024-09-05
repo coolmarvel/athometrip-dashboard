@@ -1,23 +1,25 @@
-import { Post, useDeletePost, useGetMe } from '@/apis';
-import { PageRoutes, defaultQuery } from '@/constants';
+import { TbEdit } from 'react-icons/tb';
+import { useTranslation } from 'react-i18next';
+import { Box, Button, Card, CardBody, CardHeader, Flex, Heading, Skeleton } from '@chakra-ui/react';
+
+import { toUrl } from '@/utils';
 import { useSafePush } from '@/hooks';
 import { useModalStore } from '@/stores';
-import { toUrl } from '@/utils';
-import { Box, Button, Card, CardBody, CardHeader, Flex, Heading, Skeleton } from '@chakra-ui/react';
-import { useTranslation } from 'react-i18next';
-import { TbEdit } from 'react-icons/tb';
+import { useDeletePost, useGetMe } from '@/apis';
+import { PageRoutes, defaultQuery } from '@/constants';
+
 import { PostWriter } from '../PostWriter';
 
 interface PostCardProps {
-  data?: Post;
+  data?: any;
 }
 
 const PostCard = ({ data: post }: PostCardProps) => {
   const { push } = useSafePush();
   const { data: me } = useGetMe();
-  const { mutate: deletePost } = useDeletePost();
-  const { openConfirm } = useModalStore(['openConfirm']);
   const { t } = useTranslation();
+  const { openConfirm } = useModalStore(['openConfirm']);
+  const { mutate: deletePost } = useDeletePost();
 
   return (
     <Card>

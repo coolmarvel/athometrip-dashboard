@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RiCheckDoubleFill } from 'react-icons/ri';
+import { CheckCircleIcon } from '@chakra-ui/icons';
 import { Checkbox, Icon, Tag } from '@chakra-ui/react';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
@@ -21,28 +22,29 @@ interface TopOfTheRockTableProps {
 }
 
 const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) => {
+  const router = useRouter();
   const convertDate = useConvertDate();
   const { t } = useTranslation();
-  const [memo, setMemo] = useState<string>();
 
   const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.TopOfTheRock));
-  const { mutate: updateTopOfTheRock } = useUpdateTopOfTheRock(queryKeyParams);
+  const { mutate: updateTopOfTheRock, isLoading: memoLoading, isSuccess } = useUpdateTopOfTheRock(queryKeyParams);
 
   const { openModal, openConfirm } = useModalStore(['openModal', 'openConfirm']);
 
   const handleDrawer = useCallback<(topOfTheRock: any) => void>(
     (topOfTheRock) => {
       if (!topOfTheRock) return;
-      openModal(TopOfTheRockDrawer, { topOfTheRock });
+      // @ts-ignore
+      openModal(TopOfTheRockDrawer, { topOfTheRock, setMutate: updateTopOfTheRock, isLoading: memoLoading, isSuccess: isSuccess });
     },
-    [openModal],
+    [openModal, isSuccess, memoLoading, updateTopOfTheRock],
   );
 
-  const handleDoubleCheck = useCallback<(id: string, double_check?: boolean, memo?: string) => void>((id, double_check, memo) => {
+  const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>((id, after, before) => {
     openConfirm({
       title: t('Double Check'),
       content: t('Are you sure you want to double check this order?'),
-      onConfirm: () => updateTopOfTheRock({ id, double_check: true, memo }),
+      onConfirm: () => updateTopOfTheRock({ id, double_check: true, after, before }),
     });
   }, [updateTopOfTheRock, openConfirm, t]);
 
@@ -63,7 +65,7 @@ const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) 
       columnHelper.accessor('order.date_created_gmt', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
       columnHelper.accessor('checked', {
         header: t('checked'),
-        cell: (context) => (context.row.original.order.double_checked === null ? '' : <Icon as={RiCheckDoubleFill} color={'red'} boxSize={'5'} />),
+        cell: (context) => (context.row.original.order.double_checked ? <Icon as={CheckCircleIcon} color={'green.300'} boxSize={'5'} /> : ''),
       }),
       columnHelper.display({
         id: 'actions',
@@ -76,15 +78,14 @@ const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) 
             }}
             onUpdate={(e) => {
               e.stopPropagation();
-              handleDoubleCheck(context.row.original.order.id);
+              handleDoubleCheck(context.row.original.order.id, router.query['after'] as string, router.query['before'] as string);
             }}
           />
         ),
       }),
     ],
-    [convertDate, handleDoubleCheck, handleDrawer, t],
+    [convertDate, handleDoubleCheck, handleDrawer, router.query, t],
   );
-  // console.log(topOfTheRock);
 
   const table = useReactTable({ data: topOfTheRock, columns, getCoreRowModel: getCoreRowModel() });
 

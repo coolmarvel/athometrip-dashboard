@@ -1,11 +1,13 @@
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+
 import { Post } from '@/apis';
+import { toUrl } from '@/utils';
 import { DataTable } from '@/components';
 import { PageRoutes } from '@/constants';
 import { useFormatDate, useSafePush } from '@/hooks';
-import { toUrl } from '@/utils';
-import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import PostWriter from './PostWriter';
 
 const columnHelper = createColumnHelper<Post>();
@@ -46,7 +48,7 @@ const PostTable = ({ posts, isLoading }: PostTableProps) => {
         meta: { sortable: true },
       }),
     ],
-    [original, t]
+    [original, t],
   );
 
   const table = useReactTable({

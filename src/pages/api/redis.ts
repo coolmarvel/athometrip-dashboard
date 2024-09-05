@@ -4,9 +4,7 @@ const client = redis.createClient({ url: 'redis://localhost:6379' });
 client.connect();
 
 export const getKeys = async (pattern: string): Promise<any> => {
-  const keys = await client.keys(pattern);
-
-  return keys;
+  return await client.keys(pattern);
 };
 
 export const getValue = async <T>(key: string): Promise<T | null> => {

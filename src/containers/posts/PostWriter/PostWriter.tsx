@@ -1,12 +1,12 @@
-import { Post } from '@/apis';
+import { useTranslation } from 'react-i18next';
+import { Avatar, Flex, Text } from '@chakra-ui/react';
+
+import { toUrl } from '@/utils';
 import { PageRoutes } from '@/constants';
 import { useFormatDate, useSafePush } from '@/hooks';
-import { toUrl } from '@/utils';
-import { Avatar, Flex, Text } from '@chakra-ui/react';
-import { useTranslation } from 'react-i18next';
 
 interface PostWriterProps {
-  post?: Post;
+  post?: any;
 }
 
 const PostWriter = ({ post }: PostWriterProps) => {

@@ -1,7 +1,8 @@
-import { FormField } from '@/components';
 import { capitalize } from 'lodash-es';
-import { FieldPath, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { FieldPath, UseFormRegister } from 'react-hook-form';
+
+import { FormField } from '@/components';
 
 interface UserFormFieldsProps<T extends object> {
   fields: FieldPath<T>[];

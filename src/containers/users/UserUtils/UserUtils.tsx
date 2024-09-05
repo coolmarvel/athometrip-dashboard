@@ -1,36 +1,33 @@
-import { useCreateTestUsers, useCreateUser, useResetTestUsers } from '@/apis';
-import { ApiRoutes, styles } from '@/constants';
-import { useQueryKeyParams } from '@/hooks';
-import { useModalStore } from '@/stores';
-import { getRandomPhoneNumber, getRandomString, toUrl } from '@/utils';
-import { Button, Flex, Tooltip } from '@chakra-ui/react';
 import { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
-import { GrPowerReset } from 'react-icons/gr';
 import { TbPlus } from 'react-icons/tb';
-import { UserCreateModal } from '../UserModal';
+import { GrPowerReset } from 'react-icons/gr';
+import { useTranslation } from 'react-i18next';
+import { Button, Flex, Tooltip } from '@chakra-ui/react';
+
+import { toUrl } from '@/utils';
+import { ApiRoutes } from '@/constants';
+import { useModalStore } from '@/stores';
+import { useQueryKeyParams } from '@/hooks';
+import { UserCreateModal } from '@/containers';
+import { useCreateTestUsers, useCreateUser, useResetTestUsers } from '@/apis';
 
 const count = 100;
 
 const UsersUtils = () => {
+  const { t } = useTranslation();
+
   const { openModal } = useModalStore(['openModal']);
   const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.User));
   const { mutate: createUser, isLoading: createUserIsLoading } = useCreateUser(queryKeyParams);
-  const { mutate: createTestUsers, isLoading: createTestUsersIsLoading } = useCreateTestUsers(count);
   const { mutate: resetTestUsers, isLoading: resetTestUsersIsLoading } = useResetTestUsers();
-  const { t } = useTranslation();
+  const { mutate: createTestUsers, isLoading: createTestUsersIsLoading } = useCreateTestUsers(count);
 
   const handleCreateUser = useCallback(() => {
     openModal(UserCreateModal, {});
   }, [openModal]);
 
   const handleCreateRandomUser = useCallback(() => {
-    createUser({
-      name: getRandomString(10),
-      email: `${getRandomString(20)}@gmail.com`,
-      phone: getRandomPhoneNumber(),
-    });
-  }, [createUser]);
+  }, []);
 
   const handleCreateTestUsers = useCallback(() => {
     createTestUsers();

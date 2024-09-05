@@ -1,10 +1,11 @@
-import { useGetUsersByPage } from '@/apis';
-import { Pagination } from '@/components';
-import { UserTable } from '@/containers';
-import { usePagination } from '@/hooks';
-import { QueryParser } from '@/utils';
-import { TableContainer } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { TableContainer } from '@chakra-ui/react';
+
+import { QueryParser } from '@/utils';
+import { usePagination } from '@/hooks';
+import { UserTable } from '@/containers';
+import { Pagination } from '@/components';
+import { useGetUsersByPage } from '@/apis';
 
 const UsersByPage = () => {
   const router = useRouter();

@@ -1,13 +1,13 @@
-import { User } from '@/apis';
-import { PageRoutes } from '@/constants';
-import { useAlphaColor, useSafePush } from '@/hooks';
-import { toUrl } from '@/utils';
-import { Avatar, Box, Card, CardBody, CardHeader, Flex, Heading, Stack, StackDivider, Text } from '@chakra-ui/react';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Avatar, Box, Card, CardBody, CardHeader, Flex, Heading, Stack, StackDivider, Text } from '@chakra-ui/react';
+
+import { toUrl } from '@/utils';
+import { PageRoutes } from '@/constants';
+import { useAlphaColor, useSafePush } from '@/hooks';
 
 interface UserListItemProps {
-  data: User;
+  data: any;
 }
 
 const UserListItem = ({ data: user }: UserListItemProps) => {
@@ -25,7 +25,7 @@ const UserListItem = ({ data: user }: UserListItemProps) => {
       { label: t('Email'), value: user.email },
       { label: t('Phone'), value: user.phone },
     ],
-    [t, user.approved, user.email, user.phone]
+    [t, user.approved, user.email, user.phone],
   );
 
   return (

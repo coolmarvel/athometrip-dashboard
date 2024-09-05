@@ -1,23 +1,25 @@
-import { useCreatePost, useCreateTestPosts, useGetMe, useResetTestPosts } from '@/apis';
+import { useCallback } from 'react';
+import { TbPlus } from 'react-icons/tb';
+import { GrPowerReset } from 'react-icons/gr';
+import { useTranslation } from 'react-i18next';
+import { Button, Flex, Tooltip } from '@chakra-ui/react';
+
+import { getRandomString, toUrl } from '@/utils';
 import { ApiRoutes, PageRoutes } from '@/constants';
 import { useQueryKeyParams, useSafePush } from '@/hooks';
-import { getRandomString, toUrl } from '@/utils';
-import { Button, Flex, Tooltip } from '@chakra-ui/react';
-import { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
-import { GrPowerReset } from 'react-icons/gr';
-import { TbPlus } from 'react-icons/tb';
+import { useCreatePost, useCreateTestPosts, useGetMe, useResetTestPosts } from '@/apis';
 
 const count = 100;
 
 const PostsUtils = () => {
-  const { data: me } = useGetMe();
   const { push } = useSafePush();
+  const { data: me } = useGetMe();
+  const { t } = useTranslation();
+
   const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.Post));
+  const { mutate: resetTestPosts, isLoading: resetTestPostsIsLoading } = useResetTestPosts();
   const { mutate: createPost, isLoading: createPostIsLoading } = useCreatePost(queryKeyParams);
   const { mutate: createTestPosts, isLoading: createTestPostsIsLoading } = useCreateTestPosts(count);
-  const { mutate: resetTestPosts, isLoading: resetTestPostsIsLoading } = useResetTestPosts();
-  const { t } = useTranslation();
 
   const handleCreatePost = useCallback(() => {
     push(PageRoutes.WritePost);
@@ -25,11 +27,8 @@ const PostsUtils = () => {
 
   const handleCreateRandomPost = useCallback(() => {
     if (!me) return;
-    createPost({
-      title: getRandomString(10),
-      content: getRandomString(100),
-      userId: me.id,
-    });
+
+    createPost({ title: getRandomString(10), content: getRandomString(100), userId: me.id });
   }, [createPost, me]);
 
   const handleCreateTestPosts = useCallback(() => {

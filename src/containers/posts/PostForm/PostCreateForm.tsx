@@ -1,24 +1,22 @@
-import { PostCreate, useCreatePost } from '@/apis';
-import { useGetMe } from '@/apis/auth';
-import { FormField } from '@/components';
-import { PageRoutes } from '@/constants';
-import { useSafePush } from '@/hooks';
-import { toUrl } from '@/utils';
-import { Button, Flex } from '@chakra-ui/react';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { Button, Flex } from '@chakra-ui/react';
+
+import { toUrl } from '@/utils';
+import { useSafePush } from '@/hooks';
+import { useGetMe } from '@/apis/auth';
+import { FormField } from '@/components';
+import { PageRoutes } from '@/constants';
+import { PostCreate, useCreatePost } from '@/apis';
 
 const PostCreateForm = () => {
   const { push } = useSafePush();
-  const { data: me } = useGetMe();
-  const { register, handleSubmit, control } = useForm<PostCreate>({
-    defaultValues: {
-      userId: me?.id,
-    },
-  });
-  const { mutate: createPost, isLoading, isSuccess } = useCreatePost();
   const { t } = useTranslation();
+
+  const { data: me } = useGetMe();
+  const { mutate: createPost, isLoading, isSuccess } = useCreatePost();
+  const { register, handleSubmit, control } = useForm<PostCreate>({ defaultValues: { userId: me?.id } });
 
   return (
     <Flex
@@ -33,8 +31,8 @@ const PostCreateForm = () => {
                 push(toUrl(PageRoutes.PostDetail, { id: res.data }));
               },
             }),
-          [createPost, push]
-        )
+          [createPost, push],
+        ),
       )}
     >
       <FormField fieldType={'string'} isRequired label={t('Title')} placeholder={t('Title')} {...register('title')} />

@@ -1,32 +1,34 @@
-import { User, UserUpdate, useUpdateUser, useUpdateUserInList } from '@/apis';
-import { useUpload } from '@/apis/upload';
-import { ApiRoutes } from '@/constants';
-import { useQueryKeyParams } from '@/hooks';
-import { toUrl } from '@/utils';
-import { Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react';
-import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useCallback, useMemo, useState } from 'react';
+import { Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react';
+
+import { toUrl } from '@/utils';
+import { ApiRoutes } from '@/constants';
+import { useUpload } from '@/apis/upload';
+import { useQueryKeyParams } from '@/hooks';
+import { useUpdateUser, useUpdateUserInList } from '@/apis';
+
 import UserFormFields from './UserFormFields';
 import UserProfileInput from './UserProfileInput';
 
 interface UserUpdateModalProps {
-  user: User;
+  user: any;
   onClose: () => void;
 }
 
 const UserUpdateModal = ({ user, onClose }: UserUpdateModalProps) => {
+  const { t } = useTranslation();
+
+  const [preview, setPreview] = useState(user.profile ?? '');
+  const [file, setFile] = useState<File>();
   const [isOpen, setIsOpen] = useState(true);
+  const { register, handleSubmit } = useForm<any>({ defaultValues: user });
+
   const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.User));
-  const { register, handleSubmit } = useForm<UserUpdate>({
-    defaultValues: user,
-  });
+  const { mutate: upload, isLoading: uploadIsLoading } = useUpload();
   const { mutate: updateUser, isLoading: updateUserIsLoading, isSuccess: updateUserIsSuccess } = useUpdateUser(user.id);
   const { mutate: updateUserInList, isLoading: updateUserInListIsLoading, isSuccess: updateUserInListIsSuccess } = useUpdateUserInList(queryKeyParams);
-  const { mutate: upload, isLoading: uploadIsLoading } = useUpload();
-  const [file, setFile] = useState<File>();
-  const [preview, setPreview] = useState(user.profile ?? '');
-  const { t } = useTranslation();
 
   const mutate = useMemo(() => (!queryKeyParams ? updateUser : updateUserInList), [queryKeyParams, updateUser, updateUserInList]);
 
@@ -53,8 +55,8 @@ const UserUpdateModal = ({ user, onClose }: UserUpdateModalProps) => {
                 mutate(data, { onSuccess: onClose });
               }
             },
-            [file, mutate, onClose, upload]
-          )
+            [file, mutate, onClose, upload],
+          ),
         )}
       >
         <ModalHeader>{t('Update User')}</ModalHeader>

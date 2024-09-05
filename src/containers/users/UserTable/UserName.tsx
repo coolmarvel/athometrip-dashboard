@@ -1,9 +1,8 @@
-import { User } from '@/apis';
 import { Avatar, Flex } from '@chakra-ui/react';
 
 interface UserNameProps {
-  name: User['name'];
-  profile?: User['profile'];
+  name: any;
+  profile?: any;
 }
 
 const UserName = ({ name, profile }: UserNameProps) => {

@@ -1,6 +1,7 @@
-import { QueryKey } from '@/apis';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
+
+import { QueryKey } from '@/apis';
 
 const useQueryKeyParams = (queryKey: QueryKey[0]) => {
   const queryClient = useQueryClient();

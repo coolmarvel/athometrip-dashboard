@@ -1,11 +1,13 @@
-import { Post } from '@/apis';
-import { PageRoutes } from '@/constants';
-import { useSafePush } from '@/hooks';
-import { toUrl } from '@/utils';
 import { Avatar, Box, Flex } from '@chakra-ui/react';
 
+// import { Post } from '@/apis';
+import { toUrl } from '@/utils';
+import { useSafePush } from '@/hooks';
+import { PageRoutes } from '@/constants';
+
 interface PostWriterProps {
-  writer: Post['user'];
+  // writer: Post['user'];
+  writer: any;
 }
 
 const PostWriter = ({ writer }: PostWriterProps) => {

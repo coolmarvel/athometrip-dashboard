@@ -1,7 +1,8 @@
+import { cloneDeep } from 'lodash-es';
+
 import { toUrl } from '@/utils';
 import { ApiRoutes } from '@/constants';
 import { PageQueryParams, useCommand, useFetch, useGetPage, useInvalidate, usePost } from '..';
-import { cloneDeep } from 'lodash-es';
 
 export const useGetTopOfTheRockByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.TopOfTheRock, params), params);
@@ -20,19 +21,18 @@ export const useRefetchTopOfTheRockByPage = (params?: object) => {
 };
 
 export const useUpdateTopOfTheRock = (params?: object) => {
-  // return usePost<any>(`${toUrl(ApiRoutes.TopOfTheRock)}/update`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.TopOfTheRock)) });
-
   return useCommand(
     ((data: any) => `${toUrl(ApiRoutes.TopOfTheRock, data)}/update`),
     [toUrl(ApiRoutes.TopOfTheRock), params],
     undefined,
     (old: any, data: any) => {
-      console.log(data);
+      console.log('old', old);
+      console.log('data ', data);
+
       return {
-        ...old, data: cloneDeep(old.data).map((item: any) => {
-          if (item.id == data.id) return {
-            ...item, [',order.double_checked']: item.order.double_checked,
-          };
+        ...old,
+        data: cloneDeep(old.data).map((item: any) => {
+          if (item.id === Number(data.id)) return { ...item, order: { ...item.order, double_checked: data.double_checked, memo: data.memo } };
 
           return item;
         }),
@@ -40,4 +40,3 @@ export const useUpdateTopOfTheRock = (params?: object) => {
     },
   );
 };
-

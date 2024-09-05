@@ -1,23 +1,32 @@
-import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useCallback, useMemo, useState } from 'react';
 import { Divider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { Tag, Box, Flex, Skeleton, Stack, StackDivider } from '@chakra-ui/react';
 import { Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay } from '@chakra-ui/react';
 
-import { statusColor } from '@/constants';
 import { WithLabel } from '@/components';
 import { useConvertDate } from '@/hooks';
+import { statusColor } from '@/constants';
 import { handleStringKeyValue, ResponseType } from '@/types';
 
 interface TopOfTheRockDrawerProps {
   topOfTheRock: ResponseType;
+  setMutate: () => void;
   onClose: () => void;
+  isLoading: boolean;
+  isSuccess: boolean;
 }
 
-const TopOfTheRockDrawer = ({ topOfTheRock, onClose }: TopOfTheRockDrawerProps) => {
+const TopOfTheRockDrawer = ({ topOfTheRock, setMutate, onClose, isLoading, isSuccess }: TopOfTheRockDrawerProps) => {
   const convertDate = useConvertDate();
   const { t } = useTranslation();
-  const [isOpen, setIsOpen] = useState(true);
+
+  const isOpen: boolean = true;
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+
+  const handleMemoEdit = useCallback(() => {
+    setIsEdit(!isEdit);
+  }, [isEdit, setIsEdit]);
 
   const attributes = useMemo(() => [
     { label: t('Name'), value: topOfTheRock.billing?.first_name ?? 'Name' },
@@ -41,11 +50,21 @@ const TopOfTheRockDrawer = ({ topOfTheRock, onClose }: TopOfTheRockDrawerProps) 
         return `${date} ${time}`;
       })(),
     },
-    { label: t('Memo'), value: topOfTheRock.order.memo ?? '' },
-  ], [topOfTheRock, convertDate, t]);
+    {
+      label: t('Memo'),
+      isMemo: true,
+      isEdit: isEdit,
+      isLoading: isLoading,
+      isSuccess: isSuccess,
+      id: topOfTheRock.order.id,
+      onEdit: () => handleMemoEdit(),
+      value: topOfTheRock.order.memo ?? '',
+    },
+  ], [isEdit, isLoading, isSuccess, handleMemoEdit, setMutate, topOfTheRock, convertDate, t]);
 
   const columns = useMemo(() => [{ name: topOfTheRock?.line_items?.[0]?.name, quantity: topOfTheRock?.line_items?.[0]?.quantity, total: topOfTheRock?.line_items?.[0]?.total }] ?? [], [topOfTheRock]);
 
+  // @ts-ignore
   return (
     <>
       <Drawer isOpen={isOpen} size={'lg'} placement="right" onClose={onClose}>
@@ -66,7 +85,17 @@ const TopOfTheRockDrawer = ({ topOfTheRock, onClose }: TopOfTheRockDrawerProps) 
                 <Stack divider={<StackDivider />} spacing={3}>
                   {attributes.map((attribute, index) => (
                     <Skeleton key={index} isLoaded={!!topOfTheRock}>
-                      <WithLabel label={attribute.label} value={attribute.value} />
+                      <WithLabel
+                        id={attribute.id}
+                        setMutate={setMutate}
+                        label={attribute.label}
+                        value={attribute.value}
+                        isMemo={attribute.isMemo}
+                        isEdit={attribute.isEdit}
+                        onEdit={attribute.onEdit}
+                        isLoading={attribute.isLoading}
+                        isSuccess={attribute.isSuccess}
+                      />
                     </Skeleton>
                   ))}
                 </Stack>

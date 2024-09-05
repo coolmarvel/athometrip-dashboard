@@ -9,7 +9,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-// [DELETE] /api/tickets/top-of-the-rock/reset
 const resetTopOfTheRock = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     return res.status(200).send({ data: [], message: 'Successfully reset top-of-the-rock posts' });

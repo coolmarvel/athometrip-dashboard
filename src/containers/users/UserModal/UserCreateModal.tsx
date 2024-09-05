@@ -1,12 +1,14 @@
-import { UserCreate, useCreateUser } from '@/apis';
-import { useUpload } from '@/apis/upload';
-import { ApiRoutes } from '@/constants';
-import { useQueryKeyParams } from '@/hooks';
-import { toUrl } from '@/utils';
-import { Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react';
-import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react';
+
+import { toUrl } from '@/utils';
+import { ApiRoutes } from '@/constants';
+import { useUpload } from '@/apis/upload';
+import { useQueryKeyParams } from '@/hooks';
+import { UserCreate, useCreateUser } from '@/apis';
+
 import UserFormFields from './UserFormFields';
 import UserProfileInput from './UserProfileInput';
 
@@ -15,13 +17,15 @@ interface UserCreateModalProps {
 }
 
 const UserCreateModal = ({ onClose }: UserCreateModalProps) => {
-  const { register, handleSubmit } = useForm<UserCreate>();
-  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.User));
-  const { mutate: createUser, isLoading: createUserIsLoading, isSuccess: createUserIsSuccess } = useCreateUser(queryKeyParams);
-  const { mutate: upload, isLoading: uploadIsLoading } = useUpload();
+  const { t } = useTranslation();
+
   const [file, setFile] = useState<File>();
   const [preview, setPreview] = useState('');
-  const { t } = useTranslation();
+  const { register, handleSubmit } = useForm<any>();
+
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.User));
+  const { mutate: upload, isLoading: uploadIsLoading } = useUpload();
+  const { mutate: createUser, isLoading: createUserIsLoading, isSuccess: createUserIsSuccess } = useCreateUser(queryKeyParams);
 
   return (
     <Modal isOpen onClose={onClose}>
@@ -42,8 +46,8 @@ const UserCreateModal = ({ onClose }: UserCreateModalProps) => {
                 },
               });
             },
-            [file, upload, createUser, onClose]
-          )
+            [file, upload, createUser, onClose],
+          ),
         )}
       >
         <ModalHeader>{t('Create User')}</ModalHeader>

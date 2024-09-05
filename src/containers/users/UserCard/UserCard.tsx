@@ -1,15 +1,15 @@
-import { User } from '@/apis';
-import { WithLabel } from '@/components';
+import { useMemo } from 'react';
+import { TbEdit } from 'react-icons/tb';
+import { useTranslation } from 'react-i18next';
+import { Avatar, Box, Button, Card, CardBody, CardHeader, Flex, Heading, Skeleton, SkeletonCircle, Stack, StackDivider } from '@chakra-ui/react';
+
 import { useFormatDate } from '@/hooks';
 import { useModalStore } from '@/stores';
-import { Avatar, Box, Button, Card, CardBody, CardHeader, Flex, Heading, Skeleton, SkeletonCircle, Stack, StackDivider } from '@chakra-ui/react';
-import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { TbEdit } from 'react-icons/tb';
-import { UserUpdateModal } from '../UserModal';
+import { WithLabel } from '@/components';
+import { UserUpdateModal } from '@/containers';
 
 interface UserCardProps {
-  data?: User;
+  data?: any;
 }
 
 const UserCard = ({ data: user }: UserCardProps) => {

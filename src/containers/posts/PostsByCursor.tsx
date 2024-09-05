@@ -1,9 +1,11 @@
-import { Post, useGetPostsByCursor } from "@/apis";
-import { InfiniteList } from "@/components";
-import { usePagination } from "@/hooks";
-import { PostListItem } from ".";
-import { QueryParser } from "@/utils";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
+
+import { QueryParser } from '@/utils';
+import { usePagination } from '@/hooks';
+import { InfiniteList } from '@/components';
+import { Post, useGetPostsByCursor } from '@/apis';
+
+import { PostListItem } from '.';
 
 interface PostsByCursorProps {
   usesObserver?: boolean;
@@ -15,12 +17,7 @@ const PostsByCursor = ({ usesObserver }: PostsByCursorProps) => {
 
   return (
     <InfiniteList<Post>
-      infiniteQuery={useGetPostsByCursor({
-        limit,
-        sort,
-        order,
-        search: QueryParser.toString(router.query.search) ?? "",
-      })}
+      infiniteQuery={useGetPostsByCursor({ limit, sort, order, search: QueryParser.toString(router.query.search) ?? '' })}
       renderItem={PostListItem}
       usesObserver={usesObserver}
     />

@@ -1,5 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { cloneDeep } from 'lodash-es';
 import axios from 'axios';
+
+import { getValue, setValue } from '@/pages/api/redis';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -14,10 +17,31 @@ const ticketName = 'top-of-the-rock';
 const url = process.env.NEXT_PUBLIC_API_URL;
 
 const updateTopOfTheRock = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id, double_check, memo } = req.body;
+  console.log('req.body ', req.body);
+  const { id, double_check, after, before, memo } = req.body;
+
+  const key = `${ticketName}_${after}_${before}`;
 
   try {
-    const { data } = await axios.put(`${url}?order_id=${id}&double_check=${double_check}&memo=${memo}`);
+    await axios.put(`${url}?order_id=${id}&double_check=${double_check}&memo=${memo}`);
+
+    if (double_check && memo == undefined) {
+      let data: any = await getValue(key);
+      data = cloneDeep(data).map((item: any) => {
+        if (item.id === Number(id)) return { ...item, order: { ...item.order, double_checked: double_check } };
+
+        return item;
+      });
+      await setValue(key, data);
+    } else if (memo && double_check == undefined) {
+      let data: any = await getValue(key);
+      data = cloneDeep(data).map((item: any) => {
+        if (item.id === Number(id)) return { ...item, order: { ...item.order, memo: memo } };
+
+        return item;
+      });
+      await setValue(key, data);
+    }
 
     return res.status(200).send({ data: [], message: `Successfully update ${ticketName}` });
   } catch {

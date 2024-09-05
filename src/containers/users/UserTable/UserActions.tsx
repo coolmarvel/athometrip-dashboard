@@ -1,7 +1,7 @@
-import { Flex, IconButton, Tooltip } from '@chakra-ui/react';
 import { MouseEventHandler } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TbEdit, TbTrash } from 'react-icons/tb';
+import { Flex, IconButton, Tooltip } from '@chakra-ui/react';
 
 interface UserActionsProps {
   onUpdate: MouseEventHandler<HTMLButtonElement>;
