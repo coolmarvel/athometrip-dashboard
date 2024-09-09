@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CheckCircleIcon } from '@chakra-ui/icons';
@@ -11,7 +10,7 @@ import { DataTable } from '@/components';
 import { useModalStore } from '@/stores';
 import { useUpdateTopOfTheRock } from '@/apis';
 import { ApiRoutes, statusColor } from '@/constants';
-import { useConvertDate, useQueryKeyParams } from '@/hooks';
+import { useConvertDate, useQueryKeyParams, useSafePush } from '@/hooks';
 import { TopOfTheRockDrawer, TopOfTheRockActions } from '@/containers';
 
 const columnHelper = createColumnHelper<any>();
@@ -22,22 +21,21 @@ interface TopOfTheRockTableProps {
 }
 
 const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) => {
-  const router = useRouter();
   const convertDate = useConvertDate();
+  const { router } = useSafePush();
   const { t } = useTranslation();
 
   const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.TopOfTheRock));
-  const { mutate: updateTopOfTheRock, isLoading: memoLoading, isSuccess } = useUpdateTopOfTheRock(queryKeyParams);
+  const { mutate: updateTopOfTheRock } = useUpdateTopOfTheRock(queryKeyParams);
 
   const { openModal, openConfirm } = useModalStore(['openModal', 'openConfirm']);
 
-  const handleDrawer = useCallback<(topOfTheRock: any) => void>(
+  const handleDrawer = useCallback<(topOfTheRock: ResponseType) => void>(
     (topOfTheRock) => {
       if (!topOfTheRock) return;
-      // @ts-ignore
-      openModal(TopOfTheRockDrawer, { topOfTheRock, setMutate: updateTopOfTheRock, isLoading: memoLoading, isSuccess: isSuccess });
+      openModal(TopOfTheRockDrawer, { topOfTheRock, setMutate: updateTopOfTheRock });
     },
-    [openModal, isSuccess, memoLoading, updateTopOfTheRock],
+    [openModal, updateTopOfTheRock],
   );
 
   const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>((id, after, before) => {

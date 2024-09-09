@@ -5,23 +5,22 @@ import { Tag, Box, Flex, Skeleton, Stack, StackDivider } from '@chakra-ui/react'
 import { Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay } from '@chakra-ui/react';
 
 import { WithLabel } from '@/components';
-import { useConvertDate } from '@/hooks';
 import { statusColor } from '@/constants';
+import { useConvertDate, useSafePush } from '@/hooks';
 import { handleStringKeyValue, ResponseType } from '@/types';
 
 interface TopOfTheRockDrawerProps {
   topOfTheRock: ResponseType;
-  setMutate: () => void;
+  setMutate: (data?: any) => void;
   onClose: () => void;
-  isLoading: boolean;
-  isSuccess: boolean;
 }
 
-const TopOfTheRockDrawer = ({ topOfTheRock, setMutate, onClose, isLoading, isSuccess }: TopOfTheRockDrawerProps) => {
+const TopOfTheRockDrawer = ({ topOfTheRock, setMutate, onClose }: TopOfTheRockDrawerProps) => {
   const convertDate = useConvertDate();
+  const { router } = useSafePush();
   const { t } = useTranslation();
 
-  const isOpen: boolean = true;
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
   const handleMemoEdit = useCallback(() => {
@@ -54,20 +53,17 @@ const TopOfTheRockDrawer = ({ topOfTheRock, setMutate, onClose, isLoading, isSuc
       label: t('Memo'),
       isMemo: true,
       isEdit: isEdit,
-      isLoading: isLoading,
-      isSuccess: isSuccess,
       id: topOfTheRock.order.id,
       onEdit: () => handleMemoEdit(),
       value: topOfTheRock.order.memo ?? '',
     },
-  ], [isEdit, isLoading, isSuccess, handleMemoEdit, setMutate, topOfTheRock, convertDate, t]);
+  ], [isEdit, handleMemoEdit, topOfTheRock, convertDate, t]);
 
   const columns = useMemo(() => [{ name: topOfTheRock?.line_items?.[0]?.name, quantity: topOfTheRock?.line_items?.[0]?.quantity, total: topOfTheRock?.line_items?.[0]?.total }] ?? [], [topOfTheRock]);
 
-  // @ts-ignore
   return (
     <>
-      <Drawer isOpen={isOpen} size={'lg'} placement="right" onClose={onClose}>
+      <Drawer isOpen={isOpen} onClose={onClose} size={'lg'} placement="right">
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">
@@ -87,14 +83,16 @@ const TopOfTheRockDrawer = ({ topOfTheRock, setMutate, onClose, isLoading, isSuc
                     <Skeleton key={index} isLoaded={!!topOfTheRock}>
                       <WithLabel
                         id={attribute.id}
+                        setIsOpen={setIsOpen}
+                        setIsEdit={setIsEdit}
                         setMutate={setMutate}
                         label={attribute.label}
                         value={attribute.value}
                         isMemo={attribute.isMemo}
                         isEdit={attribute.isEdit}
                         onEdit={attribute.onEdit}
-                        isLoading={attribute.isLoading}
-                        isSuccess={attribute.isSuccess}
+                        after={router.query['after'] as string}
+                        before={router.query['before'] as string}
                       />
                     </Skeleton>
                   ))}

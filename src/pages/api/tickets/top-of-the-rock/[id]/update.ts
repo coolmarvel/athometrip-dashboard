@@ -17,7 +17,6 @@ const ticketName = 'top-of-the-rock';
 const url = process.env.NEXT_PUBLIC_API_URL;
 
 const updateTopOfTheRock = async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log('req.body ', req.body);
   const { id, double_check, after, before, memo } = req.body;
 
   const key = `${ticketName}_${after}_${before}`;
@@ -25,21 +24,26 @@ const updateTopOfTheRock = async (req: NextApiRequest, res: NextApiResponse) => 
   try {
     await axios.put(`${url}?order_id=${id}&double_check=${double_check}&memo=${memo}`);
 
-    if (double_check && memo == undefined) {
-      let data: any = await getValue(key);
+    let data: any = await getValue(key);
+
+    if (double_check !== undefined) {
       data = cloneDeep(data).map((item: any) => {
         if (item.id === Number(id)) return { ...item, order: { ...item.order, double_checked: double_check } };
 
         return item;
       });
+
       await setValue(key, data);
-    } else if (memo && double_check == undefined) {
+    }
+
+    if (memo !== undefined) {
       let data: any = await getValue(key);
       data = cloneDeep(data).map((item: any) => {
         if (item.id === Number(id)) return { ...item, order: { ...item.order, memo: memo } };
 
         return item;
       });
+
       await setValue(key, data);
     }
 
