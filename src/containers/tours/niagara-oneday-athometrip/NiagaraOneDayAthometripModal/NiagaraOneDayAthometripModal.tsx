@@ -53,7 +53,7 @@ const NiagaraOneDayAthometripModal = ({ niagaraOneDayAthometrip, onClose }: Niag
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
                   <Skeleton key={index} isLoaded={!!niagaraOneDayAthometrip}>
-                    <WithLabel label={attribute.label} value={attribute.value} />
+                    {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
                   </Skeleton>
                 ))}
               </Stack>

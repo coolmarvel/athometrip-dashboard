@@ -54,7 +54,7 @@ const Memorial911Modal = ({ memorial911, onClose }: Memorial911ModalProps) => {
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
                   <Skeleton key={index} isLoaded={!!memorial911}>
-                    <WithLabel label={attribute.label} value={attribute.value} />
+                    {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
                   </Skeleton>
                 ))}
               </Stack>

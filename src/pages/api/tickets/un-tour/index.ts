@@ -3,8 +3,8 @@ import { RequiredKeysOf } from 'type-fest';
 import axios from 'axios';
 
 import { Order } from '../../types';
-import { checkExistingDataInRange, filterTicket, sortTicket } from '../ticket-utils';
 import { setValue } from '../../redis';
+import { checkExistingDataInRange, filterTicket, sortTicket } from '../ticket-utils';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -18,9 +18,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '101264,152209';
 const ticketName = 'un-tour';
-const url = process.env.NEXT_PUBLIC_APIS_URL;
+const url = process.env.NEXT_PUBLIC_APIS_URL as string;
+const productId = process.env.NEXT_PUBLIC_UN_TOUR as string;
 
 const getUNTourByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };

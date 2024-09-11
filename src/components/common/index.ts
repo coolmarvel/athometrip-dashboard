@@ -6,6 +6,7 @@ export { InfiniteList } from './InfiniteList';
 export { PageOptions } from './PageOptions';
 export { ViewOptions } from './ViewOptions';
 export { Pagination } from './Pagination';
+export { DataDrawer } from './DataDawer';
 export { DataTable } from './DataTable';
 export { FileInput } from './FileInput';
 export { FormField } from './FormField';

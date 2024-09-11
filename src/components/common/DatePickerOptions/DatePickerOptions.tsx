@@ -17,24 +17,27 @@ const DatePickerOptions = ({ setMutate }: DatePickerOptionsProps) => {
 
   useEffect(() => {
     if (Object.keys(router.query).length !== 0) {
-      const after = router.query?.after as string ?? subWeeks(new Date(), 1).toISOString().split('T')[0];
-      const before = router.query?.before as string ?? new Date().toISOString().split('T')[0];
+      const after = (router.query['after'] as string) ?? subWeeks(new Date(), 1).toISOString().split('T')[0];
+      const before = (router.query['before'] as string) ?? new Date().toISOString().split('T')[0];
 
       setSelectedDates([new Date(after), new Date(before)]);
       setLoading(false);
     }
   }, [router.query]);
 
-  const handleDateChange = useCallback((dates: Date[]) => {
-    setSelectedDates(dates);
+  const handleDateChange = useCallback(
+    (dates: Date[]) => {
+      setSelectedDates(dates);
 
-    if (dates.length === 2) {
-      setMutate();
+      if (dates.length === 2) {
+        setMutate();
 
-      const formattedDates = dates.map((date) => format(date, 'yyyy-MM-dd', { locale: ko }));
-      push({ query: { ...router.query, page: 1, after: formattedDates[0], before: formattedDates[1] } });
-    }
-  }, [push, router.query, setMutate]);
+        const formattedDates = dates.map((date) => format(date, 'yyyy-MM-dd', { locale: ko }));
+        push({ query: { ...router.query, page: 1, after: formattedDates[0], before: formattedDates[1] } });
+      }
+    },
+    [push, router.query, setMutate]
+  );
 
   if (loading) return <>loading...</>;
   else return <RangeDatepicker selectedDates={selectedDates} onDateChange={handleDateChange} />;

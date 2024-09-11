@@ -1,7 +1,7 @@
 import { match } from 'path-to-regexp';
 import { MdOutlineTour } from 'react-icons/md';
 import { RxTransparencyGrid } from 'react-icons/rx';
-import { BsFill1SquareFill, BsFill2SquareFill, BsFill3SquareFill, BsFill4SquareFill, BsFill7SquareFill } from 'react-icons/bs';
+import { BsFill1SquareFill, BsFill2SquareFill, BsFill3SquareFill, BsFill4SquareFill, BsFill5SquareFill, BsFill6SquareFill, BsFill7SquareFill } from 'react-icons/bs';
 
 import { Nav } from '@/constants';
 import { PageRoutes } from '../routes';
@@ -42,7 +42,7 @@ export const toursNav: Nav = {
       label: 'MetroDocent(Painting)',
       pathname: PageRoutes.MetroDocentPainting,
       matcher: match(PageRoutes.MetroDocentPainting),
-      icon: BsFill3SquareFill,
+      icon: BsFill4SquareFill,
       query: normalQuery,
       children: [{
         label: 'MetroDocentPainting Detail',
@@ -56,7 +56,7 @@ export const toursNav: Nav = {
       label: 'MomaDocent',
       pathname: PageRoutes.MomaDocent,
       matcher: match(PageRoutes.MomaDocent),
-      icon: BsFill4SquareFill,
+      icon: BsFill5SquareFill,
       query: normalQuery,
       children: [{ label: 'MomaDocent Detail', icon: RxTransparencyGrid, pathname: PageRoutes.MomaDocentDetail, matcher: match(PageRoutes.MomaDocentDetail), query: normalQuery }],
     },
@@ -80,7 +80,7 @@ export const toursNav: Nav = {
       label: 'SingleDocents',
       pathname: PageRoutes.SingleDocents,
       matcher: match(PageRoutes.SingleDocents),
-      icon: BsFill7SquareFill,
+      icon: BsFill6SquareFill,
       query: normalQuery,
       children: [{ label: 'SingleDocents Detail', icon: RxTransparencyGrid, pathname: PageRoutes.SingleDocentsDetail, matcher: match(PageRoutes.SingleDocentsDetail), query: normalQuery }],
     },

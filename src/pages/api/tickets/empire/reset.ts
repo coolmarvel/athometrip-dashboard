@@ -9,11 +9,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-// [DELETE] /api/tickets/empire/reset
+const ticketName = 'empire';
+
 const resetEmpire = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    return res.status(200).send({ data: [], message: 'Successfully reset empire posts' });
+    return res.status(200).send({ data: [], message: `Successfully reset ${ticketName}` });
   } catch {
-    return res.status(500).send({ data: null, message: 'Failed to reset empire posts' });
+    return res.status(500).send({ data: null, message: `Failed to reset ${ticketName}` });
   }
 };

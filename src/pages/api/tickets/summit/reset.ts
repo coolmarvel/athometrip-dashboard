@@ -9,11 +9,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-// [DELETE] /api/tickets/summit/reset
+const ticketName = 'summit';
+
 const resetSummit = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    return res.status(200).send({ data: [], message: 'Successfully reset summit posts' });
+    return res.status(200).send({ data: [], message: `Successfully reset ${ticketName}` });
   } catch {
-    return res.status(500).send({ data: null, message: 'Failed to reset summit posts' });
+    return res.status(500).send({ data: null, message: `Failed to reset ${ticketName}` });
   }
 };

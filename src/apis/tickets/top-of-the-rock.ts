@@ -26,8 +26,6 @@ export const useUpdateTopOfTheRock = (params?: object) => {
     [toUrl(ApiRoutes.TopOfTheRock), params],
     undefined,
     (old: any, data: any) => {
-      console.log('old', old);
-      console.log('data ', data);
 
       return {
         ...old,

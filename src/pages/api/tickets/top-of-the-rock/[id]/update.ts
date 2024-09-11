@@ -14,7 +14,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 const ticketName = 'top-of-the-rock';
-const url = process.env.NEXT_PUBLIC_API_URL;
+const url = process.env.NEXT_PUBLIC_API_URL as string;
 
 const updateTopOfTheRock = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id, double_check, after, before, memo } = req.body;

@@ -9,11 +9,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-// [DELETE] /api/tickets/911-memorial/reset
+const ticketName = '911-memorial';
+
 const reset911Memorial = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    return res.status(200).send({ data: [], message: 'Successfully reset 911-memorial posts' });
+    return res.status(200).send({ data: [], message: `Successfully reset ${ticketName}` });
   } catch {
-    return res.status(500).send({ data: null, message: 'Failed to reset 911-memorial posts' });
+    return res.status(500).send({ data: null, message: `Failed to reset ${ticketName}` });
   }
 };

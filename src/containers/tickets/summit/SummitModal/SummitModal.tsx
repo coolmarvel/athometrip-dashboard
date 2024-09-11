@@ -50,7 +50,7 @@ const SummitModal = ({ summit, onClose }: SummitModalProps) => {
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
                   <Skeleton key={index} isLoaded={!!summit}>
-                    <WithLabel label={attribute.label} value={attribute.value} />
+                    {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
                   </Skeleton>
                 ))}
               </Stack>

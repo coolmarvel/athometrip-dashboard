@@ -46,7 +46,7 @@ const StaysCard = ({ data: stays }: StaysCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!stays}>
-                <WithLabel label={attribute.label} value={attribute.value} />
+                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

@@ -18,9 +18,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '60568,336192';
 const ticketName = 'wollman';
-const url = process.env.NEXT_PUBLIC_APIS_URL;
+const url = process.env.NEXT_PUBLIC_APIS_URL as string;
+const productId = process.env.NEXT_PUBLIC_WOLLMAN as string;
 
 const getWollmanByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };

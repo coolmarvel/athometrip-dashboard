@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import axios from 'axios';
 import { RequiredKeysOf } from 'type-fest';
+import axios from 'axios';
+
 import { Order } from '@/apis';
 import { setValue } from '../../redis';
 import { checkExistingDataInRange, filterTicket, sortTicket } from '../ticket-utils';
@@ -17,9 +18,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '21772,447627';
 const ticketName = '911-memorial';
-const url = process.env.NEXT_PUBLIC_APIS_URL;
+const url = process.env.NEXT_PUBLIC_APIS_URL as string;
+const productId = process.env.NEXT_PUBLIC_911_MEMORIAL as string;
 
 const get911MemorialsByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };

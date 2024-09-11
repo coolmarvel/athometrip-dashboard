@@ -6,17 +6,17 @@ import { setValue } from '../../redis';
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'POST':
-      return refetchEmpire(req, res);
+      return refetchEllisIsland(req, res);
     default:
       return res.status(405).end();
   }
 }
 
-const productId = '24493';
 const ticketName = 'ellis-island';
-const url = process.env.NEXT_PUBLIC_APIS_URL;
+const url = process.env.NEXT_PUBLIC_APIS_URL as string;
+const productId = process.env.NEXT_PUBLIC_ELLIS_ISLAND as string;
 
-const refetchEmpire = async (req: NextApiRequest, res: NextApiResponse) => {
+const refetchEllisIsland = async (req: NextApiRequest, res: NextApiResponse) => {
   const { after, before } = req.body as { [key: string]: string };
 
   const key = `${ticketName}_${after}_${before}`;

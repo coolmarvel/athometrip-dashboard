@@ -4,11 +4,12 @@ import { CheckIcon, ViewIcon } from '@chakra-ui/icons';
 import { Flex, IconButton, Tooltip } from '@chakra-ui/react';
 
 interface TopOfTheRockActionsProps {
+  checked: boolean;
   onView: MouseEventHandler<HTMLButtonElement>;
   onUpdate: MouseEventHandler<HTMLButtonElement>;
 }
 
-const TopOfTheRockActions = ({ onView, onUpdate }: TopOfTheRockActionsProps) => {
+const TopOfTheRockActions = ({ checked, onView, onUpdate }: TopOfTheRockActionsProps) => {
   const { t } = useTranslation();
 
   return (
@@ -17,7 +18,7 @@ const TopOfTheRockActions = ({ onView, onUpdate }: TopOfTheRockActionsProps) => 
         <IconButton aria-label="view details" boxSize={5} icon={<ViewIcon />} onClick={onView} />
       </Tooltip>
       <Tooltip hasArrow label={t('Double Check')}>
-        <IconButton aria-label="double check" boxSize={5} icon={<CheckIcon />} onClick={onUpdate} />
+        <IconButton aria-label="double check" boxSize={5} icon={<CheckIcon />} onClick={onUpdate} isDisabled={checked} />
       </Tooltip>
     </Flex>
   );

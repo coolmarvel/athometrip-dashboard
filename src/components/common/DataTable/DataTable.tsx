@@ -3,7 +3,7 @@ import { Table as ReactTable, Row } from '@tanstack/react-table';
 
 import DataTableBody from './DataTableBody';
 import DataTableHeader from './DataTableHeader';
-import DataTableFooter from './DataTableFooter';
+// import DataTableFooter from './DataTableFooter';
 
 interface DataTableProps<T> {
   table: ReactTable<T>;
@@ -11,13 +11,13 @@ interface DataTableProps<T> {
   onRowClick?: (row: Row<T>) => void;
 }
 
-const DataTable = <T, >({ table, isLoading, onRowClick }: DataTableProps<T>) => {
+const DataTable = <T,>({ table, isLoading, onRowClick }: DataTableProps<T>) => {
   return (
     <>
-      <Table variant="striped" colorScheme="blue" width="full">
+      <Table variant="striped" colorScheme="linkedin" width="full">
         <DataTableHeader table={table} />
         {!isLoading && <DataTableBody table={table} onRowClick={onRowClick} />}
-        {/*<DataTableFooter table={table} />*/}
+        {/* <DataTableFooter table={table} /> */}
       </Table>
       {isLoading && (
         <Center my={'4'}>

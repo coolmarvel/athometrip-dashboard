@@ -63,7 +63,7 @@ const UserCard = ({ data: user }: UserCardProps) => {
             {attributes.map((attribute) => {
               return (
                 <Skeleton key={attribute.label} isLoaded={!!user}>
-                  <WithLabel {...attribute} />
+                  {/* <WithLabel {...attribute} /> */}
                 </Skeleton>
               );
             })}

@@ -42,7 +42,7 @@ const WollmanCard = ({ data: wollman }: WollmanCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!wollman}>
-                <WithLabel label={attribute.label} value={attribute.value} />
+                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

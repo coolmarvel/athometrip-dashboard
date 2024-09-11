@@ -1,7 +1,7 @@
 import { match } from 'path-to-regexp';
 import { FaShuttleVan } from 'react-icons/fa';
 import { RxTransparencyGrid } from 'react-icons/rx';
-import { BsFill1SquareFill, BsFill2SquareFill, BsFill3SquareFill } from 'react-icons/bs';
+import { BsFill1SquareFill, BsFill2SquareFill, BsFill3SquareFill, BsFill4SquareFill, BsFill5SquareFill, BsFill6SquareFill } from 'react-icons/bs';
 
 import { Nav } from '@/constants';
 import { PageRoutes } from '../routes';
@@ -42,7 +42,7 @@ export const shuttlesNav: Nav = {
       label: 'To NY/NJ/EWR',
       pathname: PageRoutes.ToNYNJEWR,
       matcher: match(PageRoutes.ToNYNJEWR),
-      icon: BsFill3SquareFill,
+      icon: BsFill4SquareFill,
       query: normalQuery,
       children: [{ label: 'To NY/NJ/EWR Detail', icon: RxTransparencyGrid, pathname: PageRoutes.ToNYNJEWRDetail, matcher: match(PageRoutes.ToNYNJEWRDetail), query: normalQuery }],
     },
@@ -50,7 +50,7 @@ export const shuttlesNav: Nav = {
       label: 'To JFK(Night)',
       pathname: PageRoutes.ToJFKNight,
       matcher: match(PageRoutes.ToJFKNight),
-      icon: BsFill3SquareFill,
+      icon: BsFill5SquareFill,
       query: normalQuery,
       children: [{ label: 'To JFK(Night) Detail', icon: RxTransparencyGrid, pathname: PageRoutes.ToJFKNightDetail, matcher: match(PageRoutes.ToJFKNightDetail), query: normalQuery }],
     },
@@ -58,7 +58,7 @@ export const shuttlesNav: Nav = {
       label: 'To NY/NJ(Night)',
       pathname: PageRoutes.ToNYNight,
       matcher: match(PageRoutes.ToNYNight),
-      icon: BsFill3SquareFill,
+      icon: BsFill6SquareFill,
       query: normalQuery,
       children: [{ label: 'To NY/NJ(Night) Detail', icon: RxTransparencyGrid, pathname: PageRoutes.ToNYNightDetail, matcher: match(PageRoutes.ToNYNightDetail), query: normalQuery }],
     },

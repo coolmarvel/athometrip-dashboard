@@ -18,9 +18,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '21725,446786';
 const ticketName = 'one-world';
-const url = process.env.NEXT_PUBLIC_APIS_URL;
+const url = process.env.NEXT_PUBLIC_APIS_URL as string;
+const productId = process.env.NEXT_PUBLIC_ONE_WORLD as string;
 
 const getOneWorldByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };

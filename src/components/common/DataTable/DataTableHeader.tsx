@@ -1,6 +1,6 @@
 import { usePagination } from '@/hooks';
-import { Flex, Icon, IconButton, Th, Thead, Tr } from '@chakra-ui/react';
 import { Table as ReactTable, flexRender } from '@tanstack/react-table';
+import { Flex, Icon, IconButton, Th, Thead, Tr } from '@chakra-ui/react';
 import { TiArrowSortedDown, TiArrowSortedUp, TiArrowUnsorted } from 'react-icons/ti';
 
 interface DataTableHeaderProps<T> {
@@ -23,9 +23,9 @@ const DataTableHeader = <T,>({ table }: DataTableHeaderProps<T>) => {
                   {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   {header.column.columnDef.meta?.sortable && (
                     <IconButton
+                      size={'xs'}
                       aria-label={'sort'}
                       variant={isSorted ? 'solid' : 'outline'}
-                      size={'xs'}
                       onClick={() => onPagination({ sort: header.id, order: isSorted ? (order === 'desc' ? 'asc' : 'desc') : 'desc' })}
                     >
                       <Icon as={isSorted ? (order === 'asc' ? TiArrowSortedUp : TiArrowSortedDown) : TiArrowUnsorted} />

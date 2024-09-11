@@ -12,9 +12,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '21772,447627';
 const ticketName = '911-memorial';
-const url = process.env.NEXT_PUBLIC_APIS_URL;
+const url = process.env.NEXT_PUBLIC_APIS_URL as string;
+const productId = process.env.NEXT_PUBLIC_911_MEMORIAL as string;
 
 const refetch911Memorials = async (req: NextApiRequest, res: NextApiResponse) => {
   const { after, before } = req.body as { [key: string]: string };

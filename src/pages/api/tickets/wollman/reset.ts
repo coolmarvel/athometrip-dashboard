@@ -9,11 +9,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-// [DELETE] /api/tickets/wollman/reset
+const ticketName = 'wollman';
+
 const resetWollman = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    return res.status(200).send({ data: [], message: 'Successfully reset wollman posts' });
+    return res.status(200).send({ data: [], message: `Successfully reset ${ticketName}` });
   } catch {
-    return res.status(500).send({ data: null, message: 'Failed to reset wollman posts' });
+    return res.status(500).send({ data: null, message: `Failed to reset ${ticketName}` });
   }
 };

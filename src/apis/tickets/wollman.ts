@@ -1,22 +1,41 @@
-import { toUrl } from '@/utils';
-import { PageQueryParams, useFetch, useGetPage, useInvalidate, usePost } from '..';
-import { ApiRoutes } from '@/constants';
+import { cloneDeep } from 'lodash-es';
 
-// [GET] /api/tickets/wollman?params
+import { toUrl } from '@/utils';
+import { ApiRoutes } from '@/constants';
+import { PageQueryParams, useCommand, useFetch, useGetPage, useInvalidate, usePost } from '..';
+
 export const useGetWollmanByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.Wollman), params);
 };
 
-// [GET] /api/tickets/wollman/{id}
 export const useGetWollman = (id?: number) => {
   return useFetch<any>(toUrl(ApiRoutes.Wollman, { id }));
 };
 
-// [DELETE] /api/tickets/wollman/reset
 export const useResetWollman = () => {
   return usePost(`${toUrl(ApiRoutes.Wollman)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.Wollman)) });
 };
 
 export const useRefetchWollmanByPage = (params?: object) => {
   return usePost<any>(`${toUrl(ApiRoutes.Wollman)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.Wollman)) });
+};
+
+export const useUpdateWollman = (params?: object) => {
+  return useCommand(
+    ((data: any) => `${toUrl(ApiRoutes.Wollman, data)}/update`),
+    [toUrl(ApiRoutes.Wollman), params],
+    undefined,
+    (old: any, data: any) => {
+
+      return {
+        ...old,
+        data: cloneDeep(old.data).map((item: any) => {
+          console.log(item);
+          if (item.id === Number(data.id)) return { ...item, order: { ...item.order, double_checked: data.double_checked, memo: data.memo } };
+
+          return item;
+        }),
+      };
+    },
+  );
 };

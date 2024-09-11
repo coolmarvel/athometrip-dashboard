@@ -46,7 +46,7 @@ const MusicalsCard = ({ data: musicals }: MusicalsCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!musicals}>
-                <WithLabel label={attribute.label} value={attribute.value} />
+                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

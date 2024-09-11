@@ -45,7 +45,7 @@ const NiagaraTwoDaysCard = ({ data: niagaraTwoDays }: NiagaraTwoDaysCardProps) =
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!niagaraTwoDays}>
-                <WithLabel label={attribute.label} value={attribute.value} />
+                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

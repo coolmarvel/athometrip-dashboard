@@ -12,9 +12,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '158582,159803,395630,397359,399005,399012';
 const ticketName = 'mlb-mets';
-const url = process.env.NEXT_PUBLIC_APIS_URL;
+const url = process.env.NEXT_PUBLIC_APIS_URL as string;
+const productId = process.env.NEXT_PUBLIC_MLB_METS as string;
 
 const refetchMLBMets = async (req: NextApiRequest, res: NextApiResponse) => {
   const { after, before } = req.body as { [key: string]: string };

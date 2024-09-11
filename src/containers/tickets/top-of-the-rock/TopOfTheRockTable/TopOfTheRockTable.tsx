@@ -10,8 +10,8 @@ import { DataTable } from '@/components';
 import { useModalStore } from '@/stores';
 import { useUpdateTopOfTheRock } from '@/apis';
 import { ApiRoutes, statusColor } from '@/constants';
-import { useConvertDate, useQueryKeyParams, useSafePush } from '@/hooks';
 import { TopOfTheRockDrawer, TopOfTheRockActions } from '@/containers';
+import { useConvertDate, useQueryKeyParams, useSafePush } from '@/hooks';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -35,16 +35,19 @@ const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) 
       if (!topOfTheRock) return;
       openModal(TopOfTheRockDrawer, { topOfTheRock, setMutate: updateTopOfTheRock });
     },
-    [openModal, updateTopOfTheRock],
+    [openModal, updateTopOfTheRock]
   );
 
-  const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>((id, after, before) => {
-    openConfirm({
-      title: t('Double Check'),
-      content: t('Are you sure you want to double check this order?'),
-      onConfirm: () => updateTopOfTheRock({ id, double_check: true, after, before }),
-    });
-  }, [updateTopOfTheRock, openConfirm, t]);
+  const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>(
+    (id, after, before) => {
+      openConfirm({
+        title: t('Double Check'),
+        content: t('Are you sure you want to double check this order?'),
+        onConfirm: () => updateTopOfTheRock({ id, double_check: true, after, before }),
+      });
+    },
+    [updateTopOfTheRock, openConfirm, t]
+  );
 
   const columns = useMemo(
     () => [
@@ -70,6 +73,7 @@ const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) 
         header: t('actions'),
         cell: (context) => (
           <TopOfTheRockActions
+            checked={context.row.original.order.double_checked}
             onView={(e) => {
               e.stopPropagation();
               handleDrawer(context.row.original);
@@ -82,7 +86,7 @@ const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) 
         ),
       }),
     ],
-    [convertDate, handleDoubleCheck, handleDrawer, router.query, t],
+    [convertDate, handleDoubleCheck, handleDrawer, router.query, t]
   );
 
   const table = useReactTable({ data: topOfTheRock, columns, getCoreRowModel: getCoreRowModel() });

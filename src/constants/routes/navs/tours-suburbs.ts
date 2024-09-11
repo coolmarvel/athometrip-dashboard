@@ -1,7 +1,7 @@
 import { match } from 'path-to-regexp';
 import { MdTour } from 'react-icons/md';
 import { RxTransparencyGrid } from 'react-icons/rx';
-import { BsFill1SquareFill, BsFill2SquareFill, BsFill3SquareFill } from 'react-icons/bs';
+import { BsFill1SquareFill, BsFill2SquareFill, BsFill3SquareFill, BsFill4SquareFill, BsFill5SquareFill } from 'react-icons/bs';
 
 import { Nav } from '@/constants';
 import { PageRoutes } from '../routes';
@@ -42,7 +42,7 @@ export const toursSuburbsNav: Nav = {
       label: 'Niagara(Athometrip)',
       pathname: PageRoutes.NiagaraOneDayAthometrip,
       matcher: match(PageRoutes.NiagaraOneDayAthometrip),
-      icon: BsFill3SquareFill,
+      icon: BsFill4SquareFill,
       query: normalQuery,
       children: [{
         label: 'Niagara(Athometrip) Detail',
@@ -56,7 +56,7 @@ export const toursSuburbsNav: Nav = {
       label: 'Niagara(KingKong)',
       pathname: PageRoutes.NiagaraOneDayKingKong,
       matcher: match(PageRoutes.NiagaraOneDayKingKong),
-      icon: BsFill3SquareFill,
+      icon: BsFill5SquareFill,
       query: normalQuery,
       children: [{
         label: 'Niagara(KingKong) Detail',

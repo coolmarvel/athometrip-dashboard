@@ -19,7 +19,7 @@ const TopOfTheRockCard = ({ data: topOfTheRock }: TopOfTheRockCardProps) => {
       { label: t('Phone'), value: topOfTheRock?.billing.phone ?? 'Phone' },
       { label: t('Payment Via'), value: `${topOfTheRock?.payment?.payment_method_title ?? 'Payment method'} (${topOfTheRock?.payment?.transaction_id ?? 'Transaction ID'})` },
     ],
-    [topOfTheRock, t],
+    [topOfTheRock, t]
   );
 
   const columns = useMemo(() => [{ name: topOfTheRock?.lineItem.name, quantity: topOfTheRock?.lineItem.quantity, total: topOfTheRock?.lineItem.total }] ?? [], [topOfTheRock]);
@@ -42,7 +42,7 @@ const TopOfTheRockCard = ({ data: topOfTheRock }: TopOfTheRockCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!topOfTheRock}>
-                <WithLabel label={attribute.label} value={attribute.value} />
+                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

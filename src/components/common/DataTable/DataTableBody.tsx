@@ -1,4 +1,4 @@
-import { useAlphaColor } from '@/hooks';
+// import { useAlphaColor } from '@/hooks';
 import { Tbody, Td, Tr } from '@chakra-ui/react';
 import { Table as ReactTable, Row, flexRender } from '@tanstack/react-table';
 
@@ -7,8 +7,8 @@ interface DataTableBodyProps<T> {
   onRowClick?: (row: Row<T>) => void;
 }
 
-const DataTableBody = <T, >({ table, onRowClick }: DataTableBodyProps<T>) => {
-  const alphaColor = useAlphaColor();
+const DataTableBody = <T,>({ table, onRowClick }: DataTableBodyProps<T>) => {
+  // const alphaColor = useAlphaColor();
   const rowModel = (typeof table.getRowModel === 'function' ? table.getRowModel() : table.getRowModel) || {};
 
   if (!rowModel?.rows || rowModel.rows.length === 0) {

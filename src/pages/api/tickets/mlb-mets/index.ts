@@ -18,9 +18,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '158582,159803,395630,397359,399005,399012';
 const ticketName = 'mlb-mets';
-const url = process.env.NEXT_PUBLIC_APIS_URL;
+const url = process.env.NEXT_PUBLIC_APIS_URL as string;
+const productId = process.env.NEXT_PUBLIC_MLB_METS as string;
 
 const getMLBMetsByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };

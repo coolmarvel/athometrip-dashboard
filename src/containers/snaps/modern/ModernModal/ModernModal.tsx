@@ -54,7 +54,7 @@ const ModernModal = ({ modern, onClose }: ModernModalProps) => {
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
                   <Skeleton key={index} isLoaded={!!modern}>
-                    <WithLabel label={attribute.label} value={attribute.value} />
+                    {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
                   </Skeleton>
                 ))}
               </Stack>
