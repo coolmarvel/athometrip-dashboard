@@ -1,4 +1,4 @@
-import { Box, Divider, Flex } from '@chakra-ui/react';
+import { Divider, Flex } from '@chakra-ui/react';
 
 import { DatePickerOptions, GaiaHead, PageOptions, ResponsiveLayout, Search, RefetchButton } from '@/components';
 import { useRefetchTopOfTheRockByPage, useResetTopOfTheRock } from '@/apis';

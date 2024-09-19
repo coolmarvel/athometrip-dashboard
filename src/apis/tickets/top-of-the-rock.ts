@@ -22,20 +22,18 @@ export const useRefetchTopOfTheRockByPage = (params?: object) => {
 
 export const useUpdateTopOfTheRock = (params?: object) => {
   return useCommand(
-    ((data: any) => `${toUrl(ApiRoutes.TopOfTheRock, data)}/update`),
+    (data: any) => `${toUrl(ApiRoutes.TopOfTheRock, data)}/update`,
     [toUrl(ApiRoutes.TopOfTheRock), params],
     undefined,
     (old: any, data: any) => {
-
       return {
         ...old,
         data: cloneDeep(old.data).map((item: any) => {
-          console.log(item);
           if (item.id === Number(data.id)) return { ...item, order: { ...item.order, double_checked: data.double_checked, memo: data.memo } };
 
           return item;
         }),
       };
-    },
+    }
   );
 };

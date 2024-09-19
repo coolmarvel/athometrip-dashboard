@@ -5,18 +5,18 @@ import { Checkbox, Icon, Tag } from '@chakra-ui/react';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 import { toUrl } from '@/utils';
-import { ResponseType } from '@/types';
-import { DataTable } from '@/components';
+import { OrderType } from '@/types';
 import { useModalStore } from '@/stores';
 import { useUpdateTopOfTheRock } from '@/apis';
+import { TopOfTheRockDrawer } from '@/containers';
 import { ApiRoutes, statusColor } from '@/constants';
-import { TopOfTheRockDrawer, TopOfTheRockActions } from '@/containers';
+import { DataTable, DataTableActions } from '@/components';
 import { useConvertDate, useQueryKeyParams, useSafePush } from '@/hooks';
 
 const columnHelper = createColumnHelper<any>();
 
 interface TopOfTheRockTableProps {
-  topOfTheRock: ResponseType[];
+  topOfTheRock: OrderType[];
   isLoading?: boolean;
 }
 
@@ -30,7 +30,7 @@ const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) 
 
   const { openModal, openConfirm } = useModalStore(['openModal', 'openConfirm']);
 
-  const handleDrawer = useCallback<(topOfTheRock: ResponseType) => void>(
+  const handleDrawer = useCallback<(topOfTheRock: OrderType) => void>(
     (topOfTheRock) => {
       if (!topOfTheRock) return;
       openModal(TopOfTheRockDrawer, { topOfTheRock, setMutate: updateTopOfTheRock });
@@ -72,7 +72,7 @@ const TopOfTheRockTable = ({ topOfTheRock, isLoading }: TopOfTheRockTableProps) 
         id: 'actions',
         header: t('actions'),
         cell: (context) => (
-          <TopOfTheRockActions
+          <DataTableActions
             checked={context.row.original.order.double_checked}
             onView={(e) => {
               e.stopPropagation();

@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 
-import { setValue } from '../../redis';
+import { setValue } from '@/pages/api';
+import { OrderType } from '@/types';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -23,7 +24,7 @@ const refetchTopOfTheRock = async (req: NextApiRequest, res: NextApiResponse) =>
 
   try {
     const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
-    data.map((v: any) => (v.id = Number(v.order.id)));
+    data.map((v: OrderType) => (v.id = Number(v.order.id)));
     await setValue(key, data);
 
     return res.status(200).send({ data: [], message: `Successfully refetch ${ticketName}` });

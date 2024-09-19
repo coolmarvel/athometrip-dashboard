@@ -1,4 +1,4 @@
-import { TableContainer } from '@chakra-ui/react';
+import { Box, TableContainer } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 import { useGetMLBMetsByPage } from '@/apis';
@@ -17,9 +17,11 @@ const MLBMetsByPage = () => {
 
   return (
     <>
-      <TableContainer flex={1} overflowY={'auto'}>
-        <MLBMetsTable mlbMets={mlbMetsByPage?.data ?? []} isLoading={isLoading} />
-      </TableContainer>
+      <Box maxH="calc(525px)" overflowY="auto" overflowX="auto" borderWidth="1px" borderRadius="md" borderColor="gray.200">
+        <TableContainer flex={1} overflowY={'auto'}>
+          <MLBMetsTable mlbMets={mlbMetsByPage?.data ?? []} isLoading={isLoading} />
+        </TableContainer>
+      </Box>
       <Pagination currentPage={page} limit={limit} total={mlbMetsByPage?.total ?? 0} onChange={(page) => onPagination({ page })} />
     </>
   );

@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { Box, Divider, DrawerBody, Skeleton, Stack, StackDivider } from '@chakra-ui/react';
 
 import { useSafePush } from '@/hooks';
-import { ResponseType } from '@/types';
+import { OrderType } from '@/types';
 import { WithLabel } from '@/components';
 import { DataDrawerBodyTable } from './DataDrawerBodyTable';
 
@@ -32,7 +32,7 @@ type Column = {
 
 interface DataDrawerBodyProps {
   columns: Column[];
-  data: ResponseType;
+  data: OrderType;
   attributes: Attribute[];
   setMutate: (data?: any) => void;
   setIsOpen: Dispatch<SetStateAction<boolean>>;

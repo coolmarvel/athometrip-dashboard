@@ -1,4 +1,4 @@
-export type ResponseType = {
+export type OrderType = {
   id?: number;
   order: Order;
   line_items: StringKeyValue[];

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 
-import { setValue } from '../../redis';
+import { setValue } from '@/pages/api';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {

@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Divider, Flex } from '@chakra-ui/react';
 
 import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
 import { useRefetch911MemorialByPage, useReset911Memorial } from '@/apis';
@@ -20,6 +20,7 @@ const Memorial911Pages = () => {
       <ResponsiveLayout>
         <Flex direction={'column'} gap={'4'} h={'100%'}>
           <Flex justifyContent={'space-between'} gap={'4'} wrap={'wrap'}>
+            <Divider orientation="horizontal" />
             <Search
               onSubmit={(search) => {
                 push({ pathname: router.pathname, query: { ...router.query, search } });
@@ -31,6 +32,7 @@ const Memorial911Pages = () => {
               <PageOptions />
             </Flex>
           </Flex>
+          <Divider orientation="horizontal" />
           <Memorial911ByPage />
         </Flex>
       </ResponsiveLayout>

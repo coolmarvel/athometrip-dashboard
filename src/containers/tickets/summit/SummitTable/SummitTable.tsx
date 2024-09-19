@@ -1,75 +1,97 @@
-import { DataTable } from '@/components';
-import { useConvertDate } from '@/hooks';
-import { useModalStore } from '@/stores';
-import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SummitModal } from '../SummitModal';
+import { CheckCircleIcon } from '@chakra-ui/icons';
+import { Checkbox, Icon, Tag } from '@chakra-ui/react';
+import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+
+import { toUrl } from '@/utils';
+import { OrderType } from '@/types';
+import { useModalStore } from '@/stores';
+import { useUpdateSummit } from '@/apis';
+import { SummitDrawer } from '@/containers';
+import { ApiRoutes, statusColor } from '@/constants';
+import { DataTable, DataTableActions } from '@/components';
+import { useConvertDate, useQueryKeyParams, useSafePush } from '@/hooks';
 
 const columnHelper = createColumnHelper<any>();
 
 interface SummitTableProps {
-  summit: any[];
+  summit: OrderType[];
   isLoading?: boolean;
 }
 
 const SummitTable = ({ summit, isLoading }: SummitTableProps) => {
-  const { t } = useTranslation();
   const convertDate = useConvertDate();
+  const { router } = useSafePush();
+  const { t } = useTranslation();
 
-  const { openModal } = useModalStore(['openModal']);
+  const { openModal, openConfirm } = useModalStore(['openModal', 'openConfirm']);
 
-  const handleModal = useCallback<(summit: any) => void>(
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.Summit));
+  const { mutate: updateSummit } = useUpdateSummit(queryKeyParams);
+
+  const handleDrawer = useCallback<(summit: OrderType) => void>(
     (summit) => {
       if (!summit) return;
-      openModal(SummitModal, { summit });
+      openModal(SummitDrawer, { summit, setMutate: updateSummit });
     },
-    [openModal]
+    [openModal, updateSummit],
+  );
+
+  const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>(
+    (id, after, before) => {
+      openConfirm({
+        title: t('Double Check'),
+        content: t('Are you sure you want to double check this order?'),
+        onConfirm: () => updateSummit({ id, double_check: true, after, before }),
+      });
+    },
+    [updateSummit, openConfirm, t],
   );
 
   const columns = useMemo(
     () => [
-      columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
+      columnHelper.accessor('select', {
+        id: 'selection',
+        header: ({ table }) => <Checkbox isChecked={table.getIsAllRowsSelected()} onChange={table.getToggleAllRowsSelectedHandler()} aria-label="Select all rows" />,
+        cell: ({ row }) => <Checkbox isChecked={row.getIsSelected()} onChange={row.getToggleSelectedHandler()} aria-label={`Select row ${row.id}`} />,
+      }),
+      columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
+      columnHelper.accessor('status', {
+        header: t('status'),
+        cell: (context) => <Tag colorScheme={statusColor[context.row.original.order.status] || 'gray'}>{t(context.row.original.order.status)}</Tag>,
+      }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created_gmt', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.line_items?.[0]?.meta_data?.['성인-어린이'] ?? '', { header: t('type') }),
-      columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
-      columnHelper.accessor(
-        (row) => {
-          const date = convertDate(
-            row.order.meta_data?.date_summit ?? row.order.meta_data?.summit_night_date ?? row.tour?.date_summit ?? row.tour?.summit_night_date ?? row.line_items?.[0]?.meta_data['날짜'] ?? ''
-          ).split(' ')[0];
-          const time =
-            row.order.meta_data?.summit_daytime_time ??
-            row.order.meta_data?.summit_night_time ??
-            row.tour?.summit_daytime_time ??
-            row.line_items?.[0]?.meta_data['입장 희망시간(1순위)'] ??
-            row.tour?.summit_night_time ??
-            '';
-
-          return `${date} ${time}`;
-        },
-        { header: t('schedule(1)') }
-      ),
-      columnHelper.accessor(
-        (row) => {
-          const date = convertDate(
-            row.order.meta_data?.date_summit ?? row.order.meta_data?.summit_night_date ?? row.tour?.date_summit ?? row.tour?.summit_night_date ?? row.line_items?.[0]?.meta_data['날짜'] ?? ''
-          ).split(' ')[0];
-          const time = row.tour?.summit_night_time ?? row.order.meta_data?.summ_time_2 ?? row.line_items?.[0]?.meta_data['입장 희망시간(2순위)'] ?? row.tour?.summ_time_2 ?? '';
-
-          return `${date} ${time}`;
-        },
-        { header: t('schedule(2)') }
-      ),
+      columnHelper.accessor('checked', {
+        header: t('checked'),
+        cell: (context) => (context.row.original.order.double_checked ? <Icon as={CheckCircleIcon} color={'green.300'} boxSize={'5'} /> : ''),
+      }),
+      columnHelper.display({
+        id: 'actions',
+        header: t('actions'),
+        cell: (context) => (
+          <DataTableActions
+            checked={context.row.original.order.double_checked}
+            onView={(e) => {
+              e.stopPropagation();
+              handleDrawer(context.row.original);
+            }}
+            onUpdate={(e) => {
+              e.stopPropagation();
+              handleDoubleCheck(context.row.original.order.id, router.query['after'] as string, router.query['before'] as string);
+            }}
+          />
+        ),
+      }),
     ],
-    [convertDate, t]
+    [convertDate, handleDoubleCheck, handleDrawer, router.query, t],
   );
 
   const table = useReactTable({ data: summit, columns, getCoreRowModel: getCoreRowModel() });
 
-  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
+  return <DataTable<any> table={table} isLoading={isLoading} />;
 };
 
 export default SummitTable;

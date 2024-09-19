@@ -1,14 +1,14 @@
 import { RequiredKeysOf } from 'type-fest';
 
 import { Order } from '@/apis';
-import { ResponseType } from '@/types';
-import { getKeys, getValue } from '../redis';
+import { OrderType } from '@/types';
+import { getKeys, getValue } from '@/pages/api';
 
 export const checkExistingDataInRange = async (name: string, after: string, before: string) => {
   const keys = await getKeys(`${name}_*`);
   for (const key of keys) {
     const [_, savedAfter, savedBefore] = key.split('_');
-    if (new Date(savedAfter) <= new Date(after) && new Date(savedBefore) >= new Date(before)) return await getValue(key) as ResponseType[];
+    if (new Date(savedAfter) <= new Date(after) && new Date(savedBefore) >= new Date(before)) return (await getValue(key)) as OrderType[];
   }
 
   return null;
@@ -32,7 +32,7 @@ export const sortTicket = (tickets: any, sort: RequiredKeysOf<any>, order: Order
           (ticket: any) =>
             ticket.order.id.includes(search.toLowerCase()) ||
             ticket.billing.email.toLowerCase().includes(search.toLowerCase()) ||
-            ticket.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase()),
+            ticket.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase())
         );
       }
 
@@ -60,13 +60,7 @@ export const sortTicket = (tickets: any, sort: RequiredKeysOf<any>, order: Order
 };
 
 export const filterTicket = (tickets: any, after: string, before: string) => {
-  // const start = new Date(after);
-  // const end = new Date(before);
-
   return tickets.filter((ticket: any) => {
-    // const ticketDate = new Date(ticket.order.date_created);
-    // return ticketDate >= start && ticketDate <= end;
-
     return ticket.order.date_created_gmt >= after && ticket.order.date_created_gmt <= before;
   });
 };

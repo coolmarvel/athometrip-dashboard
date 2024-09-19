@@ -1,53 +1,97 @@
-import { DataTable } from '@/components';
-import { useConvertDate } from '@/hooks';
-import { useModalStore } from '@/stores';
-import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { UNTourModal } from '../UNTourModal';
+import { CheckCircleIcon } from '@chakra-ui/icons';
+import { Checkbox, Icon, Tag } from '@chakra-ui/react';
+import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+
+import { toUrl } from '@/utils';
+import { OrderType } from '@/types';
+import { useModalStore } from '@/stores';
+import { useUpdateUNTour } from '@/apis';
+import { UNTourDrawer } from '@/containers';
+import { ApiRoutes, statusColor } from '@/constants';
+import { DataTable, DataTableActions } from '@/components';
+import { useConvertDate, useQueryKeyParams, useSafePush } from '@/hooks';
 
 const columnHelper = createColumnHelper<any>();
 
 interface UNTourTableProps {
-  unTour: any[];
+  unTour: OrderType[];
   isLoading?: boolean;
 }
 
 const UNTourTable = ({ unTour, isLoading }: UNTourTableProps) => {
-  const { t } = useTranslation();
   const convertDate = useConvertDate();
+  const { router } = useSafePush();
+  const { t } = useTranslation();
 
-  const { openModal } = useModalStore(['openModal']);
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.UNTour));
+  const { mutate: updateUNTour } = useUpdateUNTour(queryKeyParams);
 
-  const handleModal = useCallback<(unTour: any) => void>(
+  const { openModal, openConfirm } = useModalStore(['openModal', 'openConfirm']);
+
+  const handleDrawer = useCallback<(unTour: OrderType) => void>(
     (unTour) => {
       if (!unTour) return;
-      openModal(UNTourModal, { unTour });
+      openModal(UNTourDrawer, { unTour, setMutate: updateUNTour });
     },
-    [openModal],
+    [openModal, updateUNTour],
+  );
+
+  const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>(
+    (id, after, before) => {
+      openConfirm({
+        title: t('Double Check'),
+        content: t('Are you sure you want to double check this order?'),
+        onConfirm: () => updateUNTour({ id, double_check: true, after, before }),
+      });
+    },
+    [updateUNTour, openConfirm, t],
   );
 
   const columns = useMemo(
     () => [
-      columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
-      columnHelper.accessor('billing.first_name', { header: t('name(kr)'), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.order.meta_data?.['un_name']?.toUpperCase() ?? '', { header: t('name(en)'), meta: { sortable: true } }),
+      columnHelper.accessor('select', {
+        id: 'selection',
+        header: ({ table }) => <Checkbox isChecked={table.getIsAllRowsSelected()} onChange={table.getToggleAllRowsSelectedHandler()} aria-label="Select all rows" />,
+        cell: ({ row }) => <Checkbox isChecked={row.getIsSelected()} onChange={row.getToggleSelectedHandler()} aria-label={`Select row ${row.id}`} />,
+      }),
+      columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
+      columnHelper.accessor('status', {
+        header: t('status'),
+        cell: (context) => <Tag colorScheme={statusColor[context.row.original.order.status] || 'gray'}>{t(context.row.original.order.status)}</Tag>,
+      }),
+      columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created_gmt', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
-      columnHelper.accessor((row) => {
-        const date = convertDate(row.order.meta_data?.['un_tour_date'] ?? row.line_items?.[0]?.meta_data['날짜'] ?? '').split(' ')[0];
-        const time = row.order.meta_data?.['un_tour_time3'] ?? row.line_items?.[0]?.meta_data['시간'] ?? '';
-
-        return `${date} ${time}`;
-      }, { header: t('schedule') }),
+      columnHelper.accessor('checked', {
+        header: t('checked'),
+        cell: (context) => (context.row.original.order.double_checked ? <Icon as={CheckCircleIcon} color={'green.300'} boxSize={'5'} /> : ''),
+      }),
+      columnHelper.display({
+        id: 'actions',
+        header: t('actions'),
+        cell: (context) => (
+          <DataTableActions
+            checked={context.row.original.order.double_checked}
+            onView={(e) => {
+              e.stopPropagation();
+              handleDrawer(context.row.original);
+            }}
+            onUpdate={(e) => {
+              e.stopPropagation();
+              handleDoubleCheck(context.row.original.order.id, router.query['after'] as string, router.query['before'] as string);
+            }}
+          />
+        ),
+      }),
     ],
-    [convertDate, t],
+    [convertDate, handleDoubleCheck, handleDrawer, router.query, t],
   );
 
   const table = useReactTable({ data: unTour, columns, getCoreRowModel: getCoreRowModel() });
 
-  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
+  return <DataTable<any> table={table} isLoading={isLoading} />;
 };
 
 export default UNTourTable;

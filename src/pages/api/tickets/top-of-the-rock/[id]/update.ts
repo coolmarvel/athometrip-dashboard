@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { cloneDeep } from 'lodash-es';
 import axios from 'axios';
 
-import { getValue, setValue } from '@/pages/api/redis';
+import { getValue, setValue } from '@/pages/api';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {

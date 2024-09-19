@@ -1,3 +1,3 @@
 export * from './common';
-export type { ResponseType } from './responseType';
-export { handleStringKeyValue } from './responseType';
+export type { OrderType } from './OrderType';
+export { handleStringKeyValue } from './OrderType';

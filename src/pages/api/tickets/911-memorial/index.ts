@@ -3,7 +3,8 @@ import { RequiredKeysOf } from 'type-fest';
 import axios from 'axios';
 
 import { Order } from '@/apis';
-import { setValue } from '../../redis';
+import { OrderType } from '@/types';
+import { setValue } from '@/pages/api';
 import { checkExistingDataInRange, filterTicket, sortTicket } from '../ticket-utils';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -34,6 +35,7 @@ const get911MemorialsByPage = async (req: NextApiRequest, res: NextApiResponse) 
 
     if (tickets.length === 0) {
       const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
+      data.map((v: OrderType) => (v.id = parseInt(v.order.id, 10)));
       await setValue(key, data);
 
       tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order, search as string);

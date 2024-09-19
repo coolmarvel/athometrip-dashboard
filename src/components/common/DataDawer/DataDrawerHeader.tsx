@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { DrawerCloseButton, DrawerHeader, Flex, Tag } from '@chakra-ui/react';
 
-import { ResponseType } from '@/types';
+import { OrderType } from '@/types';
 import { statusColor } from '@/constants';
 
 interface DataDrawerHeaderProps {
-  data: ResponseType;
+  data: OrderType;
 }
 
 export const DataDrawerHeader = ({ data }: DataDrawerHeaderProps) => {

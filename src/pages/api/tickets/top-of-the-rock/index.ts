@@ -3,8 +3,8 @@ import { RequiredKeysOf } from 'type-fest';
 import axios from 'axios';
 
 import { Order } from '../../types';
-import { setValue } from '../../redis';
-import { ResponseType } from '@/types';
+import { OrderType } from '@/types';
+import { setValue } from '@/pages/api';
 import { checkExistingDataInRange, filterTicket, sortTicket } from '../ticket-utils';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -31,11 +31,11 @@ const getTopOfTheRockByPage = async (req: NextApiRequest, res: NextApiResponse) 
 
   try {
     const existingData = await checkExistingDataInRange(ticketName, after, before);
-    let tickets: ResponseType[] = existingData ? existingData : [];
+    let tickets: OrderType[] = existingData ? existingData : [];
 
     if (tickets.length === 0) {
       const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
-      data.map((v: any) => v.id = parseInt(v.order.id, 10));
+      data.map((v: OrderType) => (v.id = parseInt(v.order.id, 10)));
       await setValue(key, data);
 
       tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order, search as string);

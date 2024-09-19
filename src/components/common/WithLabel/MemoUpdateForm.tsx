@@ -46,7 +46,6 @@ export const MemoUpdateForm = ({ id, memo, after, before, setIsOpen, setIsEdit, 
         onSubmit={handleSubmit(
           useCallback<(data: any) => void>(
             (data) => {
-              console.log('data ', data);
               openConfirm({
                 title: t('Update Memo'),
                 content: t('Are you sure you want to update memo this order?'),

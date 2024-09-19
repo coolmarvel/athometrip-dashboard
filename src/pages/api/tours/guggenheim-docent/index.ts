@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 import { RequiredKeysOf } from 'type-fest';
 import { Order } from '@/apis';
-import { setValue } from '../../redis';
+import { setValue } from '@/pages/api';
 import { checkExistingDataInRange, filterTour, sortTour } from '../tour-utils';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {

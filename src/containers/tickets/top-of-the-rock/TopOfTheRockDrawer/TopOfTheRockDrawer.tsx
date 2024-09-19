@@ -3,10 +3,10 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { useConvertDate } from '@/hooks';
 import { DataDrawer } from '@/components';
-import { handleStringKeyValue, ResponseType } from '@/types';
+import { handleStringKeyValue, OrderType } from '@/types';
 
 interface TopOfTheRockDrawerProps {
-  topOfTheRock: ResponseType;
+  topOfTheRock: OrderType;
   setMutate: (data?: any) => void;
   onClose: () => void;
 }
@@ -33,6 +33,7 @@ const TopOfTheRockDrawer = ({ topOfTheRock, setMutate, onClose }: TopOfTheRockDr
         value: (() => {
           const date = convertDate(topOfTheRock.tour?.top_date ?? topOfTheRock.order?.meta_data?.top_date ?? handleStringKeyValue(topOfTheRock.line_items?.[0]?.meta_data)['날짜']).split(' ')[0];
           const time = topOfTheRock.tour?.top_sunset ?? topOfTheRock.order?.meta_data?.top_sunset ?? handleStringKeyValue(topOfTheRock.line_items?.[0]?.meta_data)['입장 희망시간(1순위)'] ?? '';
+
           return `${date} ${time}`;
         })(),
       },
@@ -41,6 +42,7 @@ const TopOfTheRockDrawer = ({ topOfTheRock, setMutate, onClose }: TopOfTheRockDr
         value: (() => {
           const date = convertDate(topOfTheRock.tour?.top_date ?? topOfTheRock.order?.meta_data?.top_date ?? handleStringKeyValue(topOfTheRock.line_items?.[0]?.meta_data)['날짜'] ?? '').split(' ')[0];
           const time = topOfTheRock.tour?.tor_time_2 ?? topOfTheRock.order?.meta_data?.tor_time_2 ?? handleStringKeyValue(topOfTheRock.line_items?.[0]?.meta_data)['입장 희망시간(2순위)'] ?? '';
+
           return `${date} ${time}`;
         })(),
       },
@@ -53,7 +55,7 @@ const TopOfTheRockDrawer = ({ topOfTheRock, setMutate, onClose }: TopOfTheRockDr
         value: topOfTheRock.order.memo ?? '',
       },
     ],
-    [isEdit, handleMemoEdit, topOfTheRock, convertDate, t]
+    [isEdit, handleMemoEdit, topOfTheRock, convertDate, t],
   );
 
   const columns = useMemo(() => [{ name: topOfTheRock?.line_items?.[0]?.name, quantity: topOfTheRock?.line_items?.[0]?.quantity, total: topOfTheRock?.line_items?.[0]?.total }] ?? [], [topOfTheRock]);

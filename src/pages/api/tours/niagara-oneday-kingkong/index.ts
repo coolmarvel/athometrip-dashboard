@@ -3,7 +3,7 @@ import { RequiredKeysOf } from 'type-fest';
 import axios from 'axios';
 
 import { Order } from '@/apis';
-import { setValue } from '../../redis';
+import { setValue } from '@/pages/api';
 import { checkExistingDataInRange, sortTour } from '../tour-utils';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {

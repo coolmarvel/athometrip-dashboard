@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Drawer, DrawerContent, DrawerOverlay } from '@chakra-ui/react';
 
-import { ResponseType } from '@/types';
+import { OrderType } from '@/types';
 import { DataDrawerBody } from './DataDrawerBody';
 import { DataDrawerHeader } from './DataDrawerHeader';
 
@@ -32,7 +32,7 @@ type Column = {
 
 interface DataDrawerProps {
   columns: Column;
-  data: ResponseType;
+  data: OrderType;
   attributes: Attribute;
   onClose: () => void;
   setMutate: (data?: any) => void;

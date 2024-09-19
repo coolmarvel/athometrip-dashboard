@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { CheckIcon, ViewIcon } from '@chakra-ui/icons';
 import { Flex, IconButton, Tooltip } from '@chakra-ui/react';
 
-interface TopOfTheRockActionsProps {
+interface DataTableActionsProps {
   checked: boolean;
   onView: MouseEventHandler<HTMLButtonElement>;
   onUpdate: MouseEventHandler<HTMLButtonElement>;
 }
 
-const TopOfTheRockActions = ({ checked, onView, onUpdate }: TopOfTheRockActionsProps) => {
+const DataTableActions = ({ checked, onView, onUpdate }: DataTableActionsProps) => {
   const { t } = useTranslation();
 
   return (
@@ -24,4 +24,4 @@ const TopOfTheRockActions = ({ checked, onView, onUpdate }: TopOfTheRockActionsP
   );
 };
 
-export default TopOfTheRockActions;
+export default DataTableActions;

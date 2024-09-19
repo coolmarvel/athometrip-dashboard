@@ -22,20 +22,18 @@ export const useRefetchEmpireByPage = (params?: object) => {
 
 export const useUpdateEmpire = (params?: object) => {
   return useCommand(
-    ((data: any) => `${toUrl(ApiRoutes.Empire, data)}/update`),
+    (data: any) => `${toUrl(ApiRoutes.Empire, data)}/update`,
     [toUrl(ApiRoutes.Empire), params],
     undefined,
     (old: any, data: any) => {
-
       return {
         ...old,
         data: cloneDeep(old.data).map((item: any) => {
-          console.log(item);
           if (item.id === Number(data.id)) return { ...item, order: { ...item.order, double_checked: data.double_checked, memo: data.memo } };
 
           return item;
         }),
       };
-    },
+    }
   );
 };

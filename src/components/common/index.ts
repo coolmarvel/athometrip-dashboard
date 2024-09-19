@@ -1,5 +1,6 @@
 export { ColorToggler, LanguageToggler, LayoutToggler, PrimaryColorChanger } from './Changer';
 export { VirtualList, WindowVirtualList } from './VirtualList';
+export { DataTable, DataTableActions } from './DataTable';
 export { WithFormLabel } from './WithFormLabel';
 export { Unauthorized } from './Unauthorized';
 export { InfiniteList } from './InfiniteList';
@@ -7,7 +8,6 @@ export { PageOptions } from './PageOptions';
 export { ViewOptions } from './ViewOptions';
 export { Pagination } from './Pagination';
 export { DataDrawer } from './DataDawer';
-export { DataTable } from './DataTable';
 export { FileInput } from './FileInput';
 export { FormField } from './FormField';
 export { WithLabel } from './WithLabel';
