@@ -55,11 +55,15 @@ const Memorial911Drawer = ({ memorial911, setMutate, onClose }: Memorial911Drawe
         value: memorial911.order.memo ?? '',
       },
     ],
-    [isEdit, handleMemoEdit, memorial911, convertDate, t]
+    [isEdit, handleMemoEdit, memorial911, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: memorial911.line_items[0]?.name, quantity: memorial911.line_items[0]?.quantity, total: memorial911.line_items[0]?.total }] ?? [], [memorial911]);
-
+  const columns = useMemo(() =>
+    [{
+      name: memorial911.line_items[0]?.name ?? '',
+      quantity: memorial911.line_items[0]?.quantity ?? '',
+      total: memorial911.line_items[0]?.total ?? '',
+    }], [memorial911]);
   return <DataDrawer columns={columns} attributes={attributes} data={memorial911} setMutate={setMutate} setIsEdit={setIsEdit} onClose={onClose} />;
 };
 

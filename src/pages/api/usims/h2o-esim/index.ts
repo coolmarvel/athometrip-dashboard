@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Order } from '@/apis';
 import { setValue } from '@/pages/api';
 import { checkExistingDataInRange, filterUsim, sortUsim } from '../usim-utils';
+import { OrderType } from '@/types';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -18,9 +19,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '222755';
 const usimName = 'h2o-esim';
-const url = process.env.NEXT_PUBLIC_APIS_URL;
+const url = process.env.NEXT_PUBLIC_APIS_URL as string;
+const productId = process.env.NEXT_PUBLIC_H20_ESIM as string;
 
 const getH2OEsimByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };
@@ -34,6 +35,7 @@ const getH2OEsimByPage = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (usims.length === 0) {
       const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
+      data.map((v: OrderType) => (v.id = parseInt(v.order.id, 10)));
       await setValue(key, data);
 
       usims = await sortUsim(data, sort as RequiredKeysOf<any>, order as Order, search);

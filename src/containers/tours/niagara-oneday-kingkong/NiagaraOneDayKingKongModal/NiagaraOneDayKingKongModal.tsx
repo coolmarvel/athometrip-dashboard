@@ -1,4 +1,4 @@
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
@@ -24,10 +24,10 @@ const NiagaraOneDayKingKongModal = ({ niagaraOneDayKingKong, onClose }: NiagaraO
   );
 
   const columns = useMemo(() => [{
-    name: niagaraOneDayKingKong?.line_items[0].name,
-    quantity: niagaraOneDayKingKong?.line_items[0].quantity,
-    total: niagaraOneDayKingKong?.line_items[0].total,
-  }] ?? [], [niagaraOneDayKingKong]);
+    name: niagaraOneDayKingKong?.line_items[0].name ?? '',
+    quantity: niagaraOneDayKingKong?.line_items[0].quantity ?? '',
+    total: niagaraOneDayKingKong?.line_items[0].total ?? '',
+  }], [niagaraOneDayKingKong]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -53,8 +53,7 @@ const NiagaraOneDayKingKongModal = ({ niagaraOneDayKingKong, onClose }: NiagaraO
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
                   <Skeleton key={index} isLoaded={!!niagaraOneDayKingKong}>
-                    {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
-                  </Skeleton>
+                      </Skeleton>
                 ))}
               </Stack>
             </Box>

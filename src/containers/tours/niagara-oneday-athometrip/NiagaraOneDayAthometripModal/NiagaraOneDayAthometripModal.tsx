@@ -1,4 +1,4 @@
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
@@ -24,10 +24,10 @@ const NiagaraOneDayAthometripModal = ({ niagaraOneDayAthometrip, onClose }: Niag
   );
 
   const columns = useMemo(() => [{
-    name: niagaraOneDayAthometrip?.line_items[0].name,
-    quantity: niagaraOneDayAthometrip?.line_items[0].quantity,
-    total: niagaraOneDayAthometrip?.line_items[0].total,
-  }] ?? [], [niagaraOneDayAthometrip]);
+    name: niagaraOneDayAthometrip?.line_items[0].name ?? '',
+    quantity: niagaraOneDayAthometrip?.line_items[0].quantity ?? '',
+    total: niagaraOneDayAthometrip?.line_items[0].total ?? '',
+  }], [niagaraOneDayAthometrip]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -53,8 +53,7 @@ const NiagaraOneDayAthometripModal = ({ niagaraOneDayAthometrip, onClose }: Niag
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
                   <Skeleton key={index} isLoaded={!!niagaraOneDayAthometrip}>
-                    {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
-                  </Skeleton>
+                      </Skeleton>
                 ))}
               </Stack>
             </Box>

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
@@ -22,7 +22,7 @@ const OneWorldCard = ({ data: oneWorld }: OneWorldCardProps) => {
     [oneWorld, t],
   );
 
-  const columns = useMemo(() => [{ name: oneWorld?.lineItem.name, quantity: oneWorld?.lineItem.quantity, total: oneWorld?.lineItem.total }] ?? [], [oneWorld]);
+  const columns = useMemo(() => [{ name: oneWorld?.lineItem.name, quantity: oneWorld?.lineItem.quantity, total: oneWorld?.lineItem.total }], [oneWorld]);
 
   return (
     <Card>
@@ -42,7 +42,6 @@ const OneWorldCard = ({ data: oneWorld }: OneWorldCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!oneWorld}>
-                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

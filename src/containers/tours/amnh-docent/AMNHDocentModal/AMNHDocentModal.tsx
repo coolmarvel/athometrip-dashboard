@@ -1,4 +1,4 @@
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
@@ -23,7 +23,7 @@ const AMNHDocentModal = ({ amnhDocent, onClose }: AMNHDocentModalProps) => {
     [amnhDocent, t],
   );
 
-  const columns = useMemo(() => [{ name: amnhDocent?.line_items[0].name, quantity: amnhDocent?.line_items[0].quantity, total: amnhDocent?.line_items[0].total }] ?? [], [amnhDocent]);
+  const columns = useMemo(() => [{ name: amnhDocent?.line_items[0].name ?? '', quantity: amnhDocent?.line_items[0].quantity ?? '', total: amnhDocent?.line_items[0].total ?? '' }], [amnhDocent]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -49,8 +49,7 @@ const AMNHDocentModal = ({ amnhDocent, onClose }: AMNHDocentModalProps) => {
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
                   <Skeleton key={index} isLoaded={!!amnhDocent}>
-                    {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
-                  </Skeleton>
+                      </Skeleton>
                 ))}
               </Stack>
             </Box>

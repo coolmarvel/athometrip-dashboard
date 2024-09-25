@@ -10,9 +10,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '126173,196976,197555,255271';
 const usimName = 't-mobile';
-const url = process.env.NEXT_PUBLIC_API_URL;
+const url = process.env.NEXT_PUBLIC_API_URL as string;
+const productId = process.env.NEXT_PUBLIC_T_MOBILE as string;
 
 const getTMobile = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

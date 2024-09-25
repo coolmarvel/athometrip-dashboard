@@ -5,7 +5,7 @@ import { Avatar, Box, Button, Card, CardBody, CardHeader, Flex, Heading, Skeleto
 
 import { useFormatDate } from '@/hooks';
 import { useModalStore } from '@/stores';
-import { WithLabel } from '@/components';
+
 import { UserUpdateModal } from '@/containers';
 
 interface UserCardProps {

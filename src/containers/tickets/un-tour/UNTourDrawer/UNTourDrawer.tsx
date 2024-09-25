@@ -49,7 +49,7 @@ const UNTourDrawer = ({ unTour, setMutate, onClose }: UNTourDrawerProps) => {
     [isEdit, handleMemoEdit, unTour, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: unTour.line_items[0]?.name, quantity: unTour.line_items[0]?.quantity, total: unTour.line_items[0]?.total }] ?? [], [unTour]);
+  const columns = useMemo(() => [{ name: unTour.line_items[0]?.name, quantity: unTour.line_items[0]?.quantity, total: unTour.line_items[0]?.total }], [unTour]);
 
   return <DataDrawer columns={columns} attributes={attributes} data={unTour} setMutate={setMutate} setIsEdit={setIsEdit} onClose={onClose} />;
 };

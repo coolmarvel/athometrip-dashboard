@@ -10,9 +10,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '252161,252526';
 const tourName = 'niagara-oneday-kingkong';
-const url = process.env.NEXT_PUBLIC_API_URL;
+const url = process.env.NEXT_PUBLIC_API_URL as string;
+const productId = process.env.NEXT_PUBLIC_NIAGARA_ONEDAY_KINGKONG as string;
 
 const getNiagaraOneDayKingKong = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

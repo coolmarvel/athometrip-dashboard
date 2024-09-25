@@ -81,7 +81,7 @@ const SummitDrawer = ({ summit, setMutate, onClose }: SummitDrawerProps) => {
     [isEdit, handleMemoEdit, summit, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: summit?.line_items?.[0]?.name, quantity: summit?.line_items?.[0]?.quantity, total: summit?.line_items?.[0]?.total }] ?? [], [summit]);
+  const columns = useMemo(() => [{ name: summit?.line_items?.[0]?.name, quantity: summit?.line_items?.[0]?.quantity, total: summit?.line_items?.[0]?.total }], [summit]);
 
   return <DataDrawer columns={columns} attributes={attributes} data={summit} setMutate={setMutate} setIsEdit={setIsEdit} onClose={onClose} />;
 };

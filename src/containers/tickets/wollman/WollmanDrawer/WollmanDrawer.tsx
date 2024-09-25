@@ -58,7 +58,7 @@ const WollmanDrawer = ({ wollman, setMutate, onClose }: WollmanDrawerProps) => {
     [isEdit, handleMemoEdit, wollman, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: wollman.line_items[0]?.name, quantity: wollman.line_items[0]?.quantity, total: wollman.line_items[0]?.total }] ?? [], [wollman]);
+  const columns = useMemo(() => [{ name: wollman.line_items[0]?.name, quantity: wollman.line_items[0]?.quantity, total: wollman.line_items[0]?.total }], [wollman]);
 
   return <DataDrawer columns={columns} attributes={attributes} data={wollman} setMutate={setMutate} setIsEdit={setIsEdit} onClose={onClose} />;
 };

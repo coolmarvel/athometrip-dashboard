@@ -1,4 +1,4 @@
-import { TableContainer } from '@chakra-ui/react';
+import { Box, TableContainer } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 
@@ -11,7 +11,7 @@ import { QueryParser } from '@/utils';
 
 const TMobileByPage = () => {
   const router = useRouter();
-  const modeOption = router.query?.mode as ModeQueries;
+  const modeOption = router.query.mode as ModeQueries;
 
   const { page, limit, sort, order, after, before, onPagination } = usePagination();
 
@@ -22,8 +22,8 @@ const TMobileByPage = () => {
     order,
     after,
     before,
-    region: QueryParser.toString(router.query.region) ?? '',
-    mode: QueryParser.toString(router.query.mode) ?? '',
+    mode: QueryParser.toString(router.query.mode),
+    region: QueryParser.toString(router.query.region),
     search: QueryParser.toString(router.query.search) ?? '',
   };
   const { data: tMobileByPage, isLoading: isLoading } = useGetTMobileByPage(params);
@@ -41,9 +41,11 @@ const TMobileByPage = () => {
 
   return (
     <>
-      <TableContainer flex={1} overflowY={'auto'}>
-        {display}
-      </TableContainer>
+      <Box maxH="calc(525px)" overflowY="auto" overflowX="auto" borderWidth="1px" borderRadius="md" borderColor="gray.200">
+        <TableContainer flex={1} overflowY={'auto'}>
+          {display}
+        </TableContainer>
+      </Box>
       <Pagination currentPage={page} limit={limit} total={tMobileByPage?.total ?? 0} onChange={(page) => onPagination({ page })} />
     </>
   );

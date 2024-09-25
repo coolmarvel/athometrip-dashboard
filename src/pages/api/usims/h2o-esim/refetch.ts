@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 
 import { setValue } from '@/pages/api';
+import { OrderType } from '@/types';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -12,9 +13,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '222755';
 const usimName = 'h2o-esim';
-const url = process.env.NEXT_PUBLIC_APIS_URL;
+const url = process.env.NEXT_PUBLIC_APIS_URL as string;
+const productId = process.env.NEXT_PUBLIC_H20_ESIM as string;
 
 const refetchH2OEsim = async (req: NextApiRequest, res: NextApiResponse) => {
   const { after, before } = req.body as { [key: string]: string };
@@ -23,6 +24,7 @@ const refetchH2OEsim = async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
+    data.map((v: OrderType) => (v.id = parseInt(v.order.id, 10)));
     await setValue(key, data);
 
     return res.status(200).send({ data: [], message: `Successfully refetch ${usimName}` });

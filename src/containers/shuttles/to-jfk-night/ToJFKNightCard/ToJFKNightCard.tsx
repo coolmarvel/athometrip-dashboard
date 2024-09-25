@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 
@@ -23,10 +23,10 @@ const ToJFKNightCard = ({ data: toJFKNight }: ToJFKNightCardProps) => {
   );
 
   const columns = useMemo(() => [{
-    name: toJFKNight?.line_items[0].name,
-    quantity: toJFKNight?.line_items[0].quantity,
-    total: toJFKNight?.line_items[0].total,
-  }] ?? [], [toJFKNight]);
+    name: toJFKNight?.line_items[0].name ?? '',
+    quantity: toJFKNight?.line_items[0].quantity ?? '',
+    total: toJFKNight?.line_items[0].total ?? '',
+  }], [toJFKNight]);
 
   return (
     <Card>
@@ -46,7 +46,6 @@ const ToJFKNightCard = ({ data: toJFKNight }: ToJFKNightCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!toJFKNight}>
-                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

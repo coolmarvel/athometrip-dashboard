@@ -1,4 +1,4 @@
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
@@ -21,7 +21,7 @@ const LandmarkCard = ({ data: landmark }: LandmarkCardProps) => {
     [landmark, t],
   );
 
-  const columns = useMemo(() => [{ name: landmark?.line_items[0].name, quantity: landmark?.line_items[0].quantity, total: landmark?.line_items[0].total }] ?? [], [landmark]);
+  const columns = useMemo(() => [{ name: landmark?.line_items[0].name ?? '', quantity: landmark?.line_items[0].quantity ?? '', total: landmark?.line_items[0].total ?? '' }], [landmark]);
 
   return (
     <Card>
@@ -41,7 +41,6 @@ const LandmarkCard = ({ data: landmark }: LandmarkCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!landmark}>
-                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

@@ -9,10 +9,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
+const tourName = 'metro-docent';
+
 const resetMetroDocent = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    return res.status(200).send({ data: [], message: 'Successfully reset metro-docent posts' });
+    return res.status(200).send({ data: [], message: `Successfully reset ${tourName} posts` });
   } catch {
-    return res.status(500).send({ data: null, message: 'Failed to reset metro-docent posts' });
+    return res.status(500).send({ data: null, message: `Failed to reset ${tourName} posts` });
   }
 };

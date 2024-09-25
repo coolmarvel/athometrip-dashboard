@@ -35,7 +35,7 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
       if (!ellisIsland) return;
       openModal(EllisIslandDrawer, { ellisIsland, setMutate: updateEllisIsland });
     },
-    [openModal, updateEllisIsland],
+    [openModal, updateEllisIsland]
   );
 
   const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>(
@@ -46,7 +46,7 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
         onConfirm: () => updateEllisIsland({ id, double_check: true, after, before }),
       });
     },
-    [updateEllisIsland, openConfirm, t],
+    [updateEllisIsland, openConfirm, t]
   );
 
   const columns = useMemo(
@@ -86,7 +86,7 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
         ),
       }),
     ],
-    [convertDate, handleDoubleCheck, handleDrawer, router.query, t],
+    [convertDate, handleDoubleCheck, handleDrawer, router.query, t]
   );
   console.log(ellisIsland);
 

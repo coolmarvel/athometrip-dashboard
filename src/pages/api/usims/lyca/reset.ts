@@ -9,10 +9,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
+const usimName = 'lyca';
+
 const resetLyca = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    return res.status(200).send({ data: [], message: 'Successfully reset lyca posts' });
+    return res.status(200).send({ data: [], message: `Successfully reset ${usimName} posts` });
   } catch {
-    return res.status(500).send({ data: null, message: 'Failed to reset lyca posts' });
+    return res.status(500).send({ data: null, message: `Failed to reset ${usimName} posts` });
   }
 };

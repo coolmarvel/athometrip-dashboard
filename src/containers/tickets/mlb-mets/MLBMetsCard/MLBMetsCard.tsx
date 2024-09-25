@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
@@ -22,7 +22,7 @@ const MLBMetsCard = ({ data: mlbMets }: MLBMetsCardProps) => {
     [mlbMets,  t]
   );
 
-  const columns = useMemo(() => [{ name: mlbMets?.lineItem.name, quantity: mlbMets?.lineItem.quantity, total: mlbMets?.lineItem.total }] ?? [], [mlbMets]);
+  const columns = useMemo(() => [{ name: mlbMets?.lineItem.name, quantity: mlbMets?.lineItem.quantity, total: mlbMets?.lineItem.total }], [mlbMets]);
 
   return (
     <Card>
@@ -42,7 +42,6 @@ const MLBMetsCard = ({ data: mlbMets }: MLBMetsCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!mlbMets}>
-                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

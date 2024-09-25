@@ -10,9 +10,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '80375,113901,125884,125889,125894,125899,127670,152531';
 const usimName = 'lyca';
-const url = process.env.NEXT_PUBLIC_API_URL;
+const url = process.env.NEXT_PUBLIC_API_URL as string;
+const productId = process.env.NEXT_PUBLIC_LYCA as string;
 
 const getLyca = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

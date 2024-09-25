@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { OrderType } from '@/types';
 import { statusColor } from '@/constants';
-// import { WithLabel } from '@/components';
+// 
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 
 interface OneWorldModalProps {
@@ -25,7 +25,7 @@ const OneWorldModal = ({ oneWorld, onClose }: OneWorldModalProps) => {
     [oneWorld, t]
   );
 
-  const columns = useMemo(() => [{ name: oneWorld?.line_items[0]?.name, quantity: oneWorld?.line_items[0]?.quantity, total: oneWorld?.line_items[0]?.total }] ?? [], [oneWorld]);
+  const columns = useMemo(() => [{ name: oneWorld?.line_items[0]?.name, quantity: oneWorld?.line_items[0]?.quantity, total: oneWorld?.line_items[0]?.total }], [oneWorld]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -51,8 +51,7 @@ const OneWorldModal = ({ oneWorld, onClose }: OneWorldModalProps) => {
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
                   <Skeleton key={index} isLoaded={!!oneWorld}>
-                    {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
-                  </Skeleton>
+                      </Skeleton>
                 ))}
               </Stack>
             </Box>

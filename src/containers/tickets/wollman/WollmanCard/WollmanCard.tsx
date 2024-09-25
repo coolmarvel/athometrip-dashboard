@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
@@ -22,7 +22,7 @@ const WollmanCard = ({ data: wollman }: WollmanCardProps) => {
     [wollman, t],
   );
 
-  const columns = useMemo(() => [{ name: wollman?.lineItem.name, quantity: wollman?.lineItem.quantity, total: wollman?.lineItem.total }] ?? [], [wollman]);
+  const columns = useMemo(() => [{ name: wollman?.lineItem.name, quantity: wollman?.lineItem.quantity, total: wollman?.lineItem.total }], [wollman]);
 
   return (
     <Card>
@@ -42,7 +42,6 @@ const WollmanCard = ({ data: wollman }: WollmanCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!wollman}>
-                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

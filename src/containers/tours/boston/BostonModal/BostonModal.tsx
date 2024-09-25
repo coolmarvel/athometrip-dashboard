@@ -1,4 +1,4 @@
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
@@ -23,7 +23,7 @@ const BostonModal = ({ boston, onClose }: BostonModalProps) => {
     [boston, t],
   );
 
-  const columns = useMemo(() => [{ name: boston?.line_items[0].name, quantity: boston?.line_items[0].quantity, total: boston?.line_items[0].total }] ?? [], [boston]);
+  const columns = useMemo(() => [{ name: boston?.line_items[0].name ?? '', quantity: boston?.line_items[0].quantity ?? '', total: boston?.line_items[0].total ?? '' }], [boston]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -49,8 +49,7 @@ const BostonModal = ({ boston, onClose }: BostonModalProps) => {
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
                   <Skeleton key={index} isLoaded={!!boston}>
-                    {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
-                  </Skeleton>
+                      </Skeleton>
                 ))}
               </Stack>
             </Box>

@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 
@@ -25,10 +25,10 @@ const TMobileModal = ({ tMobile, onClose }: TMobileModalProps) => {
   );
 
   const columns = useMemo(() => [{
-    name: tMobile?.line_items[0].name,
-    quantity: tMobile?.line_items[0].quantity,
-    total: tMobile?.line_items[0].total,
-  }] ?? [], [tMobile]);
+    name: tMobile?.line_items[0].name ?? '',
+    quantity: tMobile?.line_items[0].quantity ?? '',
+    total: tMobile?.line_items[0].total ?? '',
+  }], [tMobile]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -54,8 +54,7 @@ const TMobileModal = ({ tMobile, onClose }: TMobileModalProps) => {
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
                   <Skeleton key={index} isLoaded={!!tMobile}>
-                    {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
-                  </Skeleton>
+                      </Skeleton>
                 ))}
               </Stack>
             </Box>

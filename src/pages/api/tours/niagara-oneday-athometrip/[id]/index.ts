@@ -10,9 +10,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '424880,425875';
 const tourName = 'niagara-oneday-athometrip';
-const url = process.env.NEXT_PUBLIC_API_URL;
+const url = process.env.NEXT_PUBLIC_API_URL as string;
+const productId = process.env.NEXT_PUBLIC_NIAGARA_ONEDAY_ATHOMETRIP as string;
 
 const getNiagaraOneDayAthometrip = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

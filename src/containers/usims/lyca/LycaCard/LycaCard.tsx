@@ -1,4 +1,4 @@
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
@@ -22,10 +22,10 @@ const LycaCard = ({ data: lyca }: LycaCardProps) => {
   );
 
   const columns = useMemo(() => [{
-    name: lyca?.line_items[0].name,
-    quantity: lyca?.line_items[0].quantity,
-    total: lyca?.line_items[0].total,
-  }] ?? [], [lyca]);
+    name: lyca?.line_items[0].name ?? '',
+    quantity: lyca?.line_items[0].quantity ?? '',
+    total: lyca?.line_items[0].total ?? '',
+  }], [lyca]);
 
   return (
     <Card>
@@ -45,7 +45,6 @@ const LycaCard = ({ data: lyca }: LycaCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!lyca}>
-                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

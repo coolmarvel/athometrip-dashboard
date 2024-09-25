@@ -10,9 +10,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '222755';
 const usimName = 'h2o-esim';
-const url = process.env.NEXT_PUBLIC_API_URL;
+const url = process.env.NEXT_PUBLIC_API_URL as string;
+const productId = process.env.NEXT_PUBLIC_H20_ESIM as string;
 
 const getH2OEsim = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

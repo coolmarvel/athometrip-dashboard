@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
@@ -22,7 +22,7 @@ const UNTourCard = ({ data: unTour }: UNTourCardProps) => {
     [unTour, t],
   );
 
-  const columns = useMemo(() => [{ name: unTour?.lineItem.name, quantity: unTour?.lineItem.quantity, total: unTour?.lineItem.total }] ?? [], [unTour]);
+  const columns = useMemo(() => [{ name: unTour?.lineItem.name, quantity: unTour?.lineItem.quantity, total: unTour?.lineItem.total }], [unTour]);
 
   return (
     <Card>
@@ -42,7 +42,6 @@ const UNTourCard = ({ data: unTour }: UNTourCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!unTour}>
-                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

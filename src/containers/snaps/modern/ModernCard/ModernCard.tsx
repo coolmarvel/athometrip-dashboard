@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
@@ -23,10 +23,10 @@ const ModernCard = ({ data: modern }: ModernCardProps) => {
   );
 
   const columns = useMemo(() => [{
-    name: modern?.line_items[0].name,
-    quantity: modern?.line_items[0].quantity,
-    total: modern?.line_items[0].total,
-  }] ?? [], [modern]);
+    name: modern?.line_items[0].name ?? '',
+    quantity: modern?.line_items[0].quantity ?? '',
+    total: modern?.line_items[0].total ?? '',
+  }], [modern]);
 
   return (
     <Card>
@@ -46,7 +46,6 @@ const ModernCard = ({ data: modern }: ModernCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!modern}>
-                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

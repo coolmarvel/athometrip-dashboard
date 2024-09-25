@@ -2,13 +2,13 @@ import { Order } from '@/apis';
 import { RequiredKeysOf } from 'type-fest';
 import { getKeys, getValue } from '../redis';
 
-export const getTourById = async (ticketName: string, ticketId: string): Promise<any> => {
-  const keys = await getKeys(`${ticketName}_*`);
+export const getTourById = async (tourName: string, tourId: string): Promise<any> => {
+  const keys = await getKeys(`${tourName}_*`);
   for (const key of keys) {
-    const ticketsData: any = await getValue(key);
-    if (ticketsData) {
-      const ticket = ticketsData.find((ticket: any) => ticket.order.id === ticketId);
-      if (ticket) return ticket;
+    const toursData: any = await getValue(key);
+    if (toursData) {
+      const tour = toursData.find((tour: any) => tour.order.id === tourId);
+      if (tour) return tour;
     }
   }
 
@@ -35,15 +35,15 @@ const sortMap: any = {
   order_date_created_gmt: 'order.date_created_gmt',
 };
 
-export const sortTour = (tickets: any, sort: RequiredKeysOf<any>, order: Order, search: string): Promise<any> => {
+export const sortTour = (tours: any, sort: RequiredKeysOf<any>, order: Order, search: string): Promise<any> => {
   return new Promise((resolve, reject) => {
     try {
       if (search.length > 0) {
-        tickets = tickets.filter(
-          (ticket: any) =>
-            ticket.order.id.includes(search.toLowerCase()) ||
-            ticket.billing.email.toLowerCase().includes(search.toLowerCase()) ||
-            ticket.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase())
+        tours = tours.filter(
+          (tour: any) =>
+            tour.order.id.includes(search.toLowerCase()) ||
+            tour.billing.email.toLowerCase().includes(search.toLowerCase()) ||
+            tour.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase())
         );
       }
 
@@ -51,7 +51,7 @@ export const sortTour = (tickets: any, sort: RequiredKeysOf<any>, order: Order, 
         const resolvedSortPath = sortMap[sort] || sort;
         const deepValue = (obj: any, path: string) => path.split('.').reduce((acc, part) => acc && acc[part], obj);
 
-        tickets.sort((a: any, b: any) => {
+        tours.sort((a: any, b: any) => {
           const valueA = deepValue(a, resolvedSortPath);
           const valueB = deepValue(b, resolvedSortPath);
 
@@ -63,7 +63,7 @@ export const sortTour = (tickets: any, sort: RequiredKeysOf<any>, order: Order, 
         });
       }
 
-      resolve(tickets);
+      resolve(tours);
     } catch (error) {
       reject(error);
     }
@@ -71,13 +71,7 @@ export const sortTour = (tickets: any, sort: RequiredKeysOf<any>, order: Order, 
 };
 
 export const filterTour = (tours: any, after: string, before: string) => {
-  const start = new Date(after);
-  const end = new Date(before);
-
   return tours.filter((tour: any) => {
-    const tourDate = new Date(tour.order.date_created);
-    const dateCondition = tourDate >= start && tourDate <= end;
-
-    return dateCondition;
+    return tour.order.date_created_gmt >= after && tour.order.date_created_gmt <= before;
   });
 };

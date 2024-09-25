@@ -21,6 +21,8 @@ const EllisIslandDrawer = ({ ellisIsland, setMutate, onClose }: EllisIslandDrawe
     setIsEdit(!isEdit);
   }, [isEdit, setIsEdit]);
 
+  console.log(handleStringKeyValue(ellisIsland.line_items[0].meta_data)['smartpass_codes']);
+
   const attributes = useMemo(
     () => [
       { label: t('Name'), value: ellisIsland.billing?.first_name ?? 'Name' },
@@ -53,10 +55,10 @@ const EllisIslandDrawer = ({ ellisIsland, setMutate, onClose }: EllisIslandDrawe
         value: ellisIsland.order.memo ?? '',
       },
     ],
-    [isEdit, handleMemoEdit, ellisIsland, convertDate, t],
+    [isEdit, handleMemoEdit, ellisIsland, convertDate, t]
   );
 
-  const columns = useMemo(() => [{ name: ellisIsland.line_items[0]?.name, quantity: ellisIsland.line_items[0]?.quantity, total: ellisIsland.line_items[0]?.total }] ?? [], [ellisIsland]);
+  const columns = useMemo(() => [{ name: ellisIsland.line_items[0]?.name, quantity: ellisIsland.line_items[0]?.quantity, total: ellisIsland.line_items[0]?.total }], [ellisIsland]);
 
   return <DataDrawer columns={columns} attributes={attributes} data={ellisIsland} setMutate={setMutate} setIsEdit={setIsEdit} onClose={onClose} />;
 };

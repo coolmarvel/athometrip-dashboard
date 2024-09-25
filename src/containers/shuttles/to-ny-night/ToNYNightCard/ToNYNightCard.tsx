@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
@@ -22,7 +22,7 @@ const ToNYNightCard = ({ data: toNYNight }: ToNYNightCardProps) => {
     [toNYNight, t]
   );
 
-  const columns = useMemo(() => [{ name: toNYNight?.line_items[0].name, quantity: toNYNight?.line_items[0].quantity, total: toNYNight?.line_items[0].total }] ?? [], [toNYNight]);
+  const columns = useMemo(() => [{ name: toNYNight?.line_items[0].name ?? '', quantity: toNYNight?.line_items[0].quantity ?? '', total: toNYNight?.line_items[0].total ?? '' }], [toNYNight]);
 
   return (
     <Card>
@@ -42,7 +42,6 @@ const ToNYNightCard = ({ data: toNYNight }: ToNYNightCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!toNYNight}>
-                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

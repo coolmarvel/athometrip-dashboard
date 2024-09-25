@@ -49,7 +49,7 @@ const OneWorldDrawer = ({ oneWorld, setMutate, onClose }: OneWorldDrawerProps) =
     [isEdit, handleMemoEdit, oneWorld, convertDate, t]
   );
 
-  const columns = useMemo(() => [{ name: oneWorld?.line_items?.[0]?.name, quantity: oneWorld?.line_items?.[0]?.quantity, total: oneWorld?.line_items?.[0]?.total }] ?? [], [oneWorld]);
+  const columns = useMemo(() => [{ name: oneWorld?.line_items?.[0]?.name, quantity: oneWorld?.line_items?.[0]?.quantity, total: oneWorld?.line_items?.[0]?.total }], [oneWorld]);
 
   return <DataDrawer columns={columns} attributes={attributes} data={oneWorld} setMutate={setMutate} setIsEdit={setIsEdit} onClose={onClose} />;
 };

@@ -1,4 +1,4 @@
-import { TableContainer } from '@chakra-ui/react';
+import { Box, TableContainer } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 import { useGetSingleDocentsByPage } from '@/apis';
@@ -17,9 +17,11 @@ const SingleDocentsByPage = () => {
 
   return (
     <>
-      <TableContainer flex={1} overflowY={'auto'}>
-        <SingleDocentsTable singleDocents={singleDocentsByPage?.data ?? []} isLoading={isLoading} />
-      </TableContainer>
+      <Box maxH="calc(525px)" overflowY="auto" overflowX="auto" borderWidth="1px" borderRadius="md" borderColor="gray.200">
+        <TableContainer flex={1} overflowY={'auto'}>
+          <SingleDocentsTable singleDocents={singleDocentsByPage?.data ?? []} isLoading={isLoading} />
+        </TableContainer>
+      </Box>
       <Pagination currentPage={page} limit={limit} total={singleDocentsByPage?.total ?? 0} onChange={(page) => onPagination({ page })} />
     </>
   );

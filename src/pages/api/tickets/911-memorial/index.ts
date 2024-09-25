@@ -38,14 +38,14 @@ const get911MemorialsByPage = async (req: NextApiRequest, res: NextApiResponse) 
       data.map((v: OrderType) => (v.id = parseInt(v.order.id, 10)));
       await setValue(key, data);
 
-      tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order, search as string);
+      tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order, search);
 
       const slicedTickets = tickets.slice(Number(offset), Number(offset) + Number(limit));
 
       return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });
     } else {
       tickets = await filterTicket(tickets, after, before);
-      tickets = await sortTicket(tickets, sort as RequiredKeysOf<any>, order as Order, search as string);
+      tickets = await sortTicket(tickets, sort as RequiredKeysOf<any>, order as Order, search);
       const slicedTickets = tickets.slice(Number(offset), Number(offset) + Number(limit));
 
       return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });

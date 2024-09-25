@@ -1,4 +1,4 @@
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
@@ -22,10 +22,10 @@ const NiagaraOneDayKingKongCard = ({ data: niagaraOneDayKingKong }: NiagaraOneDa
   );
 
   const columns = useMemo(() => [{
-    name: niagaraOneDayKingKong?.line_items[0].name,
-    quantity: niagaraOneDayKingKong?.line_items[0].quantity,
-    total: niagaraOneDayKingKong?.line_items[0].total,
-  }] ?? [], [niagaraOneDayKingKong]);
+    name: niagaraOneDayKingKong?.line_items[0].name ?? '',
+    quantity: niagaraOneDayKingKong?.line_items[0].quantity ?? '',
+    total: niagaraOneDayKingKong?.line_items[0].total ?? '',
+  }], [niagaraOneDayKingKong]);
 
   return (
     <Card>
@@ -45,7 +45,6 @@ const NiagaraOneDayKingKongCard = ({ data: niagaraOneDayKingKong }: NiagaraOneDa
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!niagaraOneDayKingKong}>
-                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

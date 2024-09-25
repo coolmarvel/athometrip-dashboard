@@ -10,9 +10,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '141994';
 const tourName = 'amnh-docent';
-const url = process.env.NEXT_PUBLIC_API_URL;
+const url = process.env.NEXT_PUBLIC_API_URL as string;
+const productId = process.env.NEXT_PUBLIC_AMNH_DOCENT as string;
 
 const getAMNHDocent = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

@@ -1,54 +1,98 @@
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CheckCircleIcon } from '@chakra-ui/icons';
+import { Checkbox, Icon, Tag } from '@chakra-ui/react';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
-import { DataTable } from '@/components';
-import { useConvertDate } from '@/hooks';
+import { toUrl } from '@/utils';
+import { OrderType } from '@/types';
 import { useModalStore } from '@/stores';
-import { AMNHDocentModal } from '@/containers';
+import { useUpdateAMNHDocent } from '@/apis';
+import { AMNHDocentDrawer } from '@/containers';
+import { ApiRoutes, statusColor } from '@/constants';
+import { DataTable, DataTableActions } from '@/components';
+import { useConvertDate, useQueryKeyParams, useSafePush } from '@/hooks';
 
 const columnHelper = createColumnHelper<any>();
 
 interface AMNHDocentTableProps {
-  amnhDocent: any;
+  amnhDocent: OrderType[];
   isLoading?: boolean;
 }
 
 const AMNHDocentTable = ({ amnhDocent, isLoading }: AMNHDocentTableProps) => {
-  const { t } = useTranslation();
   const convertDate = useConvertDate();
+  const { router } = useSafePush();
+  const { t } = useTranslation();
 
-  const { openModal } = useModalStore(['openModal']);
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.AMNHDocent));
+  const { mutate: updateAMNHDocent } = useUpdateAMNHDocent(queryKeyParams);
 
-  const handleModal = useCallback<(amnhDocent: any) => void>(
+  const { openModal, openConfirm } = useModalStore(['openModal', 'openConfirm']);
+
+  const handleDrawer = useCallback<(amnhDocent: OrderType) => void>(
     (amnhDocent) => {
       if (!amnhDocent) return;
-      openModal(AMNHDocentModal, { amnhDocent });
+      openModal(AMNHDocentDrawer, { amnhDocent, setMutate: updateAMNHDocent });
     },
-    [openModal],
+    [openModal, updateAMNHDocent]
+  );
+
+  const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>(
+    (id, after, before) => {
+      openConfirm({
+        title: t('Double Check'),
+        content: t('Are you sure you want to double check this order?'),
+        onConfirm: () => updateAMNHDocent({ id, double_check: true, after, before }),
+      });
+    },
+    [updateAMNHDocent, openConfirm, t]
   );
 
   const columns = useMemo(
     () => [
-      columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
+      columnHelper.accessor('select', {
+        id: 'selection',
+        header: ({ table }) => <Checkbox isChecked={table.getIsAllRowsSelected()} onChange={table.getToggleAllRowsSelectedHandler()} aria-label="Select all rows" />,
+        cell: ({ row }) => <Checkbox isChecked={row.getIsSelected()} onChange={row.getToggleSelectedHandler()} aria-label={`Select row ${row.id}`} />,
+      }),
+      columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
+      columnHelper.accessor('status', {
+        header: t('status'),
+        cell: (context) => <Tag colorScheme={statusColor[context.row.original.order.status] || 'gray'}>{t(context.row.original.order.status)}</Tag>,
+      }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
       columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created_gmt', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.line_items?.[0]?.meta_data?.['성인-어린이'] ?? '', { header: t('type') }),
-      columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('quantity') }),
-      columnHelper.accessor((row) => {
-        const date = convertDate(row.order?.meta_data?.['amnh_docent_date']).split(' ')[0] ?? '';
-        const time = row.order?.meta_data?.['anmh_docent_time'] ?? '';
-
-        return `${date} ${time}`;
-      }, { header: t('schedule') }),
+      columnHelper.accessor('checked', {
+        header: t('checked'),
+        cell: (context) => (context.row.original.order.double_checked ? <Icon as={CheckCircleIcon} color={'green.300'} boxSize={'5'} /> : ''),
+      }),
+      columnHelper.display({
+        id: 'actions',
+        header: t('actions'),
+        cell: (context) => (
+          <DataTableActions
+            checked={context.row.original.order.double_checked}
+            onView={(e) => {
+              e.stopPropagation();
+              handleDrawer(context.row.original);
+            }}
+            onUpdate={(e) => {
+              e.stopPropagation();
+              handleDoubleCheck(context.row.original.order.id, router.query['after'] as string, router.query['before'] as string);
+            }}
+          />
+        ),
+      }),
     ],
-    [convertDate, t],
+    [convertDate, handleDoubleCheck, handleDrawer, router.query, t]
   );
+  console.log(amnhDocent);
 
   const table = useReactTable({ data: amnhDocent, columns, getCoreRowModel: getCoreRowModel() });
 
-  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
+  return <DataTable<any> table={table} isLoading={isLoading} />;
 };
 
 export default AMNHDocentTable;

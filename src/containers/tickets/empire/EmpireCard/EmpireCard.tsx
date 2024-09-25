@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
@@ -22,7 +22,7 @@ const EmpireCard = ({ data: empire }: EmpireCardProps) => {
     [empire, t],
   );
 
-  const columns = useMemo(() => [{ name: empire?.lineItem.name, quantity: empire?.lineItem.quantity, total: empire?.lineItem.total }] ?? [], [empire]);
+  const columns = useMemo(() => [{ name: empire?.lineItem.name, quantity: empire?.lineItem.quantity, total: empire?.lineItem.total }], [empire]);
 
   return (
     <Card>
@@ -42,7 +42,6 @@ const EmpireCard = ({ data: empire }: EmpireCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!empire}>
-                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

@@ -3,6 +3,7 @@ import { RequiredKeysOf } from 'type-fest';
 import axios from 'axios';
 
 import { Order } from '@/apis';
+import { OrderType } from '@/types';
 import { setValue } from '@/pages/api';
 import { checkExistingDataInRange, filterUsim, sortUsim } from '../usim-utils';
 
@@ -18,9 +19,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '126173,196976,197555,255271';
 const usimName = 't-mobile';
-const url = process.env.NEXT_PUBLIC_APIS_URL;
+const url = process.env.NEXT_PUBLIC_APIS_URL as string;
+const productId = process.env.NEXT_PUBLIC_T_MOBILE as string;
 
 const getTMobileByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, region, mode, search } = req.query as { [key: string]: string };
@@ -34,6 +35,7 @@ const getTMobileByPage = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (usims.length === 0) {
       const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
+      data.map((v: OrderType) => (v.id = parseInt(v.order.id, 10)));
       await setValue(key, data);
 
       usims = await filterUsim(usims, after, before, region, mode);

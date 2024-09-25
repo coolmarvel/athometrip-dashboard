@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
@@ -22,7 +22,7 @@ const SummitCard = ({ data: summit }: SummitCardProps) => {
     [summit, t],
   );
 
-  const columns = useMemo(() => [{ name: summit?.lineItem.name, quantity: summit?.lineItem.quantity, total: summit?.lineItem.total }] ?? [], [summit]);
+  const columns = useMemo(() => [{ name: summit?.lineItem.name, quantity: summit?.lineItem.quantity, total: summit?.lineItem.total }], [summit]);
 
   return (
     <Card>
@@ -42,7 +42,6 @@ const SummitCard = ({ data: summit }: SummitCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!summit}>
-                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

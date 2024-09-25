@@ -58,12 +58,8 @@ export const sortUsim = (usims: any, sort: RequiredKeysOf<any>, order: Order, se
 };
 
 export const filterUsim = (usims: any, after: string, before: string, region: string, mode: string) => {
-  const start = new Date(after);
-  const end = new Date(before);
-
   return usims.filter((usim: any) => {
-    const usimDate = new Date(usim.order.date_created);
-    const dateCondition = usimDate >= start && usimDate <= end;
+    const dateCondition = usim.order.date_created_gmt >= after && usim.order.date_created_gmt <= before;
 
     const regionCondition = (region: string, usim: any) => {
       const metaData = usim.line_items[0]?.meta_data;

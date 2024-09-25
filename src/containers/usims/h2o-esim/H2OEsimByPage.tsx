@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { TableContainer } from '@chakra-ui/react';
+import { Box, TableContainer } from '@chakra-ui/react';
 
 import { useGetH2OEsimByPage } from '@/apis';
 import { H2OEsimTable } from '@/containers';
@@ -17,9 +17,11 @@ const H2OEsimByPage = () => {
 
   return (
     <>
-      <TableContainer flex={1} overflowY={'auto'}>
-        <H2OEsimTable h2oEsim={h2oEsimByPage?.data ?? []} isLoading={isLoading} />
-      </TableContainer>
+      <Box maxH="calc(525px)" overflowY="auto" overflowX="auto" borderWidth="1px" borderRadius="md" borderColor="gray.200">
+        <TableContainer flex={1} overflowY={'auto'}>
+          <H2OEsimTable h2oEsim={h2oEsimByPage?.data ?? []} isLoading={isLoading} />
+        </TableContainer>
+      </Box>
       <Pagination currentPage={page} limit={limit} total={h2oEsimByPage?.total ?? 0} onChange={(page) => onPagination({ page })} />
     </>
   );

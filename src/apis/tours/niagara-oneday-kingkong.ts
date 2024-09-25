@@ -1,27 +1,38 @@
+import { cloneDeep } from 'lodash-es';
+
 import { toUrl } from '@/utils';
 import { ApiRoutes } from '@/constants';
-import { PageQueryParams, useFetch, useGetPage, useInvalidate, usePost, useUpdate } from '..';
+import { PageQueryParams, useCommand, useFetch, useGetPage, useInvalidate, usePost } from '..';
 
-// [GET] /api/tickets/niagara-oneday-kingkong?params
 export const useGetNiagaraOneDayKingKongByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.NiagaraOneDayKingKong), params);
 };
 
-// [GET] /api/tickets/niagara-oneday-kingkong/{id}
 export const useGetNiagaraOneDayKingKong = (id?: number) => {
   return useFetch<any>(toUrl(ApiRoutes.NiagaraOneDayKingKong, { id }));
 };
-
-// [PUT] /api/tickets/niagara-oneday-kingkong
-export const useUpdateNiagaraOneDayKingKong = () => {
-  return useUpdate<any, any>(toUrl(ApiRoutes.NiagaraOneDayKingKong, {}), undefined, undefined, (old, data) => ({ ...old, ...data }));
-};
-
-// [DELETE] /api/tickets/niagara-oneday-kingkong/reset
 export const useResetNiagaraOneDayKingKong = () => {
   return usePost(`${toUrl(ApiRoutes.NiagaraOneDayKingKong)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.NiagaraOneDayKingKong)) });
 };
 
 export const useRefetchNiagaraOneDayKingKongByPage = (params?: object) => {
   return usePost<any>(`${toUrl(ApiRoutes.NiagaraOneDayKingKong)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.NiagaraOneDayKingKong)) });
+};
+
+export const useUpdateNiagaraOneDayKingKong = (params?: object) => {
+  return useCommand(
+    (data: any) => `${toUrl(ApiRoutes.NiagaraOneDayKingKong, data)}/update`,
+    [toUrl(ApiRoutes.NiagaraOneDayKingKong), params],
+    undefined,
+    (old: any, data: any) => {
+      return {
+        ...old,
+        data: cloneDeep(old.data).map((item: any) => {
+          if (item.id === Number(data.id)) return { ...item, order: { ...item.order, double_checked: data.double_checked, memo: data.memo } };
+
+          return item;
+        }),
+      };
+    },
+  );
 };

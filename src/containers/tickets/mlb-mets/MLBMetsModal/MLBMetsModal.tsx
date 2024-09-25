@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 
@@ -24,7 +24,7 @@ const MLBMetsModal = ({ mlbMets, onClose }: MLBMetsModalProps) => {
     [mlbMets, t],
   );
 
-  const columns = useMemo(() => [{ name: mlbMets?.line_items[0]?.name, quantity: mlbMets?.line_items[0]?.quantity, total: mlbMets?.line_items[0]?.total }] ?? [], [mlbMets]);
+  const columns = useMemo(() => [{ name: mlbMets?.line_items[0]?.name, quantity: mlbMets?.line_items[0]?.quantity, total: mlbMets?.line_items[0]?.total }], [mlbMets]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -50,8 +50,7 @@ const MLBMetsModal = ({ mlbMets, onClose }: MLBMetsModalProps) => {
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
                   <Skeleton key={index} isLoaded={!!mlbMets}>
-                    {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
-                  </Skeleton>
+                      </Skeleton>
                 ))}
               </Stack>
             </Box>

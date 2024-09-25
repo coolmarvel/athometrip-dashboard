@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Divider, Flex } from '@chakra-ui/react';
 
 import { DatePickerOptions, PageOptions, ResponsiveLayout, Search, ModeOptions, RegionOptions, GaiaHead, RefetchButton } from '@/components';
 import { useRefetchTMobileByPage, useResetTMobile } from '@/apis';
@@ -20,6 +20,7 @@ const TMobilePages = () => {
       <ResponsiveLayout>
         <Flex direction={'column'} gap={'4'} h={'100%'}>
           <Flex justifyContent={'space-between'} gap={'4'} wrap={'wrap'}>
+            <Divider orientation="horizontal" />
             <Search
               onSubmit={(search) => {
                 push({ pathname: router.pathname, query: { ...router.query, search } });
@@ -33,6 +34,7 @@ const TMobilePages = () => {
               <PageOptions />
             </Flex>
           </Flex>
+          <Divider orientation="horizontal" />
           <TMobileByPage />
         </Flex>
       </ResponsiveLayout>

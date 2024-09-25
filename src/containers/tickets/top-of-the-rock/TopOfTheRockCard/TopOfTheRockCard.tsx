@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
@@ -22,7 +22,7 @@ const TopOfTheRockCard = ({ data: topOfTheRock }: TopOfTheRockCardProps) => {
     [topOfTheRock, t]
   );
 
-  const columns = useMemo(() => [{ name: topOfTheRock?.lineItem.name, quantity: topOfTheRock?.lineItem.quantity, total: topOfTheRock?.lineItem.total }] ?? [], [topOfTheRock]);
+  const columns = useMemo(() => [{ name: topOfTheRock?.lineItem.name, quantity: topOfTheRock?.lineItem.quantity, total: topOfTheRock?.lineItem.total }], [topOfTheRock]);
 
   return (
     <Card>
@@ -42,7 +42,6 @@ const TopOfTheRockCard = ({ data: topOfTheRock }: TopOfTheRockCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!topOfTheRock}>
-                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

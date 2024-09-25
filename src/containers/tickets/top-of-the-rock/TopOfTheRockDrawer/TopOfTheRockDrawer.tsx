@@ -40,8 +40,17 @@ const TopOfTheRockDrawer = ({ topOfTheRock, setMutate, onClose }: TopOfTheRockDr
       {
         label: t('Schedule (2)'),
         value: (() => {
-          const date = convertDate(topOfTheRock.tour?.top_date ?? topOfTheRock.order?.meta_data?.top_date ?? handleStringKeyValue(topOfTheRock.line_items?.[0]?.meta_data)['날짜'] ?? '').split(' ')[0];
-          const time = topOfTheRock.tour?.tor_time_2 ?? topOfTheRock.order?.meta_data?.tor_time_2 ?? handleStringKeyValue(topOfTheRock.line_items?.[0]?.meta_data)['입장 희망시간(2순위)'] ?? '';
+          const date = convertDate(
+            topOfTheRock.tour?.top_date ??
+            topOfTheRock.order?.meta_data?.top_date ??
+            handleStringKeyValue(topOfTheRock.line_items?.[0]?.meta_data)['날짜'] ??
+            '',
+          ).split(' ')[0];
+          const time =
+            topOfTheRock.tour?.tor_time_2 ??
+            topOfTheRock.order?.meta_data?.tor_time_2 ??
+            handleStringKeyValue(topOfTheRock.line_items?.[0]?.meta_data)['입장 희망시간(2순위)'] ??
+            '';
 
           return `${date} ${time}`;
         })(),
@@ -58,7 +67,7 @@ const TopOfTheRockDrawer = ({ topOfTheRock, setMutate, onClose }: TopOfTheRockDr
     [isEdit, handleMemoEdit, topOfTheRock, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: topOfTheRock?.line_items?.[0]?.name, quantity: topOfTheRock?.line_items?.[0]?.quantity, total: topOfTheRock?.line_items?.[0]?.total }] ?? [], [topOfTheRock]);
+  const columns = useMemo(() => [{ name: topOfTheRock?.line_items?.[0]?.name, quantity: topOfTheRock?.line_items?.[0]?.quantity, total: topOfTheRock?.line_items?.[0]?.total }], [topOfTheRock]);
 
   return <DataDrawer columns={columns} attributes={attributes} data={topOfTheRock} setMutate={setMutate} setIsEdit={setIsEdit} onClose={onClose} />;
 };

@@ -1,4 +1,4 @@
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
@@ -21,7 +21,7 @@ const WoodburyCard = ({ data: woodbury }: WoodburyCardProps) => {
     [woodbury, t],
   );
 
-  const columns = useMemo(() => [{ name: woodbury?.line_items[0].name, quantity: woodbury?.line_items[0].quantity, total: woodbury?.line_items[0].total }] ?? [], [woodbury]);
+  const columns = useMemo(() => [{ name: woodbury?.line_items[0].name ?? '', quantity: woodbury?.line_items[0].quantity ?? '', total: woodbury?.line_items[0].total ?? '' }], [woodbury]);
 
   return (
     <Card>
@@ -41,7 +41,6 @@ const WoodburyCard = ({ data: woodbury }: WoodburyCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!woodbury}>
-                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

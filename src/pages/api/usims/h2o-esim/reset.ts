@@ -9,10 +9,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
+const usimName = 'h2o-esim';
+
 const resetH2oEsim = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    return res.status(200).send({ data: [], message: 'Successfully reset h2o-eism posts' });
+    return res.status(200).send({ data: [], message: `Successfully reset ${usimName} posts` });
   } catch {
-    return res.status(500).send({ data: null, message: 'Failed to reset h2o-eism posts' });
+    return res.status(500).send({ data: null, message: `Failed to reset ${usimName} posts` });
   }
 };

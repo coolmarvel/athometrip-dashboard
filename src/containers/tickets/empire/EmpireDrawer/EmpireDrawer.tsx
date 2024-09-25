@@ -81,7 +81,7 @@ const EmpireDrawer = ({ empire, setMutate, onClose }: EmpireDrawerProps) => {
     [isEdit, handleMemoEdit, empire, convertDate, t],
   );
 
-  const columns = useMemo(() => [{ name: empire?.line_items?.[0]?.name, quantity: empire?.line_items?.[0]?.quantity, total: empire?.line_items?.[0]?.total }] ?? [], [empire]);
+  const columns = useMemo(() => [{ name: empire?.line_items?.[0]?.name, quantity: empire?.line_items?.[0]?.quantity, total: empire?.line_items?.[0]?.total }], [empire]);
 
   return <DataDrawer columns={columns} attributes={attributes} data={empire} setMutate={setMutate} setIsEdit={setIsEdit} onClose={onClose} />;
 };

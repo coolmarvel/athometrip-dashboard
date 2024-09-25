@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Divider, Flex } from '@chakra-ui/react';
 
 import { DatePickerOptions, GaiaHead, PageOptions, RefetchButton, ResponsiveLayout, Search } from '@/components';
 import { useRefetchWashingtonDCByPage, useResetWashingtonDC } from '@/apis';
@@ -20,6 +20,7 @@ const WashingtonDCPages = () => {
       <ResponsiveLayout>
         <Flex direction={'column'} gap={'4'} h={'100%'}>
           <Flex justifyContent={'space-between'} gap={'4'} wrap={'wrap'}>
+            <Divider orientation="horizontal" />
             <Search
               onSubmit={(search) => {
                 push({ pathname: router.pathname, query: { ...router.query, search } });
@@ -31,6 +32,7 @@ const WashingtonDCPages = () => {
               <PageOptions />
             </Flex>
           </Flex>
+          <Divider orientation="horizontal" />
           <WashingtonDCByPage />
         </Flex>
       </ResponsiveLayout>

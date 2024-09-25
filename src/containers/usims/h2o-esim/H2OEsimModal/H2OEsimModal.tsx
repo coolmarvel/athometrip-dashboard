@@ -1,4 +1,4 @@
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
@@ -24,10 +24,10 @@ const H2OEsimModal = ({ h2oEsim, onClose }: H2OEsimModalProps) => {
   );
 
   const columns = useMemo(() => [{
-    name: h2oEsim?.line_items[0].name,
-    quantity: h2oEsim?.line_items[0].quantity,
-    total: h2oEsim?.line_items[0].total,
-  }] ?? [], [h2oEsim]);
+    name: h2oEsim?.line_items[0].name ?? '',
+    quantity: h2oEsim?.line_items[0].quantity ?? '',
+    total: h2oEsim?.line_items[0].total ?? '',
+  }], [h2oEsim]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -53,8 +53,7 @@ const H2OEsimModal = ({ h2oEsim, onClose }: H2OEsimModalProps) => {
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
                   <Skeleton key={index} isLoaded={!!h2oEsim}>
-                    {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
-                  </Skeleton>
+                      </Skeleton>
                 ))}
               </Stack>
             </Box>

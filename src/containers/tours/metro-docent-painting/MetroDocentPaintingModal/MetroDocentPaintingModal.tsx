@@ -1,4 +1,4 @@
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
@@ -24,7 +24,7 @@ const MetroDocentPaintingModal = ({ metroDocentPainting, onClose }: MetroDocentP
   );
 
   const columns = useMemo(
-    () => [{ name: metroDocentPainting?.line_items[0].name, quantity: metroDocentPainting?.line_items[0].quantity, total: metroDocentPainting?.line_items[0].total }] ?? [],
+    () => [{ name: metroDocentPainting?.line_items[0].name ?? '', quantity: metroDocentPainting?.line_items[0].quantity ?? '', total: metroDocentPainting?.line_items[0].total ?? '' }],
     [metroDocentPainting]
   );
 
@@ -52,8 +52,7 @@ const MetroDocentPaintingModal = ({ metroDocentPainting, onClose }: MetroDocentP
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
                   <Skeleton key={index} isLoaded={!!metroDocentPainting}>
-                    {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
-                  </Skeleton>
+                      </Skeleton>
                 ))}
               </Stack>
             </Box>

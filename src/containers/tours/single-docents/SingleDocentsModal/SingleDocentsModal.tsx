@@ -1,4 +1,4 @@
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
@@ -24,7 +24,7 @@ const SingleDocentsModal = ({ singleDocents, lineItem, onClose }: SingleDocentsM
     [singleDocents, t],
   );
 
-  const columns = useMemo(() => [{ name: lineItem.name, quantity: lineItem.quantity, total: lineItem.total }] ?? [], [lineItem]);
+  const columns = useMemo(() => [{ name: lineItem.name, quantity: lineItem.quantity, total: lineItem.total }], [lineItem]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -50,8 +50,7 @@ const SingleDocentsModal = ({ singleDocents, lineItem, onClose }: SingleDocentsM
               <Stack divider={<StackDivider />} spacing={3}>
                 {attributes.map((attribute, index) => (
                   <Skeleton key={index} isLoaded={!!singleDocents}>
-                    {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
-                  </Skeleton>
+                      </Skeleton>
                 ))}
               </Stack>
             </Box>

@@ -1,4 +1,4 @@
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useMemo } from 'react';
@@ -21,7 +21,7 @@ const WashingtonDCCard = ({ data: washington }: WashingtonDCCardProps) => {
     [washington, t],
   );
 
-  const columns = useMemo(() => [{ name: washington?.line_items[0].name, quantity: washington?.line_items[0].quantity, total: washington?.line_items[0].total }] ?? [], [washington]);
+  const columns = useMemo(() => [{ name: washington?.line_items[0].name ?? '', quantity: washington?.line_items[0].quantity ?? '', total: washington?.line_items[0].total ?? '' }], [washington]);
 
   return (
     <Card>
@@ -41,7 +41,6 @@ const WashingtonDCCard = ({ data: washington }: WashingtonDCCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!washington}>
-                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>

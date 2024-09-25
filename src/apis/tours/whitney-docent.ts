@@ -1,27 +1,39 @@
+import { cloneDeep } from 'lodash-es';
+
 import { toUrl } from '@/utils';
 import { ApiRoutes } from '@/constants';
-import { PageQueryParams, useFetch, useGetPage, useInvalidate, usePost, useUpdate } from '..';
+import { PageQueryParams, useCommand, useFetch, useGetPage, useInvalidate, usePost } from '..';
 
-// [GET] /api/tickets/whitney-docent?params
 export const useGetWhitneyDocentByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.WhitneyDocent), params);
 };
 
-// [GET] /api/tickets/whitney-docent/{id}
 export const useGetWhitneyDocent = (id?: number) => {
   return useFetch<any>(toUrl(ApiRoutes.WhitneyDocent, { id }));
 };
 
-// [PUT] /api/tickets/whitney-docent
-export const useUpdateWhitneyDocent = () => {
-  return useUpdate<any, any>(toUrl(ApiRoutes.WhitneyDocent, {}), undefined, undefined, (old, data) => ({ ...old, ...data }));
-};
-
-// [DELETE] /api/tickets/whitney-docent/reset
 export const useResetWhitneyDocent = () => {
   return usePost(`${toUrl(ApiRoutes.WhitneyDocent)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.WhitneyDocent)) });
 };
 
 export const useRefetchWhitneyDocentByPage = (params?: object) => {
   return usePost<any>(`${toUrl(ApiRoutes.WhitneyDocent)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.WhitneyDocent)) });
+};
+
+export const useUpdateWhitneyDocent = (params?: object) => {
+  return useCommand(
+    (data: any) => `${toUrl(ApiRoutes.WhitneyDocent, data)}/update`,
+    [toUrl(ApiRoutes.WhitneyDocent), params],
+    undefined,
+    (old: any, data: any) => {
+      return {
+        ...old,
+        data: cloneDeep(old.data).map((item: any) => {
+          if (item.id === Number(data.id)) return { ...item, order: { ...item.order, double_checked: data.double_checked, memo: data.memo } };
+
+          return item;
+        }),
+      };
+    },
+  );
 };

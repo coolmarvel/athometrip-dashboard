@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { WithLabel } from '@/components';
+
 import { statusColor } from '@/constants';
 import { Badge, Box, Card, CardBody, CardHeader, Flex, Heading, Skeleton, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
@@ -23,10 +23,10 @@ const ToEWRCard = ({ data: toEWR }: ToEWRCardProps) => {
   );
 
   const columns = useMemo(() => [{
-    name: toEWR?.line_items[0].name,
-    quantity: toEWR?.line_items[0].quantity,
-    total: toEWR?.line_items[0].total,
-  }] ?? [], [toEWR]);
+    name: toEWR?.line_items[0].name ?? '',
+    quantity: toEWR?.line_items[0].quantity ?? '',
+    total: toEWR?.line_items[0].total ?? '',
+  }], [toEWR]);
 
   return (
     <Card>
@@ -46,7 +46,6 @@ const ToEWRCard = ({ data: toEWR }: ToEWRCardProps) => {
           <Stack divider={<StackDivider />} spacing={3}>
             {attributes.map((attribute, index) => (
               <Skeleton key={index} isLoaded={!!toEWR}>
-                {/* <WithLabel label={attribute.label} value={attribute.value} /> */}
               </Skeleton>
             ))}
           </Stack>
