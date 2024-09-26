@@ -10,9 +10,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '143688,144281,411754,446790,447602,447618';
 const shuttleName = 'to-nynj';
-const url = process.env.NEXT_PUBLIC_API_URL;
+const url = process.env.NEXT_PUBLIC_API_URL as string;
+const productId = process.env.NEXT_PUBLIC_TO_NY_NIGHT as string;
 
 const getToNYNight = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

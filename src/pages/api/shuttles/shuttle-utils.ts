@@ -1,12 +1,15 @@
-import { Order } from '@/apis';
 import { RequiredKeysOf } from 'type-fest';
+
+import { Order } from '@/apis';
+import { OrderType } from '@/types';
 import { getKeys, getValue } from '../redis';
 
 export const checkExistingDataInRange = async (name: string, after: string, before: string) => {
   const keys = await getKeys(`${name}_*`);
   for (const key of keys) {
     const [_, savedAfter, savedBefore] = key.split('_');
-    if (new Date(savedAfter) <= new Date(after) && new Date(savedBefore) >= new Date(before)) return await getValue(key);
+    if (new Date(savedAfter) <= new Date(after) && new Date(savedBefore) >= new Date(before)) return (await getValue(key)) as OrderType[];
+
   }
 
   return null;
@@ -58,16 +61,14 @@ export const sortShuttle = (shuttles: any, sort: RequiredKeysOf<any>, order: Ord
 };
 
 export const filterShuttle = (shuttles: any, after: string, before: string, day?: boolean) => {
-  const start = new Date(after);
-  const end = new Date(before);
-
   return shuttles.filter((shuttle: any) => {
-    const shuttleDate = new Date(shuttle.order.date_created);
-    const dateCondition = shuttleDate >= start && shuttleDate <= end;
+    const dateCondition = shuttle.order.date_created_gmt >= after && shuttle.order.date_created_gmt <= before;
 
     let scheduleCondition = true;
-    if (day === true) scheduleCondition = (shuttle.jfk_oneway?.jfk_shuttle_time || shuttle.jfk_shuttle_rt?.jfk_shuttle_time2 || '낮 스케줄') === '낮 스케줄';
-    else if (day === false) scheduleCondition = (shuttle.jfk_oneway?.jfk_shuttle_time || shuttle.jfk_shuttle_rt?.jfk_shuttle_time2 || '낮 스케줄') === '밤 스케줄';
+    const shuttleTime = shuttle.order.meta_data?.jfk_shuttle_time ?? shuttle.order.meta_data?.jfk_shuttle_time2;
+
+    if (day === true) scheduleCondition = shuttleTime === '낮 스케줄' || shuttleTime === undefined;
+    else if (day === false) scheduleCondition = shuttleTime === '밤 스케줄';
 
     return dateCondition && scheduleCondition;
   });

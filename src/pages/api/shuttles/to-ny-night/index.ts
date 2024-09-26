@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Order } from '@/apis';
 import { setValue } from '@/pages/api';
 import { checkExistingDataInRange, filterShuttle, sortShuttle } from '../shuttle-utils';
+import { OrderType } from '@/types';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -18,9 +19,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '143688,144281,411754,446790,447602,447618';
 const shuttleName = 'to-nynj';
-const url = process.env.NEXT_PUBLIC_APIS_URL;
+const url = process.env.NEXT_PUBLIC_APIS_URL as string;
+const productId = process.env.NEXT_PUBLIC_TO_NY_NIGHT as string;
 
 const getToNYNightsByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };
@@ -34,9 +35,10 @@ const getToNYNightsByPage = async (req: NextApiRequest, res: NextApiResponse) =>
 
     if (shuttles.length === 0) {
       const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
+      data.map((v: OrderType) => (v.id = parseInt(v.order.id, 10)));
       await setValue(key, data);
 
-      shuttles = await filterShuttle(shuttles, after, before, false);
+      shuttles = await filterShuttle(data, after, before, false);
       shuttles = await sortShuttle(data, sort as RequiredKeysOf<any>, order as Order, search as string);
       const slicedshuttles = shuttles.slice(Number(offset), Number(offset) + Number(limit));
 

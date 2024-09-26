@@ -1,51 +1,98 @@
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CheckCircleIcon } from '@chakra-ui/icons';
+import { Checkbox, Icon, Tag } from '@chakra-ui/react';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
-import { DataTable } from '@/components';
+import { toUrl } from '@/utils';
+import { OrderType } from '@/types';
 import { useModalStore } from '@/stores';
-import { useConvertDate } from '@/hooks';
-import { ToNYNJEWRModal } from '@/containers';
+import { useUpdateToNYNJEWR } from '@/apis';
+import { ToNYNJEWRDrawer } from '@/containers';
+import { ApiRoutes, statusColor } from '@/constants';
+import { DataTable, DataTableActions } from '@/components';
+import { useConvertDate, useQueryKeyParams, useSafePush } from '@/hooks';
 
 const columnHelper = createColumnHelper<any>();
 
 interface ToNYNJEWRTableProps {
-  toNYNJEWR: any;
+  toNYNJEWR: OrderType[];
   isLoading?: boolean;
 }
 
 const ToNYNJEWRTable = ({ toNYNJEWR, isLoading }: ToNYNJEWRTableProps) => {
-  const { t } = useTranslation();
   const convertDate = useConvertDate();
+  const { router } = useSafePush();
+  const { t } = useTranslation();
 
-  const { openModal } = useModalStore(['openModal']);
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.ToNYNJEWR));
+  const { mutate: updateToNYNJEWR } = useUpdateToNYNJEWR(queryKeyParams);
 
-  const handleModal = useCallback<(toNYNJEWR: any) => void>(
+  const { openModal, openConfirm } = useModalStore(['openModal', 'openConfirm']);
+
+  const handleDrawer = useCallback<(toNYNJEWR: OrderType) => void>(
     (toNYNJEWR) => {
       if (!toNYNJEWR) return;
-      openModal(ToNYNJEWRModal, { toNYNJEWR });
+      openModal(ToNYNJEWRDrawer, { toNYNJEWR, setMutate: updateToNYNJEWR });
     },
-    [openModal]
+    [openModal, updateToNYNJEWR],
+  );
+
+  const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>(
+    (id, after, before) => {
+      openConfirm({
+        title: t('Double Check'),
+        content: t('Are you sure you want to double check this order?'),
+        onConfirm: () => updateToNYNJEWR({ id, double_check: true, after, before }),
+      });
+    },
+    [updateToNYNJEWR, openConfirm, t],
   );
 
   const columns = useMemo(
     () => [
-      columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
+      columnHelper.accessor('select', {
+        id: 'selection',
+        header: ({ table }) => <Checkbox isChecked={table.getIsAllRowsSelected()} onChange={table.getToggleAllRowsSelectedHandler()} aria-label="Select all rows" />,
+        cell: ({ row }) => <Checkbox isChecked={row.getIsSelected()} onChange={row.getToggleSelectedHandler()} aria-label={`Select row ${row.id}`} />,
+      }),
+      columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
+      columnHelper.accessor('status', {
+        header: t('status'),
+        cell: (context) => <Tag colorScheme={statusColor[context.row.original.order.status] || 'gray'}>{t(context.row.original.order.status)}</Tag>,
+      }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.billing.phone, { header: t('phone') }),
+      columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created_gmt', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.jfk_oneway.kakao_id1 ?? row.jfk_shuttle_rt.kakao_id2 ?? '', { header: t('kakao talk') }),
-      columnHelper.accessor((row) => row.line_items?.[0]?.quantity ?? '', { header: t('personnel') }),
-      columnHelper.accessor((row) => convertDate(row.jfk_oneway?.ewr_depart_date).split(' ')[0] ?? '', { header: t('pickup date') }),
-      columnHelper.accessor((row) => row.jfk_oneway?.ewr_stop ?? '', { header: t('boarding area') }),
-      columnHelper.accessor((row) => row.jfk_oneway?.ewr_flight_num ?? '', { header: t('flight number') }),
+      columnHelper.accessor('checked', {
+        header: t('checked'),
+        cell: (context) => (context.row.original.order.double_checked ? <Icon as={CheckCircleIcon} color={'green.300'} boxSize={'5'} /> : ''),
+      }),
+      columnHelper.display({
+        id: 'actions',
+        header: t('actions'),
+        cell: (context) => (
+          <DataTableActions
+            checked={context.row.original.order.double_checked}
+            onView={(e) => {
+              e.stopPropagation();
+              handleDrawer(context.row.original);
+            }}
+            onUpdate={(e) => {
+              e.stopPropagation();
+              handleDoubleCheck(context.row.original.order.id, router.query['after'] as string, router.query['before'] as string);
+            }}
+          />
+        ),
+      }),
     ],
-    [convertDate, t]
+    [convertDate, handleDoubleCheck, handleDrawer, router.query, t],
   );
+  console.log(toNYNJEWR);
 
   const table = useReactTable({ data: toNYNJEWR, columns, getCoreRowModel: getCoreRowModel() });
 
-  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
+  return <DataTable<any> table={table} isLoading={isLoading} />;
 };
 
 export default ToNYNJEWRTable;

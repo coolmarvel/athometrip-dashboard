@@ -88,7 +88,6 @@ const AMNHDocentTable = ({ amnhDocent, isLoading }: AMNHDocentTableProps) => {
     ],
     [convertDate, handleDoubleCheck, handleDrawer, router.query, t]
   );
-  console.log(amnhDocent);
 
   const table = useReactTable({ data: amnhDocent, columns, getCoreRowModel: getCoreRowModel() });
 

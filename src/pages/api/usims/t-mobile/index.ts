@@ -38,7 +38,7 @@ const getTMobileByPage = async (req: NextApiRequest, res: NextApiResponse) => {
       data.map((v: OrderType) => (v.id = parseInt(v.order.id, 10)));
       await setValue(key, data);
 
-      usims = await filterUsim(usims, after, before, region, mode);
+      usims = await filterUsim(data, after, before, region, mode);
       usims = await sortUsim(data, sort as RequiredKeysOf<any>, order as Order, search);
       const slicedUsims = usims.slice(Number(offset), Number(offset) + Number(limit));
 

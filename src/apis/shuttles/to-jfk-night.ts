@@ -1,27 +1,39 @@
+import { cloneDeep } from 'lodash-es';
+
 import { toUrl } from '@/utils';
 import { ApiRoutes } from '@/constants';
-import { PageQueryParams, useFetch, useGetPage, useInvalidate, usePost, useUpdate } from '..';
+import { PageQueryParams, useCommand, useFetch, useGetPage, useInvalidate, usePost } from '..';
 
-// [GET] /api/shuttles/to-jfk-night?params
 export const useGetToJFKNightByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.ToJFKNight), params);
 };
 
-// [GET] /api/shuttles/to-jfk-night/{id}
 export const useGetToJFKNight = (id?: number) => {
   return useFetch<any>(toUrl(ApiRoutes.ToJFKNight, { id }));
 };
 
-// [PUT] /api/shuttles/to-jfk-night
-export const useUpdateToJFKNight = () => {
-  return useUpdate<any, any>(toUrl(ApiRoutes.ToJFKNight, {}), undefined, undefined, (old, data) => ({ ...old, ...data }));
-};
-
-// [DELETE] /api/shuttles/to-jfk-night/reset
 export const useResetToJFKNight = () => {
   return usePost(`${toUrl(ApiRoutes.ToJFKNight)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.ToJFKNight)) });
 };
 
 export const useRefetchToJFKNightByPage = (params?: object) => {
   return usePost<any>(`${toUrl(ApiRoutes.ToJFKNight)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.ToJFKNight)) });
+};
+
+export const useUpdateToJFKNight = (params?: object) => {
+  return useCommand(
+    (data: any) => `${toUrl(ApiRoutes.ToJFKNight, data)}/update`,
+    [toUrl(ApiRoutes.ToJFKNight), params],
+    undefined,
+    (old: any, data: any) => {
+      return {
+        ...old,
+        data: cloneDeep(old.data).map((item: any) => {
+          if (item.id === Number(data.id)) return { ...item, order: { ...item.order, double_checked: data.double_checked, memo: data.memo } };
+
+          return item;
+        }),
+      };
+    },
+  );
 };

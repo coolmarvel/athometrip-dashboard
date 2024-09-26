@@ -1,27 +1,39 @@
+import { cloneDeep } from 'lodash-es';
+
 import { toUrl } from '@/utils';
 import { ApiRoutes } from '@/constants';
-import { PageQueryParams, useFetch, useGetPage, useInvalidate, usePost, useUpdate } from '..';
+import { PageQueryParams, useCommand, useFetch, useGetPage, useInvalidate, usePost } from '..';
 
-// [GET] /api/shuttles/to-nynj?params
 export const useGetToNYNJByPage = (params: PageQueryParams) => {
   return useGetPage<any[]>(toUrl(ApiRoutes.ToNYNJ), params);
 };
 
-// [GET] /api/shuttles/to-nynj/{id}
 export const useGetToNYNJ = (id?: number) => {
   return useFetch<any>(toUrl(ApiRoutes.ToNYNJ, { id }));
 };
 
-// [PUT] /api/shuttles/to-nynj
-export const useUpdateToNYNJ = () => {
-  return useUpdate<any, any>(toUrl(ApiRoutes.ToNYNJ, {}), undefined, undefined, (old, data) => ({ ...old, ...data }));
-};
-
-// [DELETE] /api/shuttles/to-nynj/reset
 export const useResetToNYNJ = () => {
   return usePost(`${toUrl(ApiRoutes.ToNYNJ)}/reset`, undefined, { onSuccess: useInvalidate(toUrl(ApiRoutes.ToNYNJ)) });
 };
 
 export const useRefetchToNYNJByPage = (params?: object) => {
   return usePost<any>(`${toUrl(ApiRoutes.ToNYNJ)}/refetch`, params, { onSuccess: useInvalidate(toUrl(ApiRoutes.ToNYNJ)) });
+};
+
+export const useUpdateToNYNJ = (params?: object) => {
+  return useCommand(
+    (data: any) => `${toUrl(ApiRoutes.ToNYNJ, data)}/update`,
+    [toUrl(ApiRoutes.ToNYNJ), params],
+    undefined,
+    (old: any, data: any) => {
+      return {
+        ...old,
+        data: cloneDeep(old.data).map((item: any) => {
+          if (item.id === Number(data.id)) return { ...item, order: { ...item.order, double_checked: data.double_checked, memo: data.memo } };
+
+          return item;
+        }),
+      };
+    },
+  );
 };

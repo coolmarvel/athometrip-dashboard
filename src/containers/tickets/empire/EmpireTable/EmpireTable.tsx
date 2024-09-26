@@ -88,7 +88,6 @@ const EmpireTable = ({ empire, isLoading }: EmpireTableProps) => {
     ],
     [convertDate, handleDoubleCheck, handleDrawer, router.query, t],
   );
-  console.log(empire);
 
   const table = useReactTable({ data: empire, columns, getCoreRowModel: getCoreRowModel() });
 
