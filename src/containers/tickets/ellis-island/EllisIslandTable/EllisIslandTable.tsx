@@ -88,7 +88,6 @@ const EllisIslandTable = ({ ellisIsland, isLoading }: EllisIslandTableProps) => 
     ],
     [convertDate, handleDoubleCheck, handleDrawer, router.query, t]
   );
-  console.log(ellisIsland);
 
   const table = useReactTable({ data: ellisIsland, columns, getCoreRowModel: getCoreRowModel() });
 

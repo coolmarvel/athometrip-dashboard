@@ -34,6 +34,6 @@ export const useUpdateEmpire = (params?: object) => {
           return item;
         }),
       };
-    }
+    },
   );
 };

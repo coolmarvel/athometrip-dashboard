@@ -25,7 +25,7 @@ const Memorial911Table = ({ memorial911, isLoading }: Memorial911TableProps) => 
   const { router } = useSafePush();
   const { t } = useTranslation();
 
-  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.TopOfTheRock));
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.Memorial911));
   const { mutate: update911Memorial } = useUpdate911Memorial(queryKeyParams);
 
   const { openModal, openConfirm } = useModalStore(['openModal', 'openConfirm']);
@@ -35,7 +35,7 @@ const Memorial911Table = ({ memorial911, isLoading }: Memorial911TableProps) => 
       if (!memorial911) return;
       openModal(Memorial911Drawer, { memorial911, setMutate: update911Memorial });
     },
-    [openModal, update911Memorial]
+    [openModal, update911Memorial],
   );
 
   const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>(
@@ -46,7 +46,7 @@ const Memorial911Table = ({ memorial911, isLoading }: Memorial911TableProps) => 
         onConfirm: () => update911Memorial({ id, double_check: true, after, before }),
       });
     },
-    [update911Memorial, openConfirm, t]
+    [update911Memorial, openConfirm, t],
   );
 
   const columns = useMemo(
@@ -86,7 +86,7 @@ const Memorial911Table = ({ memorial911, isLoading }: Memorial911TableProps) => 
         ),
       }),
     ],
-    [convertDate, handleDoubleCheck, handleDrawer, router.query, t]
+    [convertDate, handleDoubleCheck, handleDrawer, router.query, t],
   );
 
   const table = useReactTable({ data: memorial911, columns, getCoreRowModel: getCoreRowModel() });

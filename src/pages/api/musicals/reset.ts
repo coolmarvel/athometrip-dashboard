@@ -9,10 +9,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
+const musicalName = 'musicals';
+
 const resetMusical = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    return res.status(200).send({ data: [], message: 'Successfully reset musicals posts' });
+    return res.status(200).send({ data: [], message: `Successfully reset ${musicalName} posts` });
   } catch {
-    return res.status(500).send({ data: null, message: 'Failed to reset musicals posts' });
+    return res.status(500).send({ data: null, message: `Failed to reset ${musicalName} posts` });
   }
 };

@@ -9,10 +9,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
+const ticketName = 'city-trip';
+
 const resetCityTrip = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    return res.status(200).send({ data: [], message: 'Successfully reset city-trip posts' });
+    return res.status(200).send({ data: [], message: `Successfully reset ${ticketName} posts` });
   } catch {
-    return res.status(500).send({ data: null, message: 'Failed to reset city-trip posts' });
+    return res.status(500).send({ data: null, message: `Failed to reset ${ticketName} posts` });
   }
 };

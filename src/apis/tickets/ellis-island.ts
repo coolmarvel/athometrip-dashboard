@@ -34,6 +34,6 @@ export const useUpdateEllisIsland = (params?: object) => {
           return item;
         }),
       };
-    }
+    },
   );
 };

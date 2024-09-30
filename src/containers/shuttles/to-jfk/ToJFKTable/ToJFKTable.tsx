@@ -35,7 +35,7 @@ const ToJFkTable = ({ toJFK, isLoading }: ToJFkTableProps) => {
       if (!toJFK) return;
       openModal(ToJFKDrawer, { toJFK, setMutate: updateToJFK });
     },
-    [openModal, updateToJFK],
+    [openModal, updateToJFK]
   );
 
   const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>(
@@ -46,7 +46,7 @@ const ToJFkTable = ({ toJFK, isLoading }: ToJFkTableProps) => {
         onConfirm: () => updateToJFK({ id, double_check: true, after, before }),
       });
     },
-    [updateToJFK, openConfirm, t],
+    [updateToJFK, openConfirm, t]
   );
 
   const columns = useMemo(
@@ -86,9 +86,8 @@ const ToJFkTable = ({ toJFK, isLoading }: ToJFkTableProps) => {
         ),
       }),
     ],
-    [convertDate, handleDoubleCheck, handleDrawer, router.query, t],
+    [convertDate, handleDoubleCheck, handleDrawer, router.query, t]
   );
-  console.log(toJFK);
 
   const table = useReactTable({ data: toJFK, columns, getCoreRowModel: getCoreRowModel() });
 

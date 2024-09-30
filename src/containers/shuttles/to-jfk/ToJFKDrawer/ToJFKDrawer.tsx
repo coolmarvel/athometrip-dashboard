@@ -32,31 +32,22 @@ const ToJFKDrawer = ({ toJFK, setMutate, onClose }: ToJFKDrawerProps) => {
       {
         label: t('Pickup Date'),
         value: (() =>
-            convertDate(
-              toJFK.order.meta_data?.pickup_date_30 ??
-              toJFK.order.meta_data?.pickup_date_10 ??
-              toJFK.order.meta_data?.pickup_date_fromnj ??
-              handleStringKeyValue(toJFK.line_items[0].meta_data)['날짜'],
-            ).split(' ')[0] ??
-            ''
-        )(),
+          convertDate(
+            toJFK.order.meta_data?.pickup_date_30 ?? toJFK.order.meta_data?.pickup_date_10 ?? toJFK.order.meta_data?.pickup_date_fromnj ?? handleStringKeyValue(toJFK.line_items[0].meta_data)['날짜']
+          ).split(' ')[0] ?? '')(),
       },
       {
-        label: t('Boarding Area'), value: (() =>
-            toJFK.order.meta_data?.drop_add_2 ??
-            toJFK.order.meta_data?.drop_add ??
-            toJFK.order.meta_data?.jfk_shuttle_pickup_nj ??
-            handleStringKeyValue(toJFK.line_items[0].meta_data)['승차장소'] ??
-            ''
-        )(),
+        label: t('Boarding Area'),
+        value: (() =>
+          toJFK.order.meta_data?.drop_add_2 ??
+          toJFK.order.meta_data?.drop_add ??
+          toJFK.order.meta_data?.jfk_shuttle_pickup_nj ??
+          handleStringKeyValue(toJFK.line_items[0].meta_data)['승차 장소'] ??
+          '')(),
       },
       {
-        label: t('Flight Number'), value: (() =>
-            toJFK.order.meta_data?.flight_num2 ??
-            toJFK.order.meta_data?.fligh_num ??
-            handleStringKeyValue(toJFK.line_items[0].meta_data)['JFK 탑승 항공편명'] ??
-            ''
-        )(),
+        label: t('Flight Number'),
+        value: (() => toJFK.order.meta_data?.flight_num2 ?? toJFK.order.meta_data?.fligh_num ?? handleStringKeyValue(toJFK.line_items[0].meta_data)['JFK 탑승 항공편명'] ?? '')(),
       },
       {
         label: t('Memo'),
@@ -67,15 +58,19 @@ const ToJFKDrawer = ({ toJFK, setMutate, onClose }: ToJFKDrawerProps) => {
         value: toJFK.order.memo ?? '',
       },
     ],
-    [isEdit, handleMemoEdit, toJFK, convertDate, t],
+    [isEdit, handleMemoEdit, toJFK, convertDate, t]
   );
 
-  const columns = useMemo(() =>
-    [{
-      name: toJFK.line_items[0]?.name ?? '',
-      quantity: toJFK.line_items[0]?.quantity ?? '',
-      total: toJFK.line_items[0]?.total ?? '',
-    }], [toJFK]);
+  const columns = useMemo(
+    () => [
+      {
+        name: toJFK.line_items[0]?.name ?? '',
+        quantity: toJFK.line_items[0]?.quantity ?? '',
+        total: toJFK.line_items[0]?.total ?? '',
+      },
+    ],
+    [toJFK]
+  );
   return <DataDrawer columns={columns} attributes={attributes} data={toJFK} setMutate={setMutate} setIsEdit={setIsEdit} onClose={onClose} />;
 };
 

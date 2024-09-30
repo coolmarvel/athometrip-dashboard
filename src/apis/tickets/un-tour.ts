@@ -34,6 +34,6 @@ export const useUpdateUNTour = (params?: object) => {
           return item;
         }),
       };
-    }
+    },
   );
 };

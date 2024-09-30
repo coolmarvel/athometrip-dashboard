@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Order } from '@/apis';
 import { OrderType } from '@/types';
 import { setValue } from '@/pages/api';
-import { checkExistingDataInRange, sortUsim } from '../usim-utils';
+import { checkExistingDataInRange, filterUsim, sortUsim } from '../usim-utils';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -38,12 +38,13 @@ const getLycaByPage = async (req: NextApiRequest, res: NextApiResponse) => {
       data.map((v: OrderType) => (v.id = parseInt(v.order.id, 10)));
       await setValue(key, data);
 
-      usims = await sortUsim(data, sort as RequiredKeysOf<any>, order as Order, search);
-
+      usims = await filterUsim(data, after, before);
+      usims = await sortUsim(usims, sort as RequiredKeysOf<any>, order as Order, search);
       const slicedUsims = usims.slice(Number(offset), Number(offset) + Number(limit));
 
       return res.status(200).send({ data: { total: usims.length, data: slicedUsims } });
     } else {
+      usims = await filterUsim(usims, after, before);
       usims = await sortUsim(usims, sort as RequiredKeysOf<any>, order as Order, search);
       const slicedUsims = usims.slice(Number(offset), Number(offset) + Number(limit));
 

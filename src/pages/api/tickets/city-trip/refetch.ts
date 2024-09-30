@@ -10,7 +10,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 const ticketName = 'city-trip';
-const url = process.env.NEXT_PUBLIC_APIS_URL;
+const url = process.env.NEXT_PUBLIC_APIS_URL as string;
 
 const refetchCityTrip = async (req: NextApiRequest, res: NextApiResponse) => {
   try {

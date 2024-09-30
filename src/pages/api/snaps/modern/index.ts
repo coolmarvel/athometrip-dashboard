@@ -1,7 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import axios from 'axios';
 import { RequiredKeysOf } from 'type-fest';
+import axios from 'axios';
+
 import { Order } from '@/apis';
+import { OrderType } from '@/types';
 import { setValue } from '@/pages/api';
 import { checkExistingDataInRange, filterSnap, sortSnap } from '../snap-utils';
 
@@ -17,9 +19,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '406389,406413,406451,406786,406789,406791,406797,406803,408367';
 const snapName = 'snap-modern';
-const url = process.env.NEXT_PUBLIC_APIS_URL;
+const url = process.env.NEXT_PUBLIC_APIS_URL as string;
+const productId = process.env.NEXT_PUBLIC_MODERN as string;
 
 const getModernsByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };
@@ -33,10 +35,11 @@ const getModernsByPage = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (snaps.length === 0) {
       const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
+      data.map((v: OrderType) => (v.id = parseInt(v.order.id, 10)));
       await setValue(key, data);
 
-      snaps = await filterSnap(snaps, after, before);
-      snaps = await sortSnap(data, sort as RequiredKeysOf<any>, order as Order, search as string);
+      snaps = await filterSnap(data, after, before);
+      snaps = await sortSnap(snaps, sort as RequiredKeysOf<any>, order as Order, search as string);
       const slicedSnaps = snaps.slice(Number(offset), Number(offset) + Number(limit));
 
       return res.status(200).send({ data: { total: snaps.length, data: slicedSnaps } });

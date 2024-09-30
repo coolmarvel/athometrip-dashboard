@@ -34,6 +34,6 @@ export const useUpdateSummit = (params?: object) => {
           return item;
         }),
       };
-    }
+    },
   );
 };

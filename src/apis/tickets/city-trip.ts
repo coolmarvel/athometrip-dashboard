@@ -30,6 +30,6 @@ export const useUpdateCityTrip = (params?: object) => {
           return item;
         }),
       };
-    }
+    },
   );
 };

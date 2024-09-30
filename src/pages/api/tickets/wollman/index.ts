@@ -38,8 +38,8 @@ const getWollmanByPage = async (req: NextApiRequest, res: NextApiResponse) => {
       data.map((v: OrderType) => (v.id = parseInt(v.order.id, 10)));
       await setValue(key, data);
 
-      tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order, search as string);
-
+      tickets = await filterTicket(data, after, before);
+      tickets = await sortTicket(tickets, sort as RequiredKeysOf<any>, order as Order, search as string);
       const slicedTickets = tickets.slice(Number(offset), Number(offset) + Number(limit));
 
       return res.status(200).send({ data: { total: tickets.length, data: slicedTickets } });

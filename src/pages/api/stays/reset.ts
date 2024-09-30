@@ -9,10 +9,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
+const stayName = 'stays';
+
 const resetStay = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    return res.status(200).send({ data: [], message: 'Successfully reset stays posts' });
+    return res.status(200).send({ data: [], message: `Successfully reset ${stayName} posts` });
   } catch {
-    return res.status(500).send({ data: null, message: 'Failed to reset stays posts' });
+    return res.status(500).send({ data: null, message: `Failed to reset ${stayName} posts` });
   }
 };

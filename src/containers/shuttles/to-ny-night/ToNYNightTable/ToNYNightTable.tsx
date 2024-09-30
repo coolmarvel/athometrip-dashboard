@@ -35,7 +35,7 @@ const ToNYNightTable = ({ toNYNight, isLoading }: ToNYNightTableProps) => {
       if (!toNYNight) return;
       openModal(ToNYNightDrawer, { toNYNight, setMutate: updateToNYNight });
     },
-    [openModal, updateToNYNight],
+    [openModal, updateToNYNight]
   );
 
   const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>(
@@ -46,7 +46,7 @@ const ToNYNightTable = ({ toNYNight, isLoading }: ToNYNightTableProps) => {
         onConfirm: () => updateToNYNight({ id, double_check: true, after, before }),
       });
     },
-    [updateToNYNight, openConfirm, t],
+    [updateToNYNight, openConfirm, t]
   );
 
   const columns = useMemo(
@@ -85,13 +85,9 @@ const ToNYNightTable = ({ toNYNight, isLoading }: ToNYNightTableProps) => {
           />
         ),
       }),
-      columnHelper.accessor((row) => convertDate(row.jfk_oneway?.jfk_shuttle_date2 ?? row.jfk_oneway?.pickup_date_to_nj).split(' ')[0] ?? '', { header: t('pickup date') }),
-      columnHelper.accessor((row) => row.jfk_oneway?.jfk_shuttle_stop2 ?? row.jfk_oneway?.jfk_stop_nj ?? '', { header: t('boarding area') }),
-      columnHelper.accessor((row) => row.jfk_oneway?.flight_num ?? row.jfk_shuttle_rt?.flight_num2 ?? '', { header: t('flight number') }),
     ],
-    [convertDate, handleDoubleCheck, handleDrawer, router.query, t],
+    [convertDate, handleDoubleCheck, handleDrawer, router.query, t]
   );
-  console.log(toNYNight);
 
   const table = useReactTable({ data: toNYNight, columns, getCoreRowModel: getCoreRowModel() });
 

@@ -35,7 +35,7 @@ const ToJFkNightTable = ({ toJFKNight, isLoading }: ToJFkNightTableProps) => {
       if (!toJFKNight) return;
       openModal(ToJFKNightDrawer, { toJFKNight, setMutate: updateToJFKNight });
     },
-    [openModal, updateToJFKNight],
+    [openModal, updateToJFKNight]
   );
 
   const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>(
@@ -46,7 +46,7 @@ const ToJFkNightTable = ({ toJFKNight, isLoading }: ToJFkNightTableProps) => {
         onConfirm: () => updateToJFKNight({ id, double_check: true, after, before }),
       });
     },
-    [updateToJFKNight, openConfirm, t],
+    [updateToJFKNight, openConfirm, t]
   );
 
   const columns = useMemo(
@@ -85,11 +85,8 @@ const ToJFkNightTable = ({ toJFKNight, isLoading }: ToJFkNightTableProps) => {
           />
         ),
       }),
-      columnHelper.accessor((row) => convertDate(row.jfk_shuttle_rt?.pickup_date_night ?? row.jfk_oneway?.jfk_shuttle_date2).split(' ')[0] ?? '', { header: t('pickup date') }),
-      columnHelper.accessor((row) => row.jfk_shuttle_rt?.night_drop ?? row.jfk_oneway?.jfk_shuttle_stop2 ?? '', { header: t('boarding area') }),
-      columnHelper.accessor((row) => row.jfk_shuttle_rt?.flight_num2 ?? '', { header: t('flight number') }),
     ],
-    [convertDate, handleDoubleCheck, handleDrawer, router.query, t],
+    [convertDate, handleDoubleCheck, handleDrawer, router.query, t]
   );
 
   const table = useReactTable({ data: toJFKNight, columns, getCoreRowModel: getCoreRowModel() });

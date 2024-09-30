@@ -3,9 +3,9 @@ import { RequiredKeysOf } from 'type-fest';
 import axios from 'axios';
 
 import { Order } from '../../types';
+import { OrderType } from '@/types';
 import { setValue } from '@/pages/api';
 import { checkExistingDataInRange, filterTicket, sortTicket } from '../ticket-utils';
-import { OrderType } from '@/types';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -38,7 +38,8 @@ const getSummitByPage = async (req: NextApiRequest, res: NextApiResponse) => {
       data.map((v: OrderType) => v.id = parseInt(v.order.id, 10));
       await setValue(key, data);
 
-      tickets = await sortTicket(data, sort as RequiredKeysOf<any>, order as Order, search as string);
+      tickets = await filterTicket(data, after, before);
+      tickets = await sortTicket(tickets, sort as RequiredKeysOf<any>, order as Order, search as string);
 
       const slicedTickets = tickets.slice(Number(offset), Number(offset) + Number(limit));
 

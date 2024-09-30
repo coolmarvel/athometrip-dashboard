@@ -1,5 +1,6 @@
-import { Order } from '@/apis';
 import { RequiredKeysOf } from 'type-fest';
+
+import { Order } from '@/apis';
 import { getKeys, getValue } from '../redis';
 
 export const checkExistingDataInRange = async (name: string, after: string, before: string) => {
@@ -30,7 +31,7 @@ export const sortMusical = (musicals: any, sort: RequiredKeysOf<any>, order: Ord
           (musical: any) =>
             musical.order.id.includes(search.toLowerCase()) ||
             musical.billing.email.toLowerCase().includes(search.toLowerCase()) ||
-            musical.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase())
+            musical.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase()),
         );
       }
 
@@ -58,13 +59,7 @@ export const sortMusical = (musicals: any, sort: RequiredKeysOf<any>, order: Ord
 };
 
 export const filterMusical = (musicals: any, after: string, before: string) => {
-  //   const start = new Date(after);
-  //   const end = new Date(before);
-
   return musicals.filter((musical: any) => {
-    // const musicalDate = new Date(musical.order.date_created_gmt);
-
-    // return musicalDate >= start && musicalDate <= end;
     return musical.order.date_created_gmt >= after && musical.order.date_created_gmt <= before;
   });
 };

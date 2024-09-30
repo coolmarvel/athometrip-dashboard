@@ -34,6 +34,6 @@ export const useUpdateTopOfTheRock = (params?: object) => {
           return item;
         }),
       };
-    }
+    },
   );
 };

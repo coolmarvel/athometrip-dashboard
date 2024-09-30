@@ -30,7 +30,7 @@ export const sortSnap = (snaps: any, sort: RequiredKeysOf<any>, order: Order, se
           (snap: any) =>
             snap.order.id.includes(search.toLowerCase()) ||
             snap.billing.email.toLowerCase().includes(search.toLowerCase()) ||
-            snap.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase()),
+            snap.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase())
         );
       }
 
@@ -58,12 +58,7 @@ export const sortSnap = (snaps: any, sort: RequiredKeysOf<any>, order: Order, se
 };
 
 export const filterSnap = (snaps: any, after: string, before: string) => {
-  const start = new Date(after);
-  const end = new Date(before);
-
   return snaps.filter((snap: any) => {
-    const snapDate = new Date(snap.order.date_created);
-
-    return snapDate >= start && snapDate <= end;
+    return snap.order.date_created_gmt >= after && snap.order.date_created_gmt <= before;
   });
 };

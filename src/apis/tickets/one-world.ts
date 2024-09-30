@@ -34,6 +34,6 @@ export const useUpdateOneWorld = (params?: object) => {
           return item;
         }),
       };
-    }
+    },
   );
 };

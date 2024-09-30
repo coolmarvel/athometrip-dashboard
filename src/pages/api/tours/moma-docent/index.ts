@@ -38,8 +38,8 @@ const getMomaDocentByPage = async (req: NextApiRequest, res: NextApiResponse) =>
       data.map((v: OrderType) => (v.id = parseInt(v.order.id, 10)));
       await setValue(key, data);
 
-      tours = await sortTour(data, sort as RequiredKeysOf<any>, order as Order, search as string);
-
+      tours = await filterTour(data, after, before);
+      tours = await sortTour(tours, sort as RequiredKeysOf<any>, order as Order, search as string);
       const slicedTours = tours.slice(Number(offset), Number(offset) + Number(limit));
 
       return res.status(200).send({ data: { total: tours.length, data: slicedTours } });

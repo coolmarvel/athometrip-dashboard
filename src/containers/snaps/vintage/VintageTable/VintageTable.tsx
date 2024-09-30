@@ -1,72 +1,97 @@
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CheckCircleIcon } from '@chakra-ui/icons';
+import { Checkbox, Icon, Tag } from '@chakra-ui/react';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
-import { DataTable } from '@/components';
+import { toUrl } from '@/utils';
+import { OrderType } from '@/types';
 import { useModalStore } from '@/stores';
-import { useConvertDate } from '@/hooks';
-import { VintageModal } from '@/containers';
+import { useUpdateVintage } from '@/apis';
+import { VintageDrawer } from '@/containers';
+import { ApiRoutes, statusColor } from '@/constants';
+import { DataTable, DataTableActions } from '@/components';
+import { useConvertDate, useQueryKeyParams, useSafePush } from '@/hooks';
 
 const columnHelper = createColumnHelper<any>();
 
 interface VintageTableProps {
-  vintage: any;
+  vintage: OrderType[];
   isLoading?: boolean;
 }
 
 const VintageTable = ({ vintage, isLoading }: VintageTableProps) => {
-  const { t } = useTranslation();
   const convertDate = useConvertDate();
+  const { router } = useSafePush();
+  const { t } = useTranslation();
 
-  const { openModal } = useModalStore(['openModal']);
+  const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.Vintage));
+  const { mutate: updateVintage } = useUpdateVintage(queryKeyParams);
 
-  const handleModal = useCallback<(vintage: any) => void>(
+  const { openModal, openConfirm } = useModalStore(['openModal', 'openConfirm']);
+
+  const handleDrawer = useCallback<(vintage: OrderType) => void>(
     (vintage) => {
       if (!vintage) return;
-      openModal(VintageModal, { vintage });
+      openModal(VintageDrawer, { vintage, setMutate: updateVintage });
     },
-    [openModal],
+    [openModal, updateVintage]
+  );
+
+  const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>(
+    (id, after, before) => {
+      openConfirm({
+        title: t('Double Check'),
+        content: t('Are you sure you want to double check this order?'),
+        onConfirm: () => updateVintage({ id, double_check: true, after, before }),
+      });
+    },
+    [updateVintage, openConfirm, t]
   );
 
   const columns = useMemo(
     () => [
-      columnHelper.accessor('order.id', { header: t('id'), meta: { sortable: true } }),
+      columnHelper.accessor('select', {
+        id: 'selection',
+        header: ({ table }) => <Checkbox isChecked={table.getIsAllRowsSelected()} onChange={table.getToggleAllRowsSelectedHandler()} aria-label="Select all rows" />,
+        cell: ({ row }) => <Checkbox isChecked={row.getIsSelected()} onChange={row.getToggleSelectedHandler()} aria-label={`Select row ${row.id}`} />,
+      }),
+      columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
+      columnHelper.accessor('status', {
+        header: t('status'),
+        cell: (context) => <Tag colorScheme={statusColor[context.row.original.order.status] || 'gray'}>{t(context.row.original.order.status)}</Tag>,
+      }),
       columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.billing.phone, { header: t('phone') }),
+      columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
       columnHelper.accessor('order.date_created_gmt', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
-      columnHelper.accessor((row) => row.snap_info.mobile_snap ?? '', { header: t('kakao talk') }),
-      columnHelper.accessor((row) => {
-        const date = convertDate(row.line_items[0]?.meta_data?.['날짜']).split(' ')[0] ?? '';
-        const time = row.line_items[0]?.meta_data?.['촬영 시작 희망시간 (1순위)'];
-
-        return `${date} ${time}`;
-      }, { header: t('schedule(1)') }),
-      columnHelper.accessor((row) => {
-        const date = convertDate(row.line_items[0]?.meta_data?.['날짜']).split(' ')[0] ?? '';
-        const time = row.line_items[0]?.meta_data?.['촬영 시작 희망시간 (2순위)'];
-
-        return `${date} ${time}`;
-      }, { header: t('schedule(2)') }),
-      columnHelper.accessor((row) => row.line_items[0]?.meta_data[Object.keys(row.line_items[0]?.meta_data).find((key) => key.includes('인원')) as string] ?? '', {
-        header: t('personnel'), meta: { sortable: true },
+      columnHelper.accessor('checked', {
+        header: t('checked'),
+        cell: (context) => (context.row.original.order.double_checked ? <Icon as={CheckCircleIcon} color={'green.300'} boxSize={'5'} /> : ''),
       }),
-      columnHelper.accessor((row) => row.line_items?.[0]?.meta_data?.['홍보 목적 사용 동의'] ?? '', { header: t('marketing opt-in') }),
-      columnHelper.accessor((row) => row.line_items[0]?.meta_data[Object.keys(row.line_items[0]?.meta_data).find((key) => key.includes('필름추가')) as string] ?? '', {
-        header: t('addition film'), meta: { sortable: true },
+      columnHelper.display({
+        id: 'actions',
+        header: t('actions'),
+        cell: (context) => (
+          <DataTableActions
+            checked={context.row.original.order.double_checked}
+            onView={(e) => {
+              e.stopPropagation();
+              handleDrawer(context.row.original);
+            }}
+            onUpdate={(e) => {
+              e.stopPropagation();
+              handleDoubleCheck(context.row.original.order.id, router.query['after'] as string, router.query['before'] as string);
+            }}
+          />
+        ),
       }),
-      columnHelper.accessor((row) => {
-        const a = Number(row.line_items?.[0]?.meta_data?._full_amount ?? '0');
-        const b = Number(row.line_items[0]?.subtotal);
-
-        return a - b < 0 ? 0 : a - b;
-      }, { header: t('on-site payment') }),
     ],
-    [convertDate, t],
+    [convertDate, handleDoubleCheck, handleDrawer, router.query, t]
   );
 
   const table = useReactTable({ data: vintage, columns, getCoreRowModel: getCoreRowModel() });
 
-  return <DataTable<any> table={table} isLoading={isLoading} onRowClick={(row) => handleModal(row.original)} />;
+  return <DataTable<any> table={table} isLoading={isLoading} />;
 };
 
 export default VintageTable;

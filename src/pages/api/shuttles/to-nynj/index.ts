@@ -39,7 +39,7 @@ const getToNYNJsByPage = async (req: NextApiRequest, res: NextApiResponse) => {
       await setValue(key, data);
 
       shuttles = await filterShuttle(data, after, before, true);
-      shuttles = await sortShuttle(data, sort as RequiredKeysOf<any>, order as Order, search as string);
+      shuttles = await sortShuttle(shuttles, sort as RequiredKeysOf<any>, order as Order, search as string);
       const slicedshuttles = shuttles.slice(Number(offset), Number(offset) + Number(limit));
 
       return res.status(200).send({ data: { total: shuttles.length, data: slicedshuttles } });

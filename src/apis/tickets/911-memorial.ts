@@ -34,6 +34,6 @@ export const useUpdate911Memorial = (params?: object) => {
           return item;
         }),
       };
-    }
+    },
   );
 };

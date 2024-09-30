@@ -87,7 +87,6 @@ const LycaTable = ({ lyca, isLoading }: LycaTableProps) => {
       })],
     [convertDate, handleDoubleCheck, handleDrawer, router.query, t],
   );
-  console.log(lyca);
 
   const table = useReactTable({ data: lyca, columns, getCoreRowModel: getCoreRowModel() });
 

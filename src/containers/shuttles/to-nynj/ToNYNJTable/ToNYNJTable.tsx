@@ -35,7 +35,7 @@ const ToNYNJTable = ({ toNYNJ, isLoading }: ToNYNJTableProps) => {
       if (!toNYNJ) return;
       openModal(ToNYNJDrawer, { toNYNJ, setMutate: updateToNYNJ });
     },
-    [openModal, updateToNYNJ],
+    [openModal, updateToNYNJ]
   );
 
   const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>(
@@ -46,7 +46,7 @@ const ToNYNJTable = ({ toNYNJ, isLoading }: ToNYNJTableProps) => {
         onConfirm: () => updateToNYNJ({ id, double_check: true, after, before }),
       });
     },
-    [updateToNYNJ, openConfirm, t],
+    [updateToNYNJ, openConfirm, t]
   );
 
   const columns = useMemo(
@@ -86,7 +86,7 @@ const ToNYNJTable = ({ toNYNJ, isLoading }: ToNYNJTableProps) => {
         ),
       }),
     ],
-    [convertDate, handleDoubleCheck, handleDrawer, router.query, t],
+    [convertDate, handleDoubleCheck, handleDrawer, router.query, t]
   );
 
   const table = useReactTable({ data: toNYNJ, columns, getCoreRowModel: getCoreRowModel() });

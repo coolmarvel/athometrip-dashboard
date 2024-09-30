@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import { Order } from '@/apis';
 import { setValue } from '../redis';
+import { OrderType } from '@/types';
 import { checkExistingDataInRange, filterMusical, sortMusical } from './musical-utils';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -18,9 +19,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '484,486,487,489,4387,30005,56960,98460,98932,99152,128657';
 const musicalName = 'musicals';
-const url = process.env.NEXT_PUBLIC_APIS_URL;
+const url = process.env.NEXT_PUBLIC_APIS_URL as string;
+const productId = process.env.NEXT_PUBLIC_MUSICALS as string;
 
 const getMusicalsByPage = async (req: NextApiRequest, res: NextApiResponse) => {
   const { page, limit, sort, order, after, before, search } = req.query as { [key: string]: string };
@@ -34,10 +35,11 @@ const getMusicalsByPage = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (musicals.length === 0) {
       const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
+      data.map((v: OrderType) => (v.id = parseInt(v.order.id, 10)));
       await setValue(key, data);
 
-      musicals = await filterMusical(musicals, after, before);
-      musicals = await sortMusical(data, sort as RequiredKeysOf<any>, order as Order, search as string);
+      musicals = await filterMusical(data, after, before);
+      musicals = await sortMusical(musicals, sort as RequiredKeysOf<any>, order as Order, search as string);
       const slicedMusicals = musicals.slice(Number(offset), Number(offset) + Number(limit));
 
       return res.status(200).send({ data: { total: musicals.length, data: slicedMusicals } });

@@ -33,6 +33,6 @@ export const useUpdateWashingtonDC = (params?: object) => {
           return item;
         }),
       };
-    }
+    },
   );
 };

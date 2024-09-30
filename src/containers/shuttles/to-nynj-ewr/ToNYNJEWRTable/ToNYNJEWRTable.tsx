@@ -35,7 +35,7 @@ const ToNYNJEWRTable = ({ toNYNJEWR, isLoading }: ToNYNJEWRTableProps) => {
       if (!toNYNJEWR) return;
       openModal(ToNYNJEWRDrawer, { toNYNJEWR, setMutate: updateToNYNJEWR });
     },
-    [openModal, updateToNYNJEWR],
+    [openModal, updateToNYNJEWR]
   );
 
   const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>(
@@ -46,7 +46,7 @@ const ToNYNJEWRTable = ({ toNYNJEWR, isLoading }: ToNYNJEWRTableProps) => {
         onConfirm: () => updateToNYNJEWR({ id, double_check: true, after, before }),
       });
     },
-    [updateToNYNJEWR, openConfirm, t],
+    [updateToNYNJEWR, openConfirm, t]
   );
 
   const columns = useMemo(
@@ -86,9 +86,8 @@ const ToNYNJEWRTable = ({ toNYNJEWR, isLoading }: ToNYNJEWRTableProps) => {
         ),
       }),
     ],
-    [convertDate, handleDoubleCheck, handleDrawer, router.query, t],
+    [convertDate, handleDoubleCheck, handleDrawer, router.query, t]
   );
-  console.log(toNYNJEWR);
 
   const table = useReactTable({ data: toNYNJEWR, columns, getCoreRowModel: getCoreRowModel() });
 

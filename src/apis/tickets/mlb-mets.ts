@@ -34,6 +34,6 @@ export const useUpdateMLBMets = (params?: object) => {
           return item;
         }),
       };
-    }
+    },
   );
 };

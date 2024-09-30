@@ -10,9 +10,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-const productId = '406389,406413,406451,406786,406789,406791,406797,406803,408367';
 const snapName = 'snap-modern';
-const url = process.env.NEXT_PUBLIC_API_URL;
+const url = process.env.NEXT_PUBLIC_API_URL as string;
+const productId = process.env.NEXT_PUBLIC_MODERN as string;
 
 const getModern = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

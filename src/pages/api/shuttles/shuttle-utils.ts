@@ -9,7 +9,6 @@ export const checkExistingDataInRange = async (name: string, after: string, befo
   for (const key of keys) {
     const [_, savedAfter, savedBefore] = key.split('_');
     if (new Date(savedAfter) <= new Date(after) && new Date(savedBefore) >= new Date(before)) return (await getValue(key)) as OrderType[];
-
   }
 
   return null;
@@ -33,7 +32,7 @@ export const sortShuttle = (shuttles: any, sort: RequiredKeysOf<any>, order: Ord
           (shuttle: any) =>
             shuttle.order.id.includes(search.toLowerCase()) ||
             shuttle.billing.email.toLowerCase().includes(search.toLowerCase()) ||
-            shuttle.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase()),
+            shuttle.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase())
         );
       }
 
@@ -65,10 +64,10 @@ export const filterShuttle = (shuttles: any, after: string, before: string, day?
     const dateCondition = shuttle.order.date_created_gmt >= after && shuttle.order.date_created_gmt <= before;
 
     let scheduleCondition = true;
-    const shuttleTime = shuttle.order.meta_data?.jfk_shuttle_time ?? shuttle.order.meta_data?.jfk_shuttle_time2;
+    const shuttleTime = shuttle.order.meta_data?.jfk_shuttle_time ?? shuttle.order.meta_data?.jfk_shuttle_time2 ?? shuttle.line_items[0].name;
 
-    if (day === true) scheduleCondition = shuttleTime === '낮 스케줄' || shuttleTime === undefined;
-    else if (day === false) scheduleCondition = shuttleTime === '밤 스케줄';
+    if (day === true) scheduleCondition = shuttleTime.includes('낮 스케줄') || shuttleTime === undefined;
+    else if (day === false) scheduleCondition = shuttleTime.includes('밤 스케줄');
 
     return dateCondition && scheduleCondition;
   });

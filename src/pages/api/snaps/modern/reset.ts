@@ -9,10 +9,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
+const snapName = 'snap-modern';
+
 const resetModern = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    return res.status(200).send({ data: [], message: 'Successfully reset snap-modern posts' });
+    return res.status(200).send({ data: [], message: `Successfully reset ${snapName} posts` });
   } catch {
-    return res.status(500).send({ data: null, message: 'Failed to reset snap-modern posts' });
+    return res.status(500).send({ data: null, message: `Failed to reset ${snapName} posts` });
   }
 };

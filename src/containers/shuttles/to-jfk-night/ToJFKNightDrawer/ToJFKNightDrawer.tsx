@@ -44,15 +44,19 @@ const ToJFKNightDrawer = ({ toJFKNight, setMutate, onClose }: ToJFKNightDrawerPr
         value: toJFKNight.order.memo ?? '',
       },
     ],
-    [isEdit, handleMemoEdit, toJFKNight, convertDate, t],
+    [isEdit, handleMemoEdit, toJFKNight, convertDate, t]
   );
 
-  const columns = useMemo(() =>
-    [{
-      name: toJFKNight.line_items[0]?.name ?? '',
-      quantity: toJFKNight.line_items[0]?.quantity ?? '',
-      total: toJFKNight.line_items[0]?.total ?? '',
-    }], [toJFKNight]);
+  const columns = useMemo(
+    () => [
+      {
+        name: toJFKNight.line_items[0]?.name ?? '',
+        quantity: toJFKNight.line_items[0]?.quantity ?? '',
+        total: toJFKNight.line_items[0]?.total ?? '',
+      },
+    ],
+    [toJFKNight]
+  );
   return <DataDrawer columns={columns} attributes={attributes} data={toJFKNight} setMutate={setMutate} setIsEdit={setIsEdit} onClose={onClose} />;
 };
 

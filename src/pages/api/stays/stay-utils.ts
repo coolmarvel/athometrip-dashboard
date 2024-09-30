@@ -1,5 +1,6 @@
-import { Order } from '@/apis';
 import { RequiredKeysOf } from 'type-fest';
+
+import { Order } from '@/apis';
 import { getKeys, getValue } from '../redis';
 
 export const checkExistingDataInRange = async (name: string, after: string, before: string) => {
@@ -58,14 +59,7 @@ export const sortStay = (stays: any, sort: RequiredKeysOf<any>, order: Order, se
 };
 
 export const filterStay = (stays: any, after: string, before: string) => {
-  const start = new Date(after);
-  const end = new Date(before);
-
   return stays.filter((stay: any) => {
-    const stayDate = new Date(stay.order.date_created_gmt);
-
-    // return stayDate >= start && stayDate <= end;
     return stay.order.date_created_gmt >= after && stay.order.date_created_gmt <= before;
   });
-
 };

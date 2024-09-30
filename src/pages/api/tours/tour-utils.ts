@@ -1,5 +1,6 @@
-import { Order } from '@/apis';
 import { RequiredKeysOf } from 'type-fest';
+
+import { Order } from '@/apis';
 import { getKeys, getValue } from '../redis';
 
 export const getTourById = async (tourName: string, tourId: string): Promise<any> => {

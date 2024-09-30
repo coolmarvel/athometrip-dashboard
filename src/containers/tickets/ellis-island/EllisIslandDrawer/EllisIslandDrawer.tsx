@@ -21,8 +21,6 @@ const EllisIslandDrawer = ({ ellisIsland, setMutate, onClose }: EllisIslandDrawe
     setIsEdit(!isEdit);
   }, [isEdit, setIsEdit]);
 
-  console.log(handleStringKeyValue(ellisIsland.line_items[0].meta_data)['smartpass_codes']);
-
   const attributes = useMemo(
     () => [
       { label: t('Name'), value: ellisIsland.billing?.first_name ?? 'Name' },

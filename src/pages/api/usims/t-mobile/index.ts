@@ -39,7 +39,7 @@ const getTMobileByPage = async (req: NextApiRequest, res: NextApiResponse) => {
       await setValue(key, data);
 
       usims = await filterUsim(data, after, before, region, mode);
-      usims = await sortUsim(data, sort as RequiredKeysOf<any>, order as Order, search);
+      usims = await sortUsim(usims, sort as RequiredKeysOf<any>, order as Order, search);
       const slicedUsims = usims.slice(Number(offset), Number(offset) + Number(limit));
 
       return res.status(200).send({ data: { total: usims.length, data: slicedUsims } });
