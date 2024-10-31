@@ -3,10 +3,10 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { useConvertDate } from '@/hooks';
 import { DataDrawer } from '@/components';
-import { handleStringKeyValue, OrderType } from '@/types';
+import { extractText } from '@/utils';
 
 interface LycaDrawerProps {
-  lyca: OrderType;
+  lyca: any;
   setMutate: (data?: any) => void;
   onClose: () => void;
 }
@@ -21,48 +21,41 @@ const LycaDrawer = ({ lyca, setMutate, onClose }: LycaDrawerProps) => {
     setIsEdit(!isEdit);
   }, [isEdit, setIsEdit]);
 
-  const attributes = useMemo(
-    () => [
-      { label: t('Name'), value: lyca.billing?.first_name ?? 'Name' },
-      { label: t('Email'), value: lyca.billing?.email ?? 'Email' },
-      { label: t('Phone'), value: lyca.billing?.phone ?? 'Phone' },
-      { label: t('Payment Via'), value: `${lyca.payment?.payment_method_title ?? 'Payment method'} (${lyca.payment?.transaction_id ?? 'Transaction ID'})` },
-      { label: t('Type'), value: handleStringKeyValue(lyca.line_items?.[0]?.meta_data)['성인-어린이'] ?? 'Type' },
-      {
-        label: t('period'),
-        value: (() => {
-          let period;
-          if (handleStringKeyValue(lyca.line_items[0]?.meta_data)['이용-기간-선택']) period = handleStringKeyValue(lyca.line_items[0].meta_data)['이용-기간-선택'];
-          else if (handleStringKeyValue(lyca.line_items[0]?.meta_data)['플랜-선택']) period = handleStringKeyValue(lyca.line_items[0].meta_data)['플랜-선택'];
-          else if (lyca.line_items[0]?.meta_data && handleStringKeyValue(lyca.line_items[0].meta_data)['상품-옵션']) {
-            const optionValue = handleStringKeyValue(lyca.line_items[0].meta_data)['상품-옵션'];
-            const match = optionValue.match(/\d+/);
-            if (match) period = `${match[0]}일`;
-          }
+  const targetLineItem = useMemo(() => lyca.line_items.find((item: any) => item.order_item_name.includes('라이카') || item.order_item_name.includes('lyca')), [lyca]);
 
-          return period as string;
+  const attributes = useMemo(() => {
+    if (!targetLineItem) return [];
+
+    return [
+      { label: t('Name'), value: lyca.meta_data._billing_first_name.toUpperCase() ?? 'Name' },
+      { label: t('Email'), value: lyca.meta_data._billing_email.toLowerCase() ?? 'Email' },
+      { label: t('Phone'), value: lyca.meta_data._billing_phone ?? 'Phone' },
+      { label: t('Payment Via'), value: `${lyca.meta_data._payment_method_title ?? 'Payment method'} (${lyca.meta_data._transaction_id ?? 'Transaction ID'})` },
+      {
+        label: t('Period'),
+        value: (() => {
+          const period = targetLineItem.order_item_name;
+          const match = period.match(/\d+/);
+
+          if (match) return `${match[0]}일`;
+          else return '';
         })(),
       },
-      { label: t('model'), value: lyca.usim_info?.esim_device ?? '' },
-      { label: t('activate'), value: (() => convertDate(lyca.usim_info?.att_tmobile_date ?? '').split(' ')[0])() },
       {
         label: t('Memo'),
         isMemo: true,
         isEdit: isEdit,
-        id: lyca.order.id,
+        id: targetLineItem.order_item_id,
+        value: targetLineItem.memo ?? '',
         onEdit: () => handleMemoEdit(),
-        value: lyca.order.memo ?? '',
       },
-    ],
-    [isEdit, handleMemoEdit, lyca, t, convertDate],
-  );
+    ];
+  }, [isEdit, handleMemoEdit, lyca, convertDate, t, targetLineItem]);
 
-  const columns = useMemo(() =>
-    [{
-      name: lyca.line_items[0]?.name ?? '',
-      quantity: lyca.line_items[0]?.quantity ?? '',
-      total: lyca.line_items[0]?.total ?? '',
-    }], [lyca]);
+  const columns = useMemo(() => {
+    if (!targetLineItem) return [];
+    return [{ name: extractText(targetLineItem.order_item_name), quantity: lyca.quantity, total: targetLineItem.meta_data._line_total }];
+  }, [targetLineItem]);
 
   return <DataDrawer columns={columns} attributes={attributes} data={lyca} setMutate={setMutate} setIsEdit={setIsEdit} onClose={onClose} />;
 };

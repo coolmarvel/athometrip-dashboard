@@ -4,7 +4,7 @@ import { Box, useColorMode } from '@chakra-ui/react';
 import { Sidebar as SideBar, Menu, menuClasses, MenuItemStyles } from 'react-pro-sidebar';
 
 import { SidebarHeader } from './SidebarHeader';
-import { SidebarFooter } from './SidebarFooter';
+// import { SidebarFooter } from './SidebarFooter';
 import { Typography } from './components/Typography';
 import { Navbar, CollapseToggle } from '@/components/layouts/common/Sidebar';
 import { musicalsNav, Nav, postsNav, shuttlesNav, snapsNav, staysNav, systemsNav, ticketsNav, toursNav, toursSuburbsNav, usersNav, usimsNav } from '@/constants';
@@ -50,7 +50,7 @@ const Sidebar: React.FC = () => {
   const [toggled, setToggled] = React.useState(false);
   const [hasImage, setHasImage] = React.useState(false);
   const [theme, setTheme] = React.useState<Theme>(localStorage.getItem('chakra-ui-color-mode') as Theme);
-  const [collapsed, setCollapsed] = React.useState(!!localStorage.getItem('collapsed') ?? false);
+  const [collapsed, setCollapsed] = React.useState(!!localStorage.getItem('collapsed'));
 
   const generalNavs: Nav[] = [ticketsNav, usimsNav, toursNav, toursSuburbsNav, shuttlesNav, snapsNav, staysNav, musicalsNav];
   const extraNavs: Nav[] = [systemsNav];

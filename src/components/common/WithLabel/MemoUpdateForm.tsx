@@ -11,7 +11,7 @@ type MutateProp = {
   after: string;
   before: string;
   memo: any;
-}
+};
 
 interface MemoUpdateFormProps {
   id: any;
@@ -57,12 +57,12 @@ export const MemoUpdateForm = ({ id, memo, after, before, setIsOpen, setIsEdit, 
                         setIsEdit(false);
                         setIsOpen(false);
                       },
-                    },
+                    }
                   ),
               });
             },
-            [openConfirm, t, setMutate, id, after, before, setIsOpen, setIsEdit],
-          ),
+            [openConfirm, t, setMutate, id, after, before, setIsOpen, setIsEdit]
+          )
         )}
       >
         <FormField fieldType={'document'} name={'memo'} control={control} />

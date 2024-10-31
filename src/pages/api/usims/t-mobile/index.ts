@@ -3,7 +3,6 @@ import { RequiredKeysOf } from 'type-fest';
 import axios from 'axios';
 
 import { Order } from '@/apis';
-import { OrderType } from '@/types';
 import { setValue } from '@/pages/api';
 import { checkExistingDataInRange, filterUsim, sortUsim } from '../usim-utils';
 
@@ -31,11 +30,10 @@ const getTMobileByPage = async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     const existingData = await checkExistingDataInRange(usimName, after, before);
-    let usims: any = existingData ? existingData : [];
+    let usims: any[] = existingData ? existingData : [];
 
     if (usims.length === 0) {
       const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
-      data.map((v: OrderType) => (v.id = parseInt(v.order.id, 10)));
       await setValue(key, data);
 
       usims = await filterUsim(data, after, before, region, mode);

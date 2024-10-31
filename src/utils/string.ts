@@ -20,3 +20,9 @@ export const getRandomPhoneNumber = () => {
 
   return phoneNumber;
 };
+
+export const extractText = (htmlText: string): string => {
+  const textInsideTags = htmlText.match(/<a [^>]*>(.*?)<\/a>/);
+
+  return textInsideTags && textInsideTags.length > 1 ? textInsideTags[1].replace(/<img[^>]*>/g, '').trim() : htmlText.replace(/<\/?[^>]+(>|$)/g, '').trim();
+};

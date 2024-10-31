@@ -8,32 +8,33 @@ export const checkExistingDataInRange = async (name: string, after: string, befo
   const keys = await getKeys(`${name}_*`);
   for (const key of keys) {
     const [_, savedAfter, savedBefore] = key.split('_');
-    if (new Date(savedAfter) <= new Date(after) && new Date(savedBefore) >= new Date(before)) return await getValue(key);
+    if (new Date(savedAfter) <= new Date(after) && new Date(savedBefore) >= new Date(before)) return (await getValue(key)) as any[];
   }
 
   return null;
 };
 
 const sortMap: any = {
-  id: 'order.id',
-  order_id: 'order.id',
-  email: 'billing.email',
-  billing_email: 'billing.email',
-  name: 'billing.first_name',
-  billing_name: 'billing.first_name',
-  order_date_created_gmt: 'order.date_created_gmt',
+  id: 'id',
+  order_id: 'id',
+  email: 'meta_data._billing_email',
+  order_date_created: 'date_created',
+  name: 'meta_data._billing_first_name',
+  billing_email: 'meta_data._billing_email',
+  billing_name: 'meta_data._billing_first_name',
 };
 
 export const sortUsim = (usims: any, sort: RequiredKeysOf<any>, order: Order, search: string): Promise<any> => {
   return new Promise(async (resolve, reject) => {
     try {
       if (search.length > 0) {
-        usims = usims.filter(
-          (usim: any) =>
-            usim.order.id.includes(search.toLowerCase()) ||
-            usim.billing.email.toLowerCase().includes(search.toLowerCase()) ||
-            usim.billing.first_name.toLowerCase().includes(search.toLocaleLowerCase()),
-        );
+        usims = usims.filter((usim: any) => {
+          const usimId = usim.id.toString();
+          const email = usim.meta_data._billing_email.toLowerCase();
+          const name = usim.meta_data._billing_first_name.toLowerCase();
+
+          return usimId.includes(search.toLowerCase()) || email.includes(search.toLowerCase()) || name.includes(search.toLowerCase());
+        });
       }
 
       if (sort && order) {
@@ -59,41 +60,40 @@ export const sortUsim = (usims: any, sort: RequiredKeysOf<any>, order: Order, se
   });
 };
 
-export const filterUsim = (usims: any[], after: string, before: string, region?: string, mode?: string) => {
+export const filterUsim = async (usims: any[], after: string, before: string, region?: string, mode?: string) => {
+  const afterDate = new Date(`${after}T00:00:00`);
+  const beforeDate = new Date(`${before}T23:59:59`);
+
   if (region && mode) {
     return usims.filter((usim: any) => {
-      // 날짜 조건: order의 날짜가 after와 before 사이에 있어야 함
-      const dateCondition = usim.order.date_created_gmt >= after && usim.order.date_created_gmt <= before;
+      const usimDate = new Date(usim.date_created);
+      const dateCondition = usimDate >= afterDate && usimDate <= beforeDate;
 
       // 지역 조건: meta_data에서 사용 지역을 찾거나, product_id로 확인
       const regionCondition = (region: string, usim: any) => {
-        const metaData = usim.line_items[0].meta_data;
         const productIdsForMexicoCanada = ['197555', '403418', '434516']; // 비교할 product_id 리스트
 
-        if (region === 'usa') return handleStringKeyValue(metaData)['사용 지역 선택'] === '미국 내 사용';
+        return usim.line_items.some((lineItem: any) => {
+          const metaData = lineItem.meta_data;
+          const proudctId = lineItem._product_id;
 
-        if (region === 'mexico/canada') {
-          // '사용 지역 선택'이 없을 경우 product_id로 확인
-          const regionValue = handleStringKeyValue(metaData)['사용 지역 선택'];
-          if (regionValue) return regionValue === '미국 및 캐나다/멕시코';
-          else {
-            // '사용 지역 선택' 키가 없으면 product_id 확인
-            const productId = usim.line_items[0].product_id;
-            return productIdsForMexicoCanada.includes(productId);
+          if (region === 'usa') return handleStringKeyValue(metaData)['사용 지역 선택'] === '미국 내 사용';
+
+          if (region === 'mexico/canada') {
+            const regionValue = handleStringKeyValue(metaData)['사용 지역 선택'] || handleStringKeyValue(metaData)['사용 지역 선택 ($3)'];
+            if (regionValue) return regionValue === '미국 및 캐나다/멕시코';
+            else return productIdsForMexicoCanada.includes(proudctId);
           }
-        }
-
-        return false;
+        });
       };
 
       // 모드 조건: usim_info의 데이터에 따라 'usim' 또는 'esim'을 구분하여 필터링
       const modeCondition = (mode: string, usim: any) => {
-        const usimInfo = usim.usim_info;
-        if (!usimInfo) return false;
+        const metaData = usim.meta_data;
 
-        if (mode === 'esim') return usimInfo.esim_eid && usimInfo.esim_imei;
-
-        if (mode === 'usim') return !usimInfo.esim_eid && !usimInfo.esim_imei;
+        if (!metaData) return false;
+        if (mode === 'esim') return metaData.esim_eid && metaData.esim_imei;
+        if (mode === 'usim') return !metaData.esim_eid && !metaData.esim_imei;
 
         return false;
       };
@@ -103,7 +103,9 @@ export const filterUsim = (usims: any[], after: string, before: string, region?:
     });
   } else {
     return usims.filter((usim: any) => {
-      return usim.order.date_created_gmt >= after && usim.order.date_created_gmt <= before;
+      const usimDate = new Date(usim.date_created);
+
+      return usimDate >= afterDate && usimDate <= beforeDate;
     });
   }
 };

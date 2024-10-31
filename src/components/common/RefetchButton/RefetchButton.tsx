@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { RepeatIcon } from '@chakra-ui/icons';
 import { useSafePush } from '@/hooks';
 import { useCallback } from 'react';
-import { subWeeks } from 'date-fns';
 
 interface RefetchButtonProps {
   isLoading: boolean;
@@ -11,12 +10,29 @@ interface RefetchButtonProps {
 }
 
 const RefetchButton = ({ isLoading, setMutate }: RefetchButtonProps) => {
-  const { router, push } = useSafePush();
+  const { router } = useSafePush();
   const { t } = useTranslation();
 
-  const after = router.query?.after as string ?? subWeeks(new Date(), 1).toISOString().split('T')[0];
-  const before = router.query?.before as string ?? new Date().toISOString().split('T')[0];
-
+  const after =
+    (router.query?.after as string) ??
+    new Date(new Date().setDate(new Date().getDate() - 1))
+      .toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .replace(/. /g, '-')
+      .replace('.', '');
+  const before =
+    (router.query?.before as string) ??
+    new Date()
+      .toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .replace(/. /g, '-')
+      .replace('.', '');
   const handleRefetch = useCallback(() => {
     // @ts-ignore
     setMutate({ after, before });

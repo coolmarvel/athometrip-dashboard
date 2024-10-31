@@ -5,7 +5,6 @@ import { Checkbox, Icon, Tag } from '@chakra-ui/react';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 import { toUrl } from '@/utils';
-import { OrderType } from '@/types';
 import { useModalStore } from '@/stores';
 import { useUpdateSummit } from '@/apis';
 import { SummitDrawer } from '@/containers';
@@ -16,7 +15,7 @@ import { useConvertDate, useQueryKeyParams, useSafePush } from '@/hooks';
 const columnHelper = createColumnHelper<any>();
 
 interface SummitTableProps {
-  summit: OrderType[];
+  summit: any[];
   isLoading?: boolean;
 }
 
@@ -30,12 +29,12 @@ const SummitTable = ({ summit, isLoading }: SummitTableProps) => {
   const queryKeyParams = useQueryKeyParams(toUrl(ApiRoutes.Summit));
   const { mutate: updateSummit } = useUpdateSummit(queryKeyParams);
 
-  const handleDrawer = useCallback<(summit: OrderType) => void>(
+  const handleDrawer = useCallback<(summit: any) => void>(
     (summit) => {
       if (!summit) return;
       openModal(SummitDrawer, { summit, setMutate: updateSummit });
     },
-    [openModal, updateSummit],
+    [openModal, updateSummit]
   );
 
   const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>(
@@ -46,8 +45,21 @@ const SummitTable = ({ summit, isLoading }: SummitTableProps) => {
         onConfirm: () => updateSummit({ id, double_check: true, after, before }),
       });
     },
-    [updateSummit, openConfirm, t],
+    [updateSummit, openConfirm, t]
   );
+
+  const orderItemDataMap = useMemo(() => {
+    return summit.reduce((acc, order) => {
+      const targetItem = order.line_items.find((item: any) => item.order_item_name.includes('써밋') || item.order_item_name.includes('서밋'));
+      if (targetItem) {
+        acc[order.id] = {
+          order_item_id: targetItem.order_item_id,
+          double_checked: targetItem.double_checked,
+        };
+      }
+      return acc;
+    }, {} as Record<string, { order_item_id: string; double_checked: boolean }>);
+  }, [summit]);
 
   const columns = useMemo(
     () => [
@@ -59,34 +71,34 @@ const SummitTable = ({ summit, isLoading }: SummitTableProps) => {
       columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor('status', {
         header: t('status'),
-        cell: (context) => <Tag colorScheme={statusColor[context.row.original.order.status] || 'gray'}>{t(context.row.original.order.status)}</Tag>,
+        cell: (context) => <Tag colorScheme={statusColor[context.row.original.status.split('-')[1]] || 'gray'}>{t(context.row.original.status.split('-')[1])}</Tag>,
       }),
-      columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
-      columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
-      columnHelper.accessor('order.date_created_gmt', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
+      columnHelper.accessor((row) => row.meta_data._billing_first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
+      columnHelper.accessor((row) => row.meta_data._billing_email.toLowerCase(), { header: t('email'), meta: { sortable: true } }),
+      columnHelper.accessor('date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
       columnHelper.accessor('checked', {
         header: t('checked'),
-        cell: (context) => (context.row.original.order.double_checked ? <Icon as={CheckCircleIcon} color={'green.300'} boxSize={'5'} /> : ''),
+        cell: (context) => (orderItemDataMap[context.row.original.id].double_checked ? <Icon as={CheckCircleIcon} color={'green.300'} boxSize={'5'} /> : ''),
       }),
       columnHelper.display({
         id: 'actions',
         header: t('actions'),
         cell: (context) => (
           <DataTableActions
-            checked={context.row.original.order.double_checked}
+            checked={orderItemDataMap[context.row.original.id].double_checked}
             onView={(e) => {
               e.stopPropagation();
               handleDrawer(context.row.original);
             }}
             onUpdate={(e) => {
               e.stopPropagation();
-              handleDoubleCheck(context.row.original.order.id, router.query['after'] as string, router.query['before'] as string);
+              handleDoubleCheck(orderItemDataMap[context.row.original.id].order_item_id, router.query['after'] as string, router.query['before'] as string);
             }}
           />
         ),
       }),
     ],
-    [convertDate, handleDoubleCheck, handleDrawer, router.query, t],
+    [convertDate, handleDoubleCheck, handleDrawer, router.query, orderItemDataMap, t]
   );
 
   const table = useReactTable({ data: summit, columns, getCoreRowModel: getCoreRowModel() });

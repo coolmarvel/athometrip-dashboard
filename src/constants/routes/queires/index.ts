@@ -1,5 +1,3 @@
-import { subWeeks } from 'date-fns';
-
 export enum ViewQueries {
   Table = 'table',
   List = 'list',
@@ -15,8 +13,23 @@ export enum RegionQueries {
   Other = 'mexico/canada',
 }
 
-const after = subWeeks(new Date(), 1).toISOString().split('T')[0];
-const before = new Date().toISOString().split('T')[0];
+const after = new Date(new Date().setDate(new Date().getDate() - 1))
+  .toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+  .replace(/. /g, '-')
+  .replace('.', '');
+
+const before = new Date()
+  .toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+  .replace(/. /g, '-')
+  .replace('.', '');
 
 export const defaultQuery = {
   view: ViewQueries.Table,

@@ -3,7 +3,6 @@ import { RequiredKeysOf } from 'type-fest';
 import axios from 'axios';
 
 import { Order } from '../../types';
-import { OrderType } from '@/types';
 import { setValue } from '@/pages/api';
 import { checkExistingDataInRange, filterTicket, sortTicket } from '../ticket-utils';
 
@@ -35,7 +34,6 @@ const getUNTourByPage = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (tickets.length === 0) {
       const { data } = await axios.get(`${url}?product_id=${productId}&after=${after}&before=${before}`);
-      data.map((v: OrderType) => (v.id = parseInt(v.order.id, 10)));
       await setValue(key, data);
 
       tickets = await filterTicket(data, after, before);

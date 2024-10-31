@@ -1,12 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { useCallback, useMemo, useState } from 'react';
 
+import { extractText } from '@/utils';
 import { useConvertDate } from '@/hooks';
 import { DataDrawer } from '@/components';
-import { handleStringKeyValue, OrderType } from '@/types';
+import { handleStringKeyValue } from '@/types';
 
 interface EllisIslandDrawerProps {
-  ellisIsland: OrderType;
+  ellisIsland: any;
   setMutate: (data?: any) => void;
   onClose: () => void;
 }
@@ -21,25 +22,22 @@ const EllisIslandDrawer = ({ ellisIsland, setMutate, onClose }: EllisIslandDrawe
     setIsEdit(!isEdit);
   }, [isEdit, setIsEdit]);
 
-  const attributes = useMemo(
-    () => [
-      { label: t('Name'), value: ellisIsland.billing?.first_name ?? 'Name' },
-      { label: t('Email'), value: ellisIsland.billing?.email ?? 'Email' },
-      { label: t('Phone'), value: ellisIsland.billing?.phone ?? 'Phone' },
-      { label: t('Payment Via'), value: `${ellisIsland.payment?.payment_method_title ?? 'Payment method'} (${ellisIsland.payment?.transaction_id ?? 'Transaction ID'})` },
-      { label: t('Type'), value: handleStringKeyValue(ellisIsland.line_items?.[0]?.meta_data)['성인-어린이'] ?? 'Type' },
+  const targetLineItem = useMemo(() => ellisIsland.line_items.find((item: any) => item.order_item_name.includes('엘리스')), [ellisIsland]);
+
+  const attributes = useMemo(() => {
+    if (!targetLineItem) return [];
+
+    return [
+      { label: t('Name'), value: ellisIsland.meta_data._billing_first_name.toUpperCase() ?? 'Name' },
+      { label: t('Email'), value: ellisIsland.meta_data._billing_email.toLowerCase() ?? 'Email' },
+      { label: t('Phone'), value: ellisIsland.meta_data._billing_phone ?? 'Phone' },
+      { label: t('Payment Via'), value: `${ellisIsland.meta_data._payment_method_title ?? 'Payment method'} (${ellisIsland.meta_data._transaction_id ?? 'Transaction ID'})` },
+      { label: t('Type'), value: handleStringKeyValue(targetLineItem.meta_data)['성인-어린이'] ?? 'Type' },
       {
         label: t('Schedule'),
         value: (() => {
-          const date = convertDate(ellisIsland.order.meta_data?.['ellis_island_date'] ?? '').split(' ')[0];
-          const ellisIslandTime = ellisIsland.order.meta_data?.['ellis_island_time'];
-          const ellisIslandTime2 = ellisIsland.order.meta_data?.['ellis_island_time2'];
-
-          let time;
-          if (ellisIslandTime && ellisIslandTime2) time = `${ellisIslandTime} / ${ellisIslandTime2}`;
-          else if (ellisIslandTime) time = ellisIslandTime;
-          else if (ellisIslandTime2) time = ellisIslandTime2;
-          else time = '';
+          const date = convertDate(handleStringKeyValue(targetLineItem.meta_data)['날짜']).split(' ')[0] ?? '';
+          const time = handleStringKeyValue(targetLineItem.meta_data)['입장 희망시간'] ?? '';
 
           return `${date} ${time}`;
         })(),
@@ -48,15 +46,17 @@ const EllisIslandDrawer = ({ ellisIsland, setMutate, onClose }: EllisIslandDrawe
         label: t('Memo'),
         isMemo: true,
         isEdit: isEdit,
-        id: ellisIsland.order.id,
+        id: targetLineItem.order_item_id,
+        value: targetLineItem.memo ?? '',
         onEdit: () => handleMemoEdit(),
-        value: ellisIsland.order.memo ?? '',
       },
-    ],
-    [isEdit, handleMemoEdit, ellisIsland, convertDate, t]
-  );
+    ];
+  }, [isEdit, handleMemoEdit, ellisIsland, convertDate, t, targetLineItem]);
 
-  const columns = useMemo(() => [{ name: ellisIsland.line_items[0]?.name, quantity: ellisIsland.line_items[0]?.quantity, total: ellisIsland.line_items[0]?.total }], [ellisIsland]);
+  const columns = useMemo(() => {
+    if (!targetLineItem) return [];
+    return [{ name: extractText(targetLineItem.order_item_name), quantity: ellisIsland.quantity, total: targetLineItem.meta_data._line_total }];
+  }, [targetLineItem]);
 
   return <DataDrawer columns={columns} attributes={attributes} data={ellisIsland} setMutate={setMutate} setIsEdit={setIsEdit} onClose={onClose} />;
 };

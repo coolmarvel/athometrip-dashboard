@@ -6,29 +6,29 @@ import { OrderType } from '@/types';
 import { WithLabel } from '@/components';
 import { DataDrawerBodyTable } from './DataDrawerBodyTable';
 
-type Attribute = (
+type Attribute =
   | {
-  label: string;
-  value: string;
-  isMemo?: undefined;
-  isEdit?: undefined;
-  id?: undefined;
-  onEdit?: undefined;
-}
+      label: string;
+      value: string;
+      isMemo?: undefined;
+      isEdit?: undefined;
+      id?: undefined;
+      onEdit?: undefined;
+    }
   | {
-  label: string;
-  isMemo: boolean;
-  isEdit: boolean;
-  id: string;
-  onEdit: () => void;
-  value: string;
-})
+      label: string;
+      isMemo: boolean;
+      isEdit: boolean;
+      id: string;
+      onEdit: () => void;
+      value: string;
+    };
 
 type Column = {
   name: string;
   quantity: string;
   total: string;
-}
+};
 
 interface DataDrawerBodyProps {
   columns: Column[];

@@ -5,7 +5,7 @@ import { ApiRoutes } from '@/constants';
 import { PageQueryParams, useCommand, useFetch, useGetPage, useInvalidate, usePost } from '..';
 
 export const useGetTopOfTheRockByPage = (params: PageQueryParams) => {
-  return useGetPage<any[]>(toUrl(ApiRoutes.TopOfTheRock, params), params);
+  return useGetPage<any[]>(toUrl(ApiRoutes.TopOfTheRock), params);
 };
 
 export const useGetTopOfTheRock = (id?: number) => {
@@ -34,6 +34,6 @@ export const useUpdateTopOfTheRock = (params?: object) => {
           return item;
         }),
       };
-    },
+    }
   );
 };

@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import { useCallback, useMemo, useState } from 'react';
 
+import { extractText } from '@/utils';
 import { useConvertDate } from '@/hooks';
 import { DataDrawer } from '@/components';
-import { handleStringKeyValue, OrderType } from '@/types';
 
 interface TMobileEsimDrawerProps {
-  tMobile: OrderType;
+  tMobile: any;
   setMutate: (data?: any) => void;
   onClose: () => void;
 }
@@ -21,50 +21,48 @@ const TMobileEsimDrawer = ({ tMobile, setMutate, onClose }: TMobileEsimDrawerPro
     setIsEdit(!isEdit);
   }, [isEdit, setIsEdit]);
 
-  const attributes = useMemo(
-    () => [
-      { label: t('Name'), value: tMobile.billing?.first_name ?? 'Name' },
-      { label: t('Email'), value: tMobile.billing?.email ?? 'Email' },
-      { label: t('Phone'), value: tMobile.billing?.phone ?? 'Phone' },
-      { label: t('Payment Via'), value: `${tMobile.payment?.payment_method_title ?? 'Payment method'} (${tMobile.payment?.transaction_id ?? 'Transaction ID'})` },
-      { label: t('Type'), value: handleStringKeyValue(tMobile.line_items?.[0]?.meta_data)['성인-어린이'] ?? 'Type' },
-      {
-        label: t('period'),
-        value: (() => {
-          let period;
-          if (handleStringKeyValue(tMobile.line_items[0]?.meta_data)['이용-기간-선택']) period = handleStringKeyValue(tMobile.line_items[0].meta_data)['이용-기간-선택'];
-          else if (handleStringKeyValue(tMobile.line_items[0]?.meta_data)['플랜-선택']) period = handleStringKeyValue(tMobile.line_items[0].meta_data)['플랜-선택'];
-          else if (tMobile.line_items[0]?.meta_data && handleStringKeyValue(tMobile.line_items[0].meta_data)['상품-옵션']) {
-            const optionValue = handleStringKeyValue(tMobile.line_items[0].meta_data)['상품-옵션'];
-            const match = optionValue.match(/\d+/);
-            if (match) period = `${match[0]}일`;
-          }
+  const targetLineItem = useMemo(() => tMobile.line_items.find((item: any) => item.order_item_name.includes('티모') || item.order_item_name.includes('티 모')), [tMobile]);
 
-          return period as string;
+  const attributes = useMemo(() => {
+    if (!targetLineItem) return [];
+
+    return [
+      { label: t('Name'), value: tMobile.meta_data._billing_first_name.toUpperCase() ?? 'Name' },
+      { label: t('Email'), value: tMobile.meta_data._billing_email.toLowerCase() ?? 'Email' },
+      { label: t('Phone'), value: tMobile.meta_data._billing_phone ?? 'Phone' },
+      { label: t('Payment Via'), value: `${tMobile.meta_data._payment_method_title ?? 'Payment method'} (${tMobile.meta_data._transaction_id ?? 'Transaction ID'})` },
+      {
+        label: t('Period'),
+        value: (() => {
+          const period = targetLineItem.order_item_name;
+          const match = period.match(/\d+/);
+
+          if (match) return `${match[0]}일`;
+          else return '';
         })(),
       },
-      { label: t('model'), value: tMobile.usim_info?.esim_device ?? '' },
-      { label: t('eid'), value: tMobile.usim_info?.esim_eid ?? '' },
-      { label: t('esim_imei'), value: tMobile.usim_info?.esim_imei ?? '' },
-      { label: t('activate'), value: (() => convertDate(tMobile.usim_info?.att_tmobile_date ?? '').split(' ')[0])() },
+      { label: t('Model'), value: tMobile.meta_data?.esim_device.split(',') ?? '' },
+      { label: t('Eid'), value: tMobile.meta_data?.esim_eid ?? '' },
+      { label: t('Esim_imei'), value: tMobile.meta_data?.esim_imei ?? '' },
+      {
+        label: t('Activate'),
+        value: (() => convertDate(tMobile.meta_data?.att_tmobile_date).split(' ')[0] ?? '')(),
+      },
       {
         label: t('Memo'),
         isMemo: true,
         isEdit: isEdit,
-        id: tMobile.order.id,
+        id: targetLineItem.order_item_id,
+        value: targetLineItem.memo ?? '',
         onEdit: () => handleMemoEdit(),
-        value: tMobile.order.memo ?? '',
       },
-    ],
-    [isEdit, handleMemoEdit, tMobile, t, convertDate],
-  );
+    ];
+  }, [isEdit, handleMemoEdit, tMobile, convertDate, t, targetLineItem]);
 
-  const columns = useMemo(() =>
-    [{
-      name: tMobile.line_items[0]?.name ?? '',
-      quantity: tMobile.line_items[0]?.quantity ?? '',
-      total: tMobile.line_items[0]?.total ?? '',
-    }], [tMobile]);
+  const columns = useMemo(() => {
+    if (!targetLineItem) return [];
+    return [{ name: extractText(targetLineItem.order_item_name), quantity: tMobile.quantity, total: targetLineItem.meta_data._line_total }];
+  }, [targetLineItem]);
 
   return <DataDrawer columns={columns} attributes={attributes} data={tMobile} setMutate={setMutate} setIsEdit={setIsEdit} onClose={onClose} />;
 };

@@ -1,15 +1,14 @@
-/**
- * 유저 관리 페이지
- *
- * @author 김이안
- */
-
 import { GaiaHead, PageOptions, ResponsiveLayout, Search } from '../../../components';
 import { Flex } from '@chakra-ui/react';
 import { useSafePush } from '../../../hooks';
 import UserPageContainer from '@/containers/system/user-management/UserPageContainer';
 import { UsersUtils } from '@/containers';
 
+/**
+ * 유저 관리 페이지
+ *
+ * @author 김이안
+ */
 const UserManagementPage = () => {
   const { router, push } = useSafePush();
 

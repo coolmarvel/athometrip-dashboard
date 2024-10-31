@@ -7,22 +7,22 @@ import { DataDrawerHeader } from './DataDrawerHeader';
 
 type Attribute = (
   | {
-  label: string;
-  value: string;
-  isMemo?: undefined;
-  isEdit?: undefined;
-  id?: undefined;
-  onEdit?: undefined;
-}
+      label: string;
+      value: string;
+      isMemo?: undefined;
+      isEdit?: undefined;
+      id?: undefined;
+      onEdit?: undefined;
+    }
   | {
-  label: string;
-  isMemo: boolean;
-  isEdit: boolean;
-  id: string;
-  onEdit: () => void;
-  value: string;
-}
-  )[];
+      label: string;
+      isMemo: boolean;
+      isEdit: boolean;
+      id: string;
+      onEdit: () => void;
+      value: string;
+    }
+)[];
 
 type Column = {
   name: string;

@@ -1,11 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { DrawerCloseButton, DrawerHeader, Flex, Tag } from '@chakra-ui/react';
 
-import { OrderType } from '@/types';
 import { statusColor } from '@/constants';
 
 interface DataDrawerHeaderProps {
-  data: OrderType;
+  data: any;
 }
 
 export const DataDrawerHeader = ({ data }: DataDrawerHeaderProps) => {
@@ -15,9 +14,9 @@ export const DataDrawerHeader = ({ data }: DataDrawerHeaderProps) => {
     <>
       <DrawerHeader borderBottomWidth="1px">
         <Flex align="center" gap="4">
-          Order #{data?.order?.id ?? t('Order ID')}
-          <Tag colorScheme={statusColor[data?.order?.status ?? ''] || 'gray'} fontSize={'x-large'}>
-            {data?.order?.status ? t(data.order.status.toUpperCase()) : t('Status')}
+          Order #{data?.id ?? t('Order ID')}
+          <Tag colorScheme={statusColor[data.status.split('-')[1] ?? ''] || 'gray'} fontSize={'x-large'}>
+            {data?.status ? t(data.status.split('-')[1].toUpperCase()) : t('Status')}
           </Tag>
         </Flex>
         <DrawerCloseButton mt={'2'} />

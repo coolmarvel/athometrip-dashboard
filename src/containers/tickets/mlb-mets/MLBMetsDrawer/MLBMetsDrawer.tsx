@@ -1,12 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { useCallback, useMemo, useState } from 'react';
 
+import { extractText } from '@/utils';
 import { useConvertDate } from '@/hooks';
 import { DataDrawer } from '@/components';
-import { handleStringKeyValue, OrderType } from '@/types';
+import { handleStringKeyValue, } from '@/types';
 
 interface MLBMetsDrawerProps {
-  mlbMets: OrderType;
+  mlbMets: any;
   setMutate: (data?: any) => void;
   onClose: () => void;
 }
@@ -21,29 +22,31 @@ const MLBMetsDrawer = ({ mlbMets, setMutate, onClose }: MLBMetsDrawerProps) => {
     setIsEdit(!isEdit);
   }, [isEdit, setIsEdit]);
 
-  const attributes = useMemo(
-    () => [
-      { label: t('Name'), value: mlbMets.billing?.first_name ?? 'Name' },
-      { label: t('Email'), value: mlbMets.billing?.email ?? 'Email' },
-      { label: t('Phone'), value: mlbMets.billing?.phone ?? 'Phone' },
-      { label: t('Payment Via'), value: `${mlbMets.payment?.payment_method_title ?? 'Payment method'} (${mlbMets.payment?.transaction_id ?? 'Transaction ID'})` },
-      { label: t('Type'), value: handleStringKeyValue(mlbMets.line_items?.[0]?.meta_data)['성인-어린이'] ?? 'Type' },
+  const targetLineItem = useMemo(() => mlbMets.line_items.find((item: any) => item.order_item_name.includes('MLB')), [mlbMets]);
+
+  const attributes = useMemo(() => {
+    if (!targetLineItem) return [];
+
+    return [
+      { label: t('Name'), value: mlbMets.meta_data._billing_first_name.toUpperCase() ?? 'Name' },
+      { label: t('Email'), value: mlbMets.meta_data._billing_email.toLowerCase() ?? 'Email' },
+      { label: t('Phone'), value: mlbMets.meta_data._billing_phone ?? 'Phone' },
+      { label: t('Payment Via'), value: `${mlbMets.meta_data._payment_method_title ?? 'Payment method'} (${mlbMets.meta_data._transaction_id ?? 'Transaction ID'})` },
+      { label: t('Type'), value: handleStringKeyValue(targetLineItem.meta_data)['성인-어린이'] ?? 'Type' },
       {
-        label: t('Schedule'),
+        label: t('Schedule (1)'),
         value: (() => {
-          const date = convertDate(
-            mlbMets.order.meta_data?.['yankees_peak_date'] ??
-              mlbMets.order.meta_data?.['yankees_off_date'] ??
-              handleStringKeyValue(mlbMets.line_items[0]?.meta_data)['yankees_off_date'] ??
-              handleStringKeyValue(mlbMets.line_items[0]?.meta_data)['날짜'] ??
-              ''
-          ).split(' ')[0];
-          const time =
-            mlbMets.order.meta_data?.['yankees_peak_time'] ??
-            mlbMets.order.meta_data?.['yankees_off_time'] ??
-            handleStringKeyValue(mlbMets.line_items[0]?.meta_data)['yankees_off_time'] ??
-            handleStringKeyValue(mlbMets.line_items[0]?.meta_data)['시간'] ??
-            '';
+          const date = convertDate(handleStringKeyValue(targetLineItem.meta_data)['날짜']).split(' ')[0] ?? '';
+          const time = handleStringKeyValue(targetLineItem.meta_data)['입장 희망시간(1순위)'] ?? '';
+
+          return `${date} ${time}`;
+        })(),
+      },
+      {
+        label: t('Schedule (2)'),
+        value: (() => {
+          const date = convertDate(handleStringKeyValue(targetLineItem.meta_data)['날짜']).split(' ')[0] ?? '';
+          const time = handleStringKeyValue(targetLineItem.meta_data)['입장 희망시간(2순위)'] ?? '';
 
           return `${date} ${time}`;
         })(),
@@ -52,15 +55,17 @@ const MLBMetsDrawer = ({ mlbMets, setMutate, onClose }: MLBMetsDrawerProps) => {
         label: t('Memo'),
         isMemo: true,
         isEdit: isEdit,
-        id: mlbMets.order.id,
+        id: targetLineItem.order_item_id,
+        value: targetLineItem.memo ?? '',
         onEdit: () => handleMemoEdit(),
-        value: mlbMets.order.memo ?? '',
       },
-    ],
-    [isEdit, handleMemoEdit, mlbMets, convertDate, t]
-  );
+    ];
+  }, [isEdit, handleMemoEdit, mlbMets, convertDate, t, targetLineItem]);
 
-  const columns = useMemo(() => [{ name: mlbMets.line_items[0]?.name, quantity: mlbMets.line_items[0]?.quantity, total: mlbMets.line_items[0]?.total }], [mlbMets]);
+  const columns = useMemo(() => {
+    if (!targetLineItem) return [];
+    return [{ name: extractText(targetLineItem.order_item_name), quantity: mlbMets.quantity, total: targetLineItem.meta_data._line_total }];
+  }, [targetLineItem]);
 
   return <DataDrawer columns={columns} attributes={attributes} data={mlbMets} setMutate={setMutate} setIsEdit={setIsEdit} onClose={onClose} />;
 };

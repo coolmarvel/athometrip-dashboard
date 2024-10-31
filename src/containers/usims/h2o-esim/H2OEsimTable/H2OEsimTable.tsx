@@ -5,7 +5,6 @@ import { Checkbox, Icon, Tag } from '@chakra-ui/react';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 import { toUrl } from '@/utils';
-import { OrderType } from '@/types';
 import { useModalStore } from '@/stores';
 import { useUpdateH2OEsim } from '@/apis';
 import { H2OEsimDrawer } from '@/containers';
@@ -16,7 +15,7 @@ import { useConvertDate, useQueryKeyParams, useSafePush } from '@/hooks';
 const columnHelper = createColumnHelper<any>();
 
 interface H2OEsimTableProps {
-  h2oEsim: any;
+  h2oEsim: any[];
   isLoading?: boolean;
 }
 
@@ -30,12 +29,12 @@ const H2OEsimTable = ({ h2oEsim, isLoading }: H2OEsimTableProps) => {
 
   const { openModal, openConfirm } = useModalStore(['openModal', 'openConfirm']);
 
-  const handleDrawer = useCallback<(h2oEsim: OrderType) => void>(
+  const handleDrawer = useCallback<(h2oEsim: any) => void>(
     (h2oEsim) => {
       if (!h2oEsim) return;
       openModal(H2OEsimDrawer, { h2oEsim, setMutate: updateH2OEsim });
     },
-    [openModal, updateH2OEsim],
+    [openModal, updateH2OEsim]
   );
 
   const handleDoubleCheck = useCallback<(id: string, after: string, before: string) => void>(
@@ -46,8 +45,21 @@ const H2OEsimTable = ({ h2oEsim, isLoading }: H2OEsimTableProps) => {
         onConfirm: () => updateH2OEsim({ id, double_check: true, after, before }),
       });
     },
-    [updateH2OEsim, openConfirm, t],
+    [updateH2OEsim, openConfirm, t]
   );
+
+  const orderItemDataMap = useMemo(() => {
+    return h2oEsim.reduce((acc, order) => {
+      const targetItem = order.line_items.find((item: any) => item.order_item_name.includes('h2o') || item.order_item_name.includes('H20'));
+      if (targetItem) {
+        acc[order.id] = {
+          order_item_id: targetItem.order_item_id,
+          double_checked: targetItem.double_checked,
+        };
+      }
+      return acc;
+    }, {} as Record<string, { order_item_id: string; double_checked: boolean }>);
+  }, [h2oEsim]);
 
   const columns = useMemo(
     () => [
@@ -59,33 +71,34 @@ const H2OEsimTable = ({ h2oEsim, isLoading }: H2OEsimTableProps) => {
       columnHelper.accessor('id', { header: t('id'), meta: { sortable: true } }),
       columnHelper.accessor('status', {
         header: t('status'),
-        cell: (context) => <Tag colorScheme={statusColor[context.row.original.order.status] || 'gray'}>{t(context.row.original.order.status)}</Tag>,
+        cell: (context) => <Tag colorScheme={statusColor[context.row.original.status.split('-')[1]] || 'gray'}>{t(context.row.original.status.split('-')[1])}</Tag>,
       }),
-      columnHelper.accessor((row) => row.billing.first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
-      columnHelper.accessor('billing.email', { header: t('email'), meta: { sortable: true } }),
-      columnHelper.accessor('order.date_created_gmt', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
+      columnHelper.accessor((row) => row.meta_data._billing_first_name.toUpperCase(), { header: t('name'), meta: { sortable: true } }),
+      columnHelper.accessor((row) => row.meta_data._billing_email.toLowerCase(), { header: t('email'), meta: { sortable: true } }),
+      columnHelper.accessor('date_created', { header: t('order date'), cell: (context) => convertDate(context.getValue()!), meta: { sortable: true } }),
       columnHelper.accessor('checked', {
         header: t('checked'),
-        cell: (context) => (context.row.original.order.double_checked ? <Icon as={CheckCircleIcon} color={'green.300'} boxSize={'5'} /> : ''),
+        cell: (context) => (orderItemDataMap[context.row.original.id].double_checked ? <Icon as={CheckCircleIcon} color={'green.300'} boxSize={'5'} /> : ''),
       }),
       columnHelper.display({
         id: 'actions',
         header: t('actions'),
         cell: (context) => (
           <DataTableActions
-            checked={context.row.original.order.double_checked}
+            checked={orderItemDataMap[context.row.original.id].double_checked}
             onView={(e) => {
               e.stopPropagation();
               handleDrawer(context.row.original);
             }}
             onUpdate={(e) => {
               e.stopPropagation();
-              handleDoubleCheck(context.row.original.order.id, router.query['after'] as string, router.query['before'] as string);
+              handleDoubleCheck(orderItemDataMap[context.row.original.id].order_item_id, router.query['after'] as string, router.query['before'] as string);
             }}
           />
         ),
-      })],
-    [convertDate, handleDoubleCheck, handleDrawer, router.query, t],
+      }),
+    ],
+    [convertDate, handleDoubleCheck, handleDrawer, router.query, orderItemDataMap, t]
   );
 
   const table = useReactTable({ data: h2oEsim, columns, getCoreRowModel: getCoreRowModel() });

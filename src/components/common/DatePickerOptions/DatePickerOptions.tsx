@@ -1,7 +1,7 @@
 import { RangeDatepicker } from 'chakra-dayzed-datepicker';
 import { useCallback, useEffect, useState } from 'react';
-import { format, subWeeks } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { format } from 'date-fns';
 
 import { useSafePush } from '@/hooks';
 
@@ -17,8 +17,26 @@ const DatePickerOptions = ({ setMutate }: DatePickerOptionsProps) => {
 
   useEffect(() => {
     if (Object.keys(router.query).length !== 0) {
-      const after = (router.query['after'] as string) ?? subWeeks(new Date(), 1).toISOString().split('T')[0];
-      const before = (router.query['before'] as string) ?? new Date().toISOString().split('T')[0];
+      const after =
+        (router.query['after'] as string) ??
+        new Date(new Date().setDate(new Date().getDate() - 1))
+          .toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          })
+          .replace(/. /g, '-')
+          .replace('.', '');
+      const before =
+        (router.query['before'] as string) ??
+        new Date()
+          .toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          })
+          .replace(/. /g, '-')
+          .replace('.', '');
 
       setSelectedDates([new Date(after), new Date(before)]);
       setLoading(false);
